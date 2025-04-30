@@ -1,2 +1,2 @@
 # metaeffekt-kontinuum
-The {metaeffekt} Kontinuum aggregates baseline configurations o support using the {metaeffekt} plugins, tools and content.
+The {metaeffekt} Kontinuum aggregates baseline configurations to support using the {metaeffekt} plugins, tools and content
