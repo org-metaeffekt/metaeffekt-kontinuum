@@ -20,6 +20,9 @@ either defined by job-executor-specific actions/steps (GitHub, GitLab) or pipeli
 * Validate Reference Inventory [bootstrap_validate-reference-inventory](bootstrap_validate-reference-inventory.md)
 * Update Local Vulnerability Mirror [bootstrap_update-vulnerability-mirror](bootstrap_update-update-mirror.md)
 
+### Analyze
+* Resolve Artifacts in Inventory [analyze_resolve-inventory](analyze_resolve-inventory.md)
+
 ### Advise
 
 * Attach Asset Metadata [advise_attach-metadata](advise_attach-metadata.md)
