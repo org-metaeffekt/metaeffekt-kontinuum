@@ -80,12 +80,12 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>inputInventory</property>
-                                    <message>You must set the parameter inputInventory</message>
+                                    <property>input.inventory</property>
+                                    <message>You must set the parameter input.inventory</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>targetFile</property>
-                                    <message>You must set the parameter targetFile</message>
+                                    <property>output.inventory</property>
+                                    <message>You must set the parameter output.inventory</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
