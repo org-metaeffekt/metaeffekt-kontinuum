@@ -51,6 +51,9 @@
         <vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</vulnerabilities.custom.dir>
         <activate.vulnerabilities.custom>false</activate.vulnerabilities.custom>
 
+        <input.inventory></input.inventory>
+        <output.inventory></output.inventory>
+
     </properties>
 
     <profiles>
@@ -83,7 +86,7 @@
                                     </values>
 
                                     <inventoryInputFile>${input.inventory}</inventoryInputFile>
-                                    <inventoryOutputFile>${input.inventory}</inventoryOutputFile>
+                                    <inventoryOutputFile>${output.inventory}</inventoryOutputFile>
                                 </configuration>
                             </execution>
 
