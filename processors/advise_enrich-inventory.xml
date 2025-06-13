@@ -51,8 +51,15 @@
         <vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</vulnerabilities.custom.dir>
         <activate.vulnerabilities.custom>false</activate.vulnerabilities.custom>
 
+        <correlation.dir>${input.inventory}/correlation</correlation.dir>
+        <keywords.dir>${input.inventory}/context</keywords.dir>
+        <assessment.dir>${input.inventory}/assessment</assessment.dir>
+
+        <vulnerability.mirror.dir></vulnerability.mirror.dir>
+        <security.policy.file></security.policy.file>
         <input.inventory></input.inventory>
         <output.inventory></output.inventory>
+        <processor.tmp.dir></processor.tmp.dir>
 
     </properties>
 
@@ -103,7 +110,7 @@
                                     <writeIntermediateInventories>true</writeIntermediateInventories>
                                     <intermediateInventoriesDirectory>${processor.tmp.dir}</intermediateInventoriesDirectory>
                                     <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
-                                    <securityPolicyFile>${security.policy}</securityPolicyFile>
+                                    <securityPolicyFile>${security.policy.file}</securityPolicyFile>
 
                                     <correlationYamlEnrichment>
                                         <active>${activate.correlation}</active>
