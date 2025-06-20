@@ -52,8 +52,9 @@
         <activate.vulnerabilities.custom>false</activate.vulnerabilities.custom>
 
         <correlation.dir>${input.inventory}/correlation</correlation.dir>
-        <keywords.dir>${input.inventory}/context</keywords.dir>
+        <context.dir>${input.inventory}/context</context.dir>
         <assessment.dir>${input.inventory}/assessment</assessment.dir>
+
 
         <vulnerability.mirror.dir></vulnerability.mirror.dir>
         <security.policy.file></security.policy.file>
@@ -286,8 +287,8 @@
                                     <message>You must set the parameter 'assessment.dir' to locate the assessment data that is used for enrichment.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>security.policy</property>
-                                    <message>You must set the parameter 'security.policy' to locate the specific security policy used for enrichment</message>
+                                    <property>security.policy.file</property>
+                                    <message>You must set the parameter 'security.policy.file' to locate the specific security policy used for enrichment</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>correlation.dir</property>
