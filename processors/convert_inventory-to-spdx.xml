@@ -30,25 +30,12 @@
 
     <artifactId>convert_inventory-to-spdx</artifactId>
 
-    <properties>
-        <input.inventory></input.inventory>
-        <output.bom></output.bom>
-        <documentName></documentName>
-        <description></description>
-        <documentIdPrefix></documentIdPrefix>
-        <organization></organization>
-        <organizationUrl></organizationUrl>
-        <person></person>
-        <comment></comment>
-        <customLicenseMappings></customLicenseMappings>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>com.metaeffekt.artifact.analysis</groupId>
                 <artifactId>ae-inventory-conversion-plugin</artifactId>
-                <version>0.133.0</version>
+                <version>${ae.artifact.analysis.version}</version>
                 <executions>
                     <execution>
                         <id>convert-inventory-to-spdx</id>
@@ -58,22 +45,21 @@
                         <configuration>
                             <input>${input.inventory}</input>
                             <output>${output.bom}</output>
-                            <documentName>${documentName}</documentName>
-                            <description>${description}</description>
-                            <documentIdPrefix>${documentIdPrefix}</documentIdPrefix>
-                            <organization>${organization}</organization>
-                            <organizationUrl>${organizationUrl}</organizationUrl>
-                            <person>${person}</person>
-                            <comment>${comment}</comment>
-                            <outputFormat>JSON</outputFormat>
-                            <documentVersion>1</documentVersion>
-                            <mapRelationships>true</mapRelationships>
-                            <useLicenseExpressions>true</useLicenseExpressions>
-                            <includeLicenseTexts>false</includeLicenseTexts>
-                            <includeAssets>true</includeAssets>
-                            <includeTechnicalProperties>false</includeTechnicalProperties>
-                            <deriveAttributesFromPurl>false</deriveAttributesFromPurl>
-                            <customLicenseMappings>${customLicenseMappings}</customLicenseMappings>
+                            <documentName>${document.name}</documentName>
+                            <description>${document.description}</description>
+                            <documentIdPrefix>${document.id.prefix}</documentIdPrefix>
+                            <organization>${document.organization}</organization>
+                            <organizationUrl>${document.organization.url}</organizationUrl>
+                            <person>${document.person}</person>
+                            <comment>${document.comment}</comment>
+                            <outputFormat>${document.output.format}</outputFormat>
+                            <documentVersion>${document.version}</documentVersion>
+                            <mapRelationships>${map.relationships}</mapRelationships>
+                            <useLicenseExpressions>${use.license.expressions}</useLicenseExpressions>
+                            <includeLicenseTexts>${include.license.texts}</includeLicenseTexts>
+                            <includeAssets>${include.assets}</includeAssets>
+                            <includeTechnicalProperties>${include.technical.properties}</includeTechnicalProperties>
+                            <deriveAttributesFromPurl>${derive.attributes.from.purl}</deriveAttributesFromPurl>
                         </configuration>
                     </execution>
                 </executions>
@@ -97,6 +83,22 @@
                                 <requireProperty>
                                     <property>output.bom</property>
                                     <message>You must set the parameter output.bom</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>document.id.prefix</property>
+                                    <message>You must set the parameter document.id.prefix</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>organization</property>
+                                    <message>You must set the parameter organization</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>organization.url</property>
+                                    <message>You must set the parameter organization.url</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>document.name</property>
+                                    <message>You must set the parameter document.name</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

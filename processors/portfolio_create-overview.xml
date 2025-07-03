@@ -27,7 +27,7 @@
         <relativePath>ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>create-overview</artifactId>
+    <artifactId>portfolio_create-overview</artifactId>
     <packaging>pom</packaging>
 
     <properties>
@@ -54,16 +54,16 @@
                 </executions>
                 <configuration>
                     <baseDirectory>${input.inventory.dir}</baseDirectory>
-                    <inputInventoryPath>${input.inventory.path}</inputInventoryPath>
-                    <advisorInventoryPath>${advisor.inventory.path}</advisorInventoryPath>
+                    <inputInventoryPath>${input.inventory}</inputInventoryPath>
+                    <advisorInventoryPath>${advisor.inventories.dir}</advisorInventoryPath>
 
                     <outputFile>${output.file}</outputFile>
 
-                    <dashboardsPath>${dashboards.path}</dashboardsPath>
-                    <reportsPath>${reports.path}</reportsPath>
+                    <dashboardsPath>${dashboards.dir}</dashboardsPath>
+                    <reportsPath>${reports.dir}</reportsPath>
 
-<!--                    <securityPolicyFile>${security.policy.file}</securityPolicyFile>
--->
+                    <securityPolicyFile>${security.policy}</securityPolicyFile>
+
                 </configuration>
                 <dependencies>
                     <!-- FIXME: provide plugin with complete dependencies -->
@@ -73,6 +73,56 @@
                         <version>2.23.1</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>input.inventory.dir</property>
+                                    <message>You must set the parameter 'input.inventory.dir' to specify the directory of the input
+                                        inventory for the overview.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.inventory</property>
+                                    <message>You must set the parameter 'input.inventory' to specify the path of the input
+                                        inventory for the overview.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>security.policy</property>
+                                    <message>You must set the parameter 'security.policy' to specify the security policy file for overview generation.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>dashboards.dir</property>
+                                    <message>
+                                        You must set the parameter 'dashboards.dir' to specify the directory of the dashboards to be copied.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>reports.dir</property>
+                                    <message>
+                                        You must set the parameter 'reports.dir' to specify the directory of the reports to be copied.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>advisor.inventories.dir</property>
+                                    <message>
+                                        You must set the parameter 'advisor.inventories.dir' to specify the directory of the advisor inventories to be copied.
+                                    </message>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

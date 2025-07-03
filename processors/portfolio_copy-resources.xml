@@ -27,7 +27,7 @@
         <relativePath>ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>copy-resources</artifactId>
+    <artifactId>portfolio_copy-resources</artifactId>
     <packaging>pom</packaging>
 
     <build>
@@ -43,10 +43,10 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${target.dir}/source-inventories</outputDirectory>
+                            <outputDirectory>${output.dir}/source-inventories</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${source.inventories.dir}</directory>
+                                    <directory>${input.inventories}</directory>
                                     <filtering>false</filtering>
                                     <includes>
                                         <include>**/*.xlsx</include>
@@ -62,7 +62,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${target.dir}/assessment-dashboards</outputDirectory>
+                            <outputDirectory>${output.dir}/assessment-dashboards</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${dashboards.dir}</directory>
@@ -81,7 +81,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${target.dir}/vulnerability-reports</outputDirectory>
+                            <outputDirectory>${output.dir}/vulnerability-reports</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${reports.dir}</directory>
@@ -100,7 +100,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${target.dir}/advisor-inventories</outputDirectory>
+                            <outputDirectory>${output.dir}/advisor-inventories</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${advisor.inventories.dir}</directory>
@@ -127,15 +127,15 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>target.dir</property>
+                                    <property>output.dir</property>
                                     <message>
-                                        You must set the parameter 'target.dir' to specify the directory to which the files should be copied.
+                                        You must set the parameter 'output.dir' to specify the directory to which the files should be copied.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>source.inventories.dir</property>
+                                    <property>input.inventories</property>
                                     <message>
-                                        You must set the parameter 'source.inventories.dir' to specify the directory of the source inventories to be copied.
+                                        You must set the parameter 'input.inventories' to specify the directory of the source inventories to be copied.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>

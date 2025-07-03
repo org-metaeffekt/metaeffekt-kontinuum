@@ -27,7 +27,7 @@
         <relativePath>ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>create-diff</artifactId>
+    <artifactId>advise_create-diff</artifactId>
     <packaging>pom</packaging>
 
     <build>
@@ -53,8 +53,8 @@
                                 <file>${input.inventory.compare.file}</file>
                             </referenceInventories2>
 
-                            <outputInventoryDiff1to2>${target.dir}/diff/${inventory.version}-to-${inventory.version.compare}-comparison.xls</outputInventoryDiff1to2>
-                            <outputInventoryDiff2to1>${target.dir}/diff/${inventory.version.compare}-to-${inventory.version}-comparison.xls</outputInventoryDiff2to1>
+                            <outputInventoryDiff1to2>${output.inventory.dir}/diff/${inventory.version}-to-${inventory.compare.version}-comparison.xls</outputInventoryDiff1to2>
+                            <outputInventoryDiff2to1>${output.inventory.dir}/diff/${inventory.compare.version}-to-${inventory.version}-comparison.xls</outputInventoryDiff2to1>
                         </configuration>
                     </execution>
                 </executions>
@@ -84,9 +84,9 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>target.dir</property>
+                                    <property>output.inventory.dir</property>
                                     <message>
-                                        You must set the parameter 'target.dir' to specify the directory to which the output files should be saved.
+                                        You must set the parameter 'output.inventory.dir' to specify the directory to which the output files should be saved.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
@@ -96,9 +96,9 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>inventory.version.compare</property>
+                                    <property>inventory.compare.version</property>
                                     <message>
-                                        You must set the parameter 'inventory.version.compare' to specify the version of the compare inventory which will be used for naming the output files.
+                                        You must set the parameter 'inventory.compare.version' to specify the version of the compare inventory which will be used for naming the output files.
                                     </message>
                                 </requireProperty>
                             </rules>

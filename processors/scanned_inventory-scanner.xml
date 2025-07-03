@@ -28,13 +28,6 @@
 
     <artifactId>scanned_inventory-scanner</artifactId>
 
-    <properties>
-        <input.inventory></input.inventory>
-        <output.inventory></output.inventory>
-        <analysisBaseDir></analysisBaseDir>
-        <propertiesFile></propertiesFile>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -43,7 +36,7 @@
                 <version>3.5.3</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <scancode.toolkit.path>${scancodePath}</scancode.toolkit.path>
+                        <scancode.toolkit.path>${scancode.path}</scancode.toolkit.path>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -61,8 +54,8 @@
                         <configuration>
                             <inputInventory>${input.inventory}</inputInventory>
                             <targetFile>${output.inventory}</targetFile>
-                            <analysisBaseDir>${analysisBaseDir}</analysisBaseDir>
-                            <propertiesFile>${propertiesFile}</propertiesFile>
+                            <analysisBaseDir>${analysis.base.dir}</analysisBaseDir>
+                            <propertiesFile>${properties.file}</propertiesFile>
                         </configuration>
                     </execution>
                 </executions>

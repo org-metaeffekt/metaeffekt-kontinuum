@@ -11,7 +11,7 @@
         <relativePath>ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>transform-inventory</artifactId>
+    <artifactId>bootstrap_transform-inventory</artifactId>
     <packaging>jar</packaging>
 
     <build>

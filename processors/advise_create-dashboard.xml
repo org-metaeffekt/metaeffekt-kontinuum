@@ -26,7 +26,7 @@
         <relativePath>ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>advised_create-dashboard</artifactId>
+    <artifactId>advise_create-dashboard</artifactId>
     <packaging>pom</packaging>
 
     <properties>
@@ -36,12 +36,6 @@
         <ae.cpe.correlation.limit>2147483647</ae.cpe.correlation.limit>
     </properties>
 
-    <profiles>
-        <profile>
-            <id>advise-vulnerability</id>
-            <activation> <!-- activate by default, unless disabled via -P-advise-vulnerability -->
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -121,6 +115,4 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
-    </profiles>
 </project>

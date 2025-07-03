@@ -42,8 +42,8 @@
             </goals>
             <phase>process-resources</phase>
             <configuration>
-              <inputInventoryFile>${inputInventoryFile}</inputInventoryFile>
-              <outputInventoryFile>${outputInventoryFile}</outputInventoryFile>
+              <inputInventoryFile>${input.inventory}</inputInventoryFile>
+              <outputInventoryFile>${output.inventory}</outputInventoryFile>
               <downloadBaseDir>${downloadBaseDir}</downloadBaseDir>
               <artifactResolverConfig>${artifactResolverConfig}</artifactResolverConfig>
               <proxyConfig>${proxyConfig}</proxyConfig>
@@ -64,12 +64,12 @@
             <configuration>
               <rules>
                 <requireProperty>
-                  <property>inputInventoryFile</property>
-                  <message>You must set the parameter inputFile</message>
+                  <property>input.inventory</property>
+                  <message>You must set the parameter 'input.inventory'</message>
                 </requireProperty>
                 <requireProperty>
-                  <property>outputInventoryFile</property>
-                  <message>You must set the parameter outputFile</message>
+                  <property>output.inventory</property>
+                  <message>You must set the parameter 'output.inventory'</message>
                 </requireProperty>
               </rules>
               <fail>true</fail>

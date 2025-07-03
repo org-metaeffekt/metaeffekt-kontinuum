@@ -57,19 +57,13 @@
 
 
         <vulnerability.mirror.dir></vulnerability.mirror.dir>
-        <security.policy.file></security.policy.file>
+        <security.policy></security.policy>
         <input.inventory></input.inventory>
         <output.inventory></output.inventory>
         <processor.tmp.dir></processor.tmp.dir>
 
     </properties>
 
-    <profiles>
-        <profile>
-            <id>advise-correlate</id>
-            <activation> <!-- activate by default, unless disabled via -P-advise-correlate -->
-                <activeByDefault>true</activeByDefault>
-            </activation>
             <build>
                 <plugins>
                     <plugin>
@@ -111,7 +105,7 @@
                                     <writeIntermediateInventories>true</writeIntermediateInventories>
                                     <intermediateInventoriesDirectory>${processor.tmp.dir}</intermediateInventoriesDirectory>
                                     <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
-                                    <securityPolicyFile>${security.policy.file}</securityPolicyFile>
+                                    <securityPolicyFile>${security.policy}</securityPolicyFile>
 
                                     <correlationYamlEnrichment>
                                         <active>${activate.correlation}</active>
@@ -252,12 +246,6 @@
                             </execution>
                         </executions>
                     </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-    <build>
-        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -287,8 +275,8 @@
                                     <message>You must set the parameter 'assessment.dir' to locate the assessment data that is used for enrichment.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>security.policy.file</property>
-                                    <message>You must set the parameter 'security.policy.file' to locate the specific security policy used for enrichment</message>
+                                    <property>security.policy</property>
+                                    <message>You must set the parameter 'security.policy' to locate the specific security policy used for enrichment</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>correlation.dir</property>
