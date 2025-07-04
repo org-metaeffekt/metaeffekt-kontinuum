@@ -67,7 +67,7 @@ jobs:
       - name: Run Pipelines
         id: run-tests
         run: |
-          sh tests/run-all.sh
+          sh ./tests/run-all.sh
 
   release:
     name: Create Release
