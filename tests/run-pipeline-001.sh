@@ -32,6 +32,8 @@ mvn -f "$PROCESSORS_DIR/bootstrap_update-mirror.xml" compile -P withoutProxy \
   -Dmirror.archive.url="http://ae-scanner/mirror/index/index-database.zip" \
   -Dmirror.archive.name="index-database.zip"
 
+rm -r $PROCESSORS_DIR/target # Necessary because antrun produces a target folder in processors
+
 # ENRICH INVENTORY
 mvn -f "$PROCESSORS_DIR/advise_enrich-inventory.xml" process-resources \
   -Dinput.inventory="$RESOLVED_DIR/$INPUT_NAME-resolved.xlsx" \
