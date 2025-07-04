@@ -30,18 +30,6 @@
 
     <artifactId>convert_inventory-to-cyclonedx</artifactId>
 
-    <properties>
-        <input.inventory></input.inventory>
-        <output.bom></output.bom>
-        <documentName></documentName>
-        <description></description>
-        <organization></organization>
-        <organizationUrl></organizationUrl>
-        <person></person>
-        <comment></comment>
-        <customLicenseMappings></customLicenseMappings>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -57,21 +45,21 @@
                         <configuration>
                             <input>${input.inventory}</input>
                             <output>${output.bom}</output>
-                            <documentName>${documentName}</documentName>
-                            <description>${description}</description>
-                            <organization>${organization}</organization>
-                            <organizationUrl>${organizationUrl}</organizationUrl>
-                            <person>${person}</person>
-                            <comment>${comment}</comment>
-                            <outputFormat>JSON</outputFormat>
-                            <documentVersion>1</documentVersion>
-                            <mapRelationships>true</mapRelationships>
-                            <useLicenseExpressions>true</useLicenseExpressions>
-                            <includeLicenseTexts>false</includeLicenseTexts>
-                            <includeAssets>true</includeAssets>
-                            <includeTechnicalProperties>false</includeTechnicalProperties>
-                            <deriveAttributesFromPurl>false</deriveAttributesFromPurl>
-                            <customLicenseMappings>${customLicenseMappings}</customLicenseMappings>
+                            <documentName>${document.name}</documentName>
+                            <description>${document.description}</description>
+                            <customLicenseMappings>${custom.license.mappings}</customLicenseMappings>
+                            <organization>${document.organization}</organization>
+                            <organizationUrl>${document.organization.url}</organizationUrl>
+                            <person>${document.person}</person>
+                            <comment>${document.comment}</comment>
+                            <outputFormat>${document.output.format}</outputFormat>
+                            <documentVersion>${document.version}</documentVersion>
+                            <mapRelationships>${map.relationships}</mapRelationships>
+                            <useLicenseExpressions>${use.license.expressions}</useLicenseExpressions>
+                            <includeLicenseTexts>${include.license.texts}</includeLicenseTexts>
+                            <includeAssets>${include.assets}</includeAssets>
+                            <includeTechnicalProperties>${include.technical.properties}</includeTechnicalProperties>
+                            <deriveAttributesFromPurl>${derive.attributes.from.purl}</deriveAttributesFromPurl>
                         </configuration>
                     </execution>
                 </executions>

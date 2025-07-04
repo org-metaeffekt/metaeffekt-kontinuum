@@ -89,12 +89,12 @@
                                     <message>You must set the parameter document.id.prefix</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>organization</property>
-                                    <message>You must set the parameter organization</message>
+                                    <property>document.organization</property>
+                                    <message>You must set the parameter document.organization</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>organization.url</property>
-                                    <message>You must set the parameter organization.url</message>
+                                    <property>document.organization.url</property>
+                                    <message>You must set the parameter document.organization.url</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>document.name</property>
