@@ -27,7 +27,7 @@
         <relativePath>ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>advise_create-diff</artifactId>
+    <artifactId>util_create-diff</artifactId>
     <packaging>pom</packaging>
 
     <build>
@@ -46,15 +46,21 @@
                         <!-- FIXME: currently only .xls files are supported -->
                         <configuration>
                             <referenceInventories1>
-                                <file>${input.inventory.1}</file>
+                                <file>${input.inventory.file.1}</file>
                             </referenceInventories1>
 
                             <referenceInventories2>
-                                <file>${input.inventory.2}</file>
+                                <file>${input.inventory.file.2}</file>
                             </referenceInventories2>
 
                             <outputInventoryDiff1to2>${output.inventory.dir}/diff/${inventory.1.name}-compared-to-${inventory.2.name}.xlsx</outputInventoryDiff1to2>
                             <outputInventoryDiff2to1>${output.inventory.dir}/diff/${inventory.2.name}-compared-to-${inventory.1.name}.xlsx</outputInventoryDiff2to1>
+
+                            <securityPolicy>
+                                <files>
+                                    <file>${security.policy}</file>
+                                </files>
+                            </securityPolicy>
                         </configuration>
                     </execution>
                 </executions>
@@ -72,15 +78,15 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory.1</property>
+                                    <property>input.inventory.file.1</property>
                                     <message>
-                                        You must set the parameter 'input.inventory' to specify the base inventory to be compared.
+                                        You must set the parameter 'input.inventory.file' to specify the base inventory to be compared.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.inventory.2</property>
+                                    <property>input.inventory.file.2</property>
                                     <message>
-                                        You must set the parameter 'input.inventory.2' to specify the inventory to be compared with the base inventory.
+                                        You must set the parameter 'input.inventory.file.2' to specify the inventory to be compared with the base inventory.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>

@@ -1,0 +1,54 @@
+#!/bin/bash
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_PATH="$SCRIPT_DIR/../config.sh"
+CASE="util_create-diff-01.sh"
+
+# Check if config.sh exists and source it
+if [[ -f "$CONFIG_PATH" ]]; then
+    source "$CONFIG_PATH"
+else
+    echo "Error: config.sh not found at $CONFIG_PATH" >&2
+    exit 1
+fi
+
+# Parse command line options
+while getopts "c:" flag; do
+    case "$flag" in
+        c) CASE="$OPTARG" ;;
+        *) cat <<EOF
+            Usage: $0 [options]
+                -c <case>   : which case to select for running the test. Either an absolute path or relative to the CASES_DIR, defined in the config.sh
+                -h          : show this help message
+
+            EXAMPLE:
+                ./script.sh -c 1
+EOF
+    esac
+done
+
+# Check if selected case exists
+if [ -f "$CASES_DIR/$CASE" ]; then
+   source "$CASES_DIR/$CASE"
+elif [ -f "$CASE" ]; then
+   source "$CASE"
+else
+    echo "Error: Case [$CASE] does not exist. Has to be either relative to [$CASES_DIR] or as an absolute path."
+    exit 1
+fi
+
+
+# Run maven command
+CMD=(mvn -f "$PROCESSORS_DIR/util_create-diff.xml" process-resources)
+CMD+=("-Dinput.inventory.file.1=$INPUT_INVENTORY_FILE_1")
+CMD+=("-Dinput.inventory.file.2=$INPUT_INVENTORY_FILE_2")
+CMD+=("-Dinventory.1.name=$INVENTORY_1_NAME")
+CMD+=("-Dinventory.2.name=$INVENTORY_2_NAME")
+CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
+CMD+=("-Dsecurity.policy=$SECURITY_POLICY")
+
+
+echo "${CMD[@]}"
+"${CMD[@]}"

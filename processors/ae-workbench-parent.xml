@@ -30,8 +30,8 @@
     -->
 
     <properties>
-        <ae.core.version>0.135.10</ae.core.version>
-        <ae.artifact.analysis.version>0.135.16</ae.artifact.analysis.version>
+        <ae.core.version>0.140.0</ae.core.version>
+        <ae.artifact.analysis.version>0.141.0</ae.artifact.analysis.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

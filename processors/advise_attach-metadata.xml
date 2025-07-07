@@ -43,7 +43,7 @@
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
-                            <inventoryFile>${input.inventory}</inventoryFile>
+                            <inventoryFile>${input.inventory.file}</inventoryFile>
                             <targetInventoryFile>${output.inventory}</targetInventoryFile>
                             <assetId>${metadata.asset.id}</assetId>
                             <attributes>
@@ -71,8 +71,8 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory</property>
-                                    <message>You must set the parameter 'input.inventory'</message>
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.file'</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory</property>

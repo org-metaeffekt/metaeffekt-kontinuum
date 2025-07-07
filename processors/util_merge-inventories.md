@@ -1,4 +1,4 @@
-# Bootstrap - Merge Inventories
+# Util - Merge Inventories
 
 This process merges multiple input inventories into one output inventory. The input inventories are specified using a 
 directory. Additionally, a regex can be provided to further specify the inventories used for merging within the given 

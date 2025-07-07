@@ -6,7 +6,7 @@ many more, listed in the table below.
 
 | Parameter                | Required | Description                                                        |
 |--------------------------|----------|--------------------------------------------------------------------|
-| input.inventory          | yes      | The input inventory file which will be enriched.                   |
+| input.inventory.file          | yes      | The input inventory file which will be enriched.                   |
 | correlation.dir          | yes      | The directory containing vulnerability correlation information.    |
 | context.dir              | yes      | The directory containing the vulnerability context information .   |
 | assessment.dir           | yes      | The directory containing the vulnerability assessment information. |

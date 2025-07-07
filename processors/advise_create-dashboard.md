@@ -6,7 +6,7 @@ resulting dashboard which are listed in the table below.
 
 | Parameter                | Required | Description                                                              |
 |--------------------------|----------|--------------------------------------------------------------------------|
-| input.inventory          | yes      | The file path of an enriched inventory used to generated the dashboard.  |
+| input.inventory.file          | yes      | The file path of an enriched inventory used to generated the dashboard.  |
 | output.dashboard         | yes      | The file path of the resulting vulnerability assessment dashboard.       |
 | vulnerability.mirror.dir | yes      | The directory containing the vulnerability database / index.             |
 | security.policy          | yes      | The security policy file to use.                                         |

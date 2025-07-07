@@ -13,12 +13,12 @@ either defined by job-executor-specific actions/steps (GitHub, GitLab) or pipeli
 
 ## Available Processors
 
-### Bootstrapping / General Purpose
+### Util / General Purpose
 
-* Merge Inventories [bootstrap_merge-inventories](bootstrap_merge-inventories.md)
-* Transform Inventories [bootstrap_transform-inventories](bootstrap_transform-inventories.md)
-* Validate Reference Inventory [bootstrap_validate-reference-inventory](bootstrap_validate-reference-inventory.md)
-* Update Local Vulnerability Mirror [bootstrap_update-vulnerability-mirror](bootstrap_update-update-mirror.md)
+* Merge Inventories [util_merge-inventories](util_merge-inventories.md)
+* Transform Inventories [util_transform-inventories](util_transform-inventories.md)
+* Validate Reference Inventory [util_validate-reference-inventory](util_validate-reference-inventory.md)
+* Update Local Vulnerability Mirror [util_update-vulnerability-mirror](util_update-update-mirror.md)
 
 ### Analyze
 * Resolve Artifacts in Inventory [analyze_resolve-inventory](analyze_resolve-inventory.md)

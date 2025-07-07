@@ -50,7 +50,7 @@
                                     <goal>enrich-inventory</goal>
                                 </goals>
                                 <configuration>
-                                    <inventoryInputFile>${input.inventory}</inventoryInputFile>
+                                    <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
                                     <mirrorDirectory>${vulnerability.mirror.dir}</mirrorDirectory>
 
                                     <vulnerabilityAssessmentDashboardEnrichment>
@@ -74,7 +74,11 @@
                                         <failOnUnreviewedAdvisoriesTypes>false</failOnUnreviewedAdvisoriesTypes>
                                     </vulnerabilityAssessmentDashboardEnrichment>
 
-                                    <securityPolicyFile>${security.policy}</securityPolicyFile>
+                                    <securityPolicy>
+                                        <files>
+                                            <file>${security.policy}</file>
+                                        </files>
+                                    </securityPolicy>
                                 </configuration>
                             </execution>
                         </executions>
@@ -92,8 +96,8 @@
                                 <configuration>
                                     <rules>
                                         <requireProperty>
-                                            <property>input.inventory</property>
-                                            <message>You must set the parameter 'input.inventory' to specify the input inventory to create the dashboard from.</message>
+                                            <property>input.inventory.file</property>
+                                            <message>You must set the parameter 'input.inventory.file' to specify the input inventory to create the dashboard from.</message>
                                         </requireProperty>
                                         <requireProperty>
                                             <property>output.dashboard</property>

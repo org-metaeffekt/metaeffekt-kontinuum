@@ -51,14 +51,14 @@
         <vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</vulnerabilities.custom.dir>
         <activate.vulnerabilities.custom>false</activate.vulnerabilities.custom>
 
-        <correlation.dir>${input.inventory}/correlation</correlation.dir>
-        <context.dir>${input.inventory}/context</context.dir>
-        <assessment.dir>${input.inventory}/assessment</assessment.dir>
+        <correlation.dir>${input.inventory.file}/correlation</correlation.dir>
+        <context.dir>${input.inventory.file}/context</context.dir>
+        <assessment.dir>${input.inventory.file}/assessment</assessment.dir>
 
 
         <vulnerability.mirror.dir></vulnerability.mirror.dir>
         <security.policy></security.policy>
-        <input.inventory></input.inventory>
+        <input.inventory.file></input.inventory.file>
         <output.inventory></output.inventory>
         <processor.tmp.dir></processor.tmp.dir>
 
@@ -87,7 +87,7 @@
                                         <Footer>${dashboard.footer}</Footer>
                                     </values>
 
-                                    <inventoryInputFile>${input.inventory}</inventoryInputFile>
+                                    <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
                                     <inventoryOutputFile>${output.inventory}</inventoryOutputFile>
                                 </configuration>
                             </execution>
@@ -98,14 +98,18 @@
                                     <goal>enrich-inventory</goal>
                                 </goals>
                                 <configuration>
-                                    <inventoryInputFile>${input.inventory}</inventoryInputFile>
+                                    <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
                                     <inventoryOutputFile>${output.inventory}</inventoryOutputFile>
                                     <mirrorDirectory>${vulnerability.mirror.dir}</mirrorDirectory>
 
                                     <writeIntermediateInventories>true</writeIntermediateInventories>
                                     <intermediateInventoriesDirectory>${processor.tmp.dir}</intermediateInventoriesDirectory>
                                     <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
-                                    <securityPolicyFile>${security.policy}</securityPolicyFile>
+                                    <securityPolicy>
+                                        <files>
+                                            <file>${security.policy}</file>
+                                        </files>
+                                    </securityPolicy>
 
                                     <correlationYamlEnrichment>
                                         <active>${activate.correlation}</active>
@@ -259,8 +263,8 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory</property>
-                                    <message>You must set the parameter 'input.inventory' to specify the name and location of the inventory file to be enriched.</message>
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.file' to specify the name and location of the inventory file to be enriched.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory</property>

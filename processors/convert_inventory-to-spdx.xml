@@ -43,7 +43,7 @@
                             <goal>convert-inventory-to-spdx</goal>
                         </goals>
                         <configuration>
-                            <input>${input.inventory}</input>
+                            <input>${input.inventory.file}</input>
                             <output>${output.bom}</output>
                             <documentName>${document.name}</documentName>
                             <description>${document.description}</description>
@@ -77,8 +77,8 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory</property>
-                                    <message>You must set the parameter input.inventory</message>
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter input.inventory.file</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.bom</property>

@@ -5,7 +5,7 @@ report creation to ensure that necessary metadata is available.
 
 | Parameter          | Required | Description                                                             |
 |--------------------|----------|-------------------------------------------------------------------------|
-| input.inventory    | yes      | The file path of the input inventory to attach metadata to.             |
+| input.inventory.file    | yes      | The file path of the input inventory to attach metadata to.             |
 | output.inventory   | yes      | The file path of the output inventory containing the attached metadata. |
 | metadata.asset.id  | yes      | The asset ID which will be attached to the inventory.                   |
 

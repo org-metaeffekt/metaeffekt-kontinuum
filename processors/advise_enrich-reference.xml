@@ -47,7 +47,7 @@
                             <goal>create-inventory-report</goal>
                         </goals>
                         <configuration>
-                            <inventory>${input.inventory}</inventory>
+                            <inventory>${input.inventory.file}</inventory>
                             <sourceInventoryDir>${reference.inventory.dir}</sourceInventoryDir>
                             <sourceInventoryIncludes>*.xls,*.xlsx,*.ser</sourceInventoryIncludes>
 
@@ -83,8 +83,8 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory</property>
-                                    <message>You must set the parameter 'input.inventory'. Either an .xls, .xlsx, or .ser file.</message>
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.file'. Either an .xls, .xlsx, or .ser file.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.dir</property>

@@ -4,7 +4,7 @@ Used to convert an inventory into a cyclonedx bom in either xml or json format.
 
 | Property                   | Required | Explanation                                                                  |
 |----------------------------|----------|------------------------------------------------------------------------------|
-| input.inventory            | yes      | The input inventory file path from which to generate the bom.                |
+| input.inventory.file            | yes      | The input inventory file path from which to generate the bom.                |
 | output.bom                 | yes      | The output bom file path with the correct format extension.                  |
 | documentName               | yes      | The document name listed in the bom.                                         |
 | description                | no       | The document description listed in the bom.                                  |

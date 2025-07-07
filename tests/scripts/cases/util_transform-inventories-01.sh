@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export INPUT_INVENTORY_DIR="$RESOURCES_DIR"
+export OUTPUT_INVENTORY_DIR="$UTIL_DIR"
+export KOTLIN_SCRIPT_FILE="$RESOURCES_DIR/hello-world.kts"
