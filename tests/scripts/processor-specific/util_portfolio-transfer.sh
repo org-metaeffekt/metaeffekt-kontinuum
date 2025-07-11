@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="util_portfolio-upload-01.sh"
+CASE="util_portfolio-transfer-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -57,7 +57,7 @@ ADMIN_TOKEN=$(echo "$JSON_OUTPUT" | jq -r '.body.adminToken')
 
 cd "$SCRIPT_DIR"
 
-# Run maven command
+# Run maven commands
 CMD=(mvn -f "$PROCESSORS_DIR/util_portfolio-upload.xml" process-resources)
 CMD+=("-Dportfolio.manager.url=$PORTFOLIO_MANAGER_URL")
 CMD+=("-Dportfolio.manager.token=$ADMIN_TOKEN")
@@ -73,11 +73,30 @@ CMD+=("-Dinput.file=$INPUT_FILE")
 echo "${CMD[@]}"
 "${CMD[@]}"
 
-if [ -n "$SERVICE_PID" ]; then
-    echo "Terminating service process (PID: $SERVICE_PID)..."
-    kill $SERVICE_PID
-    wait $SERVICE_PID 2>/dev/null
-    echo "Service terminated."
-else
-    echo "Warning: No service PID was captured; skipping termination."
-fi
+CMD=(mvn -f "$PROCESSORS_DIR/util_portfolio-download.xml" process-resources)
+CMD+=("-Dportfolio.manager.url=$PORTFOLIO_MANAGER_URL")
+CMD+=("-Dportfolio.manager.token=$ADMIN_TOKEN")
+CMD+=("-Dkeystore.config.file=$KEYSTORE_CONFIG_FILE")
+CMD+=("-Dkeystore.password=$KEYSTORE_PASSWORD")
+CMD+=("-Dtruststore.config.file=$TRUSTSTORE_CONFIG_FILE")
+CMD+=("-Dtruststore.password=$TRUSTSTORE_PASSWORD")
+CMD+=("-Dproduct.name=$PRODUCT_NAME")
+CMD+=("-Dproduct.version=$PRODUCT_VERSION")
+CMD+=("-Dproduct.artifact.id=$PRODUCT_ARTIFACT_ID")
+CMD+=("-Ddownload.dir=$UTIL_DIR/portfolio-manager/download")
+
+echo "${CMD[@]}"
+"${CMD[@]}"
+
+cleanup() {
+  if [ -n "$SERVICE_PID" ]; then
+      echo "Terminating service process (PID: $SERVICE_PID)..."
+      kill $SERVICE_PID
+      wait $SERVICE_PID 2>/dev/null
+      echo "Service terminated."
+  else
+      echo "Warning: No service PID was captured; skipping termination."
+  fi
+}
+
+trap cleanup EXIT

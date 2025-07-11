@@ -30,6 +30,7 @@ sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/util_create-diff.sh"
 sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/util_merge-inventories.sh"
 sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/util_transform-inventories.sh"
 sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/util_update-mirror.sh"
+sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/util_portfolio-transfer.sh"
 
 sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/analyze_resolve-inventory.sh"
 
@@ -41,6 +42,7 @@ sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/advise_enrich-inventory.sh"
 sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/advise_create-dashboard.sh"
 
 sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/scan_inventory-scanner.sh"
+
 
 
 
