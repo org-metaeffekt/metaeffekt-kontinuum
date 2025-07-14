@@ -74,11 +74,8 @@
                                         <failOnUnreviewedAdvisoriesTypes>false</failOnUnreviewedAdvisoriesTypes>
                                     </vulnerabilityAssessmentDashboardEnrichment>
 
-                                    <securityPolicy>
-                                        <files>
-                                            <file>${security.policy}</file>
-                                        </files>
-                                    </securityPolicy>
+                                    <securityPolicyFile>${security.policy.file}</securityPolicyFile>
+
                                 </configuration>
                             </execution>
                         </executions>

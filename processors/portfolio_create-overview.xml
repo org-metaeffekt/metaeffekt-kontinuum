@@ -62,7 +62,7 @@
                     <dashboardsPath>${dashboards.dir}</dashboardsPath>
                     <reportsPath>${reports.dir}</reportsPath>
 
-                    <securityPolicyFile>${security.policy}</securityPolicyFile>
+                    <securityPolicyFile>${security.policy.file}</securityPolicyFile>
 
                 </configuration>
                 <dependencies>

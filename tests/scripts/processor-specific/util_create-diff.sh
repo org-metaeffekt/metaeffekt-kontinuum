@@ -47,7 +47,7 @@ CMD+=("-Dinput.inventory.file.2=$INPUT_INVENTORY_FILE_2")
 CMD+=("-Dinventory.1.name=$INVENTORY_1_NAME")
 CMD+=("-Dinventory.2.name=$INVENTORY_2_NAME")
 CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
-CMD+=("-Dsecurity.policy=$SECURITY_POLICY")
+CMD+=("-Dsecurity.policy.file=$SECURITY_POLICY")
 
 
 echo "${CMD[@]}"
