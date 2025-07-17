@@ -18,9 +18,6 @@ mavenConfig:
   mavenCentralIndexConfig:
     ndjsonDumpGzipUrl: "https://metaeffekt.com/mirror/maven-central-index-dump/nexus-maven-repository-index-dump.ndjson.gz"
 
-rpmIndexConfig:
-  rawIndexPath: "resources/resolved/raw-rpm-index.txt"
-
 environmentManagerConfig:
   enableEnvironmentManager: false
 

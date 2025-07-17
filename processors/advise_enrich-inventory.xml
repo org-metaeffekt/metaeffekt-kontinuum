@@ -51,11 +51,12 @@
         <vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</vulnerabilities.custom.dir>
         <activate.vulnerabilities.custom>false</activate.vulnerabilities.custom>
 
-        <correlation.dir>${input.inventory.file}/correlation</correlation.dir>
-        <context.dir>${input.inventory.file}/context</context.dir>
-        <assessment.dir>${input.inventory.file}/assessment</assessment.dir>
+        <correlation.dir>${additional.inputs.dir}/correlation</correlation.dir>
+        <context.dir>${additional.inputs.dir}/context</context.dir>
+        <assessment.dir>${additional.inputs.dir}/assessment</assessment.dir>
 
 
+        <additional.inputs.dir></additional.inputs.dir>
         <vulnerability.mirror.dir></vulnerability.mirror.dir>
         <security.policy></security.policy>
         <input.inventory.file></input.inventory.file>

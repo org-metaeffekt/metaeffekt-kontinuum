@@ -35,7 +35,7 @@
             <plugin>
                 <groupId>com.metaeffekt.artifact.analysis</groupId>
                 <artifactId>ae-inventory-conversion-plugin</artifactId>
-                <version>0.133.0</version>
+                <version>${ae.artifact.analysis.version}</version>
                 <executions>
                     <execution>
                         <id>inventory-to-cyclonedx</id>

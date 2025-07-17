@@ -3,5 +3,5 @@
 export INPUT_INVENTORY_FILE="$RESOURCES_DIR/example-001.xlsx"
 export OUTPUT_DASHBOARD="$ADVISED_DIR/example-001-dashboard.xlsx"
 export VULNERABILITY_MIRROR_DIR="$UTIL_DIR/mirror/.database"
-export SECURITY_POLICY="$RESOURCES_DIR/security-policy.json"
+export SECURITY_POLICY="$RESOURCES_DIR/advise/security-policy.json"
 
