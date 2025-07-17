@@ -105,8 +105,8 @@
                                             <message>You must set the parameter 'vulnerability.mirror.dir' to locate the vulnerability mirror data on the local system.</message>
                                         </requireProperty>
                                         <requireProperty>
-                                            <property>security.policy</property>
-                                            <message>You must set the parameter 'security.policy' to specify which security policy will be used for dashboard creation.</message>
+                                            <property>security.policy.file</property>
+                                            <message>You must set the parameter 'security.policy.file' to specify which security policy will be used for dashboard creation.</message>
                                         </requireProperty>
                                     </rules>
                                     <fail>true</fail>
