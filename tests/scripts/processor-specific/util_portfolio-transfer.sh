@@ -93,7 +93,7 @@ cleanup() {
      echo "No process found on port $PORT"
      exit 0
   else
-    kill $PID
+    kill "$PID"
     echo "Terminating running portfolio manage service"
   fi
 }
