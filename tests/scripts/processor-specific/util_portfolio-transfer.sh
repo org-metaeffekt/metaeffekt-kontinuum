@@ -45,10 +45,9 @@ if [ -d "$RESOURCES_DIR/../scripts/target/util/portfolio-manager" ]; then
   rm -r "$RESOURCES_DIR/../scripts/target/util/portfolio-manager"
 fi
 
-# Setup for
+# Setup for portfolio manager
 cd "$RESOURCES_DIR/portfolio-manager/service"
 java -jar "$RESOURCES_DIR/portfolio-manager/service/ae-portfolio-manager-service.jar" &
-SERVICE_PID=$!
 
 cd "$RESOURCES_DIR/portfolio-manager/client"
 OUTPUT=$(java -jar "$RESOURCES_DIR/portfolio-manager/client/ae-portfolio-manager-cli.jar" create-project A)
@@ -89,13 +88,13 @@ echo "${CMD[@]}"
 "${CMD[@]}"
 
 cleanup() {
-  if [ -n "$SERVICE_PID" ]; then
-      echo "Terminating service process (PID: $SERVICE_PID)..."
-      kill $SERVICE_PID
-      wait $SERVICE_PID 2>/dev/null
-      echo "Service terminated."
+  PID=$(lsof -ti :6466)
+  if [ -z "$PID" ]; then
+     echo "No process found on port $PORT"
+     exit 0
   else
-      echo "Warning: No service PID was captured; skipping termination."
+    kill $PID
+    echo "Terminating running portfolio manage service"
   fi
 }
 

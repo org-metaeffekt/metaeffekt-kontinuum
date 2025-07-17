@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!--
+      Copyright 2024-2025 the original author or authors.
+
+      Licensed under the Apache License, Version 2.0 (the "License");
+      you may not use this file except in compliance with the License.
+      You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+      Unless required by applicable law or agreed to in writing, software
+      distributed under the License is distributed on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+      See the License for the specific language governing permissions and
+      limitations under the License.
+      -->
+
+  <parent>
+    <groupId>com.metaeffekt.workbench</groupId>
+    <artifactId>ae-workbench-parent</artifactId>
+    <version>WORKBENCH-SNAPSHOT</version>
+    <relativePath>ae-workbench-parent.xml</relativePath>
+  </parent>
+
+  <artifactId>util_aggregate-sources</artifactId>
+  <properties>
+    <project.build.directory>${target.dir}</project.build.directory>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.metaeffekt.core</groupId>
+        <artifactId>ae-inventory-maven-plugin</artifactId>
+        <version>${ae.core.version}</version>
+        <executions>
+          <execution>
+            <id>aggregate-sources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>aggregate-sources</goal>
+            </goals>
+            <configuration>
+              <localRepository/>
+
+              <inventoryPath>${input.inventory.file}</inventoryPath>
+
+              <softwareDistributionAnnexSourcePath>${annex.source.dir}</softwareDistributionAnnexSourcePath>
+              <retainedSourcesSourcePath>${retained.sources.dir}</retainedSourcesSourcePath>
+              <alternativeArtifactSourceMapping>${alternative.artifact.source.mapping}</alternativeArtifactSourceMapping>
+
+              <includeAllSources>${include.all.sources}</includeAllSources>
+              <failOnMissingSources>${fail.on.missing.sources}</failOnMissingSources>
+
+              <!-- The configurations below are set here with no placeholders as they contain complex configuration
+                   which is contained in the pom and not any additional config file. -->
+              <sourceRepositories>
+
+                <!-- When using includeAllSources we have to mark those artifacts, where explicitly no sources are
+                     intended to be included. An exclude repository in other words.
+                -->
+                <sourceRepository>
+                  <id>No Source Repository</id>
+
+                  <!-- a source repository without resolver or mirror configuration will not perform
+                       any aggregation. The ignoreMatches flag only suppresses the message that
+                       an artifact was skipped -->
+
+                  <targetFolder>none</targetFolder>
+                  <ignoreMatches>false</ignoreMatches>
+                  <patterns>
+                    <!-- patterns: "artifact:component:version:effectiveLicense"; Regular expressions start with '^' -->
+                    <pattern>^ignore-me-.*\.jar</pattern>
+                  </patterns>
+                </sourceRepository>
+
+                <sourceRepository>
+                  <id>Internal / External Eclipse Mirrors</id>
+                  <targetFolder>Original OSS</targetFolder>
+                  <patterns>
+                    <!-- patterns: "artifact:component:version:effectiveLicense"; Regular expressions start with '^' -->
+                    <pattern>^org\.eclipse\..*_.*\.jar:^.*:^.*:^.*</pattern>
+                  </patterns>
+                  <eclipseMirror>
+                    <mirrorUrls>
+                      <url>https://builds.gradle.org:8001/eclipse/update-site/mirror/releases-rolling/features/</url>
+                    </mirrorUrls>
+                  </eclipseMirror>
+                </sourceRepository>
+
+
+                <sourceRepository>
+                  <id>Maven Repo (Mapped)</id>
+
+                  <!-- this variant shows how incomplete artifacts can be mapped to a maven repository -->
+
+                  <targetFolder>Original OSS</targetFolder>
+                  <patterns>
+                    <pattern>^.*\.jar</pattern>
+                  </patterns>
+                  <componentMirror>
+                    <mappings>
+                      <map>^Bouncy Castle-.*:org/bouncycastle/$artifactId/$version/$artifactId-$version.$type</map>
+                      <map>^bcpkix-jdk18on-([0-9]*\.[0-9]*).jar:org/bouncycastle/bcpkix-jdk18on/$1/bcpkix-jdk18on-$1.jar</map>
+                    </mappings>
+                    <mirrorUrls>
+                      <url>https://repo1.maven.org/maven2/</url>
+                    </mirrorUrls>
+                  </componentMirror>
+                </sourceRepository>
+
+                <sourceRepository>
+
+                  <!-- this variant shows how arbitrary (yet complete gav) artifacts can be mapped -->
+
+                  <id>Maven Repo (Fallback)</id>
+                  <targetFolder>Original OSS</targetFolder>
+                  <patterns>
+                    <pattern>^.*\.jar</pattern>
+                  </patterns>
+                  <mavenMirror />
+                </sourceRepository>
+
+              </sourceRepositories>
+
+              <remoteRepositories/>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

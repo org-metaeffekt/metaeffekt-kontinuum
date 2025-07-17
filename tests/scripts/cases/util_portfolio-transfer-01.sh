@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PORTFOLIO_MANAGER_URL="https://localhost:8443"
+export PORTFOLIO_MANAGER_URL="https://localhost:6466"
 export KEYSTORE_CONFIG_FILE="$RESOURCES_DIR/portfolio-manager/client/pm-client-TEST-keystore.p12"
 export KEYSTORE_PASSWORD="client-TEST-ks-pw"
 export TRUSTSTORE_CONFIG_FILE="$RESOURCES_DIR/portfolio-manager/client/pm-client-TEST-truststore.p12"

@@ -31,6 +31,7 @@ sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/util_merge-inventories.sh"
 sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/util_transform-inventories.sh"
 sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/util_update-mirror.sh"
 sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/util_portfolio-transfer.sh"
+sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/util_aggregate-sources.sh"
 
 sh "$PROCESSOR_SPECIFIC_SCRIPTS_DIR/analyze_resolve-inventory.sh"
 

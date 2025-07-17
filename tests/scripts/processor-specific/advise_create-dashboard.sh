@@ -45,5 +45,6 @@ CMD+=("-Doutput.dashboard=$OUTPUT_DASHBOARD")
 CMD+=("-Dvulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
 CMD+=("-Dsecurity.policy=$SECURITY_POLICY")
 
+
 echo "${CMD[@]}"
 "${CMD[@]}"
