@@ -71,11 +71,11 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.bom</property>
+                                    <property>input</property>
                                     <message>You must set the parameter input.bom</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory</property>
+                                    <property>output</property>
                                     <message>You must set the parameter output.inventory</message>
                                 </requireProperty>
                             </rules>

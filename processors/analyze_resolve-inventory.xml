@@ -64,12 +64,24 @@
             <configuration>
               <rules>
                 <requireProperty>
-                  <property>input.inventory.file</property>
+                  <property>inputInventoryFile</property>
                   <message>You must set the parameter 'input.inventory.file'</message>
                 </requireProperty>
                 <requireProperty>
-                  <property>output.inventory</property>
+                  <property>outputInventoryFile</property>
                   <message>You must set the parameter 'output.inventory'</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>downloadBaseDir</property>
+                  <message>You must set the parameter 'downloadBaseDir'</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>artifactResolverConfig</property>
+                  <message>You must set the parameter 'artifactResolverConfig'</message>
+                </requireProperty>
+                <requireProperty>
+                  <property>proxyConfig</property>
+                  <message>You must set the parameter 'proxyConfig'</message>
                 </requireProperty>
               </rules>
               <fail>true</fail>

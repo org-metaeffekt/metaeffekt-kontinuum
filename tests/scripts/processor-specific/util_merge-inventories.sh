@@ -24,7 +24,7 @@ while getopts "c:" flag; do
                 -h          : show this help message
 
             EXAMPLE:
-                ./script.sh -c 1
+                ./script.sh -c /path/to/case
 EOF
     esac
 done

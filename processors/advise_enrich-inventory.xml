@@ -51,9 +51,9 @@
         <vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</vulnerabilities.custom.dir>
         <activate.vulnerabilities.custom>false</activate.vulnerabilities.custom>
 
-        <correlation.dir>${input.inventory.file}/correlation</correlation.dir>
-        <context.dir>${input.inventory.file}/context</context.dir>
-        <assessment.dir>${input.inventory.file}/assessment</assessment.dir>
+        <correlation.dir>${input.inventory.file}/../correlation</correlation.dir>
+        <context.dir>${input.inventory.file}/../context</context.dir>
+        <assessment.dir>${input.inventory.file}/../assessment</assessment.dir>
 
 
         <vulnerability.mirror.dir></vulnerability.mirror.dir>
@@ -263,11 +263,11 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory.file</property>
+                                    <property>inventoryInputFile</property>
                                     <message>You must set the parameter 'input.inventory.file' to specify the name and location of the inventory file to be enriched.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory</property>
+                                    <property>inventoryOutputFile</property>
                                     <message>You must set the parameter 'output.inventory' to specify the name of the output inventory, and it's location.</message>
                                 </requireProperty>
                                 <requireProperty>

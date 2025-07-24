@@ -77,28 +77,28 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory.file</property>
+                                    <property>input</property>
                                     <message>You must set the parameter input.inventory.file</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.bom</property>
+                                    <property>output</property>
                                     <message>You must set the parameter output.bom</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>document.id.prefix</property>
-                                    <message>You must set the parameter document.id.prefix</message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>document.organization</property>
+                                    <property>organization</property>
                                     <message>You must set the parameter document.organization</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>document.organization.url</property>
+                                    <property>organizationUrl</property>
                                     <message>You must set the parameter document.organization.url</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>document.name</property>
+                                    <property>documentName</property>
                                     <message>You must set the parameter document.name</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>documentIdPrefix</property>
+                                    <message>You must set the parameter document.id.prefix</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

@@ -71,11 +71,11 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory.file</property>
+                                    <property>inventoryFile</property>
                                     <message>You must set the parameter 'input.inventory.file'</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory</property>
+                                    <property>targetInventoryFile</property>
                                     <message>You must set the parameter 'output.inventory' to specify the name and location of the output inventory with attached metadata.</message>
                                 </requireProperty>
                             </rules>

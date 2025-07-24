@@ -83,19 +83,19 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory.file</property>
+                                    <property>inventory</property>
                                     <message>You must set the parameter 'input.inventory.file'. Either an .xls, .xlsx, or .ser file.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory.dir</property>
+                                    <property>targetInventoryDir</property>
                                     <message>You must set the parameter 'output.inventory.dir' file. The directory where the output inventory is generated.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory.name</property>
+                                    <property>targetInventoryPath</property>
                                     <message>You must set the parameter 'output.inventory.name'. Either an .xls, .xlsx, or .ser filename.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>reference.inventory.dir</property>
+                                    <property>sourceInventoryDir</property>
                                     <message>You must set the parameter 'reference.inventory.dir'. This directory should contain the reference inventory files.</message>
                                 </requireProperty>
                             </rules>
