@@ -24,11 +24,6 @@
     <version>WORKBENCH-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <!-- FIXME:
-        - rename file to ae-workbench-parent.xml
-        - also derive naming convention for processors
-    -->
-
     <properties>
         <ae.core.version>0.140.0</ae.core.version>
         <ae.artifact.analysis.version>0.141.0</ae.artifact.analysis.version>
