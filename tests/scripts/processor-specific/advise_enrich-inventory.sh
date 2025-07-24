@@ -49,6 +49,7 @@ CMD+=("-Dsecurity.policy=$SECURITY_POLICY")
 CMD+=("-Dprocessor.tmp.dir=$PROCESSOR_TMP_DIR")
 CMD+=("-Dactivate.ghsa.correlation=$ACTIVATE_GHSA_CORRELATION")
 CMD+=("-Dactivate.ghsa=$ACTIVATE_GHSA")
+CMD+=("-Dadditional.inputs.dir=$ADDITIONAL_INPUTS_DIR")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

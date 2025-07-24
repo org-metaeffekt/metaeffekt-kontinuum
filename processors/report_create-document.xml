@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+    Copyright 2024-2025 the original author or authors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    -->
+
+    <parent>
+        <groupId>com.metaeffekt.workbench</groupId>
+        <artifactId>ae-workbench-parent</artifactId>
+        <version>WORKBENCH-SNAPSHOT</version>
+        <relativePath>ae-workbench-parent.xml</relativePath>
+    </parent>
+
+    <artifactId>report_create-document</artifactId>
+    <packaging>pom</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>invoke-target-pom</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>mvn</executable>
+                            <arguments>
+                                <argument>-f</argument>
+                                <argument>../templates/pom.xml</argument>
+                                <argument>clean</argument>
+                                <argument>install</argument>
+                                <argument>-P${document.type}_${document.language}</argument>
+
+                                <argument>-Dasset.id=${asset.id}</argument>
+                                <argument>-Dasset.name=${asset.name}</argument>
+                                <argument>-Dasset.version=${asset.version}</argument>
+
+                                <argument>-Dproduct.version=${product.version}</argument>
+                                <argument>-Dproduct.name=${product.name}</argument>
+                                <argument>-Dproduct.watermark=${product.watermark}</argument>
+
+                                <argument>-Dinventory.path=${inventory.path}</argument>
+                                <argument>-Dreference.inventory.path=${reference.inventory.path}</argument>
+
+                                <argument>-Dreference.license.path=${reference.license.path}</argument>
+                                <argument>-Dreference.component.path=${reference.component.path}</argument>
+                                <argument>-Dcomputed.inventory.path=${computed.inventory.path}</argument>
+                                <argument>-Dasset.descriptor.basedir=${asset.descriptor.basedir}</argument>
+                                <argument>-Dasset.descriptor.file=${asset.descriptor.file}</argument>
+
+                                <argument>-Dpolicy.basedir=${policy.basedir}</argument>
+                                <argument>-Dinput.database=${input.database}</argument>
+                                <argument>-Doverview.advisors=${overview.advisors}</argument>
+
+                                <argument>-Dworkbench.base.path=${workbench.base.path}</argument>
+                                <argument>-Doutput.dir=${output.dir}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>asset.id</property>
+                                    <message>You must set the parameter 'asset.id' to specify the id of the asset.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>asset.name</property>
+                                    <message>You must set the parameter 'asset.name' to specify the name of the asset.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>asset.version</property>
+                                    <message>You must set the parameter 'asset.version' to specify the version of the asset</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>product.version</property>
+                                    <message>You must set the parameter 'product.version' to specify the version of the product.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>product.name</property>
+                                    <message>You must set the parameter 'product.name' to specify the name of the product.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>product.watermark</property>
+                                    <message>You must set the parameter 'product.watermark' to specify the watermark of the product.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>inventory.path</property>
+                                    <message>You must set the parameter 'inventory.path' to specify the file of the input inventory.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>reference.inventory.path</property>
+                                    <message>You must set the parameter 'reference.inventory.path' to specify the file of the reference inventory.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>reference.license.path</property>
+                                    <message>You must set the parameter 'reference.license.path' to specify the reference license path of the reference inventory.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>reference.component.path</property>
+                                    <message>You must set the parameter 'reference.license.path' to specify the reference license path of the reference inventory.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>asset.descriptor.basedir</property>
+                                    <message>You must set the parameter 'asset.descriptor.basedir' to specify the directory of the asset-descriptors.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>asset.descriptor.file</property>
+                                    <message>You must set the parameter 'asset.descriptor.file' to specify the file of the asset-descriptor.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>document.type</property>
+                                    <message>You must set the parameter 'document.type' to specify which type of document should be generated.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>document.language</property>
+                                    <message>You must set the parameter 'document.language' to specify the language of the output document.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>workbench.base.path</property>
+                                    <message>You must set the parameter 'workbench.base.path' to specify the path to your workbench.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.dir</property>
+                                    <message>You must set the parameter 'output.dir' to specify the directory where outputs are generated.</message>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
