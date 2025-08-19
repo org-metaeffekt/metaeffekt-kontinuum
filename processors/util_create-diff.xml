@@ -46,17 +46,15 @@
                         <!-- FIXME: currently only .xls files are supported -->
                         <configuration>
                             <referenceInventories1>
-                                <file>${input.inventory.file.1}</file>
+                                <file>${input.inventory.file}</file>
                             </referenceInventories1>
 
                             <referenceInventories2>
-                                <file>${input.inventory.file.2}</file>
+                                <file>${input.inventory.compare.file}</file>
                             </referenceInventories2>
 
-                            <outputInventoryDiff1to2>${output.inventory.dir}/diff/${inventory.1.name}-compared-to-${inventory.2.name}.xlsx</outputInventoryDiff1to2>
-                            <outputInventoryDiff2to1>${output.inventory.dir}/diff/${inventory.2.name}-compared-to-${inventory.1.name}.xlsx</outputInventoryDiff2to1>
-
-                            <securityPolicyFile>${security.policy.file}</securityPolicyFile>
+                            <outputInventoryDiff1to2>${output.inventory.dir}/diff/${inventory.version}-to-${inventory.compare.version}-comparison.xls</outputInventoryDiff1to2>
+                            <outputInventoryDiff2to1>${output.inventory.dir}/diff/${inventory.compare.version}-to-${inventory.version}-comparison.xls</outputInventoryDiff2to1>
                         </configuration>
                     </execution>
                 </executions>
@@ -74,15 +72,15 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory.file.1</property>
+                                    <property>input.inventory.file</property>
                                     <message>
                                         You must set the parameter 'input.inventory.file' to specify the base inventory to be compared.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.inventory.file.2</property>
+                                    <property>input.inventory.compare.file</property>
                                     <message>
-                                        You must set the parameter 'input.inventory.file.2' to specify the inventory to be compared with the base inventory.
+                                        You must set the parameter 'input.inventory.compare.file' to specify the inventory to be compared with the base inventory.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
@@ -92,15 +90,15 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>inventory.1.name</property>
+                                    <property>inventory.version</property>
                                     <message>
-                                        You must set the parameter 'inventory.1.name' to specify the version of the base inventory which will be used for naming the output files.
+                                        You must set the parameter 'inventory.version' to specify the version of the base inventory which will be used for naming the output files.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>inventory.2.name</property>
+                                    <property>inventory.compare.version</property>
                                     <message>
-                                        You must set the parameter 'inventory.2.name' to specify the version of the compare inventory which will be used for naming the output files.
+                                        You must set the parameter 'inventory.compare.version' to specify the version of the compare inventory which will be used for naming the output files.
                                     </message>
                                 </requireProperty>
                             </rules>

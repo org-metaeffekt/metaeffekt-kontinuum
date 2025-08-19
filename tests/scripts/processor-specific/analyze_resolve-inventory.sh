@@ -42,7 +42,7 @@ fi
 # Run maven command
 CMD=(mvn -f "$PROCESSORS_DIR/analyze_resolve-inventory.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Doutput.inventory=$OUTPUT_INVENTORY")
+CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
 CMD+=("-DdownloadBaseDir=$DOWNLOAD_BASE_DIR")
 CMD+=("-DartifactResolverConfig=$ARTIFACT_RESOLVER_CONFIG")
 CMD+=("-DproxyConfig=$PROXY_CONFIG")

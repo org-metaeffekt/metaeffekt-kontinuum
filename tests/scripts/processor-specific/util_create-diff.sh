@@ -42,10 +42,10 @@ fi
 
 # Run maven command
 CMD=(mvn -f "$PROCESSORS_DIR/util_create-diff.xml" process-resources)
-CMD+=("-Dinput.inventory.file.1=$INPUT_INVENTORY_FILE_1")
-CMD+=("-Dinput.inventory.file.2=$INPUT_INVENTORY_FILE_2")
-CMD+=("-Dinventory.1.name=$INVENTORY_1_NAME")
-CMD+=("-Dinventory.2.name=$INVENTORY_2_NAME")
+CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
+CMD+=("-Dinput.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE")
+CMD+=("-Dinventory.version=$INVENTORY_VERSION")
+CMD+=("-Dinventory.compare.version=$INVENTORY_COMPARE_VERSION")
 CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
 CMD+=("-Dsecurity.policy.file=$SECURITY_POLICY")
 

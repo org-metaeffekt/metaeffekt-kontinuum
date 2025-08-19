@@ -43,13 +43,16 @@ fi
 # Run maven command
 CMD=(mvn -f "$PROCESSORS_DIR/advise_enrich-inventory.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Doutput.inventory=$OUTPUT_INVENTORY")
+CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
 CMD+=("-Dvulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
 CMD+=("-Dsecurity.policy.file=$SECURITY_POLICY")
 CMD+=("-Dprocessor.tmp.dir=$PROCESSOR_TMP_DIR")
 CMD+=("-Dactivate.ghsa.correlation=$ACTIVATE_GHSA_CORRELATION")
 CMD+=("-Dactivate.ghsa=$ACTIVATE_GHSA")
 CMD+=("-Dadditional.inputs.dir=$ADDITIONAL_INPUTS_DIR")
+CMD+=("-Dcorrelation.dir=$CORRELATION_DIR")
+CMD+=("-Dcontext.dir=$CONTEXT_DIR")
+CMD+=("-Dassessment.dir=$ASSESSMENT_DIR")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

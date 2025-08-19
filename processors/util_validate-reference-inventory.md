@@ -1,5 +1,7 @@
-# Bootstrap - Validate Reference Inventory
+# Util - Validate Reference Inventory
 
-| Parameter      | Required | Description                                              |
-|----------------|----------|----------------------------------------------------------|
-| inventory.dir  | yes      | The directory containing the inventories to be validated |
+This process takes an input inventory directory and validates the contained inventories.
+
+| Parameter           | Required | Description                                              |
+|---------------------|----------|----------------------------------------------------------|
+| input.inventory.dir | yes      | The directory containing the inventories to be validated |

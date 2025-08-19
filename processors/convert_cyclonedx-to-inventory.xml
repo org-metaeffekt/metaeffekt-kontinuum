@@ -48,8 +48,8 @@
                             <goal>convert-cyclonedx-to-inventory</goal>
                         </goals>
                         <configuration>
-                            <input>${input.bom}</input>
-                            <output>${output.inventory}</output>
+                            <input>${input.bom.file}</input>
+                            <output>${output.inventory.file}</output>
                             <includeMetadataComponent>true</includeMetadataComponent>
                             <deriveAttributesFromPurl>false</deriveAttributesFromPurl>
                             <includeAssets>true</includeAssets>
@@ -71,11 +71,11 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.bom</property>
+                                    <property>input.bom.file</property>
                                     <message>You must set the parameter input.bom</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory</property>
+                                    <property>output.inventory.file</property>
                                     <message>You must set the parameter output.inventory</message>
                                 </requireProperty>
                             </rules>

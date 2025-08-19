@@ -54,7 +54,7 @@
                 </executions>
                 <configuration>
                     <baseDirectory>${input.inventory.dir}</baseDirectory>
-                    <inputInventoryPath>${input.inventory.file}</inputInventoryPath>
+                    <inputInventoryPath>${input.inventory.path}</inputInventoryPath>
                     <advisorInventoryPath>${advisor.inventories.dir}</advisorInventoryPath>
 
                     <outputFile>${output.file}</outputFile>
@@ -92,13 +92,13 @@
                                         inventory for the overview.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.inventory.file</property>
-                                    <message>You must set the parameter 'input.inventory.file' to specify the path of the input
+                                    <property>input.inventory.path</property>
+                                    <message>You must set the parameter 'input.inventory.path' to specify the path of the input
                                         inventory for the overview.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>security.policy</property>
-                                    <message>You must set the parameter 'security.policy' to specify the security policy file for overview generation.</message>
+                                    <property>security.policy.file</property>
+                                    <message>You must set the parameter 'security.policy.file' to specify the security policy file for overview generation.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>dashboards.dir</property>

@@ -42,7 +42,7 @@ fi
 # Run maven command
 CMD=(mvn -f "$PROCESSORS_DIR/advise_attach-metadata.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Doutput.inventory=$OUTPUT_INVENTORY")
+CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
 CMD+=("-Dmetadata.asset.id=$METADATA_ASSET_ID")
 CMD+=("-Dmetadata.asset.name=$METADATA_ASSET_NAME")
 CMD+=("-Dmetadata.asset.version=$METADATA_ASSET_VERSION")

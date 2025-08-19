@@ -36,84 +36,91 @@
         <ae.cpe.correlation.limit>2147483647</ae.cpe.correlation.limit>
     </properties>
 
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.metaeffekt.artifact.analysis</groupId>
-                        <artifactId>ae-inventory-enrichment-plugin</artifactId>
-                        <version>${ae.artifact.analysis.version}</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-inventory-enrichment-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
 
-                        <executions>
-                            <execution>
-                                <id>inventory-enrichment-advise-vulnerability-execution</id>
-                                <goals>
-                                    <goal>enrich-inventory</goal>
-                                </goals>
-                                <configuration>
-                                    <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
-                                    <mirrorDirectory>${vulnerability.mirror.dir}</mirrorDirectory>
+                <executions>
+                    <execution>
+                        <id>inventory-enrichment-advise-vulnerability-execution</id>
+                        <goals>
+                            <goal>enrich-inventory</goal>
+                        </goals>
+                        <configuration>
+                            <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
+                            <mirrorDirectory>${vulnerability.mirror.dir}</mirrorDirectory>
 
-                                    <vulnerabilityAssessmentDashboardEnrichment>
-                                        <active>true</active>
-                                        <outputDashboardFile>${output.dashboard}</outputDashboardFile>
+                            <vulnerabilityAssessmentDashboardEnrichment>
+                                <active>true</active>
+                                <outputDashboardFile>${output.dashboard.file}</outputDashboardFile>
 
-                                        <!-- no svg are provided on this level to save resources -->
-                                        <!-- <svgDirectory>${output.svg}</svgDirectory> -->
+                                <!-- no svg are provided on this level to save resources -->
+                                <!-- <svgDirectory>${output.svg}</svgDirectory> -->
 
-                                        <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
+                                <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
 
-                                        <vulnerabilityTimelinesGlobalEnabled>${ae.dashboard.timeline}</vulnerabilityTimelinesGlobalEnabled>
-                                        <maximumCpeForTimelinesPerVulnerability>2000</maximumCpeForTimelinesPerVulnerability>
-                                        <maximumVulnerabilitiesPerTimeline>${ae.dashboard.cpe.limit}</maximumVulnerabilitiesPerTimeline>
-                                        <vulnerabilityTimelineHideIrrelevantVersions>true</vulnerabilityTimelineHideIrrelevantVersions>
-                                        <maximumVersionsPerTimeline>2000</maximumVersionsPerTimeline>
-                                        <maximumTimeSpentOnTimelines>6000</maximumTimeSpentOnTimelines> <!-- 6000 seconds -->
+                                <vulnerabilityTimelinesGlobalEnabled>${ae.dashboard.timeline}</vulnerabilityTimelinesGlobalEnabled>
+                                <maximumCpeForTimelinesPerVulnerability>2000</maximumCpeForTimelinesPerVulnerability>
+                                <maximumVulnerabilitiesPerTimeline>${ae.dashboard.cpe.limit}</maximumVulnerabilitiesPerTimeline>
+                                <vulnerabilityTimelineHideIrrelevantVersions>true</vulnerabilityTimelineHideIrrelevantVersions>
+                                <maximumVersionsPerTimeline>2000</maximumVersionsPerTimeline>
+                                <maximumTimeSpentOnTimelines>6000</maximumTimeSpentOnTimelines> <!-- 6000 seconds -->
 
-                                        <failOnVulnerabilityWithoutSpecifiedRisk>false</failOnVulnerabilityWithoutSpecifiedRisk>
-                                        <failOnUnreviewedAdvisories>false</failOnUnreviewedAdvisories>
-                                        <failOnUnreviewedAdvisoriesTypes>false</failOnUnreviewedAdvisoriesTypes>
-                                    </vulnerabilityAssessmentDashboardEnrichment>
+                                <failOnVulnerabilityWithoutSpecifiedRisk>false</failOnVulnerabilityWithoutSpecifiedRisk>
+                                <failOnUnreviewedAdvisories>false</failOnUnreviewedAdvisories>
+                                <failOnUnreviewedAdvisoriesTypes>false</failOnUnreviewedAdvisoriesTypes>
+                            </vulnerabilityAssessmentDashboardEnrichment>
 
-                                    <securityPolicyFile>${security.policy.file}</securityPolicyFile>
-
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-enforcer-plugin</artifactId>
-                        <version>3.5.0</version>
-                        <executions>
-                            <execution>
-                                <id>enforce-property</id>
-                                <goals>
-                                    <goal>enforce</goal>
-                                </goals>
-                                <configuration>
-                                    <rules>
-                                        <requireProperty>
-                                            <property>input.inventory.file</property>
-                                            <message>You must set the parameter 'input.inventory.file' to specify the input inventory to create the dashboard from.</message>
-                                        </requireProperty>
-                                        <requireProperty>
-                                            <property>output.dashboard</property>
-                                            <message>You must set the parameter 'output.dashboard' to specify the name and location of the created dashboard.</message>
-                                        </requireProperty>
-                                        <requireProperty>
-                                            <property>vulnerability.mirror.dir</property>
-                                            <message>You must set the parameter 'vulnerability.mirror.dir' to locate the vulnerability mirror data on the local system.</message>
-                                        </requireProperty>
-                                        <requireProperty>
-                                            <property>security.policy.file</property>
-                                            <message>You must set the parameter 'security.policy.file' to specify which security policy will be used for dashboard creation.</message>
-                                        </requireProperty>
-                                    </rules>
-                                    <fail>true</fail>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
+                            <securityPolicyFile>${security.policy.file}</securityPolicyFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.file' to specify the input
+                                        inventory to create the dashboard from.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.dashboard.file</property>
+                                    <message>You must set the parameter 'output.dashboard.file' to specify the name and
+                                        location of the created dashboard.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>vulnerability.mirror.dir</property>
+                                    <message>You must set the parameter 'vulnerability.mirror.dir' to locate the
+                                        vulnerability mirror data on the local system.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>security.policy.file</property>
+                                    <message>You must set the parameter 'security.policy.file' to specify which security
+                                        policy will be used for dashboard creation.
+                                    </message>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

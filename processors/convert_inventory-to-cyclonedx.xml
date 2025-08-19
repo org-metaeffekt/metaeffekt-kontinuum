@@ -44,7 +44,7 @@
                         </goals>
                         <configuration>
                             <input>${input.inventory.file}</input>
-                            <output>${output.bom}</output>
+                            <output>${output.bom.file}</output>
                             <documentName>${document.name}</documentName>
                             <description>${document.description}</description>
                             <customLicenseMappings>${custom.license.mappings}</customLicenseMappings>
@@ -81,7 +81,7 @@
                                     <message>You must set the parameter input.inventory.file</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.bom</property>
+                                    <property>output.bom.file</property>
                                     <message>You must set the parameter output.bom</message>
                                 </requireProperty>
                             </rules>

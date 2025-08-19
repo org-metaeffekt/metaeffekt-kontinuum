@@ -41,13 +41,13 @@ fi
 
 CMD=(mvn -f "$PROCESSORS_DIR/convert_inventory-to-spdx.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Doutput.bom=$OUTPUT_BOM")
+CMD+=("-Ddocument.id.prefix=$DOCUMENT_ID_PREFIX")
 CMD+=("-Ddocument.name=$DOCUMENT_NAME")
 CMD+=("-Ddocument.description=$DOCUMENT_DESCRIPTION")
 CMD+=("-Ddocument.organization=$DOCUMENT_ORGANIZATION")
 CMD+=("-Ddocument.organization.url=$DOCUMENT_ORGANIZATION_URL")
+CMD+=("-Doutput.bom.file=$OUTPUT_BOM_FILE")
 CMD+=("-Doutput.format=$OUTPUT_FORMAT")
-CMD+=("-Ddocument.id.prefix=$DOCUMENT_ID_PREFIX")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

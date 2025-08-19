@@ -1,24 +1,29 @@
-# (Convert) Inventory to SPDX
+# Convert inventory to spdx
 
-Used to convert an inventory into a spdx bom in either xml or json format.
+This process converts an inventory, independent of which stage it was produced in, into a spdx document. All available
+parameters are listed in the table below. Parameters marked as "not required" already have default values associated with
+them if necessary. For example "documentFormat" is no required to be manually set, as it already has the default value "JSON".
 
-| Property                   | Required | Explanation                                                                  |
-|----------------------------|----------|------------------------------------------------------------------------------|
-| input.inventory.file            | yes      | The input inventory file path from which to generate the bom.                |
-| output.bom                 | yes      | The output bom file path with the correct format extension.                  |
-| documentName               | yes      | The document name listed in the bom.                                         |
-| description                | no       | The document description listed in the bom.                                  |
-| documentIdPrefix           | yes      | Id prefix used for every component.                                          |
-| organization               | yes      | The organization which created the bom.                                      |
-| organizationUrl            | yes      | The url of the organization which created the bom.                           |
-| person                     | no       | The person which created the bom.                                            |
-| comment                    | no       | A comment regarding the creation of the bom.                                 |
-| outputFormat               | no       | Which output format the bom should be in. (Default JSON)                     |
-| documentVersion            | no       | The current version of this bom.                                             |
-| mapRelationships           | no       | If relationships between inventory artifacts should be tracked.              |
-| useLicenseExpressions      | no       | If license expressions or single licenses should be used.                    |
-| includeLicenseTexts        | no       | If license texts should be included.                                         |
-| includeAssets              | no       | If only artifacts should be included or assets as well.                      |
-| includeTechnicalProperties | no       | Only required to mitigate data-loss for multiple import/export cycles.       |
-| deriveAttributesFromPurl   | no       | If missing attributes should be derived from the PURL if present.            |
-| customLicenseMappings      | no       | A custom license mapping file containing license identifier : license pairs. |
+
+| Parameter                    | Required | Description                                                                               |
+|------------------------------|----------|-------------------------------------------------------------------------------------------|
+| input.inventory.file         | yes      | The input inventory file                                                                  |
+| output.bom.file              | yes      | The output inventory file                                                                 |
+| document.name                | yes      | The name of the SPDX-Document                                                             |
+| document.description         | yes      | A description contained in the SPDX-Document                                              |
+| document.id.prefix           | no       | A custom prefix for every SPDX-element ID                                                 |
+| document.organization        | no       | The organization which produced the SPDX-Document                                         |
+| document.organization.url    | no       | The URL of the organization which produced the SPDX-Document                              |
+| document.person              | no       | The Person which produced the SPDX-Document                                               |
+| document.comment             | no       | Any additional information about the SPDX-Document                                        |
+| document.output.format       | no       | Output format of the SPDX-Document (JSON or XML)                                          |
+| document.version             | no       | The version of this exact SPDX-Document                                                   |
+| map.relationships            | no       | Whether relationships between artifacts should be tracked                                 |
+| use.license.expressions      | no       | Whether license expressions instead of single licenses should be used                     |
+| include.license.texts        | no       | Whether license texts should be contained in the document                                 |
+| include.assets               | no       | Whether assets should be listed in the document or omitted                                |
+| include.technical.properties | no       | Whether additional properties required for lossless cyclic conversion should be included. |
+| derive.attributes.from.purl  | no       | Whether missing attributes should be derived from PURL if possible                        |
+
+
+
