@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="util_transform-inventories-01.sh"
+CASE="scan_inventory-scanner-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -40,10 +40,11 @@ else
 fi
 
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/util/util_transform-inventories.xml" process-resources)
-CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
-CMD+=("-Dinput.kotlin.script.file=$KOTLIN_SCRIPT_FILE")
-CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
+CMD=(mvn -f "$PROCESSORS_DIR/scan/scan_scan-inventory.xml" process-resources)
+CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
+CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
+CMD+=("-Dinput.output.analysis.base.dir=$ANALYSIS_BASE_DIR")
+CMD+=("-Dinput.properties.file=$PROPERTIES_FILE")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

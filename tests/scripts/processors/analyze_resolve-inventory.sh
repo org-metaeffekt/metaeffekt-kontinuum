@@ -24,7 +24,7 @@ while getopts "c:" flag; do
                 -h          : show this help message
 
             EXAMPLE:
-                ./script.sh -c 1
+                ./script.sh -c /path/to/case
 EOF
     esac
 done
@@ -40,12 +40,12 @@ else
 fi
 
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/analyze_resolve-inventory.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/analyze/analyze_resolve-inventory.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
-CMD+=("-DdownloadBaseDir=$DOWNLOAD_BASE_DIR")
-CMD+=("-DartifactResolverConfig=$ARTIFACT_RESOLVER_CONFIG")
-CMD+=("-DproxyConfig=$PROXY_CONFIG")
+CMD+=("-Denv.maven.index.dir=$DOWNLOAD_BASE_DIR")
+CMD+=("-Dinput.artifact.resolver.config.file=$ARTIFACT_RESOLVER_CONFIG")
+CMD+=("-Dinput.artifact.resolver.proxy.file=$PROXY_CONFIG")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

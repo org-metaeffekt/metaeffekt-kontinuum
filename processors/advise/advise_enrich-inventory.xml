@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+    Copyright 2024-2025 the original author or authors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    -->
+
+    <parent>
+        <groupId>com.metaeffekt.workbench</groupId>
+        <artifactId>ae-workbench-parent</artifactId>
+        <version>WORKBENCH-SNAPSHOT</version>
+        <relativePath>../ae-workbench-parent.xml</relativePath>
+    </parent>
+
+    <artifactId>advise_enrich-inventory</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <param.activate.msrc>true</param.activate.msrc>
+        <param.activate.nvd>true</param.activate.nvd>
+        <param.activate.certfr>true</param.activate.certfr>
+        <param.activate.certeu>true</param.activate.certeu>
+        <param.activate.certsei>true</param.activate.certsei>
+        <param.activate.ghsa>true</param.activate.ghsa>
+        <param.activate.kev>true</param.activate.kev>
+        <param.activate.epss>true</param.activate.epss>
+        <param.activate.eol>true</param.activate.eol>
+
+        <param.activate.status>true</param.activate.status>
+        <param.activate.keywords>true</param.activate.keywords>
+        <param.activate.validation>false</param.activate.validation>
+
+        <param.dashboard.title>Vulnerability Assessment Dashboard</param.dashboard.title>
+        <param.dashboard.subtitle>${project.artifactId}</param.dashboard.subtitle>
+        <param.dashboard.footer>${project.artifactId}</param.dashboard.footer>
+
+        <input.vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</input.vulnerabilities.custom.dir>
+        <param.activate.vulnerabilities.custom>false</param.activate.vulnerabilities.custom>
+
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-inventory-enrichment-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>set-inventory-info</id>
+                        <goals>
+                            <goal>set-inventory-info</goal>
+                        </goals>
+                        <configuration>
+                            <active>true</active>
+
+                            <entryId>vad-customization</entryId>
+                            <values>
+                                <Title>${param.dashboard.title}</Title>
+                                <Subtitle>${param.dashboard.subtitle}</Subtitle>
+                                <Footer>${param.dashboard.footer}</Footer>
+                            </values>
+
+                            <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
+                            <inventoryOutputFile>${input.inventory.file}</inventoryOutputFile>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>inventory-enrichment-advise-correlate-execution</id>
+                        <goals>
+                            <goal>enrich-inventory</goal>
+                        </goals>
+                        <configuration>
+                            <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
+                            <inventoryOutputFile>${output.inventory.file}</inventoryOutputFile>
+                            <mirrorDirectory>${env.vulnerability.mirror.dir}</mirrorDirectory>
+
+                            <writeIntermediateInventories>true</writeIntermediateInventories>
+                            <intermediateInventoriesDirectory>${output.tmp.dir}</intermediateInventoriesDirectory>
+                            <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
+                            <securityPolicy>
+                                <files>
+                                    <file>${input.security.policy.file}</file>
+                                </files>
+                            </securityPolicy>
+
+                            <correlationYamlEnrichment>
+                                <active>${param.activate.correlation}</active>
+                                <yamlFiles>
+                                    <file>${input.correlation.dir}</file>
+                                </yamlFiles>
+                            </correlationYamlEnrichment>
+
+                            <cpeDerivationEnrichment>
+                                <active>${param.activate.nvd}</active>
+                                <maxCorrelatedCpePerArtifact>${ae.cpe.correlation.limit}</maxCorrelatedCpePerArtifact>
+                            </cpeDerivationEnrichment>
+
+                            <msVulnerabilitiesByProductEnrichment>
+                                <active>${param.activate.msrc}</active>
+                            </msVulnerabilitiesByProductEnrichment>
+
+                            <nvdMatchCveFromCpeEnrichment>
+                                <active>false</active> <!-- currently disabled -->
+                            </nvdMatchCveFromCpeEnrichment>
+
+                            <customVulnerabilitiesFromCpeEnrichment>
+                                <active>${param.activate.vulnerabilities.custom}</active>
+                                <vulnerabilityFiles>
+                                    <file>${input.vulnerabilities.custom.dir}</file>
+                                </vulnerabilityFiles>
+                            </customVulnerabilitiesFromCpeEnrichment>
+
+                            <ghsaVulnerabilitiesEnrichment>
+                                <active>${param.activate.ghsa.correlation}</active>
+
+                                <!-- active sources -->
+                                <maven>true</maven>
+                                <npm>true</npm>
+                                <crates_io>true</crates_io> <!-- RUST -->
+                                <hex>true</hex> <!-- Erlang -->
+                                <pypi>true</pypi> <!-- python/pip -->
+                                <rubygems>true</rubygems>
+
+                                <!-- disabled source -->
+                                <go>false</go>
+                                <packagist>false</packagist> <!-- composer/php -->
+
+                                <!-- inactive sources -->
+                                <githubactions>false</githubactions>
+                                <purl_type_swift>false</purl_type_swift> <!-- swift -->
+                                <pub>false</pub> <!-- Dart -->
+                                <nuget>false</nuget> <!-- c-sharp -->
+
+                                <!-- whether to only allow reviewed advisors -->
+                                <githubReviewed>false</githubReviewed>
+                            </ghsaVulnerabilitiesEnrichment>
+
+                            <nvdCveFillDetailsEnrichment>
+                                <active>${param.activate.nvd}</active>
+                            </nvdCveFillDetailsEnrichment>
+
+                            <customVulnerabilitiesFillDetailsEnrichment>
+                                <active>${param.activate.vulnerabilities.custom}</active>
+                                <vulnerabilityFiles>
+                                    <file>${input.vulnerabilities.custom.dir}</file>
+                                </vulnerabilityFiles>
+                            </customVulnerabilitiesFillDetailsEnrichment>
+
+                            <msrcAdvisorFillDetailsEnrichment>
+                                <active>${param.activate.msrc}</active>
+                            </msrcAdvisorFillDetailsEnrichment>
+
+                            <ghsaAdvisorFillDetailsEnrichment>
+                                <active>${param.activate.ghsa}</active>
+                            </ghsaAdvisorFillDetailsEnrichment>
+
+                            <vulnerabilityStatusEnrichment>
+                                <id>EnrichStatus</id>
+                                <active>${param.activate.status}</active>
+                                <statusFiles>
+                                    <file>${input.assessment.dir}</file>
+                                </statusFiles>
+                                <activeLabels>${assessment.labels}</activeLabels>
+                            </vulnerabilityStatusEnrichment>
+
+                            <vulnerabilityKeywordsEnrichment>
+                                <active>${param.activate.keywords}</active>
+                                <yamlFiles>
+                                    <file>${input.context.dir}</file>
+                                </yamlFiles>
+                                <activeLabels>${keywords.labels}</activeLabels>
+                            </vulnerabilityKeywordsEnrichment>
+
+                            <certFrAdvisorEnrichment>
+                                <active>${param.activate.certfr}</active>
+                            </certFrAdvisorEnrichment>
+
+                            <certEuAdvisorEnrichment>
+                                <active>${param.activate.certeu}</active>
+                            </certEuAdvisorEnrichment>
+
+                            <certSeiAdvisorEnrichment>
+                                <active>${param.activate.certsei}</active>
+                            </certSeiAdvisorEnrichment>
+
+                            <kevEnrichment>
+                                <active>${param.activate.kev}</active>
+                            </kevEnrichment>
+
+                            <epssEnrichment>
+                                <active>${param.activate.epss}</active>
+                            </epssEnrichment>
+
+                            <eolEnrichment>
+                                <active>${param.activate.eol}</active>
+                                <warningThresholdDaysSupport>180</warningThresholdDaysSupport>
+                                <warningThresholdDaysExtendedSupport>180</warningThresholdDaysExtendedSupport>
+                            </eolEnrichment>
+
+                            <inventoryValidationEnrichment>
+                                <active>${param.activate.validation}</active>
+                                <failOnValidationErrors>false</failOnValidationErrors>
+                                <addAsCorrelationWarnings>true</addAsCorrelationWarnings>
+
+                                <additionalCpeIsNotEffectiveInventoryValidator/>
+                                <multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
+                                    <versionLevel>minor</versionLevel>
+                                </multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
+                                <vulnerabilityInvalidNameValidator/>
+                            </inventoryValidationEnrichment>
+
+                            <vulnerabilityFilterEnrichment>
+                                <active>false</active>
+                                <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
+                            </vulnerabilityFilterEnrichment>
+
+                            <!-- enable automatic assessments -->
+                            <vulnerabilityStatusPostProcessingEnrichment>
+                                <active>true</active>
+                            </vulnerabilityStatusPostProcessingEnrichment>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.file' to specify the input
+                                        inventory to be enriched.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.inventory.file</property>
+                                    <message>You must set the parameter 'output.inventory.file' to specify the output
+                                        inventory.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.context.dir</property>
+                                    <message>You must set the parameter 'input.context.dir' to locate the context data that is
+                                        used for enrichment.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.assessment.dir</property>
+                                    <message>You must set the parameter 'input.assessment.dir' to locate the assessment data
+                                        that is used for enrichment.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.security.policy.file</property>
+                                    <message>You must set the parameter 'input.security.policy.file' to specify the security
+                                        policy used for enrichment.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.correlation.dir</property>
+                                    <message>You must set the parameter 'input.correlation.dir' to locate the correlation data
+                                        that is used for enrichment.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.vulnerability.mirror.dir</property>
+                                    <message>You must set the parameter 'env.vulnerability.mirror.dir' to locate the
+                                        vulnerability mirror data local on the system.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.tmp.dir</property>
+                                    <message>You must set the parameter 'output.tmp.dir' to specify where temporary
+                                        files like intermediate inventories should be saved.
+                                    </message>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

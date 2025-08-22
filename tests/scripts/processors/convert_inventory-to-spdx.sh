@@ -24,7 +24,7 @@ while getopts "c:" flag; do
                 -h          : show this help message
 
             EXAMPLE:
-                ./script.sh -c 1
+                ./script.sh -c /path/to/case
 EOF
     esac
 done
@@ -39,13 +39,13 @@ else
     exit 1
 fi
 
-CMD=(mvn -f "$PROCESSORS_DIR/convert_inventory-to-spdx.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/convert/convert_inventory-to-spdx.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Ddocument.id.prefix=$DOCUMENT_ID_PREFIX")
-CMD+=("-Ddocument.name=$DOCUMENT_NAME")
-CMD+=("-Ddocument.description=$DOCUMENT_DESCRIPTION")
-CMD+=("-Ddocument.organization=$DOCUMENT_ORGANIZATION")
-CMD+=("-Ddocument.organization.url=$DOCUMENT_ORGANIZATION_URL")
+CMD+=("-Dparam.document.id.prefix=$DOCUMENT_ID_PREFIX")
+CMD+=("-Dparam.document.name=$DOCUMENT_NAME")
+CMD+=("-Dparam.document.description=$DOCUMENT_DESCRIPTION")
+CMD+=("-Dparam.document.organization=$DOCUMENT_ORGANIZATION")
+CMD+=("-Dparam.document.organization.url=$DOCUMENT_ORGANIZATION_URL")
 CMD+=("-Doutput.bom.file=$OUTPUT_BOM_FILE")
 CMD+=("-Doutput.format=$OUTPUT_FORMAT")
 

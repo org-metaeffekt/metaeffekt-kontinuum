@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.metaeffekt.workbench</groupId>
+        <artifactId>ae-workbench-parent</artifactId>
+        <version>WORKBENCH-SNAPSHOT</version>
+        <relativePath>../ae-workbench-parent.xml</relativePath>
+    </parent>
+
+    <artifactId>util_validate-reference-inventory</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <artifact.inventory.enabled>true</artifact.inventory.enabled>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.metaeffekt.core</groupId>
+                <artifactId>ae-inventory-maven-plugin</artifactId>
+                <version>${ae.core.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>update-inventory</goal>
+                        </goals>
+                        <phase>compile</phase>
+                        <configuration>
+                            <sourceInventoryPath>${input.inventory.dir}/inventory/artifact-inventory.xls</sourceInventoryPath>
+                            <targetInventoryPath>${input.inventory.dir}/inventory-update/artifact-inventory.xls</targetInventoryPath>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <processors>
+                        <processor>
+                            <className>org.metaeffekt.core.inventory.processor.ValidateInventoryProcessor</className>
+                            <properties>
+                                <licenses.path>${input.inventory.dir}/licenses</licenses.path>
+                                <components.path>${input.inventory.dir}/components</components.path>
+                                <failOnError>${artifact.inventory.enabled}</failOnError>
+                            </properties>
+                        </processor>
+                    </processors>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>input.inventory.dir</property>
+                                    <message>
+                                        You must set the parameter 'input.inventory.dir' to specify the directory in which the validation should be applied.
+                                    </message>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

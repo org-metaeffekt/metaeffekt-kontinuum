@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.metaeffekt.workbench</groupId>
+        <artifactId>ae-workbench-parent</artifactId>
+        <version>WORKBENCH-SNAPSHOT</version>
+        <relativePath>../ae-workbench-parent.xml</relativePath>
+    </parent>
+
+    <artifactId>util_portfolio-download</artifactId>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.metaeffekt.portfolio.manager</groupId>
+                <artifactId>ae-portfolio-manager-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>pull-to-portfolio-manager</id>
+                        <goals>
+                            <goal>pull</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                        <configuration>
+
+                            <!-- url to the SwAM Portfolio Manager Endpoint -->
+                            <serviceUrl>${param.portfolio.manager.url}</serviceUrl>
+                            <!-- 'upload' user token for project; always pass as credential/secret -->
+                            <token>${param.portfolio.manager.token}</token>
+                            <!-- the modifier initial is the default -->
+                            <modifier>initial</modifier>
+
+                            <!-- path to the keystore; replace or configure -->
+                            <keyStoreFile>${input.keystore.config.file}</keyStoreFile>
+                            <!-- keystore password; always pass as credential/secret -->
+                            <keyStorePassword>${param.keystore.password}</keyStorePassword>
+
+                            <!-- path to the truststore; replace or configure -->
+                            <trustStoreFile>${input.truststore.config.file}</trustStoreFile>
+                            <!-- truststore password; always pass as credential/secret -->
+                            <trustStorePassword>${param.truststore.password}</trustStorePassword>
+
+                            <!-- the project name to upload to -->
+                            <projectName>${param.product.name}</projectName>
+                            <!-- the asset group (in the project) to upload to -->
+                            <assetGroupQuery>${param.product.name}:${param.product.version}</assetGroupQuery>
+                            <!-- the asset (in the project) the sbom represents -->
+                            <assetQuery>${param.product.artifact.id}:${param.product.version}</assetQuery>
+                            <!-- the path to the sbom/inventory to download -->
+                            <targetDir>${output.inventory.dir}</targetDir>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>param.portfolio.manager.url</property>
+                                    <message>You must set the parameter 'param.portfolio.manager.url'.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.portfolio.manager.token</property>
+                                    <message>You must set the parameter 'param.portfolio.manager.token'.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.keystore.config.file</property>
+                                    <message>You must set the parameter 'input.keystore.config.file'.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.keystore.password</property>
+                                    <message>You must set the parameter 'param.keystore.password'.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.truststore.config.file</property>
+                                    <message>You must set the parameter 'input.truststore.config.file'.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.truststore.password</property>
+                                    <message>You must set the parameter 'param.truststore.password'.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.product.name</property>
+                                    <message>You must set the parameter 'param.product.name'.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.product.version</property>
+                                    <message>You must set the parameter 'param.product.version'.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.product.artifact.id</property>
+                                    <message>You must set the parameter 'param.product.artifact.id'.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.inventory.dir</property>
+                                    <message>You must set the parameter 'output.inventory.dir'.</message>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
