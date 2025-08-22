@@ -26,7 +26,7 @@
         <relativePath>ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>advise_enrich-reference</artifactId>
+    <artifactId>advise_enrich-with-reference</artifactId>
     <packaging>rar</packaging>
 
     <properties>
@@ -83,20 +83,24 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>inventory</property>
-                                    <message>You must set the parameter 'input.inventory.file'. Either an .xls, .xlsx, or .ser file.</message>
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.file' to specify the input
+                                        inventory to be enriched.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>targetInventoryDir</property>
-                                    <message>You must set the parameter 'output.inventory.dir' file. The directory where the output inventory is generated.</message>
+                                    <property>output.inventory.dir</property>
+                                    <message>You must set the parameter 'output.inventory.dir' to specify the directory
+                                        where the output inventory is generated.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>targetInventoryPath</property>
-                                    <message>You must set the parameter 'output.inventory.name'. Either an .xls, .xlsx, or .ser filename.</message>
+                                    <property>output.inventory.name</property>
+                                    <message>You must set the parameter 'output.inventory.name' to specify the name of
+                                        the output inventory.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>sourceInventoryDir</property>
-                                    <message>You must set the parameter 'reference.inventory.dir'. This directory should contain the reference inventory files.</message>
+                                    <property>reference.inventory.dir</property>
+                                    <message>You must set the parameter 'reference.inventory.dir' to specify the
+                                        directory containing the reference inventory files.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

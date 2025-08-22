@@ -44,7 +44,7 @@
                         </goals>
                         <configuration>
                             <input>${input.inventory.file}</input>
-                            <output>${output.bom}</output>
+                            <output>${output.bom.file}</output>
                             <documentName>${document.name}</documentName>
                             <description>${document.description}</description>
                             <documentIdPrefix>${document.id.prefix}</documentIdPrefix>
@@ -77,28 +77,24 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input</property>
-                                    <message>You must set the parameter input.inventory.file</message>
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.path' to specify the file of the input inventory.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output</property>
-                                    <message>You must set the parameter output.bom</message>
+                                    <property>output.bom.file</property>
+                                    <message>You must set the parameter 'output.bom.file' to specify the file of the output bom.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>organization</property>
+                                    <property>document.name</property>
+                                    <message>You must set the parameter 'document.name' to specify the name of the document.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>document.organization</property>
                                     <message>You must set the parameter document.organization</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>organizationUrl</property>
+                                    <property>document.organization.url</property>
                                     <message>You must set the parameter document.organization.url</message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>documentName</property>
-                                    <message>You must set the parameter document.name</message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>documentIdPrefix</property>
-                                    <message>You must set the parameter document.id.prefix</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

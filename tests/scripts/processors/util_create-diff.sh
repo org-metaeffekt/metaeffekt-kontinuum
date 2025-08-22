@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="advise_attach-metadata-01.sh"
+CASE="util_create-diff-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -39,15 +39,16 @@ else
     exit 1
 fi
 
+
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/advise_attach-metadata.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/util_create-diff.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Doutput.inventory=$OUTPUT_INVENTORY")
-CMD+=("-Dmetadata.asset.id=$METADATA_ASSET_ID")
-CMD+=("-Dmetadata.asset.name=$METADATA_ASSET_NAME")
-CMD+=("-Dmetadata.asset.version=$METADATA_ASSET_VERSION")
-CMD+=("-Dmetadata.asset.path=$METADATA_ASSET_PATH")
-CMD+=("-Dmetadata.asset.type=$METADATA_ASSET_TYPE")
+CMD+=("-Dinput.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE")
+CMD+=("-Dinventory.version=$INVENTORY_VERSION")
+CMD+=("-Dinventory.compare.version=$INVENTORY_COMPARE_VERSION")
+CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
+CMD+=("-Dsecurity.policy.file=$SECURITY_POLICY_FILE")
+
 
 echo "${CMD[@]}"
 "${CMD[@]}"

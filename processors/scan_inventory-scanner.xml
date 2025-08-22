@@ -53,7 +53,7 @@
                         <phase>process-resources</phase>
                         <configuration>
                             <inputInventory>${input.inventory.file}</inputInventory>
-                            <targetFile>${output.inventory}</targetFile>
+                            <targetFile>${output.inventory.file}</targetFile>
                             <analysisBaseDir>${analysis.base.dir}</analysisBaseDir>
                             <propertiesFile>${properties.file}</propertiesFile>
                         </configuration>
@@ -74,11 +74,11 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter input.inventory.file</message>
+                                    <message>You must set the parameter 'input.inventory.file' to specify the input inventory for the scanning process.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory</property>
-                                    <message>You must set the parameter output.inventory</message>
+                                    <property>output.inventory.file</property>
+                                    <message>You must set the parameter 'output.inventory.file' to specify the output inventory of the scanning process</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

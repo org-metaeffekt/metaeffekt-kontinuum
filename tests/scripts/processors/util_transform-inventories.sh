@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="util_create-diff-01.sh"
+CASE="util_transform-inventories-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -39,16 +39,11 @@ else
     exit 1
 fi
 
-
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/util_create-diff.xml" process-resources)
-CMD+=("-Dinput.inventory.file.1=$INPUT_INVENTORY_FILE_1")
-CMD+=("-Dinput.inventory.file.2=$INPUT_INVENTORY_FILE_2")
-CMD+=("-Dinventory.1.name=$INVENTORY_1_NAME")
-CMD+=("-Dinventory.2.name=$INVENTORY_2_NAME")
+CMD=(mvn -f "$PROCESSORS_DIR/util_transform-inventories.xml" process-resources)
+CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
+CMD+=("-Dkotlin.script.file=$KOTLIN_SCRIPT_FILE")
 CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
-CMD+=("-Dsecurity.policy=$SECURITY_POLICY")
-
 
 echo "${CMD[@]}"
 "${CMD[@]}"

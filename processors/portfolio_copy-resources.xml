@@ -46,7 +46,7 @@
                             <outputDirectory>${output.dir}/source-inventories</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${input.inventories}</directory>
+                                    <directory>${input.inventories.dir}</directory>
                                     <filtering>false</filtering>
                                     <includes>
                                         <include>**/*.xlsx</include>
@@ -133,9 +133,9 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.inventories</property>
+                                    <property>input.inventories.dir</property>
                                     <message>
-                                        You must set the parameter 'input.inventories' to specify the directory of the source inventories to be copied.
+                                        You must set the parameter 'input.inventories.dir' to specify the directory of the source inventories to be copied.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>

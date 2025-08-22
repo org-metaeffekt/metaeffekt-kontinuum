@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="advise_enrich-inventory-01.sh"
+CASE="advise_attach-metadata-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -13,7 +13,6 @@ else
     echo "Error: config.sh not found at $CONFIG_PATH" >&2
     exit 1
 fi
-
 
 # Parse command line options
 while getopts "c:" flag; do
@@ -41,15 +40,14 @@ else
 fi
 
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/advise_enrich-inventory.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/advise_attach-metadata.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Doutput.inventory=$OUTPUT_INVENTORY")
-CMD+=("-Dvulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
-CMD+=("-Dsecurity.policy=$SECURITY_POLICY")
-CMD+=("-Dprocessor.tmp.dir=$PROCESSOR_TMP_DIR")
-CMD+=("-Dactivate.ghsa.correlation=$ACTIVATE_GHSA_CORRELATION")
-CMD+=("-Dactivate.ghsa=$ACTIVATE_GHSA")
-CMD+=("-Dadditional.inputs.dir=$ADDITIONAL_INPUTS_DIR")
+CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
+CMD+=("-Dmetadata.asset.id=$METADATA_ASSET_ID")
+CMD+=("-Dmetadata.asset.name=$METADATA_ASSET_NAME")
+CMD+=("-Dmetadata.asset.version=$METADATA_ASSET_VERSION")
+CMD+=("-Dmetadata.asset.path=$METADATA_ASSET_PATH")
+CMD+=("-Dmetadata.asset.type=$METADATA_ASSET_TYPE")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

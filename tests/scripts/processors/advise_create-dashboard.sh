@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="util_merge-inventories-01.sh"
+CASE="advise_create-dashboard-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -39,11 +39,12 @@ else
     exit 1
 fi
 
-# Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/util_merge-inventories.xml" process-resources)
-CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
-CMD+=("-Doutput.inventory=$OUTPUT_INVENTORY")
-CMD+=("-Dinventory.includes=$INVENTORY_INCLUDES")
+CMD=(mvn -f "$PROCESSORS_DIR/advise_create-dashboard.xml" process-resources)
+CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
+CMD+=("-Doutput.dashboard.file=$OUTPUT_DASHBOARD_FILE")
+CMD+=("-Dvulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
+CMD+=("-Dsecurity.policy.file=$SECURITY_POLICY")
+
 
 echo "${CMD[@]}"
 "${CMD[@]}"

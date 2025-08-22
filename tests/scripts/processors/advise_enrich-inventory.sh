@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="util_transform-inventories-01.sh"
+CASE="advise_enrich-inventory-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -13,6 +13,7 @@ else
     echo "Error: config.sh not found at $CONFIG_PATH" >&2
     exit 1
 fi
+
 
 # Parse command line options
 while getopts "c:" flag; do
@@ -40,10 +41,18 @@ else
 fi
 
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/util_transform-inventories.xml" process-resources)
-CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
-CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
-CMD+=("-Dkotlin.script.file=$KOTLIN_SCRIPT_FILE")
+CMD=(mvn -f "$PROCESSORS_DIR/advise_enrich-inventory.xml" process-resources)
+CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
+CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
+CMD+=("-Dvulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
+CMD+=("-Dsecurity.policy.file=$SECURITY_POLICY")
+CMD+=("-Dprocessor.tmp.dir=$PROCESSOR_TMP_DIR")
+CMD+=("-Dactivate.ghsa.correlation=$ACTIVATE_GHSA_CORRELATION")
+CMD+=("-Dactivate.ghsa=$ACTIVATE_GHSA")
+CMD+=("-Dadditional.inputs.dir=$ADDITIONAL_INPUTS_DIR")
+CMD+=("-Dcorrelation.dir=$CORRELATION_DIR")
+CMD+=("-Dcontext.dir=$CONTEXT_DIR")
+CMD+=("-Dassessment.dir=$ASSESSMENT_DIR")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

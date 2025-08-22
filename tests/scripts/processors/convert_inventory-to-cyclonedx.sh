@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="analyze_resolve-inventory-01.sh"
+CASE="convert_inventory-to-cyclonedx-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -39,13 +39,14 @@ else
     exit 1
 fi
 
-# Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/analyze_resolve-inventory.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/convert_inventory-to-cyclonedx.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Doutput.inventory=$OUTPUT_INVENTORY")
-CMD+=("-DdownloadBaseDir=$DOWNLOAD_BASE_DIR")
-CMD+=("-DartifactResolverConfig=$ARTIFACT_RESOLVER_CONFIG")
-CMD+=("-DproxyConfig=$PROXY_CONFIG")
+CMD+=("-Ddocument.name=$DOCUMENT_NAME")
+CMD+=("-Ddocument.description=$DOCUMENT_DESCRIPTION")
+CMD+=("-Ddocument.organization=$DOCUMENT_ORGANIZATION")
+CMD+=("-Ddocument.organization.url=$DOCUMENT_ORGANIZATION_URL")
+CMD+=("-Doutput.bom.file=$OUTPUT_BOM_FILE")
+CMD+=("-Doutput.format=$OUTPUT_FORMAT")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

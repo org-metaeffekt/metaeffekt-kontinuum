@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="convert_inventory-to-spdx-01.sh"
+CASE="analyze_resolve-inventory-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -39,15 +39,13 @@ else
     exit 1
 fi
 
-CMD=(mvn -f "$PROCESSORS_DIR/convert_inventory-to-spdx.xml" process-resources)
+# Run maven command
+CMD=(mvn -f "$PROCESSORS_DIR/analyze_resolve-inventory.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Doutput.bom=$OUTPUT_BOM")
-CMD+=("-Ddocument.name=$DOCUMENT_NAME")
-CMD+=("-Ddocument.description=$DOCUMENT_DESCRIPTION")
-CMD+=("-Ddocument.organization=$DOCUMENT_ORGANIZATION")
-CMD+=("-Ddocument.organization.url=$DOCUMENT_ORGANIZATION_URL")
-CMD+=("-Doutput.format=$OUTPUT_FORMAT")
-CMD+=("-Ddocument.id.prefix=$DOCUMENT_ID_PREFIX")
+CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
+CMD+=("-Ddownload.base.dir=$DOWNLOAD_BASE_DIR")
+CMD+=("-Dartifact.resolver.config.file=$ARTIFACT_RESOLVER_CONFIG")
+CMD+=("-Dartifact.resolver.proxy.file=$PROXY_CONFIG")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

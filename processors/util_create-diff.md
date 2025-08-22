@@ -1,4 +1,4 @@
-# Diff - Create Diff
+# Util - Create Diff
 
 This process creates two output files containing the differences between two provided inventory versions. Which 
 inventory version is declared as "base" and which as "compare" is negligible since the comparison is done in both 
@@ -10,5 +10,5 @@ two output files.
 | input.inventory.file         | yes      | The file of the base inventory for comparison.                    |
 | input.inventory.compare.file | yes      | The file of the inventory to be compared with the base inventory. |
 | inventory.version            | yes      | The version of the base inventory.                                |
-| inventory.version.compare    | yes      | The version of the compare inventory.                             |
-| target.dir                   | yes      | The target directory for saving the results of the diff.          |
+| inventory.compare.version    | yes      | The version of the compare inventory.                             |
+| output.inventory.dir         | yes      | The output directory for saving the results of the diff.          |

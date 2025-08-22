@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="advise_attach-metadata-01.sh"
+CASE="scan_inventory-scanner-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -42,7 +42,7 @@ fi
 # Run maven command
 CMD=(mvn -f "$PROCESSORS_DIR/scan_inventory-scanner.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Doutput.inventory=$OUTPUT_INVENTORY")
+CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
 CMD+=("-Danalysis.base.dir=$ANALYSIS_BASE_DIR")
 CMD+=("-Dproperties.file=$PROPERTIES_FILE")
 

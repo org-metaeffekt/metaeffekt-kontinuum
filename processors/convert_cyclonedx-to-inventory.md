@@ -1,12 +1,12 @@
-# (Convert) CycloneDx to Inventory
+# (Convert) CycloneDX to Inventory
 
-Used to convert a cyclonedx document into an inventory.
+Used to convert a CycloneDX document into an inventory.
 
-| Property                 | Required | Explanation                                                       |
-|--------------------------|----------|-------------------------------------------------------------------|
-| input.bom                | yes      | The input inventory file path from which to generate the bom.     |
-| output.inventory         | yes      | The output bom file path with the correct format extension.       |
-| includeMetadataComponent | no       | If the cyclonedx component under metadata should be included.     |
-| deriveAttributesFromPurl | no       | If missing attributes should be derived from the PURL if present. |
-| includeAssets            | no       | If assets should be included in the conversion or omitted.        |
-| includeLicenses          | no       | If licenses should be included in the conversion or omitted.      |
+| Property                    | Required | Explanation                                                                                   |
+|-----------------------------|----------|-----------------------------------------------------------------------------------------------|
+| input.bom.file              | yes      | The CycloneDX bom which to convert to an inventory.                                           |
+| output.inventory.file       | yes      | The file path of the output inventory.                                                        |
+| include.metadata.component  | no       | If set to true, includes components contained in the CycloneDX metadata field.                |
+| derive.attributes.from.purl | no       | If set to true, derives attributes not present as CycloneDX fields from the purl if possible. |
+| include.assets              | no       | If set to true, includes CycloneDX components recognized as assets.                           |
+| include.licenses            | no       | If set to true, licenses listed in the CycloneDX document will be included in the inventory.  |

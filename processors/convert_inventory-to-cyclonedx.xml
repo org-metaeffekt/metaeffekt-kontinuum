@@ -44,7 +44,7 @@
                         </goals>
                         <configuration>
                             <input>${input.inventory.file}</input>
-                            <output>${output.bom}</output>
+                            <output>${output.bom.file}</output>
                             <documentName>${document.name}</documentName>
                             <description>${document.description}</description>
                             <customLicenseMappings>${custom.license.mappings}</customLicenseMappings>
@@ -77,23 +77,23 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input</property>
+                                    <property>input.inventory.file</property>
                                     <message>You must set the parameter input.inventory.file</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output</property>
+                                    <property>output.bom.file</property>
                                     <message>You must set the parameter output.bom</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>organization</property>
+                                    <property>document.organization</property>
                                     <message>You must set the parameter document.organization</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>organizationUrl</property>
+                                    <property>document.organization.url</property>
                                     <message>You must set the parameter document.organization.url</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>documentName</property>
+                                    <property>document.name</property>
                                     <message>You must set the parameter document.name</message>
                                 </requireProperty>
                             </rules>

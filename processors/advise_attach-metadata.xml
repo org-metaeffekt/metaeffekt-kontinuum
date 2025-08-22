@@ -37,14 +37,13 @@
                 <version>${ae.core.version}</version>
                 <executions>
                     <execution>
-                        <!-- attaches further metadata to the output input inventory -->
                         <goals>
                             <goal>attach-asset-metadata</goal>
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
                             <inventoryFile>${input.inventory.file}</inventoryFile>
-                            <targetInventoryFile>${output.inventory}</targetInventoryFile>
+                            <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
                             <assetId>${metadata.asset.id}</assetId>
                             <attributes>
                                 <Name>${metadata.asset.name}</Name>
@@ -71,12 +70,16 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>inventoryFile</property>
-                                    <message>You must set the parameter 'input.inventory.file'</message>
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.file' to specify the input inventory for metadata attachment.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>targetInventoryFile</property>
-                                    <message>You must set the parameter 'output.inventory' to specify the name and location of the output inventory with attached metadata.</message>
+                                    <property>output.inventory.file</property>
+                                    <message>You must set the parameter 'output.inventory.file' to specify the output inventory with attached metadata.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>metadata.asset.id</property>
+                                    <message>You must set the parameter 'metadata.asset.id' to specify the asset id to be attached to the inventory.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

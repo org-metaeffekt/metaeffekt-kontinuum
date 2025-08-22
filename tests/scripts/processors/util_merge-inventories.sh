@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="convert_inventory-to-cyclonedx-01.sh"
+CASE="util_merge-inventories-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then
@@ -39,14 +39,11 @@ else
     exit 1
 fi
 
-CMD=(mvn -f "$PROCESSORS_DIR/convert_inventory-to-cyclonedx.xml" process-resources)
-CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-CMD+=("-Doutput.bom=$OUTPUT_BOM")
-CMD+=("-Ddocument.name=$DOCUMENT_NAME")
-CMD+=("-Ddocument.description=$DOCUMENT_DESCRIPTION")
-CMD+=("-Ddocument.organization=$DOCUMENT_ORGANIZATION")
-CMD+=("-Ddocument.organization.url=$DOCUMENT_ORGANIZATION_URL")
-CMD+=("-Doutput.format=$OUTPUT_FORMAT")
+# Run maven command
+CMD=(mvn -f "$PROCESSORS_DIR/util_merge-inventories.xml" process-resources)
+CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
+CMD+=("-Dinventory.includes=$INVENTORY_INCLUDES")
+CMD+=("-Doutput.inventory=$OUTPUT_INVENTORY_FILE")
 
 echo "${CMD[@]}"
 "${CMD[@]}"
