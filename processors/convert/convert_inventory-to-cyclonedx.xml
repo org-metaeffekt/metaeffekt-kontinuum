@@ -25,10 +25,10 @@
         <groupId>com.metaeffekt.workbench</groupId>
         <artifactId>ae-workbench-parent</artifactId>
         <version>WORKBENCH-SNAPSHOT</version>
-        <relativePath>ae-workbench-parent.xml</relativePath>
+        <relativePath>../ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>convert_inventory-to-spdx</artifactId>
+    <artifactId>convert_inventory-to-cyclonedx</artifactId>
 
     <build>
         <plugins>
@@ -38,16 +38,16 @@
                 <version>${ae.artifact.analysis.version}</version>
                 <executions>
                     <execution>
-                        <id>convert-inventory-to-spdx</id>
+                        <id>inventory-to-cyclonedx</id>
                         <goals>
-                            <goal>convert-inventory-to-spdx</goal>
+                            <goal>convert-inventory-to-cyclonedx</goal>
                         </goals>
                         <configuration>
                             <input>${input.inventory.file}</input>
                             <output>${output.bom.file}</output>
                             <documentName>${document.name}</documentName>
                             <description>${document.description}</description>
-                            <documentIdPrefix>${document.id.prefix}</documentIdPrefix>
+                            <customLicenseMappings>${custom.license.mappings}</customLicenseMappings>
                             <organization>${document.organization}</organization>
                             <organizationUrl>${document.organization.url}</organizationUrl>
                             <person>${document.person}</person>
@@ -78,15 +78,11 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter 'input.inventory.path' to specify the file of the input inventory.</message>
+                                    <message>You must set the parameter input.inventory.file</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.bom.file</property>
-                                    <message>You must set the parameter 'output.bom.file' to specify the file of the output bom.</message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>document.name</property>
-                                    <message>You must set the parameter 'document.name' to specify the name of the document.</message>
+                                    <message>You must set the parameter output.bom</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>document.organization</property>
@@ -95,6 +91,10 @@
                                 <requireProperty>
                                     <property>document.organization.url</property>
                                     <message>You must set the parameter document.organization.url</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>document.name</property>
+                                    <message>You must set the parameter document.name</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

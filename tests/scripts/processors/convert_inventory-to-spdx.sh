@@ -39,7 +39,7 @@ else
     exit 1
 fi
 
-CMD=(mvn -f "$PROCESSORS_DIR/convert_inventory-to-spdx.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/convert/convert_inventory-to-spdx.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Ddocument.id.prefix=$DOCUMENT_ID_PREFIX")
 CMD+=("-Ddocument.name=$DOCUMENT_NAME")

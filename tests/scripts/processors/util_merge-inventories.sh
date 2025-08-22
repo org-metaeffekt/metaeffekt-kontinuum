@@ -40,7 +40,7 @@ else
 fi
 
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/util_merge-inventories.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/util/util_merge-inventories.xml" process-resources)
 CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
 CMD+=("-Dinventory.includes=$INVENTORY_INCLUDES")
 CMD+=("-Doutput.inventory=$OUTPUT_INVENTORY_FILE")

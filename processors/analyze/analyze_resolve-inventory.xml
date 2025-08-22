@@ -23,41 +23,35 @@
         <groupId>com.metaeffekt.workbench</groupId>
         <artifactId>ae-workbench-parent</artifactId>
         <version>WORKBENCH-SNAPSHOT</version>
-        <relativePath>ae-workbench-parent.xml</relativePath>
+        <relativePath>../ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>advise_enrich-reference</artifactId>
-    <packaging>rar</packaging>
+    <artifactId>resolve-artifacts</artifactId>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.metaeffekt.core</groupId>
-                <artifactId>ae-inventory-maven-plugin</artifactId>
-                <version>${ae.core.version}</version>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-artifact-analysis-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
                 <executions>
                     <execution>
+                        <id>resolve-artifacts</id>
                         <goals>
-                            <goal>attach-asset-metadata</goal>
+                            <goal>resolve-artifacts</goal>
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
-                            <inventoryFile>${input.inventory.file}</inventoryFile>
-                            <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
-                            <assetId>${metadata.asset.id}</assetId>
-                            <attributes>
-                                <Name>${metadata.asset.name}</Name>
-                                <Version>${metadata.asset.version}</Version>
-                                <Path>${metadata.asset.path}</Path>
-                                <Type>${metadata.asset.type}</Type>
-                                <Primary>x</Primary>
-                            </attributes>
+                            <inputInventoryFile>${input.inventory.file}</inputInventoryFile>
+                            <outputInventoryFile>${output.inventory.file}</outputInventoryFile>
+                            <downloadBaseDir>${download.base.dir}</downloadBaseDir>
+                            <artifactResolverConfig>${artifact.resolver.config.file}</artifactResolverConfig>
+                            <proxyConfig>${artifact.resolver.proxy.file}</proxyConfig>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
+            <plugin>  <!-- This plugin is only relevant to deliver better error messages to the caller of this pom. -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>3.5.0</version>
@@ -71,15 +65,23 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter 'input.inventory.file' to specify the input inventory for metadata attachment.</message>
+                                    <message>You must set the parameter 'input.inventory.file'</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
-                                    <message>You must set the parameter 'output.inventory.file' to specify the output inventory with attached metadata.</message>
+                                    <message>You must set the parameter 'output.inventory.file'</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>metadata.asset.id</property>
-                                    <message>You must set the parameter 'metadata.asset.id' to specify the asset id to be attached to the inventory.</message>
+                                    <property>download.base.dir</property>
+                                    <message>You must set the parameter 'download.base.dir'</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>artifact.resolver.config.file</property>
+                                    <message>You must set the parameter 'artifact.resolver.config.file'</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>artifact.resolver.proxy.file</property>
+                                    <message>You must set the parameter 'artifact.resolver.proxy.file'</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

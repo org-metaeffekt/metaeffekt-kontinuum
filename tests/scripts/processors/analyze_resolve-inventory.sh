@@ -40,7 +40,7 @@ else
 fi
 
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/analyze_resolve-inventory.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/analyze/analyze_resolve-inventory.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
 CMD+=("-Ddownload.base.dir=$DOWNLOAD_BASE_DIR")

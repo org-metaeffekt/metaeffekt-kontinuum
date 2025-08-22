@@ -57,7 +57,7 @@ ADMIN_TOKEN=$(echo "$JSON_OUTPUT" | jq -r '.body.adminToken')
 cd "$SCRIPT_DIR"
 
 # Run maven commands
-CMD=(mvn -f "$PROCESSORS_DIR/util_portfolio-upload.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/util/util_portfolio-upload.xml" process-resources)
 CMD+=("-Dportfolio.manager.url=$PORTFOLIO_MANAGER_URL")
 CMD+=("-Dportfolio.manager.token=$ADMIN_TOKEN")
 CMD+=("-Dkeystore.config.file=$KEYSTORE_CONFIG_FILE")
@@ -72,7 +72,7 @@ CMD+=("-Dinput.file=$INPUT_FILE")
 echo "${CMD[@]}"
 "${CMD[@]}"
 
-CMD=(mvn -f "$PROCESSORS_DIR/util_portfolio-download.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/util/util_portfolio-download.xml" process-resources)
 CMD+=("-Dportfolio.manager.url=$PORTFOLIO_MANAGER_URL")
 CMD+=("-Dportfolio.manager.token=$ADMIN_TOKEN")
 CMD+=("-Dkeystore.config.file=$KEYSTORE_CONFIG_FILE")

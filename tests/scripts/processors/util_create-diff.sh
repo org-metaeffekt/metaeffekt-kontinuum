@@ -41,7 +41,7 @@ fi
 
 
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/util_create-diff.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/util/util_create-diff.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Dinput.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE")
 CMD+=("-Dinventory.version=$INVENTORY_VERSION")

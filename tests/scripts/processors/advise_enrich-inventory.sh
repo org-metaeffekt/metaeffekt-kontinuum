@@ -41,7 +41,7 @@ else
 fi
 
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/advise_enrich-inventory.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/advise/advise_enrich-inventory.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
 CMD+=("-Dvulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")

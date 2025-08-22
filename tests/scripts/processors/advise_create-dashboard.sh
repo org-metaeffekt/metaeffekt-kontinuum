@@ -39,7 +39,7 @@ else
     exit 1
 fi
 
-CMD=(mvn -f "$PROCESSORS_DIR/advise_create-dashboard.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/advise/advise_create-dashboard.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Doutput.dashboard.file=$OUTPUT_DASHBOARD_FILE")
 CMD+=("-Dvulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")

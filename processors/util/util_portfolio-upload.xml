@@ -7,10 +7,10 @@
         <groupId>com.metaeffekt.workbench</groupId>
         <artifactId>ae-workbench-parent</artifactId>
         <version>WORKBENCH-SNAPSHOT</version>
-        <relativePath>ae-workbench-parent.xml</relativePath>
+        <relativePath>../ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>util_portfolio-download</artifactId>
+    <artifactId>util_portfolio-upload</artifactId>
 
     <build>
         <plugins>
@@ -19,9 +19,9 @@
                 <artifactId>ae-portfolio-manager-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>pull-to-portfolio-manager</id>
+                        <id>push-to-portfolio-manager</id>
                         <goals>
-                            <goal>pull</goal>
+                            <goal>push</goal>
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
@@ -46,11 +46,11 @@
                             <!-- the project name to upload to -->
                             <projectName>${product.name}</projectName>
                             <!-- the asset group (in the project) to upload to -->
-                            <assetGroupQuery>${product.name}:${product.version}</assetGroupQuery>
+                            <assetGroup>${product.name}:${product.version}</assetGroup>
                             <!-- the asset (in the project) the sbom represents -->
-                            <assetQuery>${product.artifact.id}:${product.version}</assetQuery>
+                            <asset>${product.artifact.id}:${product.version}</asset>
                             <!-- the path to the sbom/inventory to upload -->
-                            <targetDir>${download.dir}</targetDir>
+                            <fileToPush>${input.file}</fileToPush>
 
                         </configuration>
                     </execution>
@@ -106,8 +106,8 @@
                                     <message>You must set the parameter 'product.artifact.id'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>download.dir</property>
-                                    <message>You must set the parameter 'download.dir'.</message>
+                                    <property>input.file</property>
+                                    <message>You must set the parameter 'input.file'.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

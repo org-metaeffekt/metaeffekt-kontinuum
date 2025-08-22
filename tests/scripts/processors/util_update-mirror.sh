@@ -42,7 +42,7 @@ else
 fi
 
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/util_update-mirror.xml" compile -P withoutProxy)
+CMD=(mvn -f "$PROCESSORS_DIR/util/util_update-mirror.xml" compile -P withoutProxy)
 CMD+=("-Dmirror.target.dir=$MIRROR_TARGET_DIR")
 CMD+=("-Dmirror.archive.url=$MIRROR_ARCHIVE_URL")
 CMD+=("-Dmirror.archive.name=$MIRROR_ARCHIVE_NAME")
@@ -50,4 +50,4 @@ CMD+=("-Dmirror.archive.name=$MIRROR_ARCHIVE_NAME")
 echo "${CMD[@]}"
 "${CMD[@]}"
 
-rm -r "$PROCESSORS_DIR/target" # Necessary because antrun produces a target folder in processors
+rm -r "$PROCESSORS_DIR/util/target" # Necessary because antrun produces a target folder in processors

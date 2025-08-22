@@ -42,7 +42,7 @@ else
 fi
 
 # Run maven command
-CMD=(mvn -f "$PROCESSORS_DIR/util_aggregate-sources.xml" process-resources)
+CMD=(mvn -f "$PROCESSORS_DIR/util/util_aggregate-sources.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Dtarget.dir=$TARGET_DIR")
 CMD+=("-Dannex.source.dir=$ANNEX_SOURCE_DIR")
