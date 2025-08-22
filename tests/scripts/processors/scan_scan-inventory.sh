@@ -4,7 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-CASE="scan_inventory-scanner-01.sh"
+CASE="scan_scan-inventory-01.sh"
 
 # Check if config.sh exists and source it
 if [[ -f "$CONFIG_PATH" ]]; then

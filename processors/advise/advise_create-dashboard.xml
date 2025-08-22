@@ -64,11 +64,7 @@
                                 <detailLevels>${param.detail.levels}</detailLevels>
                             </vulnerabilityAssessmentDashboardEnrichment>
 
-                            <securityPolicy>
-                                <files>
-                                    <file>${input.security.policy.file}</file>
-                                </files>
-                            </securityPolicy>
+                            <securityPolicyFile>${input.security.policy.file}</securityPolicyFile>
                         </configuration>
                     </execution>
                 </executions>

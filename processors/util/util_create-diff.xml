@@ -56,11 +56,7 @@
                             <outputInventoryDiff1to2>${output.inventory.dir}/diff/${param.inventory.version}-to-${param.inventory.compare.version}-comparison.xls</outputInventoryDiff1to2>
                             <outputInventoryDiff2to1>${output.inventory.dir}/diff/${param.inventory.compare.version}-to-${param.inventory.version}-comparison.xls</outputInventoryDiff2to1>
 
-                            <securityPolicy>
-                                <files>
-                                    <file>${input.security.policy.file}</file>
-                                </files>
-                            </securityPolicy>
+                            <securityPolicyFile>${input.security.policy.file}</securityPolicyFile>
                         </configuration>
                     </execution>
                 </executions>

@@ -18,10 +18,10 @@ of this repository.
 | output.inventory.dir         | yes      | The output directory for saving the results of the diff.          |
 
 ### Parameters
-| Parameter                    | Required | Description                                                       |
-|------------------------------|----------|-------------------------------------------------------------------|
-| param.inventory.version            | yes      | The version of the base inventory.                                |
-| param.inventory.compare.version    | yes      | The version of the compare inventory.                             |
+| Parameter                       | Required | Description                                   |
+|---------------------------------|----------|-----------------------------------------------|
+| param.inventory.version         | yes      | The version of the base inventory.            |
+| param.inventory.compare.version | yes      | The version of the compare inventory.         |
 
 ### Environment
 None

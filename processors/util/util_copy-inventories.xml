@@ -41,9 +41,9 @@
                         <phase>process-resources</phase>
                         <configuration>
                             <target>
-                                <mkdir dir="${output.dir}"/>
-                                <copy todir="${output.dir}">
-                                    <filelist dir="." files="${inventories.list}" />
+                                <mkdir dir="${output.inventories.dir}"/>
+                                <copy todir="${output.inventories.dir}">
+                                    <filelist dir="." files="${input.inventories.list}" />
                                 </copy>
                             </target>
                         </configuration>
@@ -66,12 +66,12 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>inventories.list</property>
-                                    <message>You must set the parameter 'inventories.list' to specify the inventories you want to copy.</message>
+                                    <property>input.inventories.list</property>
+                                    <message>You must set the parameter 'input.inventories.list' to specify the inventories you want to copy.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.dir</property>
-                                    <message>You must set the parameter 'output.dir' to specify to which directory the provided list of files should be copied.</message>
+                                    <property>output.inventories.dir</property>
+                                    <message>You must set the parameter 'output.inventories.dir' to specify to which directory the provided list of files should be copied.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

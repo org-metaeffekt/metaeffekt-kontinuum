@@ -94,11 +94,8 @@
                             <writeIntermediateInventories>true</writeIntermediateInventories>
                             <intermediateInventoriesDirectory>${output.tmp.dir}</intermediateInventoriesDirectory>
                             <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
-                            <securityPolicy>
-                                <files>
-                                    <file>${input.security.policy.file}</file>
-                                </files>
-                            </securityPolicy>
+
+                            <securityPolicyFile>${input.security.policy.file}</securityPolicyFile>
 
                             <correlationYamlEnrichment>
                                 <active>${param.activate.correlation}</active>
