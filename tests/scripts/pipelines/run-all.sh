@@ -45,4 +45,4 @@ sh "$PROCESSOR_SCRIPTS_DIR/advise_attach-metadata.sh"
 sh "$PROCESSOR_SCRIPTS_DIR/advise_enrich-inventory.sh"
 sh "$PROCESSOR_SCRIPTS_DIR/advise_create-dashboard.sh"
 
-sh "$PROCESSOR_SCRIPTS_DIR/scan_inventory-scanner.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/scan_scan-inventory.sh"
