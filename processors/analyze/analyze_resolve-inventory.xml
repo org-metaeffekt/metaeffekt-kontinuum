@@ -44,9 +44,9 @@
                         <configuration>
                             <inputInventoryFile>${input.inventory.file}</inputInventoryFile>
                             <outputInventoryFile>${output.inventory.file}</outputInventoryFile>
-                            <downloadBaseDir>${download.base.dir}</downloadBaseDir>
-                            <artifactResolverConfig>${artifact.resolver.config.file}</artifactResolverConfig>
-                            <proxyConfig>${artifact.resolver.proxy.file}</proxyConfig>
+                            <downloadBaseDir>${env.maven.index.dir}</downloadBaseDir>
+                            <artifactResolverConfig>${input.artifact.resolver.config.file}</artifactResolverConfig>
+                            <proxyConfig>${input.artifact.resolver.proxy.file}</proxyConfig>
                         </configuration>
                     </execution>
                 </executions>
@@ -72,16 +72,16 @@
                                     <message>You must set the parameter 'output.inventory.file'</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>download.base.dir</property>
-                                    <message>You must set the parameter 'download.base.dir'</message>
+                                    <property>env.maven.index.dir</property>
+                                    <message>You must set the parameter 'env.maven.index.dir'</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>artifact.resolver.config.file</property>
-                                    <message>You must set the parameter 'artifact.resolver.config.file'</message>
+                                    <property>input.artifact.resolver.config.file</property>
+                                    <message>You must set the parameter 'input.artifact.resolver.config.file'</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>artifact.resolver.proxy.file</property>
-                                    <message>You must set the parameter 'artifact.resolver.proxy.file'</message>
+                                    <property>input.artifact.resolver.proxy.file</property>
+                                    <message>You must set the parameter 'input.artifact.resolver.proxy.file'</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

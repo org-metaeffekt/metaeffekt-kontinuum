@@ -44,12 +44,12 @@
                         <configuration>
                             <inventoryFile>${input.inventory.file}</inventoryFile>
                             <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
-                            <assetId>${metadata.asset.id}</assetId>
+                            <assetId>${param.metadata.asset.id}</assetId>
                             <attributes>
-                                <Name>${metadata.asset.name}</Name>
-                                <Version>${metadata.asset.version}</Version>
-                                <Path>${metadata.asset.path}</Path>
-                                <Type>${metadata.asset.type}</Type>
+                                <Name>${param.metadata.asset.name}</Name>
+                                <Version>${param.metadata.asset.version}</Version>
+                                <Path>${param.metadata.asset.path}</Path>
+                                <Type>${param.metadata.asset.type}</Type>
                                 <Primary>x</Primary>
                             </attributes>
                         </configuration>
@@ -78,8 +78,8 @@
                                     <message>You must set the parameter 'output.inventory.file' to specify the output inventory with attached metadata.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>metadata.asset.id</property>
-                                    <message>You must set the parameter 'metadata.asset.id' to specify the asset id to be attached to the inventory.</message>
+                                    <property>param.metadata.asset.id</property>
+                                    <message>You must set the parameter 'param.metadata.asset.id' to specify the asset id to be attached to the inventory.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

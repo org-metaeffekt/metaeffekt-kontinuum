@@ -50,30 +50,30 @@
                                 <argument>../templates/pom.xml</argument>
                                 <argument>clean</argument>
                                 <argument>install</argument>
-                                <argument>-P${document.type}_${document.language}</argument>
+                                <argument>-P${param.document.type}_${param.document.language}</argument>
 
-                                <argument>-Dasset.id=${asset.id}</argument>
-                                <argument>-Dasset.name=${asset.name}</argument>
-                                <argument>-Dasset.version=${asset.version}</argument>
+                                <argument>-Dasset.id=${param.asset.id}</argument>
+                                <argument>-Dasset.name=${param.asset.name}</argument>
+                                <argument>-Dasset.version=${param.asset.version}</argument>
 
-                                <argument>-Dproduct.version=${product.version}</argument>
-                                <argument>-Dproduct.name=${product.name}</argument>
-                                <argument>-Dproduct.watermark=${product.watermark}</argument>
+                                <argument>-Dproduct.version=${param.product.version}</argument>
+                                <argument>-Dproduct.name=${param.product.name}</argument>
+                                <argument>-Dproduct.watermark=${param.product.watermark}</argument>
 
-                                <argument>-Dinventory.path=${inventory.path}</argument>
-                                <argument>-Dreference.inventory.path=${reference.inventory.path}</argument>
+                                <argument>-Dinventory.path=${input.inventory.file}</argument>
+                                <argument>-Dreference.inventory.path=${input.reference.inventory.file}</argument>
 
-                                <argument>-Dreference.license.path=${reference.license.path}</argument>
-                                <argument>-Dreference.component.path=${reference.component.path}</argument>
+                                <argument>-Dreference.license.path=${input.reference.license.dir}</argument>
+                                <argument>-Dreference.component.path=${input.reference.component.dir}</argument>
                                 <argument>-Dcomputed.inventory.path=${computed.inventory.path}</argument>
-                                <argument>-Dasset.descriptor.basedir=${asset.descriptor.basedir}</argument>
-                                <argument>-Dasset.descriptor.file=${asset.descriptor.file}</argument>
+                                <argument>-Dasset.descriptor.basedir=${input.asset.descriptor.dir}</argument>
+                                <argument>-Dasset.descriptor.file=${input.asset.descriptor.file}</argument>
 
-                                <argument>-Dpolicy.basedir=${policy.basedir}</argument>
-                                <argument>-Dinput.database=${input.database}</argument>
-                                <argument>-Doverview.advisors=${overview.advisors}</argument>
+                                <argument>-Dpolicy.basedir=${input.security.policy.dir}</argument>
+                                <argument>-Dinput.database=${env.vulnerability.mirror.dir}</argument>
+                                <argument>-Doverview.advisors=${param.overview.advisors}</argument>
 
-                                <argument>-Dworkbench.base.path=${workbench.base.path}</argument>
+                                <argument>-Dworkbench.base.path=${env.workbench.base.path}</argument>
                                 <argument>-Doutput.dir=${output.dir}</argument>
                             </arguments>
                         </configuration>
@@ -93,64 +93,64 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>asset.id</property>
-                                    <message>You must set the parameter 'asset.id' to specify the id of the asset.</message>
+                                    <property>param.asset.id</property>
+                                    <message>You must set the parameter 'param.asset.id' to specify the id of the asset.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>asset.name</property>
-                                    <message>You must set the parameter 'asset.name' to specify the name of the asset.</message>
+                                    <property>param.asset.name</property>
+                                    <message>You must set the parameter 'param.asset.name' to specify the name of the asset.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>asset.version</property>
-                                    <message>You must set the parameter 'asset.version' to specify the version of the asset</message>
+                                    <property>param.asset.version</property>
+                                    <message>You must set the parameter 'param.asset.version' to specify the version of the asset</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>product.version</property>
-                                    <message>You must set the parameter 'product.version' to specify the version of the product.</message>
+                                    <property>param.product.version</property>
+                                    <message>You must set the parameter 'param.product.version' to specify the version of the product.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>product.name</property>
-                                    <message>You must set the parameter 'product.name' to specify the name of the product.</message>
+                                    <property>param.product.name</property>
+                                    <message>You must set the parameter 'param.product.name' to specify the name of the product.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>product.watermark</property>
-                                    <message>You must set the parameter 'product.watermark' to specify the watermark of the product.</message>
+                                    <property>param.product.watermark</property>
+                                    <message>You must set the parameter 'param.product.watermark' to specify the watermark of the product.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>inventory.path</property>
-                                    <message>You must set the parameter 'inventory.path' to specify the file of the input inventory.</message>
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.file' to specify the file of the input inventory.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>reference.inventory.path</property>
-                                    <message>You must set the parameter 'reference.inventory.path' to specify the file of the reference inventory.</message>
+                                    <property>input.reference.inventory.file</property>
+                                    <message>You must set the parameter 'input.reference.inventory.file' to specify the file of the reference inventory.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>reference.license.path</property>
-                                    <message>You must set the parameter 'reference.license.path' to specify the reference license path of the reference inventory.</message>
+                                    <property>input.reference.license.dir</property>
+                                    <message>You must set the parameter 'input.reference.license.dir' to specify the reference license path of the reference inventory.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>reference.component.path</property>
-                                    <message>You must set the parameter 'reference.license.path' to specify the reference license path of the reference inventory.</message>
+                                    <property>input.reference.component.dir</property>
+                                    <message>You must set the parameter 'input.reference.component.dir' to specify the reference component path of the reference inventory.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>asset.descriptor.basedir</property>
-                                    <message>You must set the parameter 'asset.descriptor.basedir' to specify the directory of the asset-descriptors.</message>
+                                    <property>input.asset.descriptor.file</property>
+                                    <message>You must set the parameter 'input.asset.descriptor.file' to specify the directory of the asset-descriptors.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>asset.descriptor.file</property>
-                                    <message>You must set the parameter 'asset.descriptor.file' to specify the file of the asset-descriptor.</message>
+                                    <property>input.asset.descriptor.dir</property>
+                                    <message>You must set the parameter 'input.asset.descriptor.dir' to specify the file of the asset-descriptor.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>document.type</property>
-                                    <message>You must set the parameter 'document.type' to specify which type of document should be generated.</message>
+                                    <property>param.document.type</property>
+                                    <message>You must set the parameter 'param.document.type' to specify which type of document should be generated.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>document.language</property>
-                                    <message>You must set the parameter 'document.language' to specify the language of the output document.</message>
+                                    <property>param.document.language</property>
+                                    <message>You must set the parameter 'param.document.language' to specify the language of the output document.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>workbench.base.path</property>
-                                    <message>You must set the parameter 'workbench.base.path' to specify the path to your workbench.</message>
+                                    <property>env.workbench.base.path</property>
+                                    <message>You must set the parameter 'env.workbench.base.path' to specify the path to your workbench.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.dir</property>

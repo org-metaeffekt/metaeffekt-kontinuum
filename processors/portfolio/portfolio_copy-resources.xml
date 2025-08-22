@@ -43,7 +43,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${output.dir}/source-inventories</outputDirectory>
+                            <outputDirectory>${output.resources.dir}/source-inventories</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${input.inventories.dir}</directory>
@@ -62,10 +62,10 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${output.dir}/assessment-dashboards</outputDirectory>
+                            <outputDirectory>${output.resources.dir}/assessment-dashboards</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${dashboards.dir}</directory>
+                                    <directory>${input.dashboards.dir}</directory>
                                     <filtering>false</filtering>
                                     <includes>
                                         <include>**/*.html</include>
@@ -81,10 +81,10 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${output.dir}/vulnerability-reports</outputDirectory>
+                            <outputDirectory>${output.resources.dir}/vulnerability-reports</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${reports.dir}</directory>
+                                    <directory>${input.reports.dir}</directory>
                                     <filtering>false</filtering>
                                     <includes>
                                         <include>**/*.pdf</include>
@@ -100,10 +100,10 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${output.dir}/advisor-inventories</outputDirectory>
+                            <outputDirectory>${output.resources.dir}/advisor-inventories</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${advisor.inventories.dir}</directory>
+                                    <directory>${input.advisor.inventories.dir}</directory>
                                     <filtering>false</filtering>
                                     <includes>
                                         <include>**/*.xlsx</include>
@@ -127,9 +127,9 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>output.dir</property>
+                                    <property>output.resources.dir</property>
                                     <message>
-                                        You must set the parameter 'output.dir' to specify the directory to which the files should be copied.
+                                        You must set the parameter 'output.resources.dir' to specify the directory to which the files should be copied.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
@@ -139,21 +139,21 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>dashboards.dir</property>
+                                    <property>input.dashboards.dir</property>
                                     <message>
-                                        You must set the parameter 'dashboards.dir' to specify the directory of the dashboards to be copied.
+                                        You must set the parameter 'input.dashboards.dir' to specify the directory of the dashboards to be copied.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>reports.dir</property>
+                                    <property>input.reports.dir</property>
                                     <message>
-                                        You must set the parameter 'reports.dir' to specify the directory of the reports to be copied.
+                                        You must set the parameter 'input.reports.dir' to specify the directory of the reports to be copied.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>advisor.inventories.dir</property>
+                                    <property>input.advisor.inventories.dir</property>
                                     <message>
-                                        You must set the parameter 'advisor.inventories.dir' to specify the directory of the advisor inventories to be copied.
+                                        You must set the parameter 'input.advisor.inventories.dir' to specify the directory of the advisor inventories to be copied.
                                     </message>
                                 </requireProperty>
                             </rules>

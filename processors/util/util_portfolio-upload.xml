@@ -27,28 +27,28 @@
                         <configuration>
 
                             <!-- url to the SwAM Portfolio Manager Endpoint -->
-                            <serviceUrl>${portfolio.manager.url}</serviceUrl>
+                            <serviceUrl>${param.portfolio.manager.url}</serviceUrl>
                             <!-- 'upload' user token for project; always pass as credential/secret -->
-                            <token>${portfolio.manager.token}</token>
+                            <token>${param.portfolio.manager.token}</token>
                             <!-- the modifier initial is the default -->
                             <modifier>initial</modifier>
 
                             <!-- path to the keystore; replace or configure -->
-                            <keyStoreFile>${keystore.config.file}</keyStoreFile>
+                            <keyStoreFile>${input.keystore.config.file}</keyStoreFile>
                             <!-- keystore password; always pass as credential/secret -->
-                            <keyStorePassword>${keystore.password}</keyStorePassword>
+                            <keyStorePassword>${param.keystore.password}</keyStorePassword>
 
                             <!-- path to the truststore; replace or configure -->
-                            <trustStoreFile>${truststore.config.file}</trustStoreFile>
+                            <trustStoreFile>${input.truststore.config.file}</trustStoreFile>
                             <!-- truststore password; always pass as credential/secret -->
-                            <trustStorePassword>${truststore.password}</trustStorePassword>
+                            <trustStorePassword>${param.truststore.password}</trustStorePassword>
 
                             <!-- the project name to upload to -->
-                            <projectName>${product.name}</projectName>
+                            <projectName>${param.product.name}</projectName>
                             <!-- the asset group (in the project) to upload to -->
-                            <assetGroup>${product.name}:${product.version}</assetGroup>
+                            <assetGroup>${param.product.name}:${param.product.version}</assetGroup>
                             <!-- the asset (in the project) the sbom represents -->
-                            <asset>${product.artifact.id}:${product.version}</asset>
+                            <asset>${param.product.artifact.id}:${param.product.version}</asset>
                             <!-- the path to the sbom/inventory to upload -->
                             <fileToPush>${input.file}</fileToPush>
 
@@ -70,40 +70,40 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>portfolio.manager.url</property>
-                                    <message>You must set the parameter 'portfolio.manager.url'.</message>
+                                    <property>param.portfolio.manager.url</property>
+                                    <message>You must set the parameter 'param.portfolio.manager.url'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>portfolio.manager.token</property>
-                                    <message>You must set the parameter 'portfolio.manager.token'.</message>
+                                    <property>param.portfolio.manager.token</property>
+                                    <message>You must set the parameter 'param.portfolio.manager.token'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>keystore.config.file</property>
-                                    <message>You must set the parameter 'keystore.config.file'.</message>
+                                    <property>input.keystore.config.file</property>
+                                    <message>You must set the parameter 'input.keystore.config.file'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>keystore.password</property>
-                                    <message>You must set the parameter 'keystore.password'.</message>
+                                    <property>param.keystore.password</property>
+                                    <message>You must set the parameter 'param.keystore.password'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>truststore.config.file</property>
-                                    <message>You must set the parameter 'truststore.config.file'.</message>
+                                    <property>input.truststore.config.file</property>
+                                    <message>You must set the parameter 'input.truststore.config.file'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>truststore.password</property>
-                                    <message>You must set the parameter 'truststore.password'.</message>
+                                    <property>param.truststore.password</property>
+                                    <message>You must set the parameter 'param.truststore.password'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>product.name</property>
-                                    <message>You must set the parameter 'product.name'.</message>
+                                    <property>param.product.name</property>
+                                    <message>You must set the parameter 'param.product.name'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>product.version</property>
-                                    <message>You must set the parameter 'product.version'.</message>
+                                    <property>param.product.version</property>
+                                    <message>You must set the parameter 'param.product.version'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>product.artifact.id</property>
-                                    <message>You must set the parameter 'product.artifact.id'.</message>
+                                    <property>param.product.artifact.id</property>
+                                    <message>You must set the parameter 'param.product.artifact.id'.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.file</property>

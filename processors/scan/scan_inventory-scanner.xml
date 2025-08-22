@@ -26,7 +26,7 @@
         <relativePath>../ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>scanned_inventory-scanner</artifactId>
+    <artifactId>scan_inventory-scanner</artifactId>
 
     <build>
         <plugins>
@@ -36,7 +36,7 @@
                 <version>3.5.3</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <scancode.toolkit.path>${scancode.path}</scancode.toolkit.path>
+                        <scancode.toolkit.path>${env.scancode.binary.file}</scancode.toolkit.path>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -54,8 +54,8 @@
                         <configuration>
                             <inputInventory>${input.inventory.file}</inputInventory>
                             <targetFile>${output.inventory.file}</targetFile>
-                            <analysisBaseDir>${analysis.base.dir}</analysisBaseDir>
-                            <propertiesFile>${properties.file}</propertiesFile>
+                            <analysisBaseDir>${input.output.analysis.base.dir}</analysisBaseDir>
+                            <propertiesFile>${input.properties.file}</propertiesFile>
                         </configuration>
                     </execution>
                 </executions>

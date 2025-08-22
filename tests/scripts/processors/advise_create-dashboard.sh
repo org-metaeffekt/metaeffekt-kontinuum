@@ -42,8 +42,8 @@ fi
 CMD=(mvn -f "$PROCESSORS_DIR/advise/advise_create-dashboard.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Doutput.dashboard.file=$OUTPUT_DASHBOARD_FILE")
-CMD+=("-Dvulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
-CMD+=("-Dsecurity.policy.file=$SECURITY_POLICY")
+CMD+=("-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
+CMD+=("-Dinput.security.policy.file=$SECURITY_POLICY")
 
 
 echo "${CMD[@]}"

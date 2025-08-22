@@ -42,7 +42,7 @@ fi
 # Run maven command
 CMD=(mvn -f "$PROCESSORS_DIR/util/util_transform-inventories.xml" process-resources)
 CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
-CMD+=("-Dkotlin.script.file=$KOTLIN_SCRIPT_FILE")
+CMD+=("-Dinput.kotlin.script.file=$KOTLIN_SCRIPT_FILE")
 CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
 
 echo "${CMD[@]}"

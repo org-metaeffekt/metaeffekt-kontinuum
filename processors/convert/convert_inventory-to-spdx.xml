@@ -45,21 +45,21 @@
                         <configuration>
                             <input>${input.inventory.file}</input>
                             <output>${output.bom.file}</output>
-                            <documentName>${document.name}</documentName>
-                            <description>${document.description}</description>
-                            <documentIdPrefix>${document.id.prefix}</documentIdPrefix>
-                            <organization>${document.organization}</organization>
-                            <organizationUrl>${document.organization.url}</organizationUrl>
-                            <person>${document.person}</person>
-                            <comment>${document.comment}</comment>
-                            <outputFormat>${document.output.format}</outputFormat>
-                            <documentVersion>${document.version}</documentVersion>
-                            <mapRelationships>${map.relationships}</mapRelationships>
-                            <useLicenseExpressions>${use.license.expressions}</useLicenseExpressions>
-                            <includeLicenseTexts>${include.license.texts}</includeLicenseTexts>
-                            <includeAssets>${include.assets}</includeAssets>
-                            <includeTechnicalProperties>${include.technical.properties}</includeTechnicalProperties>
-                            <deriveAttributesFromPurl>${derive.attributes.from.purl}</deriveAttributesFromPurl>
+                            <documentName>${param.document.name}</documentName>
+                            <description>${param.document.description}</description>
+                            <documentIdPrefix>${param.document.id.prefix}</documentIdPrefix>
+                            <organization>${param.document.organization}</organization>
+                            <organizationUrl>${param.document.organization.url}</organizationUrl>
+                            <person>${param.document.person}</person>
+                            <comment>${param.document.comment}</comment>
+                            <outputFormat>${param.document.output.format}</outputFormat>
+                            <documentVersion>${param.document.version}</documentVersion>
+                            <mapRelationships>${param.map.relationships.enabled}</mapRelationships>
+                            <useLicenseExpressions>${param.license.expressions.enabled}</useLicenseExpressions>
+                            <includeLicenseTexts>${param.include.license.texts.enabled}</includeLicenseTexts>
+                            <includeAssets>${param.include.assets.enabled}</includeAssets>
+                            <includeTechnicalProperties>${param.technical.properties.enabled}</includeTechnicalProperties>
+                            <deriveAttributesFromPurl>${param.derive.attributes.from.purl.enabled}</deriveAttributesFromPurl>
                         </configuration>
                     </execution>
                 </executions>
@@ -85,16 +85,16 @@
                                     <message>You must set the parameter 'output.bom.file' to specify the file of the output bom.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>document.name</property>
-                                    <message>You must set the parameter 'document.name' to specify the name of the document.</message>
+                                    <property>param.document.name</property>
+                                    <message>You must set the parameter 'param.document.name' to specify the name of the document.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>document.organization</property>
-                                    <message>You must set the parameter document.organization</message>
+                                    <property>param.document.organization</property>
+                                    <message>You must set the parameter param.document.organization</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>document.organization.url</property>
-                                    <message>You must set the parameter document.organization.url</message>
+                                    <property>param.document.organization.url</property>
+                                    <message>You must set the parameter param.document.organization.url</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

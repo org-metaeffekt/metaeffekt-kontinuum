@@ -48,7 +48,7 @@
                         </goals>
                         <configuration>
                             <inventory>${input.inventory.file}</inventory>
-                            <sourceInventoryDir>${reference.inventory.dir}</sourceInventoryDir>
+                            <sourceInventoryDir>${input.reference.inventory.dir}</sourceInventoryDir>
                             <sourceInventoryIncludes>*.xls,*.xlsx,*.ser</sourceInventoryIncludes>
 
                             <failOnError>${advisor.validation}</failOnError>
@@ -98,8 +98,8 @@
                                         the output inventory.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>reference.inventory.dir</property>
-                                    <message>You must set the parameter 'reference.inventory.dir' to specify the
+                                    <property>input.reference.inventory.dir</property>
+                                    <message>You must set the parameter 'input.reference.inventory.dir' to specify the
                                         directory containing the reference inventory files.</message>
                                 </requireProperty>
                             </rules>

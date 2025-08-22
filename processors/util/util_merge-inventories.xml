@@ -30,7 +30,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <inventory.includes>*.xls</inventory.includes>
+        <param.inventory.includes>*.xls</param.inventory.includes>
     </properties>
     <build>
         <plugins>
@@ -47,8 +47,8 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <sourceInventoryBaseDir>${input.inventory.dir}</sourceInventoryBaseDir>
-                            <sourceInventoryIncludes>${inventory.includes}</sourceInventoryIncludes>
-                            <targetInventory>${output.inventory}</targetInventory>
+                            <sourceInventoryIncludes>${param.inventory.includes}</sourceInventoryIncludes>
+                            <targetInventory>${output.inventory.file}</targetInventory>
                         </configuration>
                     </execution>
                 </executions>
@@ -71,8 +71,8 @@
                                     <message>You must set the parameter 'input.inventory.dir' to specify the directory containing the inventories to be merged.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory</property>
-                                    <message>You must set the parameter 'output.inventory' to specify the merged output inventory's name and location.</message>
+                                    <property>output.inventory.file</property>
+                                    <message>You must set the parameter 'output.inventory.file' to specify the merged output inventory's name and location.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

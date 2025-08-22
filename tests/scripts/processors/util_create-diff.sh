@@ -44,10 +44,10 @@ fi
 CMD=(mvn -f "$PROCESSORS_DIR/util/util_create-diff.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Dinput.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE")
-CMD+=("-Dinventory.version=$INVENTORY_VERSION")
-CMD+=("-Dinventory.compare.version=$INVENTORY_COMPARE_VERSION")
+CMD+=("-Dparam.inventory.version=$INVENTORY_VERSION")
+CMD+=("-Dparam.inventory.compare.version=$INVENTORY_COMPARE_VERSION")
 CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
-CMD+=("-Dsecurity.policy.file=$SECURITY_POLICY_FILE")
+CMD+=("-Dinput.security.policy.file=$SECURITY_POLICY_FILE")
 
 
 echo "${CMD[@]}"

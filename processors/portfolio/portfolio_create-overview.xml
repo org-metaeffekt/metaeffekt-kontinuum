@@ -31,12 +31,12 @@
     <packaging>pom</packaging>
 
     <properties>
-        <input.inventory.path>source-inventories</input.inventory.path>
+        <input.inventory.file>source-inventories</input.inventory.file>
         <advisor.inventory.path>advisor-inventories</advisor.inventory.path>
         <reports.path>vulnerability-reports</reports.path>
         <dashboards.path>assessment-dashboards</dashboards.path>
 
-        <output.file>${input.inventory.dir}/index.html</output.file>
+        <output.overview.file>${input.inventory.dir}/index.html</output.overview.file>
     </properties>
 
     <build>
@@ -54,15 +54,15 @@
                 </executions>
                 <configuration>
                     <baseDirectory>${input.inventory.dir}</baseDirectory>
-                    <inputInventoryPath>${input.inventory.path}</inputInventoryPath>
-                    <advisorInventoryPath>${advisor.inventories.dir}</advisorInventoryPath>
+                    <inputInventoryPath>${input.inventory.file}</inputInventoryPath>
+                    <advisorInventoryPath>${input.advisor.inventories.dir}</advisorInventoryPath>
 
-                    <outputFile>${output.file}</outputFile>
+                    <outputFile>${output.overview.file}</outputFile>
 
-                    <dashboardsPath>${dashboards.dir}</dashboardsPath>
-                    <reportsPath>${reports.dir}</reportsPath>
+                    <dashboardsPath>${input.dashboards.dir}</dashboardsPath>
+                    <reportsPath>${input.reports.dir}</reportsPath>
 
-                    <securityPolicyFile>${security.policy.file}</securityPolicyFile>
+                    <securityPolicyFile>${input.security.policy.file}</securityPolicyFile>
 
                 </configuration>
                 <dependencies>
@@ -92,30 +92,30 @@
                                         inventory for the overview.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.inventory.path</property>
-                                    <message>You must set the parameter 'input.inventory.path' to specify the path of the input
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.file' to specify the path of the input
                                         inventory for the overview.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>security.policy.file</property>
-                                    <message>You must set the parameter 'security.policy.file' to specify the security policy file for overview generation.</message>
+                                    <property>input.security.policy.file</property>
+                                    <message>You must set the parameter 'input.security.policy.file' to specify the security policy file for overview generation.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>dashboards.dir</property>
+                                    <property>input.dashboards.dir</property>
                                     <message>
-                                        You must set the parameter 'dashboards.dir' to specify the directory of the dashboards to be copied.
+                                        You must set the parameter 'input.dashboards.dir' to specify the directory of the dashboards to be copied.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>reports.dir</property>
+                                    <property>input.reports.dir</property>
                                     <message>
-                                        You must set the parameter 'reports.dir' to specify the directory of the reports to be copied.
+                                        You must set the parameter 'input.reports.dir' to specify the directory of the reports to be copied.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>advisor.inventories.dir</property>
+                                    <property>input.advisor.inventories.dir</property>
                                     <message>
-                                        You must set the parameter 'advisor.inventories.dir' to specify the directory of the advisor inventories to be copied.
+                                        You must set the parameter 'input.advisor.inventories.dir' to specify the directory of the advisor inventories to be copied.
                                     </message>
                                 </requireProperty>
                             </rules>

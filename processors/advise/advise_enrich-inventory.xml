@@ -30,26 +30,26 @@
     <packaging>pom</packaging>
 
     <properties>
-        <activate.msrc>true</activate.msrc>
-        <activate.nvd>true</activate.nvd>
-        <activate.certfr>true</activate.certfr>
-        <activate.certeu>true</activate.certeu>
-        <activate.certsei>true</activate.certsei>
-        <activate.ghsa>true</activate.ghsa>
-        <activate.kev>true</activate.kev>
-        <activate.epss>true</activate.epss>
-        <activate.eol>true</activate.eol>
+        <param.activate.msrc>true</param.activate.msrc>
+        <param.activate.nvd>true</param.activate.nvd>
+        <param.activate.certfr>true</param.activate.certfr>
+        <param.activate.certeu>true</param.activate.certeu>
+        <param.activate.certsei>true</param.activate.certsei>
+        <param.activate.ghsa>true</param.activate.ghsa>
+        <param.activate.kev>true</param.activate.kev>
+        <param.activate.epss>true</param.activate.epss>
+        <param.activate.eol>true</param.activate.eol>
 
-        <activate.status>true</activate.status>
-        <activate.keywords>true</activate.keywords>
-        <activate.validation>false</activate.validation>
+        <param.activate.status>true</param.activate.status>
+        <param.activate.keywords>true</param.activate.keywords>
+        <param.activate.validation>false</param.activate.validation>
 
-        <dashboard.title>Vulnerability Assessment Dashboard</dashboard.title>
-        <dashboard.subtitle>${project.artifactId}</dashboard.subtitle>
-        <dashboard.footer>${project.artifactId}</dashboard.footer>
+        <param.dashboard.title>Vulnerability Assessment Dashboard</param.dashboard.title>
+        <param.dashboard.subtitle>${project.artifactId}</param.dashboard.subtitle>
+        <param.dashboard.footer>${project.artifactId}</param.dashboard.footer>
 
-        <vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</vulnerabilities.custom.dir>
-        <activate.vulnerabilities.custom>false</activate.vulnerabilities.custom>
+        <input.vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</input.vulnerabilities.custom.dir>
+        <param.activate.vulnerabilities.custom>false</param.activate.vulnerabilities.custom>
 
     </properties>
 
@@ -71,9 +71,9 @@
 
                             <entryId>vad-customization</entryId>
                             <values>
-                                <Title>${dashboard.title}</Title>
-                                <Subtitle>${dashboard.subtitle}</Subtitle>
-                                <Footer>${dashboard.footer}</Footer>
+                                <Title>${param.dashboard.title}</Title>
+                                <Subtitle>${param.dashboard.subtitle}</Subtitle>
+                                <Footer>${param.dashboard.footer}</Footer>
                             </values>
 
                             <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
@@ -89,31 +89,31 @@
                         <configuration>
                             <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
                             <inventoryOutputFile>${output.inventory.file}</inventoryOutputFile>
-                            <mirrorDirectory>${vulnerability.mirror.dir}</mirrorDirectory>
+                            <mirrorDirectory>${env.vulnerability.mirror.dir}</mirrorDirectory>
 
                             <writeIntermediateInventories>true</writeIntermediateInventories>
-                            <intermediateInventoriesDirectory>${processor.tmp.dir}</intermediateInventoriesDirectory>
+                            <intermediateInventoriesDirectory>${output.tmp.dir}</intermediateInventoriesDirectory>
                             <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
                             <securityPolicy>
                                 <files>
-                                    <file>${security.policy.file}</file>
+                                    <file>${input.security.policy.file}</file>
                                 </files>
                             </securityPolicy>
 
                             <correlationYamlEnrichment>
-                                <active>${activate.correlation}</active>
+                                <active>${param.activate.correlation}</active>
                                 <yamlFiles>
-                                    <file>${correlation.dir}</file>
+                                    <file>${input.correlation.dir}</file>
                                 </yamlFiles>
                             </correlationYamlEnrichment>
 
                             <cpeDerivationEnrichment>
-                                <active>${activate.nvd}</active>
+                                <active>${param.activate.nvd}</active>
                                 <maxCorrelatedCpePerArtifact>${ae.cpe.correlation.limit}</maxCorrelatedCpePerArtifact>
                             </cpeDerivationEnrichment>
 
                             <msVulnerabilitiesByProductEnrichment>
-                                <active>${activate.msrc}</active>
+                                <active>${param.activate.msrc}</active>
                             </msVulnerabilitiesByProductEnrichment>
 
                             <nvdMatchCveFromCpeEnrichment>
@@ -121,14 +121,14 @@
                             </nvdMatchCveFromCpeEnrichment>
 
                             <customVulnerabilitiesFromCpeEnrichment>
-                                <active>${activate.vulnerabilities.custom}</active>
+                                <active>${param.activate.vulnerabilities.custom}</active>
                                 <vulnerabilityFiles>
-                                    <file>${vulnerabilities.custom.dir}</file>
+                                    <file>${input.vulnerabilities.custom.dir}</file>
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFromCpeEnrichment>
 
                             <ghsaVulnerabilitiesEnrichment>
-                                <active>${activate.ghsa.correlation}</active>
+                                <active>${param.activate.ghsa.correlation}</active>
 
                                 <!-- active sources -->
                                 <maven>true</maven>
@@ -153,69 +153,69 @@
                             </ghsaVulnerabilitiesEnrichment>
 
                             <nvdCveFillDetailsEnrichment>
-                                <active>${activate.nvd}</active>
+                                <active>${param.activate.nvd}</active>
                             </nvdCveFillDetailsEnrichment>
 
                             <customVulnerabilitiesFillDetailsEnrichment>
-                                <active>${activate.vulnerabilities.custom}</active>
+                                <active>${param.activate.vulnerabilities.custom}</active>
                                 <vulnerabilityFiles>
-                                    <file>${vulnerabilities.custom.dir}</file>
+                                    <file>${input.vulnerabilities.custom.dir}</file>
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFillDetailsEnrichment>
 
                             <msrcAdvisorFillDetailsEnrichment>
-                                <active>${activate.msrc}</active>
+                                <active>${param.activate.msrc}</active>
                             </msrcAdvisorFillDetailsEnrichment>
 
                             <ghsaAdvisorFillDetailsEnrichment>
-                                <active>${activate.ghsa}</active>
+                                <active>${param.activate.ghsa}</active>
                             </ghsaAdvisorFillDetailsEnrichment>
 
                             <vulnerabilityStatusEnrichment>
                                 <id>EnrichStatus</id>
-                                <active>${activate.status}</active>
+                                <active>${param.activate.status}</active>
                                 <statusFiles>
-                                    <file>${assessment.dir}</file>
+                                    <file>${input.assessment.dir}</file>
                                 </statusFiles>
                                 <activeLabels>${assessment.labels}</activeLabels>
                             </vulnerabilityStatusEnrichment>
 
                             <vulnerabilityKeywordsEnrichment>
-                                <active>${activate.keywords}</active>
+                                <active>${param.activate.keywords}</active>
                                 <yamlFiles>
-                                    <file>${context.dir}</file>
+                                    <file>${input.context.dir}</file>
                                 </yamlFiles>
                                 <activeLabels>${keywords.labels}</activeLabels>
                             </vulnerabilityKeywordsEnrichment>
 
                             <certFrAdvisorEnrichment>
-                                <active>${activate.certfr}</active>
+                                <active>${param.activate.certfr}</active>
                             </certFrAdvisorEnrichment>
 
                             <certEuAdvisorEnrichment>
-                                <active>${activate.certeu}</active>
+                                <active>${param.activate.certeu}</active>
                             </certEuAdvisorEnrichment>
 
                             <certSeiAdvisorEnrichment>
-                                <active>${activate.certsei}</active>
+                                <active>${param.activate.certsei}</active>
                             </certSeiAdvisorEnrichment>
 
                             <kevEnrichment>
-                                <active>${activate.kev}</active>
+                                <active>${param.activate.kev}</active>
                             </kevEnrichment>
 
                             <epssEnrichment>
-                                <active>${activate.epss}</active>
+                                <active>${param.activate.epss}</active>
                             </epssEnrichment>
 
                             <eolEnrichment>
-                                <active>${activate.eol}</active>
+                                <active>${param.activate.eol}</active>
                                 <warningThresholdDaysSupport>180</warningThresholdDaysSupport>
                                 <warningThresholdDaysExtendedSupport>180</warningThresholdDaysExtendedSupport>
                             </eolEnrichment>
 
                             <inventoryValidationEnrichment>
-                                <active>${activate.validation}</active>
+                                <active>${param.activate.validation}</active>
                                 <failOnValidationErrors>false</failOnValidationErrors>
                                 <addAsCorrelationWarnings>true</addAsCorrelationWarnings>
 
@@ -264,38 +264,38 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>context.dir</property>
-                                    <message>You must set the parameter 'context.dir' to locate the context data that is
+                                    <property>input.context.dir</property>
+                                    <message>You must set the parameter 'input.context.dir' to locate the context data that is
                                         used for enrichment.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>assessment.dir</property>
-                                    <message>You must set the parameter 'assessment.dir' to locate the assessment data
+                                    <property>input.assessment.dir</property>
+                                    <message>You must set the parameter 'input.assessment.dir' to locate the assessment data
                                         that is used for enrichment.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>security.policy.file</property>
-                                    <message>You must set the parameter 'security.policy.file' to specify the security
+                                    <property>input.security.policy.file</property>
+                                    <message>You must set the parameter 'input.security.policy.file' to specify the security
                                         policy used for enrichment.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>correlation.dir</property>
-                                    <message>You must set the parameter 'correlation.dir' to locate the correlation data
+                                    <property>input.correlation.dir</property>
+                                    <message>You must set the parameter 'input.correlation.dir' to locate the correlation data
                                         that is used for enrichment.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>vulnerability.mirror.dir</property>
-                                    <message>You must set the parameter 'vulnerability.mirror.dir' to locate the
+                                    <property>env.vulnerability.mirror.dir</property>
+                                    <message>You must set the parameter 'env.vulnerability.mirror.dir' to locate the
                                         vulnerability mirror data local on the system.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>processor.tmp.dir</property>
-                                    <message>You must set the parameter 'processor.tmp.dir' to specify where temporary
+                                    <property>output.tmp.dir</property>
+                                    <message>You must set the parameter 'output.tmp.dir' to specify where temporary
                                         files like intermediate inventories should be saved.
                                     </message>
                                 </requireProperty>

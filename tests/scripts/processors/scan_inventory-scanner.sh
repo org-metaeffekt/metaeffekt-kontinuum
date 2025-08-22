@@ -43,8 +43,8 @@ fi
 CMD=(mvn -f "$PROCESSORS_DIR/scan/scan_inventory-scanner.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
-CMD+=("-Danalysis.base.dir=$ANALYSIS_BASE_DIR")
-CMD+=("-Dproperties.file=$PROPERTIES_FILE")
+CMD+=("-Dinput.output.analysis.base.dir=$ANALYSIS_BASE_DIR")
+CMD+=("-Dinput.properties.file=$PROPERTIES_FILE")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

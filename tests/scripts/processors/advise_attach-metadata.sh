@@ -43,11 +43,11 @@ fi
 CMD=(mvn -f "$PROCESSORS_DIR/advise/advise_attach-metadata.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
-CMD+=("-Dmetadata.asset.id=$METADATA_ASSET_ID")
-CMD+=("-Dmetadata.asset.name=$METADATA_ASSET_NAME")
-CMD+=("-Dmetadata.asset.version=$METADATA_ASSET_VERSION")
-CMD+=("-Dmetadata.asset.path=$METADATA_ASSET_PATH")
-CMD+=("-Dmetadata.asset.type=$METADATA_ASSET_TYPE")
+CMD+=("-Dparam.metadata.asset.id=$METADATA_ASSET_ID")
+CMD+=("-Dparam.metadata.asset.name=$METADATA_ASSET_NAME")
+CMD+=("-Dparam.metadata.asset.version=$METADATA_ASSET_VERSION")
+CMD+=("-Dparam.metadata.asset.path=$METADATA_ASSET_PATH")
+CMD+=("-Dparam.metadata.asset.type=$METADATA_ASSET_TYPE")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

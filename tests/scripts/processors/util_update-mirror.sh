@@ -43,9 +43,9 @@ fi
 
 # Run maven command
 CMD=(mvn -f "$PROCESSORS_DIR/util/util_update-mirror.xml" compile -P withoutProxy)
-CMD+=("-Dmirror.target.dir=$MIRROR_TARGET_DIR")
-CMD+=("-Dmirror.archive.url=$MIRROR_ARCHIVE_URL")
-CMD+=("-Dmirror.archive.name=$MIRROR_ARCHIVE_NAME")
+CMD+=("-Doutput.vulnerability.mirror.dir=$MIRROR_TARGET_DIR")
+CMD+=("-Dparam.mirror.archive.url=$MIRROR_ARCHIVE_URL")
+CMD+=("-Dparam.mirror.archive.name=$MIRROR_ARCHIVE_NAME")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

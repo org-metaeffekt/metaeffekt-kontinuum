@@ -45,10 +45,10 @@
                         <configuration>
                             <input>${input.bom.file}</input>
                             <output>${output.inventory.file}</output>
-                            <includeMetadataComponent>${include.metadata.component}</includeMetadataComponent>
-                            <deriveAttributesFromPurl>${derive.attributes.from.purl}</deriveAttributesFromPurl>
-                            <includeAssets>${include.assets}</includeAssets>
-                            <includeLicenses>${include.licenses}</includeLicenses>
+                            <includeMetadataComponent>${param.include.metadata.component.enabled}</includeMetadataComponent>
+                            <deriveAttributesFromPurl>${param.derive.attributes.from.purl.enabled}</deriveAttributesFromPurl>
+                            <includeAssets>${param.include.assets.enabled}</includeAssets>
+                            <includeLicenses>${param.include.licenses.enabled}</includeLicenses>
                         </configuration>
                     </execution>
                 </executions>

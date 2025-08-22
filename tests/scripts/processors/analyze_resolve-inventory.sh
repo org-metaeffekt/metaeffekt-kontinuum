@@ -43,9 +43,9 @@ fi
 CMD=(mvn -f "$PROCESSORS_DIR/analyze/analyze_resolve-inventory.xml" process-resources)
 CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
 CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
-CMD+=("-Ddownload.base.dir=$DOWNLOAD_BASE_DIR")
-CMD+=("-Dartifact.resolver.config.file=$ARTIFACT_RESOLVER_CONFIG")
-CMD+=("-Dartifact.resolver.proxy.file=$PROXY_CONFIG")
+CMD+=("-Denv.maven.index.dir=$DOWNLOAD_BASE_DIR")
+CMD+=("-Dinput.artifact.resolver.config.file=$ARTIFACT_RESOLVER_CONFIG")
+CMD+=("-Dinput.artifact.resolver.proxy.file=$PROXY_CONFIG")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

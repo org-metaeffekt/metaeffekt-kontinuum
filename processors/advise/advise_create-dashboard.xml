@@ -44,29 +44,29 @@
                         </goals>
                         <configuration>
                             <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
-                            <mirrorDirectory>${vulnerability.mirror.dir}</mirrorDirectory>
+                            <mirrorDirectory>${env.vulnerability.mirror.dir}</mirrorDirectory>
 
                             <vulnerabilityAssessmentDashboardEnrichment>
                                 <active>active</active>
                                 <outputDashboardFile>${output.dashboard.file}</outputDashboardFile>
-                                <maximumVulnerabilitiesPerDashboardCount>${maximum.vulnerabilities.per.dashboard.count}</maximumVulnerabilitiesPerDashboardCount>
-                                <vulnerabilityIncludeFilter>${vulnerability.include.filter}</vulnerabilityIncludeFilter>
-                                <maximumCpeForTimelinesPerVulnerability>${maximum.cpe.for.timelines.per.vulnerability}</maximumCpeForTimelinesPerVulnerability>
-                                <maximumVulnerabilitiesPerTimeline>${maximum.vulnerabilities.per.timeline}</maximumVulnerabilitiesPerTimeline>
-                                <maximumVersionsPerTimeline>${maximum.versions.per.timeline}</maximumVersionsPerTimeline>
-                                <maximumTimeSpentOnTimelines>${maximum.time.spent.on.timelines}</maximumTimeSpentOnTimelines>
-                                <maximumTimeSpentPerTimeline>${maximum.time.spent.per.timeline}</maximumTimeSpentPerTimeline>
-                                <vulnerabilityTimelinesGlobalEnabled>${vulnerability.timelines.global.enabled}</vulnerabilityTimelinesGlobalEnabled>
-                                <vulnerabilityTimelineHideIrrelevantVersions>${vulnerability.timeline.hide.irrelevant.versions}</vulnerabilityTimelineHideIrrelevantVersions>
-                                <failOnVulnerabilityWithoutSpecifiedRisk>${fail.on.vulnerability.without.specified.risk}</failOnVulnerabilityWithoutSpecifiedRisk>
-                                <failOnUnreviewedAdvisories>${fail.on.unreviewed.advisories}</failOnUnreviewedAdvisories>
-                                <vulnerabilitySvgChartInterpolationMethod>${vulnerability.svg.chart.interpolation.method}</vulnerabilitySvgChartInterpolationMethod>
-                                <detailLevels>${detail.levels}</detailLevels>
+                                <maximumVulnerabilitiesPerDashboardCount>${param.max.vulnerabilities.per.dashboard}</maximumVulnerabilitiesPerDashboardCount>
+                                <vulnerabilityIncludeFilter>${param.vulnerability.include.filter}</vulnerabilityIncludeFilter>
+                                <maximumCpeForTimelinesPerVulnerability>${param.max.cpe.for.timelines.per.vulnerability}</maximumCpeForTimelinesPerVulnerability>
+                                <maximumVulnerabilitiesPerTimeline>${param.max.vulnerabilities.per.timeline }</maximumVulnerabilitiesPerTimeline>
+                                <maximumVersionsPerTimeline>${param.max.versions.per.timeline}</maximumVersionsPerTimeline>
+                                <maximumTimeSpentOnTimelines>${param.max.time.spent.on.timelines}</maximumTimeSpentOnTimelines>
+                                <maximumTimeSpentPerTimeline>${param.max.time.spent.per.timeline}</maximumTimeSpentPerTimeline>
+                                <vulnerabilityTimelinesGlobalEnabled>${param.vulnerability.timelines.global.enabled}</vulnerabilityTimelinesGlobalEnabled>
+                                <vulnerabilityTimelineHideIrrelevantVersions>${param.timeline.hide.irrelevant.versions.enabled}</vulnerabilityTimelineHideIrrelevantVersions>
+                                <failOnVulnerabilityWithoutSpecifiedRisk>${param.fail.on.vulnerability.without.specified.risk.enabled}</failOnVulnerabilityWithoutSpecifiedRisk>
+                                <failOnUnreviewedAdvisories>${param.fail.on.unreviewed.advisories.enabled}</failOnUnreviewedAdvisories>
+                                <vulnerabilitySvgChartInterpolationMethod>${param.vulnerability.svg.chart.interpolation.method}</vulnerabilitySvgChartInterpolationMethod>
+                                <detailLevels>${param.detail.levels}</detailLevels>
                             </vulnerabilityAssessmentDashboardEnrichment>
 
                             <securityPolicy>
                                 <files>
-                                    <file>${security.policy.file}</file>
+                                    <file>${input.security.policy.file}</file>
                                 </files>
                             </securityPolicy>
                         </configuration>
@@ -98,14 +98,14 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>vulnerability.mirror.dir</property>
-                                    <message>You must set the parameter 'vulnerability.mirror.dir' to locate the
+                                    <property>env.vulnerability.mirror.dir</property>
+                                    <message>You must set the parameter 'env.vulnerability.mirror.dir' to locate the
                                         vulnerability mirror data on the local system.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>security.policy.file</property>
-                                    <message>You must set the parameter 'security.policy.file' to specify which security
+                                    <property>input.security.policy.file</property>
+                                    <message>You must set the parameter 'input.security.policy.file' to specify which security
                                         policy will be used for dashboard creation.
                                     </message>
                                 </requireProperty>

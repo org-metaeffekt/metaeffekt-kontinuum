@@ -53,12 +53,12 @@
                                 <file>${input.inventory.compare.file}</file>
                             </referenceInventories2>
 
-                            <outputInventoryDiff1to2>${output.inventory.dir}/diff/${inventory.version}-to-${inventory.compare.version}-comparison.xls</outputInventoryDiff1to2>
-                            <outputInventoryDiff2to1>${output.inventory.dir}/diff/${inventory.compare.version}-to-${inventory.version}-comparison.xls</outputInventoryDiff2to1>
+                            <outputInventoryDiff1to2>${output.inventory.dir}/diff/${param.inventory.version}-to-${param.inventory.compare.version}-comparison.xls</outputInventoryDiff1to2>
+                            <outputInventoryDiff2to1>${output.inventory.dir}/diff/${param.inventory.compare.version}-to-${param.inventory.version}-comparison.xls</outputInventoryDiff2to1>
 
                             <securityPolicy>
                                 <files>
-                                    <file>${security.policy.file}</file>
+                                    <file>${input.security.policy.file}</file>
                                 </files>
                             </securityPolicy>
                         </configuration>
@@ -99,22 +99,22 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>inventory.version</property>
+                                    <property>param.inventory.version</property>
                                     <message>
-                                        You must set the parameter 'inventory.version' to specify the version
+                                        You must set the parameter 'param.inventory.version' to specify the version
                                         of the base inventory which will be used for naming the output files.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>inventory.compare.version</property>
+                                    <property>param.inventory.compare.version</property>
                                     <message>
-                                        You must set the parameter 'inventory.compare.version' to specify the version
+                                        You must set the parameter 'param.inventory.compare.version' to specify the version
                                         of the compare inventory which will be used for naming the output files.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>security.policy.file</property>
-                                    <message>You must set the parameter 'security.policy.file' to specify the security
+                                    <property>input.security.policy.file</property>
+                                    <message>You must set the parameter 'input.security.policy.file' to specify the security
                                         policy used for enrichment.
                                     </message>
                                 </requireProperty>
