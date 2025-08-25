@@ -47,7 +47,7 @@
                             <mirrorDirectory>${env.vulnerability.mirror.dir}</mirrorDirectory>
 
                             <vulnerabilityAssessmentDashboardEnrichment>
-                                <active>active</active>
+                                <active>true</active>
                                 <outputDashboardFile>${output.dashboard.file}</outputDashboardFile>
                                 <maximumVulnerabilitiesPerDashboardCount>${param.max.vulnerabilities.per.dashboard}</maximumVulnerabilitiesPerDashboardCount>
                                 <vulnerabilityIncludeFilter>${param.vulnerability.include.filter}</vulnerabilityIncludeFilter>

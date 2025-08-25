@@ -14,16 +14,17 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Parameter                      | Required        | Description                                                                                         |
-|--------------------------------|-----------------|-----------------------------------------------------------------------------------------------------|
-| output.dir                     | yes             | The directory where outputs are copied to. This will contain the .pdf file of the document.         | 
-| input.asset.descriptor.dir     | yes             | The directory where the asset descriptors are located.                                              |
-| input.asset.descriptor.file    | yes             | The file of the asset descriptor used for the document.                                             | 
-| input.inventory.file           | yes             | The path of the input inventory for the document.                                                   |
-| input.reference.inventory.file | yes             | The path of the reference inventory for the document.                                               |
-| input.reference.license.dir    | yes             | The path to the reference license directory.                                                        |
-| input.reference.component.dir  | yes             | The path to the reference component directory.                                                      |
-| input.security.policy.dir      | no (VR/CR only) | The directory containing the security policy files.                                                 | 
+| Parameter                      | Required        | Description                                             |
+|--------------------------------|-----------------|---------------------------------------------------------|
+| input.asset.descriptor.dir     | yes             | The directory where the asset descriptors are located.  |
+| input.asset.descriptor.path    | yes             | The path of the asset descriptor used for the document. | 
+| input.inventory.file           | yes             | The path of the input inventory for the document.       |
+| input.reference.inventory.file | yes             | The path of the reference inventory for the document.   |
+| input.reference.license.dir    | yes             | The path to the reference license directory.            |
+| input.reference.component.dir  | yes             | The path to the reference component directory.          |
+| input.templates.dir            | yes             | The directory containing the document templates.        |
+| input.security.policy.dir      | no (VR/CR only) | The directory containing the security policy files.     | 
+| output.document.file           | yes             | The file where to store the resulting output document.  | 
 
 ### Parameters
 | Parameter                    | Required        | Description                                                                                                                                                                                     |
@@ -41,5 +42,12 @@ of this repository.
 ### Environment
 | Parameter                    | Required           | Description                                                                                                  |
 |------------------------------|--------------------|--------------------------------------------------------------------------------------------------------------|
-| env.workbench.base.path      | yes                | The path to the workbench. This is used to form relative paths to the inventories if they are not absolute.  | 
+| env.workbench.base.dir       | yes                | The path to the workbench. This is used to form relative paths to the inventories if they are not absolute.  | 
 | env.vulnerability.mirror.dir | yes (VR/CR only)   | The input database containing the vulnerability data.                                                        |
+
+# FIXMEs
+
+* do we require the asset descriptor separated into two parameters?
+* asset.* should be optional; what about product.*; could be also optional falling back on asset
+* the input inventory path should be redundant; maybe required as placeholder
+* the reference inventory path should be redundant; maybe required as placeholder

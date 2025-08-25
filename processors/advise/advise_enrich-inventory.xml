@@ -36,6 +36,7 @@
         <param.activate.certeu>true</param.activate.certeu>
         <param.activate.certsei>true</param.activate.certsei>
         <param.activate.ghsa>true</param.activate.ghsa>
+        <param.activate.ghsa.correlation>true</param.activate.ghsa.correlation>
         <param.activate.kev>true</param.activate.kev>
         <param.activate.epss>true</param.activate.epss>
         <param.activate.eol>true</param.activate.eol>
@@ -117,7 +118,7 @@
                             </msVulnerabilitiesByProductEnrichment>
 
                             <nvdMatchCveFromCpeEnrichment>
-                                <active>false</active> <!-- currently disabled -->
+                                <active>${param.activate.nvd}</active>
                             </nvdMatchCveFromCpeEnrichment>
 
                             <customVulnerabilitiesFromCpeEnrichment>

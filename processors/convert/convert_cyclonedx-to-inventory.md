@@ -1,4 +1,4 @@
-# (Convert) CycloneDX to Inventory
+# Convert - CycloneDX to Inventory
 
 Used to convert a CycloneDX document into an inventory.
 
