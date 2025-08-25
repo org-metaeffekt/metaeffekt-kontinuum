@@ -53,11 +53,7 @@
                     <dashboardsPath>${input.dashboards.dir}</dashboardsPath>
                     <reportsPath>${input.reports.dir}</reportsPath>
 
-                    <securityPolicy>
-                        <files>
-                            <file>${input.security.policy.file}</file>
-                        </files>
-                    </securityPolicy>
+                    <securityPolicyFile>${input.security.policy.file}</securityPolicyFile>
 
                 </configuration>
                 <dependencies>
