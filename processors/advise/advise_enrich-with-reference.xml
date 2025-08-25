@@ -67,6 +67,10 @@
                             <!-- FIXME: we should also enable to produce a file here -->
                             <targetInventoryDir>${output.inventory.dir}</targetInventoryDir>
                             <targetInventoryPath>${output.inventory.path}</targetInventoryPath>
+
+                            <securityPolicy>
+                                <failOnMissingPolicyFile>false</failOnMissingPolicyFile>
+                            </securityPolicy>
                         </configuration>
                     </execution>
                 </executions>

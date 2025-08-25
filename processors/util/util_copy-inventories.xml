@@ -30,6 +30,10 @@
     <artifactId>util_copy-inventories</artifactId>
     <packaging>pom</packaging>
 
+    <properties>
+        <input.base.dir>.</input.base.dir>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -43,7 +47,7 @@
                             <target>
                                 <mkdir dir="${output.inventories.dir}"/>
                                 <copy todir="${output.inventories.dir}">
-                                    <filelist dir="." files="${input.inventories.list}" />
+                                    <filelist dir="${input.base.dir}" files="${input.inventories.list}" />
                                 </copy>
                             </target>
                         </configuration>

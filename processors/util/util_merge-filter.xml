@@ -47,6 +47,11 @@
                             <referenceInventories>${input.reference.inventories.dir}</referenceInventories>
                             <vulnerabilityAdvisoryFilter>${param.vulnerability.advisory.filter}</vulnerabilityAdvisoryFilter>
                             <inventoryOutputFile>${output.filtered.inventory.file}</inventoryOutputFile>
+                            <securityPolicy>
+                                <files>
+                                    <file>${input.security.policy.file}</file>
+                                </files>
+                            </securityPolicy>
                         </configuration>
                     </execution>
                 </executions>
