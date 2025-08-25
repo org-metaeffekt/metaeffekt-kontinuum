@@ -47,7 +47,7 @@
                             <executable>mvn</executable>
                             <arguments>
                                 <argument>-f</argument>
-                                <argument>../templates/pom.xml</argument>
+                                <argument>${input.templates.dir}/pom.xml</argument>
                                 <argument>clean</argument>
                                 <argument>install</argument>
                                 <argument>-P${param.document.type}_${param.document.language}</argument>
@@ -67,14 +67,14 @@
                                 <argument>-Dreference.component.path=${input.reference.component.dir}</argument>
                                 <argument>-Dcomputed.inventory.path=${computed.inventory.path}</argument>
                                 <argument>-Dasset.descriptor.basedir=${input.asset.descriptor.dir}</argument>
-                                <argument>-Dasset.descriptor.file=${input.asset.descriptor.file}</argument>
+                                <argument>-Dasset.descriptor.path=${input.asset.descriptor.path}</argument>
 
                                 <argument>-Dpolicy.basedir=${input.security.policy.dir}</argument>
                                 <argument>-Dinput.database=${env.vulnerability.mirror.dir}</argument>
                                 <argument>-Doverview.advisors=${param.overview.advisors}</argument>
 
-                                <argument>-Dworkbench.base.path=${env.workbench.base.path}</argument>
-                                <argument>-Doutput.dir=${output.dir}</argument>
+                                <argument>-Dworkbench.base.dir=${env.workbench.base.dir}</argument>
+                                <argument>-Doutput.document.file=${output.document.file}</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -133,8 +133,8 @@
                                     <message>You must set the parameter 'input.reference.component.dir' to specify the reference component path of the reference inventory.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.asset.descriptor.file</property>
-                                    <message>You must set the parameter 'input.asset.descriptor.file' to specify the directory of the asset-descriptors.</message>
+                                    <property>input.asset.descriptor.path</property>
+                                    <message>You must set the parameter 'input.asset.descriptor.path' to specify the directory of the asset-descriptors.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.asset.descriptor.dir</property>
@@ -149,12 +149,12 @@
                                     <message>You must set the parameter 'param.document.language' to specify the language of the output document.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>env.workbench.base.path</property>
-                                    <message>You must set the parameter 'env.workbench.base.path' to specify the path to your workbench.</message>
+                                    <property>env.workbench.base.dir</property>
+                                    <message>You must set the parameter 'env.workbench.base.dir' to specify the path to your workbench.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.dir</property>
-                                    <message>You must set the parameter 'output.dir' to specify the directory where outputs are generated.</message>
+                                    <property>output.document.file</property>
+                                    <message>You must set the parameter 'output.document.file' to specify the target for generating the document.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

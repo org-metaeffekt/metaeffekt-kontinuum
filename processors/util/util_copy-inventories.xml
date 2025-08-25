@@ -24,7 +24,7 @@
         <groupId>com.metaeffekt.workbench</groupId>
         <artifactId>ae-workbench-parent</artifactId>
         <version>WORKBENCH-SNAPSHOT</version>
-        <relativePath>ae-workbench-parent.xml</relativePath>
+        <relativePath>../ae-workbench-parent.xml</relativePath>
     </parent>
 
     <artifactId>util_copy-inventories</artifactId>

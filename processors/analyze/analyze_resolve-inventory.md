@@ -1,4 +1,4 @@
-### (Resolved) Inventory Resolved
+### Resolved - Inventory Resolved
 
 Used to resolve all artifacts contained in an inventory and gather additional information on those
 artifacts.

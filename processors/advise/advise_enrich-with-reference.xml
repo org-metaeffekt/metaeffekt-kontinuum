@@ -48,6 +48,7 @@
                         </goals>
                         <configuration>
                             <inventory>${input.inventory.file}</inventory>
+
                             <sourceInventoryDir>${input.reference.inventory.dir}</sourceInventoryDir>
                             <sourceInventoryIncludes>*.xls,*.xlsx,*.ser</sourceInventoryIncludes>
 
@@ -63,8 +64,9 @@
                             <failOnDowngrade>${advisor.validation}</failOnDowngrade>
                             <failOnUpgrade>false</failOnUpgrade>
 
+                            <!-- FIXME: we should also enable to produce a file here -->
                             <targetInventoryDir>${output.inventory.dir}</targetInventoryDir>
-                            <targetInventoryPath>${output.inventory.name}</targetInventoryPath>
+                            <targetInventoryPath>${output.inventory.path}</targetInventoryPath>
                         </configuration>
                     </execution>
                 </executions>
@@ -93,8 +95,8 @@
                                         where the output inventory is generated.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory.name</property>
-                                    <message>You must set the parameter 'output.inventory.name' to specify the name of
+                                    <property>output.inventory.path</property>
+                                    <message>You must set the parameter 'output.inventory.path' to specify the path of
                                         the output inventory.</message>
                                 </requireProperty>
                                 <requireProperty>
