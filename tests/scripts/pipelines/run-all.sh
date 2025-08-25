@@ -25,24 +25,37 @@ SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 
-# Script Pipeline
-sh "$PROCESSOR_SCRIPTS_DIR/util_create-diff.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util_merge-inventories.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util_transform-inventories.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util_update-mirror.sh"
+# Advise
+sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_attach-metadata.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_create-dashboard.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-inventory.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-with-reference.sh"
 
-# requires service
-# sh "$PROCESSOR_SCRIPTS_DIR/util_portfolio-transfer.sh"
+# Analyze
+sh "$PROCESSOR_SCRIPTS_DIR/analyze/analyze_resolve-inventory.sh"
 
-sh "$PROCESSOR_SCRIPTS_DIR/util_aggregate-sources.sh"
+# Convert
+sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_cyclonedx-to-inventory.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-cyclonedx.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-spdx.sh"
 
-sh "$PROCESSOR_SCRIPTS_DIR/analyze_resolve-inventory.sh"
+# Portfolio
+sh "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_copy-resources.sh"
+# sh "$PROCESSOR_SCRIPTS_DIR/portfolio_create-overview.sh" currently disabled
 
-sh "$PROCESSOR_SCRIPTS_DIR/convert_inventory-to-cyclonedx.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/convert_inventory-to-spdx.sh"
+# Scan
+sh "$PROCESSOR_SCRIPTS_DIR/scan/scan_scan-inventory.sh"
 
-sh "$PROCESSOR_SCRIPTS_DIR/advise_attach-metadata.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/advise_enrich-inventory.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/advise_create-dashboard.sh"
+# Util
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-sources.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_copy-inventories.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_create-diff.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_merge-filter.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_merge-inventories.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_portfolio-transfer.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_transform-inventories.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_validate-reference-inventory.sh"
 
-sh "$PROCESSOR_SCRIPTS_DIR/scan_scan-inventory.sh"
+
+

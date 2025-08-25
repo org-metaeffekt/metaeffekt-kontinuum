@@ -26,7 +26,7 @@
         <relativePath>../ae-workbench-parent.xml</relativePath>
     </parent>
 
-    <artifactId>transform-merge-filter</artifactId>
+    <artifactId>util_merge-filter</artifactId>
     <packaging>pom</packaging>
 
     <build>
@@ -44,9 +44,11 @@
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <referenceInventories>${inventories}</referenceInventories>
-                            <vulnerabilityAdvisoryFilter>${vulnerabilityAdvisoryFilter}</vulnerabilityAdvisoryFilter>
-                            <inventoryOutputFile>${filteredInventoryFile}</inventoryOutputFile>
+                            <referenceInventories>${input.reference.inventories.dir}</referenceInventories>
+                            <vulnerabilityAdvisoryFilter>${param.vulnerability.advisory.filter}</vulnerabilityAdvisoryFilter>
+                            <inventoryOutputFile>${output.filtered.inventory.file}</inventoryOutputFile>
+
+                            <securityPolicyFile>${input.security.policy.file}</securityPolicyFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -64,15 +66,21 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>filteredInventoryFile</property>
+                                    <property>input.reference.inventories.dir</property>
                                     <message>
-                                        You must set the parameter 'filteredInventoryFile' to specify the file of the filtered inventory.
+                                        You must set the parameter 'input.reference.inventories.dir' to specify the file of the filtered inventory.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>vulnerabilityAdvisoryFilter</property>
+                                    <property>output.filtered.inventory.file</property>
                                     <message>
-                                        You must set the parameter 'vulnerabilityAdvisoryFilter' to specify the advisor to filter the inventory by.
+                                        You must set the parameter 'output.filtered.inventory.file' to specify the file of the filtered inventory.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.vulnerability.advisory.filter</property>
+                                    <message>
+                                        You must set the parameter 'param.vulnerability.advisory.filter' to specify the advisor to filter the inventory by.
                                     </message>
                                 </requireProperty>
                             </rules>

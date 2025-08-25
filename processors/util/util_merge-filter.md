@@ -1,4 +1,4 @@
-# Util - Merge & Filter
+# Util - Merge and Filter
 
 This process merges inventories based on an individual security advisor and filters them by CERT-FR.
 
@@ -11,6 +11,7 @@ of this repository.
 | Parameter                       | Required | Description                                                                |
 |---------------------------------|----------|----------------------------------------------------------------------------|
 | input.reference.inventories.dir | yes      | The directory containing all inventories which will be merged and filtered |
+| input.security.policy.file      | yes      | The security policy file needed to filter the inventory.                   |
 | output.filtered.inventory.file  | yes      | The output inventory file                                                  |
 
 ### Parameters
