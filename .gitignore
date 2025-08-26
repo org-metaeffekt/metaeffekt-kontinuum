@@ -4,3 +4,5 @@ tests/scripts/target
 
 tests/resources/portfolio-manager/client/ae-portfolio-manager-cli.jar
 tests/resources/portfolio-manager/service/ae-portfolio-manager-service.jar
+
+**/target/

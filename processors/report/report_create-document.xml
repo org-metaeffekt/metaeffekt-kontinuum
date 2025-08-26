@@ -30,6 +30,11 @@
     <artifactId>report_create-document</artifactId>
     <packaging>pom</packaging>
 
+    <properties>
+        <param.property.selector.classification>DEFAULT</param.property.selector.classification>
+        <param.property.selector.control>DEFAULT</param.property.selector.control>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -47,7 +52,7 @@
                             <executable>mvn</executable>
                             <arguments>
                                 <argument>-f</argument>
-                                <argument>${input.templates.dir}/pom.xml</argument>
+                                <argument>${param.template.dir}/pom.xml</argument>
                                 <argument>clean</argument>
                                 <argument>install</argument>
                                 <argument>-P${param.document.type}_${param.document.language}</argument>
@@ -71,10 +76,19 @@
 
                                 <argument>-Dpolicy.basedir=${input.security.policy.dir}</argument>
                                 <argument>-Dinput.database=${env.vulnerability.mirror.dir}</argument>
+
                                 <argument>-Doverview.advisors=${param.overview.advisors}</argument>
 
-                                <argument>-Dworkbench.base.dir=${env.workbench.base.dir}</argument>
                                 <argument>-Doutput.document.file=${output.document.file}</argument>
+
+                                <argument>-Dproperty.selector.organization=${param.property.selector.organization}</argument>
+                                <argument>-Dproperty.selector.classification=${param.property.selector.classification}</argument>
+                                <argument>-Dproperty.selector.control=${param.property.selector.control}</argument>
+                                <argument>-Dproperty.selector.language=${param.document.language}</argument>
+                                <argument>-Dtemplate.dir=${param.template.dir}</argument>
+
+                                <argument>-Dworkbench.processors.dir=${env.workbench.processors.dir}</argument>
+                                <argument>-Dkontinuum.processors.dir=${env.kontinuum.processors.dir}</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -149,12 +163,20 @@
                                     <message>You must set the parameter 'param.document.language' to specify the language of the output document.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>env.workbench.base.dir</property>
-                                    <message>You must set the parameter 'env.workbench.base.dir' to specify the path to your workbench.</message>
+                                    <property>env.workbench.processors.dir</property>
+                                    <message>You must set the parameter 'env.workbench.processors.dir' to specify the path to the workbench processors.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.kontinuum.processors.dir</property>
+                                    <message>You must set the parameter 'env.kontinuum.processors.dir' to specify the path to the kontinuum processors.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.document.file</property>
                                     <message>You must set the parameter 'output.document.file' to specify the target for generating the document.</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.property.selector.organization</property>
+                                    <message>You must set the parameter 'param.property.selector.organization' to select additional resources required by the document template.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
