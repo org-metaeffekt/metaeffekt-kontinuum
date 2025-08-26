@@ -25,6 +25,17 @@ SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 
+# Util
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-sources.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_copy-inventories.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_create-diff.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_merge-filter.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_merge-inventories.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_portfolio-transfer.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_transform-inventories.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_validate-reference-inventory.sh"
+
 # Advise
 sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_attach-metadata.sh"
 sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_create-dashboard.sh"
@@ -45,17 +56,6 @@ sh "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_copy-resources.sh"
 
 # Scan
 sh "$PROCESSOR_SCRIPTS_DIR/scan/scan_scan-inventory.sh"
-
-# Util
-sh "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-sources.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util/util_copy-inventories.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util/util_create-diff.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util/util_merge-filter.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util/util_merge-inventories.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util/util_portfolio-transfer.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util/util_transform-inventories.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/util/util_validate-reference-inventory.sh"
 
 
 
