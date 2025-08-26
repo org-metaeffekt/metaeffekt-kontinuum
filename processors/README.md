@@ -2,21 +2,21 @@
 
 ## Purpose and Function
 
-This folder contains a set of maven POM files (ending with .xml) and a set of markdown files (ending with .md) 
-describing the purpose and details of the POM files. 
+This folder contains a set of maven POM files (ending with .xml) and a set of markdown files (ending with .md)
+describing the purpose and details of the POM files.
 
-Each POM file addresses a particular task in the pipeline. The POM files serve as blueprint for a task and can be 
+Each POM file addresses a particular task in the pipeline. The POM files serve as blueprint for a task and can be
 parameterized and executed. Please check the markdown files on the individual POMs for details.
 
 ![](../docs/concept-processor.png)
 
-Each processor has user-controlled input, output and other params and environment settings. The user does not need a 
-full understanding of the implementation of each processor. For detailed examples of how to control the processors and 
-structure a project, please refer to the scripts at test/scripts/scripts-sh. The scripts show a basic execution of each 
-processor with minimal parameterization, for optional parameters to further control each processor, please refer to the 
+Each processor has user-controlled input, output and other params and environment settings. The user does not need a
+full understanding of the implementation of each processor. For detailed examples of how to control the processors and
+structure a project, please refer to the shell scripts at `tests/scripts`. The scripts show a basic execution of each
+processor with minimal parameterization, for optional parameters to further control each processor, please refer to the
 markdown documentation of each processor.
 
-The POM files are platform independent configurations that can be combined into a workflow. The workflows are either 
+The POM files are platform independent configurations that can be combined into a workflow. The workflows are either
 defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.e. Jenkins pipelines).
 
 ## Available Processors
@@ -35,14 +35,15 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 * Validate Reference Inventory [util_validate-reference-inventory](util/util_validate-reference-inventory.md)
 
 ### Analyze
-* Resolve Artifacts in Inventory [analyze_resolve-inventory](analyze_resolve-inventory.md)
+
+* Resolve Artifacts in Inventory [analyze_resolve-inventory](analyze/analyze_resolve-inventory.md)
 
 ### Advise
 
-* Attach Asset Metadata [advise_attach-metadata](advise_attach-metadata.md)
-* Create Vulnerability Assessment Dashboard [badvise_create-dashboard](advise_create-dashboard.md)
-* Enrich Inventory with Vulnerability/Advisory Data [advise_enrich-inventory](advise_enrich-inventory.md)
-* Enrich Inventory with Curated Data [advise_enrich-reference](advise_enrich-reference.md)
+* Attach Asset Metadata [advise_attach-metadata](advise/advise_attach-metadata.md)
+* Create Vulnerability Assessment Dashboard [advise_create-dashboard](advise/advise_create-dashboard.md)
+* Enrich Inventory with Vulnerability/Advisory Data [advise_enrich-inventory](advise/advise_enrich-inventory.md)
+* Enrich Inventory with Curated Data [advise_enrich-reference](advise/advise_enrich-with-reference.md)
 
 ### Convert
 
@@ -52,8 +53,8 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 
 ### Portfolio Overview
 
-* Aggregate Portfolio Resources [portfolio_copy-resources](portfolio_copy-resources.md)
-* Create Portfolio Overview [portfolio_create-overview](portfolio_create-overview.md)
+* Aggregate Portfolio Resources [portfolio_copy-resources](portfolio/portfolio_copy-resources.md)
+* Create Portfolio Overview [portfolio_create-overview](portfolio/portfolio_create-overview.md)
 
 ### Scan
 
@@ -63,14 +64,14 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 
 * Create Document [report_create-document](report/report_create-document.md)
 
-### Diff 
-
-* Diff Vulnerability-enriched Inventories [diff_create-diff](diff_create-diff.md)
-
 ## Processor Conventions
 
 Each processor requires a series of parameters to be set to function correctly. The required and optional parameters
-are grouped into three categories, input / output, parameters and environment.
+are grouped into three categories:
+
+- input / output,
+- parameters and
+- environment.
 
 ### Input / Output
 
@@ -78,28 +79,35 @@ Input / output parameters usually describe files or directories which the proces
 These can be in the form of configuration files, inventories, SBOMs, property-files and so on.
 
 Parameters in this category are prefixed with:
+
 - input
 - output
 
 And suffixed with:
+
 - file
 - dir
 - path
 
 ### Parameters
+
 The "parameters" category simply describes any additional parameters which are needed for the processor to run or to
-configure the processors flow and influence the outout.
+configure the processors flow and influence the output.
 
 Parameters in this category are prefixed with:
+
 - param
 
 Suffixed with:
+
 - enabled (for parameters which can be true or false)
 
 ### Environment
+
 Environment parameters describe a series of prerequisites which are not necessarily specific to this single processor.
 They usually describe directories or config files containing resources required by multiple processors which can be
 shared project wide. Examples are the vulnerability database, maven mirror etc.
 
 Parameters in this category are prefixed with:
+
 - env

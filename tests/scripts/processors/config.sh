@@ -9,6 +9,10 @@ export RESOURCES_DIR=$(realpath "$SELF_DIR/../../resources")
 export CASES_DIR=$(realpath "$SELF_DIR/../cases")
 
 # Define target directories
+if [ ! -d "$SELF_DIR/../target" ]; then
+  mkdir "$SELF_DIR/../target"
+fi
+
 TARGET_BASE_DIR=$(realpath "$SELF_DIR/../target")
 ANALYZED_DIR="$TARGET_BASE_DIR/analyzed"
 RESOLVED_DIR="$TARGET_BASE_DIR/resolved"
