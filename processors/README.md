@@ -6,15 +6,18 @@ This folder contains a set of maven POM files (ending with .xml) and a set of ma
 describing the purpose and details of the POM files. 
 
 Each POM file addresses a particular task in the pipeline. The POM files serve as blueprint for a task and can be 
-parameterized and executed. Please check the markdown files on the individual POMs for details. 
+parameterized and executed. Please check the markdown files on the individual POMs for details.
 
-Each processor has user-controlled inputs & outputs. The user does not need a full understanding of the implementation 
-of each processor. For detailed examples of how to control the processors and structure a project, please refer to the 
-scripts at test/scripts/scripts-sh. The scripts show a basic execution of each processor with minimal parameterization, 
-for optional parameters to further control each processor, please refer to the markdown documentation of each processor.
+![](../docs/concept-processor.png)
 
-The POM files are platform independent configurations that can be combined into a workflow. The workflows are
-either defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.e. Jenkins pipelines).
+Each processor has user-controlled input, output and other params and environment settings. The user does not need a 
+full understanding of the implementation of each processor. For detailed examples of how to control the processors and 
+structure a project, please refer to the scripts at test/scripts/scripts-sh. The scripts show a basic execution of each 
+processor with minimal parameterization, for optional parameters to further control each processor, please refer to the 
+markdown documentation of each processor.
+
+The POM files are platform independent configurations that can be combined into a workflow. The workflows are either 
+defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.e. Jenkins pipelines).
 
 ## Available Processors
 
@@ -43,3 +46,40 @@ either defined by job-executor-specific actions/steps (GitHub, GitLab) or pipeli
 ### Diff 
 
 * Diff Vulnerability-enriched Inventories [diff_create-diff](diff_create-diff.md)
+
+## Processor Conventions
+
+Each processor requires a series of parameters to be set to function correctly. The required and optional parameters
+are grouped into three categories, input / output, parameters and environment.
+
+### Input / Output
+
+Input / output parameters usually describe files or directories which the processor requires to run.
+These can be in the form of configuration files, inventories, SBOMs, property-files and so on.
+
+Parameters in this category are prefixed with:
+- input
+- output
+
+And suffixed with:
+- file
+- dir
+- path
+
+### Parameters
+The "parameters" category simply describes any additional parameters which are needed for the processor to run or to
+configure the processors flow and influence the outout.
+
+Parameters in this category are prefixed with:
+- param
+
+Suffixed with:
+- enabled (for parameters which can be true or false)
+
+### Environment
+Environment parameters describe a series of prerequisites which are not necessarily specific to this single processor.
+They usually describe directories or config files containing resources required by multiple processors which can be
+shared project wide. Examples are the vulnerability database, maven mirror etc.
+
+Parameters in this category are prefixed with:
+- env

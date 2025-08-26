@@ -13,39 +13,16 @@ On integration level the processors can be combined to define pipelines and work
 
 For further details see [Processors](processors/README.md).
 
-## Parameters
+## Integration
 
-Each processor requires a series of parameters to be set to function correctly. The required and optional parameters
-are grouped into three categories, input / output, parameters and environment. 
+Integration of the {metæffekt} processors is manifold. The following diagram illustrates the anticipated integration 
+scenarios.
 
-### Input / Output
+![](docs/concept_kontinuum-workbench.png)
 
-Input / output parameters usually describe files or directories which the processor requires to run.
-These can be in the form of configuration files, inventories, SBOMs, property-files and so on.
+The Kontinuum provides the infrastructure to set up integration projects referred to as workbenches. Workbenches may 
+exist in different repositories of different parties and with varying audiences.
 
-Parameters in this category are prefixed with:
-- input
-- output
-
-Suffixed with:
-- file
-- dir
-- path
-
-### Parameters
-The "parameters" category simply describes any additional parameters which are needed for the processor to run or to
-configure the processors flow and influence the outpout.
-
-Parameters in this category are prefixed with:
-- param
-
-Suffixed with:
-- enabled (for parameters which can be true or false)
-
-### Environment
-Environment parameters describe a series of prerequisites which are not necessarily specific to this single processor.
-They usually describe directories or config files containing resources required by multiple processors which can be
-shared project wide. Examples are the vulnerability database, maven mirror etc.
-
-Parameters in this category are prefixed with:
-- env
+{metæffekt} provides the {metæffekt} Workbench as public repository to provide a reference for project- or 
+customer-specific workbenches. In the concrete application we anticipate Workbench Extensions to supply sufficient 
+context information and to enable sophisticated, version-controlled monitoring and reporting features for everyone.
