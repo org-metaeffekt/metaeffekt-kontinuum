@@ -4,12 +4,12 @@ set -euo pipefail
 
 # Define base directories
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-export PROCESSORS_DIR="$SELF_DIR/../../../processors"
-export RESOURCES_DIR="$SELF_DIR/../../resources"
-export CASES_DIR="$SELF_DIR/../cases"
+export PROCESSORS_DIR=$(realpath "$SELF_DIR/../../../processors")
+export RESOURCES_DIR=$(realpath "$SELF_DIR/../../resources")
+export CASES_DIR=$(realpath "$SELF_DIR/../cases")
 
 # Define target directories
-TARGET_BASE_DIR="$SELF_DIR/../target"
+TARGET_BASE_DIR=$(realpath "$SELF_DIR/../target")
 ANALYZED_DIR="$TARGET_BASE_DIR/analyzed"
 RESOLVED_DIR="$TARGET_BASE_DIR/resolved"
 ADVISED_DIR="$TARGET_BASE_DIR/advised"
