@@ -21,10 +21,10 @@ fi
 
 # Setup for portfolio manager
 cd "$RESOURCES_DIR/portfolio-manager/service"
-java -jar "$RESOURCES_DIR/portfolio-manager/service/ae-portfolio-manager-service.jar" &
+java -jar "$UTIL_DIR/portfolio-manager-jars/ae-portfolio-manager-service-0.5.0.jar" &
 
 cd "$RESOURCES_DIR/portfolio-manager/client"
-OUTPUT=$(java -jar "$RESOURCES_DIR/portfolio-manager/client/ae-portfolio-manager-cli.jar" create-project A)
+OUTPUT=$(java -jar "$UTIL_DIR/portfolio-manager-jars/ae-portfolio-manager-cli-0.5.0-exec.jar" create-project A)
 JSON_OUTPUT=$(echo "$OUTPUT" | sed -n '/^{/,$p')
 ADMIN_TOKEN=$(echo "$JSON_OUTPUT" | jq -r '.body.adminToken')
 
@@ -42,6 +42,8 @@ CMD+=("-Dparam.product.name=$PRODUCT_NAME")
 CMD+=("-Dparam.product.version=$PRODUCT_VERSION")
 CMD+=("-Dparam.product.artifact.id=$PRODUCT_ARTIFACT_ID")
 CMD+=("-Dinput.file=$INPUT_FILE")
+CMD+=("-Dinput.cli.dir=$UTIL_DIR/portfolio-manager-jars")
+
 
 echo "${CMD[@]}"
 "${CMD[@]}"
@@ -57,6 +59,7 @@ CMD+=("-Dparam.product.name=$PRODUCT_NAME")
 CMD+=("-Dparam.product.version=$PRODUCT_VERSION")
 CMD+=("-Dparam.product.artifact.id=$PRODUCT_ARTIFACT_ID")
 CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
+CMD+=("-Dinput.cli.dir=$UTIL_DIR/portfolio-manager-jars")
 
 echo "${CMD[@]}"
 "${CMD[@]}"

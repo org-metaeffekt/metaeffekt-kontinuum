@@ -15,6 +15,32 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-cli-tool</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.metaeffekt.portfolio.manager</groupId>
+                                    <artifactId>ae-portfolio-manager-cli</artifactId>
+                                    <version>0.5.0</version>
+                                    <classifier>exec</classifier>
+                                    <type>jar</type>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${input.cli.dir}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>com.metaeffekt.portfolio.manager</groupId>
                 <artifactId>ae-portfolio-manager-maven-plugin</artifactId>
                 <executions>
