@@ -21,12 +21,18 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 
 ## Available Processors
 
-### Util / General Purpose
+### Util
 
-* Merge Inventories [util_merge-inventories](util_merge-inventories.md)
-* Transform Inventories [util_transform-inventories](util_transform-inventories.md)
-* Validate Reference Inventory [util_validate-reference-inventory](util_validate-reference-inventory.md)
-* Update Local Vulnerability Mirror [util_update-vulnerability-mirror](util_update-update-mirror.md)
+* Aggregate Sources [util_aggregate-sources](util/util_aggregate-sources.md)
+* Copy Inventories [util_copy-inventories](util/util_copy-inventories.md)
+* Create Diff [util_create-diff](util/util_create-diff.md)
+* Merge and Filter [util_merge-filter](util/util_merge-filter.md)
+* Merge Inventories[util_merge-inventories](util/util_merge-inventories.md)
+* Portfolio Download [util_portfolio-download](util/util_portfolio-download.md)
+* Portfolio Upload [util_portfolio-upload](util/util_portfolio-upload.md)
+* Transform Inventories [util_transform-inventories](util/util_transform-inventories.md)
+* Update Mirror [util_update-mirror](util/util_update-mirror.md)
+* Validate Reference Inventory [util_validate-reference-inventory](util/util_validate-reference-inventory.md)
 
 ### Analyze
 * Resolve Artifacts in Inventory [analyze_resolve-inventory](analyze_resolve-inventory.md)
@@ -38,10 +44,24 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 * Enrich Inventory with Vulnerability/Advisory Data [advise_enrich-inventory](advise_enrich-inventory.md)
 * Enrich Inventory with Curated Data [advise_enrich-reference](advise_enrich-reference.md)
 
+### Convert
+
+* Convert CycloneDX to inventory [convert_cyclonedx-to-inventory](convert/convert_cyclonedx-to-inventory.md)
+* Convert Inventory to CycloneDX [convert_inventory-to-cyclonedx](convert/convert_inventory-to-cyclonedx.md)
+* Convert Inventory to SPDX [convert_inventory-to-spdx](convert/convert_inventory-to-spdx.md)
+
 ### Portfolio Overview
 
 * Aggregate Portfolio Resources [portfolio_copy-resources](portfolio_copy-resources.md)
 * Create Portfolio Overview [portfolio_create-overview](portfolio_create-overview.md)
+
+### Scan
+
+* Scan Inventory [scan_scan-inventory](scan/scan_scan-inventory.md)
+
+### Report
+
+* Create Document [report_create-document](report/report_create-document.md)
 
 ### Diff 
 
