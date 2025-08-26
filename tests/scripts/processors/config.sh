@@ -18,6 +18,7 @@ REPORTED_DIR="$TARGET_BASE_DIR/reported"
 UTIL_DIR="$TARGET_BASE_DIR/util"
 PORTFOLIO_DIR="$TARGET_BASE_DIR/portfolio"
 CONVERTED_DIR="$TARGET_BASE_DIR/converted"
+DASHBOARD_DIR="$TARGET_BASE_DIR/dashboard"
 
 # Create all target directories
 echo "Creating target directories..."
