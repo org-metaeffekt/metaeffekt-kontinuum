@@ -7,7 +7,7 @@
         <groupId>com.metaeffekt.kontinuum</groupId>
         <artifactId>ae-kontinuum-processors</artifactId>
         <version>WORKBENCH-SNAPSHOT</version>
-        <relativePath>../common/ae-kontinuum-processors.xml</relativePath>
+        <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
     <artifactId>util_portfolio-download</artifactId>

@@ -12,4 +12,4 @@
 - [ ] due to the complexities on template level we use a decoupled report-template on kontinuum level. This needs to
   be documented accordingly (the fact and how to use the metaeffekt-workbench default report-template).
 - [ ] reorganize target folder content by workspace
-- 
+- [ ] in processors/util a target folder is generated, check whether this still the case; avoid uncontrolled target folders
