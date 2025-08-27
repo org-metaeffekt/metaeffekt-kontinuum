@@ -20,8 +20,8 @@
         -->
 
     <parent>
-        <groupId>com.metaeffekt.workbench</groupId>
-        <artifactId>ae-workbench-parent</artifactId>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
         <version>WORKBENCH-SNAPSHOT</version>
         <relativePath>../ae-workbench-parent.xml</relativePath>
     </parent>

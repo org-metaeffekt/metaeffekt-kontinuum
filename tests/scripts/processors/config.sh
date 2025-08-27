@@ -6,7 +6,7 @@ set -euo pipefail
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export KONTINUUM_DIR=$(realpath "$SELF_DIR/../../../")
 export PROCESSORS_DIR="$KONTINUUM_DIR/processors"
-export RESOURCES_DIR="$KONTINUUM_DIR/tests/resources"
+export RESOURCES_DIR="$KONTINUUM_DIR/tests/resources/generic"
 export CASES_DIR="$KONTINUUM_DIR/tests/scripts/cases"
 
 TARGET_BASE_DIR="$KONTINUUM_DIR/target"
