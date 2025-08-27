@@ -11,3 +11,5 @@
   vulnerability associations on this level. Yet this must be documented sufficiently to not raise false expectations.
 - [ ] due to the complexities on template level we use a decoupled report-template on kontinuum level. This needs to
   be documented accordingly (the fact and how to use the metaeffekt-workbench default report-template).
+- [ ] reorganize target folder content by workspace
+- 
