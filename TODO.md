@@ -12,4 +12,9 @@
 - [ ] due to the complexities on template level we use a decoupled report-template on kontinuum level. This needs to
   be documented accordingly (the fact and how to use the metaeffekt-workbench default report-template).
 - [ ] reorganize target folder content by workspace
-- [ ] in processors/util a target folder is generated, check whether this still the case; avoid uncontrolled target folders
+- [ ] in processors/util a target folder is generated, check whether this still the case; avoid uncontrolled target 
+  folders.
+- [ ] DISCUSS: only log processor executions from script; append processor logs to dedicate log file; enable console
+  logging using debug flag on environment-level.
+- [ ] cover all processors with at least one unit test.
+
