@@ -13,7 +13,8 @@ readonly KONTINUUM_DIR="$(realpath "$SELF_DIR/../../../")"
 export KONTINUUM_DIR
 export PROCESSORS_DIR="$KONTINUUM_DIR/processors"
 export TESTS_DIR="$KONTINUUM_DIR/tests"
-export RESOURCES_DIR="$TESTS_DIR/resources/generic"
+export GENERIC_RESOURCES_DIR="$TESTS_DIR/resources/generic"
+export WORKBENCH_DIR="$TESTS_DIR/resources/workbench"
 export CASES_DIR="$TESTS_DIR/scripts/cases"
 
 # Target directory structure

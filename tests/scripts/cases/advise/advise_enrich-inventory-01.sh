@@ -1,12 +1,12 @@
 #!/bin/bash
 
-export INPUT_INVENTORY_FILE="$RESOURCES_DIR/example-001.xlsx"
+export INPUT_INVENTORY_FILE="$GENERIC_RESOURCES_DIR/example-001.xlsx"
 export OUTPUT_INVENTORY_FILE="$ADVISED_DIR/example-001-enriched.xlsx"
 export VULNERABILITY_MIRROR_DIR="$TARGET_DIR/mirror/.database"
-export SECURITY_POLICY="$RESOURCES_DIR/advise/security-policy.json"
+export SECURITY_POLICY="$WORKBENCH_DIR/policies/security-policy.json"
 export PROCESSOR_TMP_DIR="$ADVISED_DIR/tmp"
 export ACTIVATE_GHSA_CORRELATION="false"
 export ACTIVATE_GHSA="false"
-export CONTEXT_DIR="$RESOURCES_DIR/advise/context"
-export ASSESSMENT_DIR="$RESOURCES_DIR/advise/assessment"
-export CORRELATION_DIR="$RESOURCES_DIR/advise/correlation"
+export CONTEXT_DIR="$WORKBENCH_DIR/contexts"
+export ASSESSMENT_DIR="$WORKBENCH_DIR/assessments"
+export CORRELATION_DIR="$WORKBENCH_DIR/correlations"
