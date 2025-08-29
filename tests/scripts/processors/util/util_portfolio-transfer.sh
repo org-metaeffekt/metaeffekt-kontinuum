@@ -17,8 +17,8 @@ check_shared_config() {
 }
 
 create_required_directories() {
-  if [ -d "$RESOURCES_DIR/../scripts/target/util/portfolio-manager" ]; then
-    rm -r "$RESOURCES_DIR/../scripts/target/util/portfolio-manager"
+  if [ -d "$TARGET_DIR/portfolio-manager" ]; then
+    rm -r "$TARGET_DIR/portfolio-manager"
   fi
 
   PORTFOLIO_MANAGER_JARS="$TARGET_DIR/portfolio-manager-jars"
