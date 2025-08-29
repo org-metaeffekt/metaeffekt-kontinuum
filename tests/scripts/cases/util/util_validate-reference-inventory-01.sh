@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export INPUT_INVENTORY_DIR="$RESOURCES_DIR/advise/reference-inventory"
+export INPUT_INVENTORY_DIR="$WORKBENCH_DIR/inventories/example-reference-inventory"
 

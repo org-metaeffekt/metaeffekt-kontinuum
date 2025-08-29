@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export INPUT_INVENTORY_FILE="$RESOURCES_DIR/example-001.xlsx"
+export INPUT_INVENTORY_FILE="$GENERIC_RESOURCES_DIR/example-001.xlsx"
 export OUTPUT_INVENTORY_FILE="$ADVISED_DIR/example-001-attach-metadata.xlsx"
 export METADATA_ASSET_ID="test-asset-id"
 export METADATA_ASSET_NAME="test-asset-name"

@@ -23,7 +23,7 @@ run_maven_command() {
   CMD+=("-Dinput.dashboards.dir=$INPUT_DASHBOARDS_DIR")
   CMD+=("-Dinput.reports.dir=$INPUT_REPORTS_DIR")
   CMD+=("-Dinput.advisor.inventories.dir=$INPUT_ADVISOR_INVENTORIES_DIR")
-  CMD+=("-Doutput.resources.dir=$OUTPUT_RESOURCES_DIR")
+  CMD+=("-Doutput.resources.dir=$OUTPUT_GENERIC_RESOURCES_DIR")
 
   echo "${CMD[@]}"
   "${CMD[@]}"

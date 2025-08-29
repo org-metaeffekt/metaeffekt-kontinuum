@@ -35,10 +35,10 @@ run_portfolio_manager() {
   echo "${CMD[@]}"
   "${CMD[@]}"
 
-  cd "$RESOURCES_DIR/portfolio-manager/service"
+  cd "$GENERIC_RESOURCES_DIR/portfolio-manager/service"
   java -jar "$PORTFOLIO_MANAGER_JARS/ae-portfolio-manager-service-0.5.0.jar" &
 
-  cd "$RESOURCES_DIR/portfolio-manager/client"
+  cd "$GENERIC_RESOURCES_DIR/portfolio-manager/client"
   OUTPUT=$(java -jar "$PORTFOLIO_MANAGER_JARS/ae-portfolio-manager-cli-0.5.0-exec.jar" create-project A)
   JSON_OUTPUT=$(echo "$OUTPUT" | sed -n '/^{/,$p')
   ADMIN_TOKEN=$(echo "$JSON_OUTPUT" | jq -r '.body.adminToken')
