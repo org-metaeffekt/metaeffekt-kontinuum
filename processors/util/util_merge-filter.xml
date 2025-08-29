@@ -20,10 +20,10 @@
     -->
 
     <parent>
-        <groupId>com.metaeffekt.workbench</groupId>
-        <artifactId>ae-workbench-parent</artifactId>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
         <version>WORKBENCH-SNAPSHOT</version>
-        <relativePath>../ae-workbench-parent.xml</relativePath>
+        <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
     <artifactId>util_merge-filter</artifactId>
@@ -48,7 +48,11 @@
                             <vulnerabilityAdvisoryFilter>${param.vulnerability.advisory.filter}</vulnerabilityAdvisoryFilter>
                             <inventoryOutputFile>${output.filtered.inventory.file}</inventoryOutputFile>
 
-                            <securityPolicyFile>${input.security.policy.file}</securityPolicyFile>
+                            <securityPolicy>
+                                <files>
+                                    <file>${input.security.policy.file}</file>
+                                </files>
+                            </securityPolicy>
                         </configuration>
                     </execution>
                 </executions>

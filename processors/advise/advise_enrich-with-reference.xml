@@ -20,10 +20,10 @@
     -->
 
     <parent>
-        <groupId>com.metaeffekt.workbench</groupId>
-        <artifactId>ae-workbench-parent</artifactId>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
         <version>WORKBENCH-SNAPSHOT</version>
-        <relativePath>../ae-workbench-parent.xml</relativePath>
+        <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
     <artifactId>advise_enrich-with-reference</artifactId>
@@ -67,6 +67,10 @@
                             <!-- FIXME: we should also enable to produce a file here -->
                             <targetInventoryDir>${output.inventory.dir}</targetInventoryDir>
                             <targetInventoryPath>${output.inventory.path}</targetInventoryPath>
+
+                            <securityPolicy>
+                                <failOnMissingPolicyFile>false</failOnMissingPolicyFile>
+                            </securityPolicy>
                         </configuration>
                     </execution>
                 </executions>

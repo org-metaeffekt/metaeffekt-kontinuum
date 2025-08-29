@@ -16,11 +16,6 @@ cat <<"EOF"
 
 EOF
 
-#!/bin/bash
-
-# Exit on any error and treat unset variables as errors
-set -euo pipefail
-
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
@@ -56,6 +51,3 @@ sh "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_copy-resources.sh"
 
 # Scan
 sh "$PROCESSOR_SCRIPTS_DIR/scan/scan_scan-inventory.sh"
-
-
-

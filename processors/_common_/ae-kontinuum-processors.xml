@@ -19,14 +19,14 @@
     limitations under the License.
     -->
 
-    <groupId>com.metaeffekt.workbench</groupId>
-    <artifactId>ae-workbench-parent</artifactId>
+    <groupId>com.metaeffekt.kontinuum</groupId>
+    <artifactId>ae-kontinuum-processors</artifactId>
     <version>WORKBENCH-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
-        <ae.core.version>0.135.10</ae.core.version>
-        <ae.artifact.analysis.version>0.135.16</ae.artifact.analysis.version>
+        <ae.core.version>0.142.0</ae.core.version>
+        <ae.artifact.analysis.version>0.145.0</ae.artifact.analysis.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

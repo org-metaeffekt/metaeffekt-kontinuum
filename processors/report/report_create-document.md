@@ -22,28 +22,32 @@ of this repository.
 | input.reference.inventory.file | yes             | The path of the reference inventory for the document.   |
 | input.reference.license.dir    | yes             | The path to the reference license directory.            |
 | input.reference.component.dir  | yes             | The path to the reference component directory.          |
-| input.templates.dir            | yes             | The directory containing the document templates.        |
 | input.security.policy.dir      | no (VR/CR only) | The directory containing the security policy files.     | 
 | output.document.file           | yes             | The file where to store the resulting output document.  | 
 
 ### Parameters
-| Parameter                    | Required        | Description                                                                                                                                                                                     |
-|------------------------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| param.document.type          | yes             | The type of the document, choose from `VR` (vulnerability-report), `CR` (cert-report), `SDA` (software distribution annex), `LD` (license distribution) or `ILD`(initial license distribution). | 
-| param.document.language      | yes             | The language of the document, currently `de` (German) and `en` (English) are supported.                                                                                                         | 
-| param.asset.id               | yes             | The Id of the asset.                                                                                                                                                                            | 
-| param.asset.name             | yes             | The name of the asset.                                                                                                                                                                          | 
-| param.asset.version          | yes             | The version of the asset.                                                                                                                                                                       | 
-| param.product.name           | yes             | The name of the product.                                                                                                                                                                        | 
-| param.product.version        | yes             | The version of the product.                                                                                                                                                                     | 
-| param.product.watermark      | yes             | The watermark of the product.                                                                                                                                                                   |
-| param.overview.advisors      | no (VR/CR only) | The selection of advisors for which the overview is created, provide as a comma-separated list (e.g. "CERT-FR, ...").                                                                           |
+| Parameter                              | Required        | Description                                                                                                                                                                                     |
+|----------------------------------------|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| param.template.dir                     | yes             | The directory containing the document template.                                                                                                                                                 |
+| param.document.type                    | yes             | The type of the document, choose from `VR` (vulnerability-report), `CR` (cert-report), `SDA` (software distribution annex), `LD` (license distribution) or `ILD`(initial license distribution). | 
+| param.document.language                | yes             | The language of the document, currently `de` (German) and `en` (English) are supported.                                                                                                         | 
+| param.asset.id                         | yes             | The Id of the asset.                                                                                                                                                                            | 
+| param.asset.name                       | yes             | The name of the asset.                                                                                                                                                                          | 
+| param.asset.version                    | yes             | The version of the asset.                                                                                                                                                                       | 
+| param.product.name                     | yes             | The name of the product.                                                                                                                                                                        | 
+| param.product.version                  | yes             | The version of the product.                                                                                                                                                                     | 
+| param.product.watermark                | yes             | The watermark of the product.                                                                                                                                                                   |
+| param.overview.advisors                | no (VR/CR only) | The selection of advisors for which the overview is created, provide as a comma-separated list (e.g. "CERT-FR, ...").                                                                           |
+| param.property.selector.organization   | yes             | Templates may introduce a set of custom properties. These properties are loaded via a dedicated set of property files qualified by this selector.                                               |
+| param.property.selector.classification | no              | Templates may introduce a set of custom properties. These properties are loaded via a dedicated set of property files qualified by this selector.                                               |
+| param.property.selector.control        | no              | Templates may introduce a set of custom properties. These properties are loaded via a dedicated set of property files qualified by this selector.                                               |
 
 ### Environment
-| Parameter                    | Required           | Description                                                                                                  |
-|------------------------------|--------------------|--------------------------------------------------------------------------------------------------------------|
-| env.workbench.base.dir       | yes                | The path to the workbench. This is used to form relative paths to the inventories if they are not absolute.  | 
-| env.vulnerability.mirror.dir | yes (VR/CR only)   | The input database containing the vulnerability data.                                                        |
+| Parameter                    | Required           | Description                                           |
+|------------------------------|--------------------|-------------------------------------------------------|
+| env.kontinuum.processors.dir | yes                | The directory of the kontinuum processors.            | 
+| env.workbench.processors.dir | yes                | The directory of the workbench processors.            | 
+| env.vulnerability.mirror.dir | yes (VR/CR only)   | The input database containing the vulnerability data. |
 
 # FIXMEs
 

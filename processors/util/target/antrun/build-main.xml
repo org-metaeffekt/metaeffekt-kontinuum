@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="maven-antrun-" default="main">
+  <target name="main">
+    <mkdir dir="/Users/jfuegen/IdeaProjects/metaeffekt-kontinuum/tests/target/workspace-001/sample-product-1.0.0/00_util" />
+    <copy todir="/Users/jfuegen/IdeaProjects/metaeffekt-kontinuum/tests/target/workspace-001/sample-product-1.0.0/00_util">
+      <filelist files="example-001.xlsx, example-002.xlsx" dir="/Users/jfuegen/IdeaProjects/metaeffekt-kontinuum/tests/resources/generic" />
+    </copy>
+  </target>
+</project>

@@ -21,10 +21,10 @@
     -->
 
     <parent>
-        <groupId>com.metaeffekt.workbench</groupId>
-        <artifactId>ae-workbench-parent</artifactId>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
         <version>WORKBENCH-SNAPSHOT</version>
-        <relativePath>../ae-workbench-parent.xml</relativePath>
+        <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
     <artifactId>util_create-diff</artifactId>
@@ -56,7 +56,12 @@
                             <outputInventoryDiff1to2>${output.inventory.dir}/diff/${param.inventory.version}-to-${param.inventory.compare.version}-comparison.xls</outputInventoryDiff1to2>
                             <outputInventoryDiff2to1>${output.inventory.dir}/diff/${param.inventory.compare.version}-to-${param.inventory.version}-comparison.xls</outputInventoryDiff2to1>
 
-                            <securityPolicyFile>${input.security.policy.file}</securityPolicyFile>
+                            <securityPolicy>
+                                <files>
+                                    <file>${input.security.policy.file}</file>
+                                </files>
+                            </securityPolicy>
+
                         </configuration>
                     </execution>
                 </executions>
