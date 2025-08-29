@@ -27,7 +27,7 @@ sh "$PROCESSOR_SCRIPTS_DIR/util/util_copy-inventories.sh"
 sh "$PROCESSOR_SCRIPTS_DIR/util/util_create-diff.sh"
 sh "$PROCESSOR_SCRIPTS_DIR/util/util_merge-filter.sh"
 sh "$PROCESSOR_SCRIPTS_DIR/util/util_merge-inventories.sh"
-# sh "$PROCESSOR_SCRIPTS_DIR/util/util_portfolio-transfer.sh" // currently disabled; pre-reqs not implicit given
+sh "$PROCESSOR_SCRIPTS_DIR/util/util_portfolio-transfer.sh"
 sh "$PROCESSOR_SCRIPTS_DIR/util/util_transform-inventories.sh"
 sh "$PROCESSOR_SCRIPTS_DIR/util/util_validate-reference-inventory.sh"
 

@@ -92,7 +92,7 @@
                             <inventoryOutputFile>${output.inventory.file}</inventoryOutputFile>
                             <mirrorDirectory>${env.vulnerability.mirror.dir}</mirrorDirectory>
 
-                            <writeIntermediateInventories>true</writeIntermediateInventories>
+                            <writeIntermediateInventories>false</writeIntermediateInventories>
                             <intermediateInventoriesDirectory>${output.tmp.dir}</intermediateInventoriesDirectory>
                             <storeIntermediateStepsInInventoryInfo>true</storeIntermediateStepsInInventoryInfo>
 
