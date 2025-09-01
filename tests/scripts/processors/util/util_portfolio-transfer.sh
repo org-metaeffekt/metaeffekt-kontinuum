@@ -35,13 +35,14 @@ run_portfolio_manager() {
   echo "${CMD[@]}"
   "${CMD[@]}"
 
-  cd "$GENERIC_RESOURCES_DIR/portfolio-manager/service"
+  cd "$WORKBENCH_DIR/configs/portfolio-manager/service"
   java -jar "$PORTFOLIO_MANAGER_JARS/ae-portfolio-manager-service-0.5.0.jar" &
 
-  cd "$GENERIC_RESOURCES_DIR/portfolio-manager/client"
+  cd "$WORKBENCH_DIR/configs/portfolio-manager/client"
   OUTPUT=$(java -jar "$PORTFOLIO_MANAGER_JARS/ae-portfolio-manager-cli-0.5.0-exec.jar" create-project A)
   JSON_OUTPUT=$(echo "$OUTPUT" | sed -n '/^{/,$p')
   ADMIN_TOKEN=$(echo "$JSON_OUTPUT" | jq -r '.body.adminToken')
+  echo "ADMIN TOKEN: $ADMIN_TOKEN"
 }
 
 run_maven_command_portfolio_upload() {

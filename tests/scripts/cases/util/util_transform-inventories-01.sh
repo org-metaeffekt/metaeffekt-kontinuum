@@ -1,5 +1,5 @@
 #!/bin/bash
 
-export INPUT_INVENTORY_DIR="$GENERIC_RESOURCES_DIR"
+export INPUT_INVENTORY_DIR="$PRODUCT_DIR/01_assets"
 export OUTPUT_INVENTORY_DIR="$UTIL_DIR"
-export KOTLIN_SCRIPT_FILE="$GENERIC_RESOURCES_DIR/hello-world.kts"
+export KOTLIN_SCRIPT_FILE="$WORKBENCH_DIR/transformations/hello-world.kts"

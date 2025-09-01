@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export INPUT_INVENTORY_FILE="$GENERIC_RESOURCES_DIR/example-003.xlsx"
+export INPUT_INVENTORY_FILE="$PRODUCT_DIR/01_assets/example-003.xlsx"
 export ANNEX_SOURCE_DIR="$TARGET_DIR/annex/sources"
 export RETAINED_SOURCES_DIR="$TARGET_DIR/util/aggregate-sources"
 export ALTERNATIVE_ARTIFACT_SOURCE_MAPPING=""
