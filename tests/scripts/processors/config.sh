@@ -15,21 +15,23 @@ export PROCESSORS_DIR="$KONTINUUM_DIR/processors"
 export TESTS_DIR="$KONTINUUM_DIR/tests"
 export GENERIC_RESOURCES_DIR="$TESTS_DIR/resources/generic"
 export WORKBENCH_DIR="$TESTS_DIR/resources/workbench"
+export WORKSPACE_DIR="$TESTS_DIR/resources/workspace-001"
+export PRODUCT_DIR="$WORKSPACE_DIR/sample-product-1.0.0"
 export CASES_DIR="$TESTS_DIR/scripts/cases"
 
 # Target directory structure
 readonly TARGET_DIR="$TESTS_DIR/target"
-readonly WORKSPACE_DIR="$TARGET_DIR/workspace-001"
-readonly PRODUCT_DIR="$WORKSPACE_DIR/sample-product-1.0.0"
+readonly TARGET_WORKSPACE_DIR="$TARGET_DIR/workspace-001"
+readonly TARGET_PRODUCT_DIR="$TARGET_WORKSPACE_DIR/sample-product-1.0.0"
 
-readonly ANALYZED_DIR="$PRODUCT_DIR/02_analyzed"
-readonly RESOLVED_DIR="$PRODUCT_DIR/03_resolved"
-readonly ADVISED_DIR="$PRODUCT_DIR/05_advised"
-readonly SCANNED_DIR="$PRODUCT_DIR/04_scanned"
-readonly REPORTED_DIR="$PRODUCT_DIR/06_reported"
-readonly UTIL_DIR="$PRODUCT_DIR/00_util"
-readonly PORTFOLIO_DIR="$PRODUCT_DIR/00_portfolio"
-readonly CONVERTED_DIR="$PRODUCT_DIR/00_converted"
+readonly ANALYZED_DIR="$TARGET_PRODUCT_DIR/02_analyzed"
+readonly RESOLVED_DIR="$TARGET_PRODUCT_DIR/03_resolved"
+readonly ADVISED_DIR="$TARGET_PRODUCT_DIR/05_advised"
+readonly SCANNED_DIR="$TARGET_PRODUCT_DIR/04_scanned"
+readonly REPORTED_DIR="$TARGET_PRODUCT_DIR/06_reported"
+readonly UTIL_DIR="$TARGET_PRODUCT_DIR/00_util"
+readonly PORTFOLIO_DIR="$TARGET_PRODUCT_DIR/00_portfolio"
+readonly CONVERTED_DIR="$TARGET_PRODUCT_DIR/00_converted"
 
 ########################################
 # Function Definitions
