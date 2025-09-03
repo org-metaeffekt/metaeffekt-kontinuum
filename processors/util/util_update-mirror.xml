@@ -48,6 +48,19 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <version>3.1.0</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>ant-contrib</groupId>
+                                <artifactId>ant-contrib</artifactId>
+                                <version>1.0b3</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>ant</groupId>
+                                        <artifactId>ant</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </dependency>
+                        </dependencies>
                         <executions>
                             <execution>
                                 <id>initialize-update-check</id>
@@ -124,11 +137,29 @@
                                 </goals>
                                 <configuration>
                                     <target if="update.required">
-                                        <echo message="Unpacking to ${output.vulnerability.mirror.dir}/.database_update" />
-                                        <unzip src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" />
-                                        <!--
-                                        <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" compression="gzip" />
-                                            -->
+                                        <!-- Define ant-contrib tasks -->
+                                        <taskdef resource="net/sf/antcontrib/antlib.xml" />
+
+                                        <!-- Determine archive type based on file extension -->
+                                        <condition property="is.zip">
+                                            <matches pattern=".*\.zip$" string="${param.mirror.archive.name}" />
+                                        </condition>
+                                        <condition property="is.tar.gz">
+                                            <matches pattern=".*\.tar\.gz$" string="${param.mirror.archive.name}" />
+                                        </condition>
+
+                                        <if>
+                                            <isset property="is.zip" />
+                                            <then>
+                                                <unzip src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" />
+                                            </then>
+                                            <elseif>
+                                                <isset property="is.tar.gz" />
+                                                <then>
+                                                    <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" compression="gzip" />
+                                                </then>
+                                            </elseif>
+                                        </if>
                                     </target>
                                 </configuration>
                             </execution>
@@ -206,6 +237,19 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <version>3.1.0</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>ant-contrib</groupId>
+                                <artifactId>ant-contrib</artifactId>
+                                <version>1.0b3</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>ant</groupId>
+                                        <artifactId>ant</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </dependency>
+                        </dependencies>
                         <executions>
                             <execution>
                                 <id>initialize-update-check</id>
@@ -282,8 +326,29 @@
                                 </goals>
                                 <configuration>
                                     <target if="update.required">
-                                        <echo message="Unpacking to ${output.vulnerability.mirror.dir}/.database_update" />
-                                        <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" compression="gzip" />
+                                        <!-- Define ant-contrib tasks -->
+                                        <taskdef resource="net/sf/antcontrib/antlib.xml" />
+
+                                        <!-- Determine archive type based on file extension -->
+                                        <condition property="is.zip">
+                                            <matches pattern=".*\.zip$" string="${param.mirror.archive.name}" />
+                                        </condition>
+                                        <condition property="is.tar.gz">
+                                            <matches pattern=".*\.tar\.gz$" string="${param.mirror.archive.name}" />
+                                        </condition>
+
+                                        <if>
+                                            <isset property="is.zip" />
+                                            <then>
+                                                <unzip src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" />
+                                            </then>
+                                            <elseif>
+                                                <isset property="is.tar.gz" />
+                                                <then>
+                                                    <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" compression="gzip" />
+                                                </then>
+                                            </elseif>
+                                        </if>
                                     </target>
                                 </configuration>
                             </execution>

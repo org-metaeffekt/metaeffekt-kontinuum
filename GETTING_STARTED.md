@@ -45,12 +45,11 @@ Since only two processors currently require the vulnerability mirror, you can om
 To configure scripts to use your local vulnerability mirror instance:
 
 1. Navigate to the [`tests/scripts/cases`](tests/scripts/cases) directory
-2. Update the `VULNERABILITY_MIRROR_DIR` environment variable in the following files:
-    - [`advise_create-dashboard-01.sh`](tests/scripts/cases/advise/advise_create-dashboard-01.sh)
-    - [`advise_enrich-inventory-01.sh`](tests/scripts/cases/advise/advise_enrich-inventory-01.sh)
-3. Remove the following processor from the `run-all.sh` pipeline:
-   ```bash
-   sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh"
+2. Update the `MIRROR_ARCHIVE_URL` and `MIRROR_ARCHIVE_NAME` environment variable in the following file:
+    - [`util_update-mirror-01.sh`](tests/scripts/cases/util/util_update-mirror-01.sh)
+3. Since the `MIRROR_ARCHIVE_URL` requires a valid URL, local files need a file resource locator as a prefix.
+    ```bash
+   export MIRROR_ARCHIVE_URL="file:///absolute/path/index-database.tar.gz"
    ```
 
 ## Running a Single Processor
