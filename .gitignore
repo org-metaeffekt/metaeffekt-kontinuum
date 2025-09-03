@@ -1,6 +1,6 @@
 .idea
 .pre-commit-config.yaml
-.mirror
+.vulnerability-mirror
 
 tests/target/
 

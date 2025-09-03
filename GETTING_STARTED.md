@@ -45,12 +45,11 @@ Since only two processors currently require the vulnerability mirror, you can om
 To configure scripts to use your local vulnerability mirror instance:
 
 1. Navigate to the [`tests/scripts/cases`](tests/scripts/cases) directory
-2. Update the `VULNERABILITY_MIRROR_DIR` environment variable in the following files:
-    - [`advise_create-dashboard-01.sh`](tests/scripts/cases/advise/advise_create-dashboard-01.sh)
-    - [`advise_enrich-inventory-01.sh`](tests/scripts/cases/advise/advise_enrich-inventory-01.sh)
-3. Remove the following processor from the `run-all.sh` pipeline:
-   ```bash
-   sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh"
+2. Update the `MIRROR_ARCHIVE_URL` and `MIRROR_ARCHIVE_NAME` environment variable in the following file:
+    - [`util_update-mirror-01.sh`](tests/scripts/cases/util/util_update-mirror-01.sh)
+3. Since the `MIRROR_ARCHIVE_URL` requires a valid URL, local files need a file resource locator as a prefix.
+    ```bash
+   export MIRROR_ARCHIVE_URL="file:///absolute/path/index-database.tar.gz"
    ```
 
 ## Running a Single Processor
@@ -79,26 +78,26 @@ While this repository is not designed as a custom workbench for executing proces
 * [Getting Started](GETTING_STARTED.md)
 * [Tests](tests/README.md)
 * [Processors](processors/README.md)
-  * [advise_attach-metadata](processors/advise/advise_attach-metadata.md)
-  * [advise_create-dashboard](processors/advise/advise_create-dashboard.md)
-  * [advise_enrich-inventory](processors/advise/advise_enrich-inventory.md)
-  * [advise_enrich-with-reference](processors/advise/advise_enrich-with-reference.md)
-  * [analyze_resolve-inventory](processors/analyze/analyze_resolve-inventory.md)
-  * [convert_cyclonedx-to-inventory](processors/convert/convert_cyclonedx-to-inventory.md)
-  * [convert_inventory-to-cyclonedx](processors/convert/convert_inventory-to-cyclonedx.md)
-  * [convert_inventory-to-spdx](processors/convert/convert_inventory-to-spdx.md)
-  * [portfolio_copy-resources](processors/portfolio/portfolio_copy-resources.md)
-  * [portfolio_create-overview](processors/portfolio/portfolio_create-overview.md)
-  * [report_create-document](processors/report/report_create-document.md)
-  * [scan_scan-inventory](processors/scan/scan_scan-inventory.md)
-  * [util_aggregate-sources](processors/util/util_aggregate-sources.md)
-  * [util_copy-inventories](processors/util/util_copy-inventories.md)
-  * [util_create-diff](processors/util/util_create-diff.md)
-  * [util_merge-filter](processors/util/util_merge-filter.md)
-  * [util_merge-inventories](processors/util/util_merge-inventories.md)
-  * [util_portfolio-download](processors/util/util_portfolio-download.md)
-  * [util_portfolio-download-jars](processors/util/util_portfolio-download-jars.md)
-  * [util_portfolio-upload](processors/util/util_portfolio-upload.md)
-  * [util_transform-inventories](processors/util/util_transform-inventories.md)
-  * [util_update-mirror](processors/util/util_update-mirror.md)
-  * [util_validate-reference-inventory](processors/util/util_validate-reference-inventory.md))
+    * [advise_attach-metadata](processors/advise/advise_attach-metadata.md)
+    * [advise_create-dashboard](processors/advise/advise_create-dashboard.md)
+    * [advise_enrich-inventory](processors/advise/advise_enrich-inventory.md)
+    * [advise_enrich-with-reference](processors/advise/advise_enrich-with-reference.md)
+    * [analyze_resolve-inventory](processors/analyze/analyze_resolve-inventory.md)
+    * [convert_cyclonedx-to-inventory](processors/convert/convert_cyclonedx-to-inventory.md)
+    * [convert_inventory-to-cyclonedx](processors/convert/convert_inventory-to-cyclonedx.md)
+    * [convert_inventory-to-spdx](processors/convert/convert_inventory-to-spdx.md)
+    * [portfolio_copy-resources](processors/portfolio/portfolio_copy-resources.md)
+    * [portfolio_create-overview](processors/portfolio/portfolio_create-overview.md)
+    * [report_create-document](processors/report/report_create-document.md)
+    * [scan_scan-inventory](processors/scan/scan_scan-inventory.md)
+    * [util_aggregate-sources](processors/util/util_aggregate-sources.md)
+    * [util_copy-inventories](processors/util/util_copy-inventories.md)
+    * [util_create-diff](processors/util/util_create-diff.md)
+    * [util_merge-filter](processors/util/util_merge-filter.md)
+    * [util_merge-inventories](processors/util/util_merge-inventories.md)
+    * [util_portfolio-download](processors/util/util_portfolio-download.md)
+    * [util_portfolio-download-jars](processors/util/util_portfolio-download-jars.md)
+    * [util_portfolio-upload](processors/util/util_portfolio-upload.md)
+    * [util_transform-inventories](processors/util/util_transform-inventories.md)
+    * [util_update-mirror](processors/util/util_update-mirror.md)
+    * [util_validate-reference-inventory](processors/util/util_validate-reference-inventory.md))
