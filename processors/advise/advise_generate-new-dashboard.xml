@@ -26,7 +26,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>util_merge-filter</artifactId>
+    <artifactId>advise_create-dashboard</artifactId>
     <packaging>pom</packaging>
 
     <build>
@@ -35,18 +35,30 @@
                 <groupId>com.metaeffekt.artifact.analysis</groupId>
                 <artifactId>ae-inventory-enrichment-plugin</artifactId>
                 <version>${ae.artifact.analysis.version}</version>
+
                 <executions>
-                    <!-- Merge the individual advisor inventories into a single one; filter by CERT-FR -->
                     <execution>
-                        <id>last-updated-cert-overall</id>
+                        <id>generate-vulnerability-dashboard</id>
                         <goals>
-                            <goal>merge-advisor-inventories</goal>
+                            <goal>generate-asset-dashboard</goal>
                         </goals>
-                        <phase>generate-sources</phase>
                         <configuration>
-                            <referenceInventories>${input.reference.inventories.dir}</referenceInventories>
-                            <vulnerabilityAdvisoryFilter>${param.vulnerability.advisory.filter}</vulnerabilityAdvisoryFilter>
-                            <inventoryOutputFile>${output.filtered.inventory.file}</inventoryOutputFile>
+                            <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
+                            <outputFile>${output.dashboard.file}</outputFile>
+                            <mirrorDirectory>${env.vulnerability.mirror.dir}</mirrorDirectory>
+
+                            <reportConfiguration>
+                                <apiConfiguration>
+                                    <apiType>NONE</apiType>
+                                </apiConfiguration>
+                            </reportConfiguration>
+
+                            <timelines>
+                                <active>${param.timeline.conf.enabled}</active>
+                                <maxThreads>${param.timeline.max.threads}</maxThreads>
+                                <maximumTimeSpentPerTimeline>${param.timeline.time.spent.max}</maximumTimeSpentPerTimeline>
+                                <vulnerabilityProviders>${param.timeline.vuln.providers.list}</vulnerabilityProviders>
+                            </timelines>
 
                             <securityPolicy>
                                 <files>
@@ -70,21 +82,9 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.reference.inventories.dir</property>
-                                    <message>
-                                        You must set the parameter 'input.reference.inventories.dir' to specify the file of the filtered inventory.
-                                    </message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>output.filtered.inventory.file</property>
-                                    <message>
-                                        You must set the parameter 'output.filtered.inventory.file' to specify the file of the filtered inventory.
-                                    </message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.vulnerability.advisory.filter</property>
-                                    <message>
-                                        You must set the parameter 'param.vulnerability.advisory.filter' to specify the advisor to filter the inventory by.
+                                    <property>input.inventory.file</property>
+                                    <message>You must set the parameter 'input.inventory.file' to specify the input
+                                        inventory to create the dashboard from.
                                     </message>
                                 </requireProperty>
                             </rules>
@@ -95,5 +95,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
