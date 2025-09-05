@@ -151,12 +151,12 @@
                                         <if>
                                             <isset property="is.zip" />
                                             <then>
-                                        <unzip src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" />
+                                                <unzip src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" />
                                             </then>
                                             <elseif>
                                                 <isset property="is.tar.gz" />
                                                 <then>
-                                        <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" compression="gzip" />
+                                                    <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" compression="gzip" />
                                                 </then>
                                             </elseif>
                                         </if>
@@ -345,7 +345,7 @@
                                             <elseif>
                                                 <isset property="is.tar.gz" />
                                                 <then>
-                                        <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" compression="gzip" />
+                                                    <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" compression="gzip" />
                                                 </then>
                                             </elseif>
                                         </if>
