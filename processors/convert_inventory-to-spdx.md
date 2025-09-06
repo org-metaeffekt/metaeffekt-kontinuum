@@ -1,8 +1,8 @@
 # Convert inventory to spdx
 
-This process converts an inventory, independent of which stage it was produced in, into a spdx document. All available
+This process converts an inventory, independent of which stage it was produced in, into a SPDX-document. All available
 parameters are listed in the table below. Parameters marked as "not required" already have default values associated with
-them if necessary. For example "documentFormat" is no required to be manually set, as it already has the default value "JSON".
+them if necessary. For example "documentFormat" is not required to be manually set, as it already has the default value "JSON".
 
 
 | Parameter                    | Required | Description                                                                               |

@@ -2,19 +2,18 @@
 
 ## Purpose and Function
 
-This folder contains a set of maven POM files (ending with .xml) and a set of markdown files (ending with .md) 
+This folder contains a set of Maven POM files (ending with .xml) and a set of markdown files (ending with .md) 
 describing the purpose and details of the POM files. 
 
-Each POM file addresses a particular task in the pipeline. The POM files serve as blueprint for a task and can be 
+Each POM file addresses a particular task in the pipeline. The POM files serve as a blueprint for a task and can be 
 parameterized and executed. Please check the markdown files on the individual POMs for details. 
 
 Each processor has user-controlled inputs & outputs. The user does not need a full understanding of the implementation 
 of each processor. For detailed examples of how to control the processors and structure a project, please refer to the 
-scripts at test/scripts/scripts-sh. The scripts show a basic execution of each processor with minimal parameterization, 
-for optional parameters to further control each processor, please refer to the markdown documentation of each processor.
+scripts at test/scripts/scripts-sh. The scripts show a basic execution of each processor with minimal parameterization. For optional parameters to further control each processor, please refer to the markdown documentation of each processor.
 
-The POM files are platform independent configurations that can be combined into a workflow. The workflows are
-either defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.e. Jenkins pipelines).
+The POM files are platform-independent configurations that can be combined into a workflow. The workflows are
+either defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.e., Jenkins pipelines).
 
 ## Available Processors
 
