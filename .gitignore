@@ -1,6 +1,7 @@
 .idea
 .pre-commit-config.yaml
 .mirror
+.logs
 
 tests/target/
 

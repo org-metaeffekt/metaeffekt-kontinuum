@@ -15,33 +15,43 @@ export PROCESSORS_DIR="$KONTINUUM_DIR/processors"
 export TESTS_DIR="$KONTINUUM_DIR/tests"
 export GENERIC_RESOURCES_DIR="$TESTS_DIR/resources/generic"
 export WORKBENCH_DIR="$TESTS_DIR/resources/workbench"
-export WORKSPACE_DIR="$TESTS_DIR/resources/workspace-001"
-export PRODUCT_DIR="$WORKSPACE_DIR/sample-product-1.0.0"
 export CASES_DIR="$TESTS_DIR/scripts/cases"
 
 # Target directory structure
 readonly TARGET_DIR="$TESTS_DIR/target"
-readonly TARGET_WORKSPACE_DIR="$TARGET_DIR/workspace-001"
-readonly TARGET_PRODUCT_DIR="$TARGET_WORKSPACE_DIR/sample-product-1.0.0"
 
-readonly ANALYZED_DIR="$TARGET_PRODUCT_DIR/02_analyzed"
-readonly RESOLVED_DIR="$TARGET_PRODUCT_DIR/03_resolved"
-readonly ADVISED_DIR="$TARGET_PRODUCT_DIR/05_advised"
-readonly SCANNED_DIR="$TARGET_PRODUCT_DIR/04_scanned"
-readonly REPORTED_DIR="$TARGET_PRODUCT_DIR/06_reported"
-readonly UTIL_DIR="$TARGET_PRODUCT_DIR/00_util"
-readonly PORTFOLIO_DIR="$TARGET_PRODUCT_DIR/00_portfolio"
-readonly CONVERTED_DIR="$TARGET_PRODUCT_DIR/00_converted"
+
+# Workspace 001
+export WORKSPACE_001_DIR="$TESTS_DIR/resources/workspace-001"
+
+readonly TARGET_WORKSPACE_001_DIR="$TARGET_DIR/workspace-001"
+readonly ANALYZED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/02_analyzed"
+readonly RESOLVED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/03_resolved"
+readonly ADVISED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/05_advised"
+readonly SCANNED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/04_scanned"
+readonly REPORTED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/06_reported"
+readonly UTIL_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/00_util"
+readonly PORTFOLIO_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/00_portfolio"
+readonly CONVERTED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/00_converted"
+
+#Workspace 002
+export WORKSPACE_002_DIR="$TESTS_DIR/resources/workspace-002"
+
+readonly TARGET_WORKSPACE_002_DIR="$TARGET_DIR/workspace-002"
+readonly ANALYZED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/02_analyzed"
+readonly RESOLVED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/03_resolved"
+readonly ADVISED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/05_advised"
+readonly SCANNED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/04_scanned"
+readonly REPORTED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/06_reported"
+readonly UTIL_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/00_util"
+readonly PORTFOLIO_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/00_portfolio"
+readonly CONVERTED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/00_converted"
+
 
 ########################################
 # Function Definitions
 ########################################
 
-# Print error message and exit
-error_exit() {
-    echo "Error: $1" >&2
-    exit 1
-}
 
 # Print usage information
 print_usage() {
@@ -49,6 +59,8 @@ print_usage() {
 Usage: $0 [options]
     -c <case>   : Which case to select for running the test. Either an absolute
                   path or relative to the CASES_DIR ($CASES_DIR)
+    -l          : Provides the log level, can either be ALL, IO_ONLY, CMD_ONLY or INFO
+    -p          : Enables pipeline mode, set this flag only if running multiple scripts in sequence
     -h          : Show this help message
 
 Example:
@@ -58,41 +70,30 @@ EOF
 
 # Initialize target directory structure
 initialize_target_directories() {
-    echo "Creating target directories if missing..."
-
     if [[ ! -d "$TARGET_DIR" ]]; then
-        echo "Initializing target directory structure..."
         mkdir -p "$TARGET_DIR"
-        cp -r "$TESTS_DIR/resources/workspace-001" "$TARGET_DIR"
+        cp -r "$WORKSPACE_001_DIR" "$TARGET_DIR"
+        cp -r "$WORKSPACE_002_DIR" "$TARGET_DIR"
     fi
 
     local directories=(
-        "$CONVERTED_DIR"
-        "$ANALYZED_DIR"
-        "$RESOLVED_DIR"
-        "$ADVISED_DIR"
-        "$SCANNED_DIR"
-        "$REPORTED_DIR"
-        "$UTIL_DIR"
-        "$PORTFOLIO_DIR"
+        "$CONVERTED_DIR_001"
+        "$ANALYZED_DIR_001"
+        "$RESOLVED_DIR_001"
+        "$ADVISED_DIR_001"
+        "$SCANNED_DIR_001"
+        "$REPORTED_DIR_001"
+        "$UTIL_DIR_001"
+        "$PORTFOLIO_DIR_001"
+        "$CONVERTED_DIR_002"
+        "$ANALYZED_DIR_002"
+        "$RESOLVED_DIR_002"
+        "$ADVISED_DIR_002"
+        "$SCANNED_DIR_002"
+        "$REPORTED_DIR_002"
+        "$UTIL_DIR_002"
+        "$PORTFOLIO_DIR_002"
     )
-
-    if ! mkdir -p "${directories[@]}"; then
-        error_exit "Failed to create target directories"
-    fi
-}
-
-# Load case configuration
-load_case_configuration() {
-    local case_path="$1"
-
-    if [[ -f "$CASES_DIR/$case_path" ]]; then
-        source "$CASES_DIR/$case_path"
-    elif [[ -f "$case_path" ]]; then
-        source "$case_path"
-    else
-        error_exit "Case [$case_path] does not exist. Must be either relative to [$CASES_DIR] or an absolute path."
-    fi
 }
 
 ########################################
@@ -100,18 +101,7 @@ load_case_configuration() {
 ########################################
 
 main() {
-    while getopts "c:h" flag; do
-        case "$flag" in
-            c) CASE="$OPTARG" ;;
-            h) print_usage; exit 0 ;;
-            *) print_usage; exit 1 ;;
-        esac
-    done
-
     initialize_target_directories
-    load_case_configuration "$CASE"
-
-    echo "Configuration loaded successfully"
 }
 
 main "$@"

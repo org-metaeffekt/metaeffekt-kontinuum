@@ -1,0 +1,10 @@
+#!/bin/bash
+
+export INPUT_INVENTORY_FILE="$ADVISED_DIR_002/asset-enriched.xlsx"
+export SECURITY_POLICY="$WORKBENCH_DIR/policies/security-policy.json"
+export OUTPUT_DASHBOARD_FILE="$ADVISED_DIR_002/asset-dashboard.html"
+export PARAM_TIMELINE_CONF_ENABLED="true"
+export VULNERABILITY_MIRROR_DIR="$KONTINUUM_DIR/.mirror/.database"
+export PARAM_TIMELINE_MAX_THREADS="4"
+export PARAM_TIMELINE_TIME_SPENT_MAX="10000"
+export PARAM_TIMELINE_VULN_PROVIDERS_LIST="NVD, OSV"

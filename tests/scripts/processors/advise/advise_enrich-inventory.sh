@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
 CASE="advise/advise_enrich-inventory-01.sh"
 
-# Check if config.sh exists and source it
+
 check_shared_config() {
   if [[ -f "$CONFIG_PATH" ]]; then
       source "$CONFIG_PATH"
@@ -24,8 +24,6 @@ run_maven_command() {
   CMD+=("-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
   CMD+=("-Dinput.security.policy.file=$SECURITY_POLICY")
   CMD+=("-Doutput.tmp.dir=$PROCESSOR_TMP_DIR")
-  CMD+=("-Dparam.activate.ghsa.correlation=$ACTIVATE_GHSA_CORRELATION")
-  CMD+=("-Dparam.activate.ghsa=$ACTIVATE_GHSA")
   CMD+=("-Dinput.correlation.dir=$CORRELATION_DIR")
   CMD+=("-Dinput.context.dir=$CONTEXT_DIR")
   CMD+=("-Dinput.assessment.dir=$ASSESSMENT_DIR")
@@ -36,6 +34,25 @@ run_maven_command() {
 
 main() {
   check_shared_config
+
+  local case_file="$CASE"
+
+  while getopts "c:h" flag; do
+            case "$flag" in
+                c) case_file="$OPTARG" ;;
+                h) print_usage; exit 0 ;;
+                *) print_usage; exit 1 ;;
+            esac
+      done
+
+  if [[ -f "$CASES_DIR/$case_file" ]]; then
+      source "$CASES_DIR/$case_file"
+  elif [[ -f "$case_file" ]]; then
+      source "$case_file"
+  else
+      error_exit "Case [$case_file] does not exist. Must be either relative to [$CASES_DIR] or an absolute path."
+  fi
+
   run_maven_command
 }
 

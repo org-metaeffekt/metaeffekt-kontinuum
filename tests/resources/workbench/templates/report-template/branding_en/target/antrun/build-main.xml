@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <echo message="Replacing SVG Artifacts"/>
+  <replaceregexp match="-inkscape-font-specification:[^;]*;" replace="" byline="true">
+    <fileset dir="/Users/jfuegen/IdeaProjects/metaeffekt-kontinuum/tests/resources/workbench/templates/report-template/branding_en/target/classes">
+      <include name="**/*.svg"/>
+    </fileset>
+  </replaceregexp>
+</target>
+</project>

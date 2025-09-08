@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
 CASE="util/util_validate-reference-inventory-01.sh"
 
-# Check if config.sh exists and source it
+
 check_shared_config() {
   if [[ -f "$CONFIG_PATH" ]]; then
       source "$CONFIG_PATH"
@@ -27,6 +27,25 @@ run_maven_command() {
 
 main() {
   check_shared_config
+
+  local case_file="$CASE"
+
+  while getopts "c:h" flag; do
+            case "$flag" in
+                c) case_file="$OPTARG" ;;
+                h) print_usage; exit 0 ;;
+                *) print_usage; exit 1 ;;
+            esac
+      done
+
+  if [[ -f "$CASES_DIR/$case_file" ]]; then
+      source "$CASES_DIR/$case_file"
+  elif [[ -f "$case_file" ]]; then
+      source "$case_file"
+  else
+      error_exit "Case [$case_file] does not exist. Must be either relative to [$CASES_DIR] or an absolute path."
+  fi
+
   run_maven_command
 }
 
