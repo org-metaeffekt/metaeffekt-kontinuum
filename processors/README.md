@@ -88,7 +88,7 @@ And suffixed with:
 
 ### Parameters
 The "parameters" category simply describes any additional parameters which are needed for the processor to run or to
-configure the processors flow and influence the outout.
+configure the processors flow and influence the output.
 
 Parameters in this category are prefixed with:
 - param

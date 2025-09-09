@@ -5,16 +5,21 @@ set -eo pipefail
 ########################################
 # Configuration and Directory Setup
 ########################################
-
 readonly SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-readonly KONTINUUM_DIR="$(realpath "$SELF_DIR/../../../")"
+KONTINUUM_DIR="$(realpath "$SELF_DIR/../../../")"
+
+source "$KONTINUUM_DIR/external-template.rc"
+
+if [ -n "$EXTERNAL_WORKBENCH_DIR" ]; then
+    export WORKBENCH_DIR="$EXTERNAL_WORKBENCH_DIR"
+fi
 
 # Export environment variables
 export KONTINUUM_DIR
 export PROCESSORS_DIR="$KONTINUUM_DIR/processors"
 export TESTS_DIR="$KONTINUUM_DIR/tests"
 export GENERIC_RESOURCES_DIR="$TESTS_DIR/resources/generic"
-export WORKBENCH_DIR="$TESTS_DIR/resources/workbench"
+export INTERNAL_WORKBENCH_DIR="$TESTS_DIR/resources/workbench"
 export CASES_DIR="$TESTS_DIR/scripts/cases"
 
 # Target directory structure
@@ -59,17 +64,20 @@ print_usage() {
 Usage: $0 [options]
     -c <case>   : Which case to select for running the test. Either an absolute
                   path or relative to the CASES_DIR ($CASES_DIR)
-    -l          : Provides the log level, can either be ALL, IO_ONLY, CMD_ONLY or INFO
-    -p          : Enables pipeline mode, set this flag only if running multiple scripts in sequence
+    -l          : Provides the log level, can either be ALL, CONFIG, CMD, INFO or ERROR
+    -f          : In which file to log all information
     -h          : Show this help message
+    -o          : If set, outputs the logs on the console
 
 Example:
-    $0 -c /path/to/case
+    $0 -c /path/to/case -l CMD -o
 EOF
 }
 
 # Initialize target directory structure
 initialize_target_directories() {
+    log_info "Creating target directories if missing"
+
     if [[ ! -d "$TARGET_DIR" ]]; then
         mkdir -p "$TARGET_DIR"
         cp -r "$WORKSPACE_001_DIR" "$TARGET_DIR"
@@ -94,6 +102,26 @@ initialize_target_directories() {
         "$UTIL_DIR_002"
         "$PORTFOLIO_DIR_002"
     )
+
+    if ! mkdir -p "${directories[@]}"; then
+      log_error "Failed to create target directories"
+    else
+      log_info "Target directories successfully created"
+    fi
+}
+
+source_case_file() {
+    local case_file="$1"
+    if [[ -f "$CASES_DIR/$case_file" ]]; then
+        source "$CASES_DIR/$case_file"
+        log_info "Successfully sourced case file $(realpath "$CASES_DIR/$case_file")"
+    elif [[ -f "$case_file" ]]; then
+        source "$case_file"
+        log_info "Successfully sourced case file $(realpath "$case_file")"
+    else
+        log_error "Case [$case_file] does not exist. Must be either relative to [$CASES_DIR] or an absolute path."
+        exit 1
+    fi
 }
 
 ########################################

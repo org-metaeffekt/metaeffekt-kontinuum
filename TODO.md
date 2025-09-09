@@ -14,4 +14,3 @@
   - log 3: full log of maven call, commands, processor name/success. (current console log)
 - [ ] add mirror download processor which downloads and builds the mirror from the different data sources instaed of
   our own server / a local instance.
-

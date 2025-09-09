@@ -1,12 +1,12 @@
 #!/bin/bash
 
-export INPUT_ASSET_DESCRIPTOR_DIR="$WORKBENCH_DIR/descriptors"
+export INPUT_ASSET_DESCRIPTOR_DIR="$INTERNAL_WORKBENCH_DIR/descriptors"
 export INPUT_ASSET_DESCRIPTOR_PATH="asset-descriptor_GENERIC-vulnerability-report.yaml"
 export INPUT_INVENTORY_FILE="$ADVISED_DIR_002/asset-enriched.xlsx"
-export INPUT_REFERENCE_INVENTORY_FILE="$WORKBENCH_DIR/inventories/example-reference-inventory/inventory/artifact-inventory.xls"
-export INPUT_REFERENCE_LICENSE_DIR="$WORKBENCH_DIR/inventories/example-reference-inventory/licenses"
-export INPUT_REFERENCE_COMPONENT_DIR="$WORKBENCH_DIR/inventories/example-reference-inventory/components"
-export INPUT_SECURITY_POLICY_DIR="$WORKBENCH_DIR/policies/vulnerability-report"
+export INPUT_REFERENCE_INVENTORY_FILE="$INTERNAL_WORKBENCH_DIR/inventories/example-reference-inventory/inventory/artifact-inventory.xls"
+export INPUT_REFERENCE_LICENSE_DIR="$INTERNAL_WORKBENCH_DIR/inventories/example-reference-inventory/licenses"
+export INPUT_REFERENCE_COMPONENT_DIR="$INTERNAL_WORKBENCH_DIR/inventories/example-reference-inventory/components"
+export INPUT_SECURITY_POLICY_DIR="$INTERNAL_WORKBENCH_DIR/policies/vulnerability-report"
 export OUTPUT_DOCUMENT_FILE="$REPORTED_DIR_002/asset-vulnerability-report.pdf"
 export OUTPUT_COMPUTED_INVENTORY_DIR="$REPORTED_DIR_002/computed"
 export PARAM_TEMPLATE_DIR="$WORKBENCH_DIR/templates/report-template"

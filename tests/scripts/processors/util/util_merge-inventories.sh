@@ -4,6 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
+LOGGER_PATH="$SCRIPT_DIR/../log.sh"
 CASE="util/util_merge-inventories-01.sh"
 
 
@@ -11,10 +12,20 @@ check_shared_config() {
   if [[ -f "$CONFIG_PATH" ]]; then
       source "$CONFIG_PATH"
   else
-      echo "Error: config.sh not found at $CONFIG_PATH" >&2
+      log_error "Config file not found at $CONFIG_PATH"
       exit 1
   fi
 }
+
+initialize_logger() {
+    local log_level="$1"
+    local console_output_enabled="$2"
+    local log_file="$3"
+    source $LOGGER_PATH
+    logger_init "$log_level" "$log_file" "${console_output_enabled}"
+}
+
+
 
 # Run maven command
 run_maven_command() {
@@ -23,30 +34,40 @@ run_maven_command() {
   CMD+=("-Dparam.inventory.includes=$INVENTORY_INCLUDES")
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
 
-  echo "${CMD[@]}"
-  "${CMD[@]}"
+  log_info "Running processor $PROCESSORS_DIR/util/util_merge-inventories.xml"
+
+  log_config "input.inventory.dir=$INPUT_INVENTORY_DIR" "output.inventory.file=$OUTPUT_INVENTORY_FILE"
+
+  log_cmd "${CMD[*]}"
+
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+      log_info "Successfully ran $PROCESSORS_DIR/util/util_merge-inventories.xml"
+  else
+      log_error "Failed to run $PROCESSORS_DIR/util/util_merge-inventories.xml because the maven execution was unsuccessful"
+      return 1
+  fi
 }
 
 main() {
-  check_shared_config
-
   local case_file="$CASE"
+  local log_level="ALL"
+  local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
+  local console_output_enabled=false
 
-  while getopts "c:h" flag; do
+  while getopts "c:l:f:ho" flag; do
             case "$flag" in
                 c) case_file="$OPTARG" ;;
                 h) print_usage; exit 0 ;;
+                l) log_level="$OPTARG" ;;
+                f) log_file="$OPTARG" ;;
+                o) console_output_enabled=true ;;
                 *) print_usage; exit 1 ;;
             esac
       done
 
-  if [[ -f "$CASES_DIR/$case_file" ]]; then
-      source "$CASES_DIR/$case_file"
-  elif [[ -f "$case_file" ]]; then
-      source "$case_file"
-  else
-      error_exit "Case [$case_file] does not exist. Must be either relative to [$CASES_DIR] or an absolute path."
-  fi
+  initialize_logger "$log_level" "$console_output_enabled" "$log_file"
+  check_shared_config
+  source_case_file "$case_file"
 
   run_maven_command
 }

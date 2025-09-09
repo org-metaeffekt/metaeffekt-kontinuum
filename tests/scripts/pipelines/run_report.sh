@@ -23,5 +23,5 @@ CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 
 # Report
-sh "$PROCESSOR_SCRIPTS_DIR/report/report_create-overview.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/report/report_create-overview.sh -p"
 

@@ -4,6 +4,8 @@
 set -euo pipefail
 
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SELF_DIR/../log.sh"
+logger_init "INFO" "$SELF_DIR/../../../.logs/run_all.log" "true"
 
 sh "$SELF_DIR/run_util.sh"
 sh "$SELF_DIR/run_analyze.sh"

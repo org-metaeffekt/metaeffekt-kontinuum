@@ -4,15 +4,26 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
+LOGGER_PATH="$SCRIPT_DIR/../log.sh"
 CASE="util/util_update-mirror-01.sh"
 
 check_shared_config() {
   if [[ -f "$CONFIG_PATH" ]]; then
       source "$CONFIG_PATH"
+  else
+      log_error "Config file not found at $CONFIG_PATH"
+      exit 1
   fi
 }
 
-# Run maven command
+initialize_logger() {
+    local log_level="$1"
+    local console_output_enabled="$2"
+    local log_file="$3"
+    source $LOGGER_PATH
+    logger_init "$log_level" "$log_file" "${console_output_enabled}"
+}
+
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_update-mirror.xml" compile -P withoutProxy)
   CMD+=("-Doutput.vulnerability.mirror.dir=$MIRROR_TARGET_DIR")
@@ -21,59 +32,42 @@ run_maven_command() {
 
   log_info "Running processor $PROCESSORS_DIR/util/util_update-mirror.xml"
 
-  log_io "[]" "[
-    output.vulnerability.mirror.dir=$MIRROR_TARGET_DIR
-    param.mirror.archive.url=$MIRROR_ARCHIVE_URL
-    param.mirror.archive.name=$MIRROR_ARCHIVE_NAME
-  ]"
+  log_config "" "output.vulnerability.mirror.dir=$MIRROR_TARGET_DIR
+                 param.mirror.archive.url=$MIRROR_ARCHIVE_URL
+                 param.mirror.archive.name=$MIRROR_ARCHIVE_NAME"
 
-  log_mvn "${CMD[@]}"
+  log_cmd "${CMD[*]}"
 
-  if ! "${CMD[@]}"; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+      log_info "Successfully ran $PROCESSORS_DIR/util/util_update-mirror.xml"
+  else
       log_error "Failed to run $PROCESSORS_DIR/util/util_update-mirror.xml because the maven execution was unsuccessful"
       return 1
   fi
-
-  log_info "Successfully ran $PROCESSORS_DIR/util/util_update-mirror.xml"
 }
 
 main() {
-  check_shared_config
-
   local case_file="$CASE"
   local log_level="ALL"
-  local initialize_logging=true
+  local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
+  local console_output_enabled=false
 
-  while getopts "c:h:l:p" flag; do
+  while getopts "c:l:f:ho" flag; do
             case "$flag" in
                 c) case_file="$OPTARG" ;;
                 h) print_usage; exit 0 ;;
                 l) log_level="$OPTARG" ;;
-                p) initialize_logging=false ;;
+                f) log_file="$OPTARG" ;;
+                o) console_output_enabled=true ;;
                 *) print_usage; exit 1 ;;
             esac
       done
 
-  if [ $initialize_logging ]; then
-    source "$TESTS_DIR/scripts/processors/log.sh"
-    init_logging "$KONTINUUM_DIR/.logs/util_update-mirror.log" "$log_level"
-  fi
-  # No logging before this point
-
-
-  if [[ -f "$CASES_DIR/$case_file" ]]; then
-      source "$CASES_DIR/$case_file"
-      log_info "Successfully sourced case file $CASES_DIR/$case_file"
-  elif [[ -f "$case_file" ]]; then
-      source "$case_file"
-      log_info "Successfully sourced case file $case_file"
-  else
-      log_error "Case [$case_file] does not exist. Must be either relative to [$CASES_DIR] or an absolute path."
-  fi
+  initialize_logger "$log_level" "$console_output_enabled" "$log_file"
+  check_shared_config
+  source_case_file "$case_file"
 
   run_maven_command
-  rm -r "$PROCESSORS_DIR/util/target" # Necessary because antrun produces a target folder in processors
-
 }
 
 main "$@"

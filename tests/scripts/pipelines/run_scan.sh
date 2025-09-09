@@ -20,4 +20,4 @@ CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 
 # Scan
-sh "$PROCESSOR_SCRIPTS_DIR/scan/scan_scan-inventory.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/scan/scan_scan-inventory.sh -p"
