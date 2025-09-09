@@ -8,7 +8,12 @@ set -eo pipefail
 readonly SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 KONTINUUM_DIR="$(realpath "$SELF_DIR/../../../")"
 
-source "$KONTINUUM_DIR/external-template.rc"
+if [ -f "$KONTINUUM_DIR/external-template.rc" ]; then
+    source "$KONTINUUM_DIR/external-template.rc"
+else
+    log_error "Missing external-template.rc file in root of repository."
+    exit 1
+fi
 
 if [ -n "$EXTERNAL_WORKBENCH_DIR" ]; then
     export WORKBENCH_DIR="$EXTERNAL_WORKBENCH_DIR"
