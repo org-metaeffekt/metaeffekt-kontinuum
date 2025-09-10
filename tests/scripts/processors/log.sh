@@ -16,7 +16,7 @@ logger_init() {
     LOG_TO_CONSOLE="${3:-true}"
 
     case "$LOG_LEVEL" in
-        "ALL"|"CMD"|"CONFIG"|"INFO"|"ERROR")
+        "ALL"|"MVN"|"CONFIG"|"INFO"|"ERROR")
             ;;
         *)
             echo "Warning: Invalid log level '$LOG_LEVEL'. Defaulting to INFO." >&2
@@ -41,8 +41,8 @@ should_log() {
         "ALL")
             return 0  # Log everything
             ;;
-        "CMD")
-            [[ "$log_type" == "CMD" || "$log_type" == "INFO" || "$log_type" == "ERROR" ]]
+        "MVN")
+            [[ "$log_type" == "MVN" || "$log_type" == "INFO" || "$log_type" == "ERROR" ]]
             return $?
             ;;
         "CONFIG")
@@ -97,10 +97,10 @@ _log_output() {
     fi
 }
 
-log_cmd() {
+log_mvn() {
     local message="$*"
-    if should_log "CMD"; then
-        _log_output "CMD" "$message"
+    if should_log "MVN"; then
+        _log_output "MVN" "$message"
     fi
 }
 
@@ -139,4 +139,4 @@ log_error() {
     fi
 }
 
-export log_cmd log_config log_info log_error
+export log_mvn log_config log_info log_error

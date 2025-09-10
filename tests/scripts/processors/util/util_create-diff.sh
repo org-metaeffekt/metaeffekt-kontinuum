@@ -43,9 +43,9 @@ run_maven_command() {
               input.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE
               input.security.policy.file=$SECURITY_POLICY_FILE" "output.inventory.dir=$OUTPUT_INVENTORY_DIR"
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/util/util_create-diff.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/util/util_create-diff.xml because the maven execution was unsuccessful"

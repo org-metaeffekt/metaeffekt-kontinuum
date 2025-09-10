@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export INPUT_ASSET_DESCRIPTOR_DIR="$WORKBENCH_DIR/descriptors"
+export INPUT_ASSET_DESCRIPTOR_DIR="$INTERNAL_WORKBENCH_DIR/descriptors"
 export INPUT_ASSET_DESCRIPTOR_PATH="asset-descriptor_GENERIC-vulnerability-report.yaml"
 export INPUT_INVENTORY_FILE="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/02_analyzed/sample-asset-1.0/sample-asset-1.0-inventory.xls"
 export INPUT_REFERENCE_INVENTORY_FILE="$INTERNAL_WORKBENCH_DIR/inventories/example-reference-inventory/inventory/artifact-inventory.xls"

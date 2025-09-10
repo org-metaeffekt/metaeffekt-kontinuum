@@ -66,9 +66,9 @@ run_maven_command() {
               output.document.file=$OUTPUT_DOCUMENT_FILE
               output.computed.inventory.path=$OUTPUT_COMPUTED_INVENTORY_DIR"
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/report/report_create-document.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/report/report_create-document.xml because the maven execution was unsuccessful"

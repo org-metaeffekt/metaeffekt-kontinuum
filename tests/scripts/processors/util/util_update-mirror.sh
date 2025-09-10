@@ -36,9 +36,9 @@ run_maven_command() {
                  param.mirror.archive.url=$MIRROR_ARCHIVE_URL
                  param.mirror.archive.name=$MIRROR_ARCHIVE_NAME"
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/util/util_update-mirror.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/util/util_update-mirror.xml because the maven execution was unsuccessful"

@@ -17,6 +17,9 @@ fi
 
 if [ -n "$EXTERNAL_WORKBENCH_DIR" ]; then
     export WORKBENCH_DIR="$EXTERNAL_WORKBENCH_DIR"
+    log_info "Found workbench repository at $EXTERNAL_WORKBENCH_DIR"
+else
+  log_error "Could not find workbench repository at path specified in the external-template.rc file"
 fi
 
 # Export environment variables

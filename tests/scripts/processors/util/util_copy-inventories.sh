@@ -40,9 +40,9 @@ run_maven_command() {
               input.inventories.list=$INPUT_INVENTORIES_LIST" "
               output.inventories.dir=$OUTPUT_INVENTORIES_DIR"
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/util/util_copy-inventories.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/util/util_copy-inventories.xml because the maven execution was unsuccessful"
