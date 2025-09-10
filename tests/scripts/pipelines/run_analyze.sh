@@ -23,4 +23,4 @@ CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 
 # Analyze
-sh "$PROCESSOR_SCRIPTS_DIR/analyze/analyze_resolve-inventory.sh -p"
+sh "$PROCESSOR_SCRIPTS_DIR/analyze/analyze_resolve-inventory.sh"

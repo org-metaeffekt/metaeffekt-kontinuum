@@ -45,9 +45,6 @@
         <param.activate.keywords>true</param.activate.keywords>
         <param.activate.validation>false</param.activate.validation>
 
-        <param.exclude.nvd.equivalent.msrc>true</param.exclude.nvd.equivalent.msrc>
-        <param.exclude.nvd.equivalent.osv>true</param.exclude.nvd.equivalent.osv>
-
         <param.dashboard.title>Vulnerability Assessment Dashboard</param.dashboard.title>
         <param.dashboard.subtitle>${project.artifactId}</param.dashboard.subtitle>
         <param.dashboard.footer>${project.artifactId}</param.dashboard.footer>
@@ -125,16 +122,41 @@
                                 <active>${param.activate.nvd}</active>
                             </nvdMatchCveFromCpeEnrichment>
 
-                            <nvdCveFillDetailsEnrichment>
-                                <active>${param.activate.nvd}</active>
-                            </nvdCveFillDetailsEnrichment>
-
                             <customVulnerabilitiesFromCpeEnrichment>
                                 <active>${param.activate.vulnerabilities.custom}</active>
                                 <vulnerabilityFiles>
                                     <file>${input.vulnerabilities.custom.dir}</file>
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFromCpeEnrichment>
+
+                            <ghsaVulnerabilitiesEnrichment>
+                                <active>${param.activate.ghsa.correlation}</active>
+
+                                <!-- active sources -->
+                                <maven>true</maven>
+                                <npm>true</npm>
+                                <crates_io>true</crates_io> <!-- RUST -->
+                                <hex>true</hex> <!-- Erlang -->
+                                <pypi>true</pypi> <!-- python/pip -->
+                                <rubygems>true</rubygems>
+
+                                <!-- disabled source -->
+                                <go>false</go>
+                                <packagist>false</packagist> <!-- composer/php -->
+
+                                <!-- inactive sources -->
+                                <githubactions>false</githubactions>
+                                <purl_type_swift>false</purl_type_swift> <!-- swift -->
+                                <pub>false</pub> <!-- Dart -->
+                                <nuget>false</nuget> <!-- c-sharp -->
+
+                                <!-- whether to only allow reviewed advisors -->
+                                <githubReviewed>false</githubReviewed>
+                            </ghsaVulnerabilitiesEnrichment>
+
+                            <nvdCveFillDetailsEnrichment>
+                                <active>${param.activate.nvd}</active>
+                            </nvdCveFillDetailsEnrichment>
 
                             <customVulnerabilitiesFillDetailsEnrichment>
                                 <active>${param.activate.vulnerabilities.custom}</active>
@@ -143,12 +165,30 @@
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFillDetailsEnrichment>
 
-
-
                             <msrcAdvisorFillDetailsEnrichment>
                                 <active>${param.activate.msrc}</active>
-                                <excludeNvdEquivalent>${param.exclude.nvd.equivalent.msrc}</excludeNvdEquivalent>
                             </msrcAdvisorFillDetailsEnrichment>
+
+                            <ghsaAdvisorFillDetailsEnrichment>
+                                <active>${param.activate.ghsa}</active>
+                            </ghsaAdvisorFillDetailsEnrichment>
+
+                            <vulnerabilityStatusEnrichment>
+                                <id>EnrichStatus</id>
+                                <active>${param.activate.status}</active>
+                                <statusFiles>
+                                    <file>${input.assessment.dir}</file>
+                                </statusFiles>
+                                <activeLabels>${assessment.labels}</activeLabels>
+                            </vulnerabilityStatusEnrichment>
+
+                            <vulnerabilityKeywordsEnrichment>
+                                <active>${param.activate.keywords}</active>
+                                <yamlFiles>
+                                    <file>${input.context.dir}</file>
+                                </yamlFiles>
+                                <activeLabels>${keywords.labels}</activeLabels>
+                            </vulnerabilityKeywordsEnrichment>
 
                             <certFrAdvisorEnrichment>
                                 <active>${param.activate.certfr}</active>
@@ -170,87 +210,11 @@
                                 <active>${param.activate.epss}</active>
                             </epssEnrichment>
 
-                            <osvVulnerabilitiesEnrichment>
-                                <active>${param.activate.osv}</active>
-                                <maven>${param.osv.matcher.maven.active}</maven>
-                                <packagist>${param.osv.matcher.packagist.active}</packagist>
-                                <rubygems>${param.osv.matcher.rubygems.active}</rubygems>
-                                <pypi>${param.osv.matcher.pypi.active}</pypi>
-                                <hex>${param.osv.matcher.hex.active}</hex>
-                                <npm>${param.osv.matcher.npm.active}</npm>
-                                <crates_io>${param.osv.matcher.crates_io.active}</crates_io>
-                                <nuget>${param.osv.matcher.nuget.active}</nuget>
-                                <githubReviewed>${param.osv.matcher.githubReviewed.active}</githubReviewed>
-                                <cran>${param.osv.matcher.cran.active}</cran>
-
-                                <excludeNvdEquivalent>${param.exclude.nvd.equivalent.osv}</excludeNvdEquivalent>
-                            </osvVulnerabilitiesEnrichment>
-
-                            <cweFillDetailsEnrichment>
-                                <active>${param.activate.cwe}</active>
-                            </cweFillDetailsEnrichment>
-
-                            <capecFillDetailsEnrichment>
-                                <active>${param.activate.capec}</active>
-                            </capecFillDetailsEnrichment>
-
-                            <csafVulnerabilitiesEnrichment>
-                                <active>${param.activate.csaf}</active>
-                            </csafVulnerabilitiesEnrichment>
-
-                            <csafAdvisorEnrichment>
-                                <active>${param.activate.csaf}</active>
-                            </csafAdvisorEnrichment>
-
-                            <!--
-                            Review with YWT
-
-                            <curatedVersionFiles></curatedVersionFiles>
-                            <requireInventorySourceFileExists></requireInventorySourceFileExists>
-                            -->
-
-                            <!-- Not in enrichment order, might be done through OSV enrichment. Review with YWT -->
-                            <ghsaVulnerabilitiesEnrichment></ghsaVulnerabilitiesEnrichment>
-
-                            <ghsaAdvisorFillDetailsEnrichment>
-                                <active>${param.activate.ghsa}</active>
-                            </ghsaAdvisorFillDetailsEnrichment>
-
-
-                            <!-- Review if listed properties are necessary -->
                             <eolEnrichment>
                                 <active>${param.activate.eol}</active>
                                 <warningThresholdDaysSupport>180</warningThresholdDaysSupport>
                                 <warningThresholdDaysExtendedSupport>180</warningThresholdDaysExtendedSupport>
                             </eolEnrichment>
-
-                            <osvAdvisorFillDetailsEnrichment>
-                                <active>${param.activate.osv}</active>
-                                <includeAdvisoryProviders></includeAdvisoryProviders>
-                                <lastCachedIncludeAdvisoryProviders></lastCachedIncludeAdvisoryProviders>
-                                <cachedIncludeAdvisoryProviders></cachedIncludeAdvisoryProviders>
-                            </osvAdvisorFillDetailsEnrichment>
-
-                            <vulnerabilityStatusEnrichment>
-                                <active>${param.activate.status}</active>
-                                <statusFiles>
-                                    <file>${input.assessment.dir}</file>
-                                </statusFiles>
-                                <additionalStatus></additionalStatus>
-                                <activeLabels>${assessment.labels}</activeLabels>
-                                <failOnValidationErrors></failOnValidationErrors>
-                                <failOnAmbiguousMatchingInformation></failOnAmbiguousMatchingInformation>
-                            </vulnerabilityStatusEnrichment>
-
-                            <vulnerabilityKeywordsEnrichment>
-                                <active>${param.activate.keywords}</active>
-                                <yamlFiles>
-                                    <file>${input.context.dir}</file>
-                                </yamlFiles>
-                                <activeLabels>${keywords.labels}</activeLabels>
-                                <addonVulnerabilityKeywords></addonVulnerabilityKeywords>
-                                <failOnValidationErrors></failOnValidationErrors>
-                            </vulnerabilityKeywordsEnrichment>
 
                             <inventoryValidationEnrichment>
                                 <active>${param.activate.validation}</active>
@@ -261,23 +225,15 @@
                                 <multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
                                     <versionLevel>minor</versionLevel>
                                 </multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
-                                <artifactAndCpeVersionsDifferGreatlyInventoryValidator></artifactAndCpeVersionsDifferGreatlyInventoryValidator>
                                 <vulnerabilityInvalidNameValidator/>
                             </inventoryValidationEnrichment>
 
-                            <!-- Always active / inactive -->
                             <vulnerabilityFilterEnrichment>
                                 <active>false</active>
+                                <vulnerabilityIncludeFilter></vulnerabilityIncludeFilter>
                             </vulnerabilityFilterEnrichment>
 
-                            <vulnerabilityAssessmentDashboardEnrichment>
-                                <active>false</active>
-                            </vulnerabilityAssessmentDashboardEnrichment>
-
-                            <advisorPeriodicEnrichment>
-                                <active>false</active>
-                            </advisorPeriodicEnrichment>
-
+                            <!-- enable automatic assessments -->
                             <vulnerabilityStatusPostProcessingEnrichment>
                                 <active>true</active>
                             </vulnerabilityStatusPostProcessingEnrichment>

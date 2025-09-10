@@ -38,27 +38,31 @@
 
                 <executions>
                     <execution>
-                        <id>generate-vulnerability-dashboard</id>
+                        <id>inventory-enrichment-advise-vulnerability-execution</id>
                         <goals>
-                            <goal>generate-asset-dashboard</goal>
+                            <goal>enrich-inventory</goal>
                         </goals>
                         <configuration>
                             <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
-                            <outputFile>${output.dashboard.file}</outputFile>
                             <mirrorDirectory>${env.vulnerability.mirror.dir}</mirrorDirectory>
 
-                            <reportConfiguration>
-                                <apiConfiguration>
-                                    <apiType>NONE</apiType>
-                                </apiConfiguration>
-                            </reportConfiguration>
-
-                            <timelines>
-                                <active>${param.timeline.conf.enabled}</active>
-                                <maxThreads>${param.timeline.max.threads}</maxThreads>
-                                <maximumTimeSpentPerTimeline>${param.timeline.time.spent.max}</maximumTimeSpentPerTimeline>
-                                <vulnerabilityProviders>${param.timeline.vuln.providers.list}</vulnerabilityProviders>
-                            </timelines>
+                            <vulnerabilityAssessmentDashboardEnrichment>
+                                <active>true</active>
+                                <outputDashboardFile>${output.dashboard.file}</outputDashboardFile>
+                                <maximumVulnerabilitiesPerDashboardCount>${param.max.vulnerabilities.per.dashboard}</maximumVulnerabilitiesPerDashboardCount>
+                                <vulnerabilityIncludeFilter>${param.vulnerability.include.filter}</vulnerabilityIncludeFilter>
+                                <maximumCpeForTimelinesPerVulnerability>${param.max.cpe.for.timelines.per.vulnerability}</maximumCpeForTimelinesPerVulnerability>
+                                <maximumVulnerabilitiesPerTimeline>${param.max.vulnerabilities.per.timeline }</maximumVulnerabilitiesPerTimeline>
+                                <maximumVersionsPerTimeline>${param.max.versions.per.timeline}</maximumVersionsPerTimeline>
+                                <maximumTimeSpentOnTimelines>${param.max.time.spent.on.timelines}</maximumTimeSpentOnTimelines>
+                                <maximumTimeSpentPerTimeline>${param.max.time.spent.per.timeline}</maximumTimeSpentPerTimeline>
+                                <vulnerabilityTimelinesGlobalEnabled>${param.vulnerability.timelines.global.enabled}</vulnerabilityTimelinesGlobalEnabled>
+                                <vulnerabilityTimelineHideIrrelevantVersions>${param.timeline.hide.irrelevant.versions.enabled}</vulnerabilityTimelineHideIrrelevantVersions>
+                                <failOnVulnerabilityWithoutSpecifiedRisk>${param.fail.on.vulnerability.without.specified.risk.enabled}</failOnVulnerabilityWithoutSpecifiedRisk>
+                                <failOnUnreviewedAdvisories>${param.fail.on.unreviewed.advisories.enabled}</failOnUnreviewedAdvisories>
+                                <vulnerabilitySvgChartInterpolationMethod>${param.vulnerability.svg.chart.interpolation.method}</vulnerabilitySvgChartInterpolationMethod>
+                                <detailLevels>${param.detail.levels}</detailLevels>
+                            </vulnerabilityAssessmentDashboardEnrichment>
 
                             <securityPolicy>
                                 <files>
@@ -85,6 +89,24 @@
                                     <property>input.inventory.file</property>
                                     <message>You must set the parameter 'input.inventory.file' to specify the input
                                         inventory to create the dashboard from.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.dashboard.file</property>
+                                    <message>You must set the parameter 'output.dashboard.file' to specify the name and
+                                        location of the created dashboard.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.vulnerability.mirror.dir</property>
+                                    <message>You must set the parameter 'env.vulnerability.mirror.dir' to locate the
+                                        vulnerability mirror data on the local system.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.security.policy.file</property>
+                                    <message>You must set the parameter 'input.security.policy.file' to specify which security
+                                        policy will be used for dashboard creation.
                                     </message>
                                 </requireProperty>
                             </rules>

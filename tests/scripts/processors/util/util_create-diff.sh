@@ -4,76 +4,34 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
-LOGGER_PATH="$SCRIPT_DIR/../log.sh"
 CASE="util/util_create-diff-01.sh"
 
-
+# Check if config.sh exists and source it
 check_shared_config() {
   if [[ -f "$CONFIG_PATH" ]]; then
       source "$CONFIG_PATH"
   else
-      log_error "Config file not found at $CONFIG_PATH"
+      echo "Error: config.sh not found at $CONFIG_PATH" >&2
       exit 1
   fi
 }
-
-initialize_logger() {
-    local log_level="$1"
-    local console_output_enabled="$2"
-    local log_file="$3"
-    source $LOGGER_PATH
-    logger_init "$log_level" "$log_file" "${console_output_enabled}"
-}
-
-
 
 # Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_create-diff.xml" process-resources)
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
   CMD+=("-Dinput.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE")
-  CMD+=("-Dinput.security.policy.file=$SECURITY_POLICY_FILE")
   CMD+=("-Dparam.inventory.version=$INVENTORY_VERSION")
   CMD+=("-Dparam.inventory.compare.version=$INVENTORY_COMPARE_VERSION")
   CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
+  CMD+=("-Dinput.security.policy.file=$SECURITY_POLICY_FILE")
 
-  log_info "Running processor $PROCESSORS_DIR/util/util_create-diff.xml"
-
-  log_config "input.inventory.file=$INPUT_INVENTORY_FILE
-              input.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE
-              input.security.policy.file=$SECURITY_POLICY_FILE" "output.inventory.dir=$OUTPUT_INVENTORY_DIR"
-
-  log_cmd "${CMD[*]}"
-
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
-      log_info "Successfully ran $PROCESSORS_DIR/util/util_create-diff.xml"
-  else
-      log_error "Failed to run $PROCESSORS_DIR/util/util_create-diff.xml because the maven execution was unsuccessful"
-      return 1
-  fi
+  echo "${CMD[@]}"
+  "${CMD[@]}"
 }
 
 main() {
-  local case_file="$CASE"
-  local log_level="ALL"
-  local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
-  local console_output_enabled=false
-
-  while getopts "c:l:f:ho" flag; do
-            case "$flag" in
-                c) case_file="$OPTARG" ;;
-                h) print_usage; exit 0 ;;
-                l) log_level="$OPTARG" ;;
-                f) log_file="$OPTARG" ;;
-                o) console_output_enabled=true ;;
-                *) print_usage; exit 1 ;;
-            esac
-      done
-
-  initialize_logger "$log_level" "$console_output_enabled" "$log_file"
   check_shared_config
-  source_case_file "$case_file"
-
   run_maven_command
 }
 
