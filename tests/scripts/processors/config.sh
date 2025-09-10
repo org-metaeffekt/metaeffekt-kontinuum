@@ -8,10 +8,10 @@ set -eo pipefail
 readonly SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 KONTINUUM_DIR="$(realpath "$SELF_DIR/../../../")"
 
-if [ -f "$KONTINUUM_DIR/external-template.rc" ]; then
-    source "$KONTINUUM_DIR/external-template.rc"
+if [ -f "$KONTINUUM_DIR/external.rc" ]; then
+    source "$KONTINUUM_DIR/external.rc"
 else
-    log_error "Missing external-template.rc file in root of repository."
+    log_error "Missing external.rc file in root of repository."
     exit 1
 fi
 
@@ -19,7 +19,7 @@ if [ -n "$EXTERNAL_WORKBENCH_DIR" ]; then
     export WORKBENCH_DIR="$EXTERNAL_WORKBENCH_DIR"
     log_info "Found workbench repository at $EXTERNAL_WORKBENCH_DIR"
 else
-  log_error "Could not find workbench repository at path specified in the external-template.rc file"
+  log_error "Could not find workbench repository at path specified in the external.rc file"
 fi
 
 # Export environment variables

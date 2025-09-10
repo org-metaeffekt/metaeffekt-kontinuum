@@ -2,7 +2,7 @@
 .pre-commit-config.yaml
 .mirror
 .logs
-external-template.rc
+external.rc
 
 tests/target/
 

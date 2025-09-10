@@ -3,20 +3,6 @@
 # Exit on any error
 set -euo pipefail
 
-cat <<"EOF"
-
------------------------- {metaeffekt} --------------------------
-                                                _
-                                               | |
-             ___  ___   _ __ __   __ ___  _ __ | |_
-            / __|/ _ \ | '_ \\ \ / // _ \| '__|| __|
-           | (__| (_) || | | |\ V /|  __/| |   | |_
-            \___|\___/ |_| |_| \_/  \___||_|    \__|
-
--------------------------- kontinuum ---------------------------
-
-EOF
-
 # Configuration
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SELF_DIR/../config.sh"
