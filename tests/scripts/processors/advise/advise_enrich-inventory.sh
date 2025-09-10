@@ -50,9 +50,9 @@ run_maven_command() {
               output.tmp.dir=$PROCESSOR_TMP_DIR
               output.inventory.file=$OUTPUT_INVENTORY_FILE"
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/advise/advise_enrich-inventory.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/advise/advise_enrich-inventory.xml because the maven execution was unsuccessful"

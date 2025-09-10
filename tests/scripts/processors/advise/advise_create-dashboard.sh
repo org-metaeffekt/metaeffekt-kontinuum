@@ -39,9 +39,9 @@ run_maven_command() {
 
   log_config "input.inventory.file=$INPUT_INVENTORY_FILE" "output.dashboard.file=$OUTPUT_DASHBOARD_FILE"
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/advise/advise_create-dashboard.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/advise/advise_create-dashboard.xml because the maven execution was unsuccessful"

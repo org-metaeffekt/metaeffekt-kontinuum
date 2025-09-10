@@ -17,11 +17,15 @@ cat <<"EOF"
 
 EOF
 
+# Configuration
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
+CASES_DIR="$SELF_DIR/../cases"
+LOG_FILE=${LOG_FILE:-"$SELF_DIR/../../../.logs/$(basename $0).log"}
+LOG_LEVEL=${LOG_LEVEL:-"ALL"}
 
-# Convert
-sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_cyclonedx-to-inventory.sh -p"
-sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-cyclonedx.sh -p"
-sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-spdx.sh -p"
+# Execution of single processors
+sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_cyclonedx-to-inventory.sh" -o -c "$CASES_DIR/convert/convert_cyclonedx-to-inventory-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-cyclonedx.sh" -o -c "$CASES_DIR/convert/convert_inventory-to-cyclonedx-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-spdx.sh" -o -c "$CASES_DIR/convert/convert_inventory-to-spdx-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"

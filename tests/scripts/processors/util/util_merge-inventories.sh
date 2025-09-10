@@ -25,8 +25,6 @@ initialize_logger() {
     logger_init "$log_level" "$log_file" "${console_output_enabled}"
 }
 
-
-
 # Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_merge-inventories.xml" process-resources)
@@ -38,9 +36,9 @@ run_maven_command() {
 
   log_config "input.inventory.dir=$INPUT_INVENTORY_DIR" "output.inventory.file=$OUTPUT_INVENTORY_FILE"
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/util/util_merge-inventories.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/util/util_merge-inventories.xml because the maven execution was unsuccessful"

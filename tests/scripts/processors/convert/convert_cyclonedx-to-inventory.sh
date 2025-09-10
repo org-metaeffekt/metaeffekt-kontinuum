@@ -37,9 +37,9 @@ run_maven_command() {
 
   log_config "input.bom.file=$INPUT_BOM_FILE" "output.inventory.file=$OUTPUT_INVENTORY_FILE"
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/convert/convert_cyclonedx-to-inventory.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/convert/convert_cyclonedx-to-inventory.xml because the maven execution was unsuccessful"

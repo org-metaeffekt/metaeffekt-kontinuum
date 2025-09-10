@@ -44,9 +44,9 @@ run_maven_command() {
               input.advisor.inventories.dir=$INPUT_ADVISOR_INVENTORIES_DIR" "
               output.resources.dir=$OUTPUT_GENERIC_RESOURCES_DIR"
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/portfolio/portfolio_copy-resources.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/portfolio/portfolio_copy-resources.xml because the maven execution was unsuccessful"

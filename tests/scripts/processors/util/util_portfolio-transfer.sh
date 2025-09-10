@@ -25,8 +25,6 @@ initialize_logger() {
     logger_init "$log_level" "$log_file" "${console_output_enabled}"
 }
 
-
-
 create_required_directories() {
   if [ -d "$TARGET_DIR/portfolio-manager" ]; then
     rm -r "$TARGET_DIR/portfolio-manager"
@@ -79,9 +77,9 @@ run_maven_command_portfolio_upload() {
               input.cli.dir=$PORTFOLIO_MANAGER_JARS
               input.truststore.config.file=$TRUSTSTORE_CONFIG_FILE" ""
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/util/util_portfolio-upload.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/util/util_portfolio-upload.xml because the maven execution was unsuccessful"
@@ -112,9 +110,9 @@ run_maven_command_portfolio_download() {
               input.truststore.config.file=$TRUSTSTORE_CONFIG_FILE" "
               output.inventory.dir=$OUTPUT_INVENTORY_DIR"
 
-  log_cmd "${CMD[*]}"
+  log_mvn "${CMD[*]}"
 
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/util/util_portfolio-download.xml"
   else
       log_error "Failed to run $PROCESSORS_DIR/util/util_portfolio-download.xml because the maven execution was unsuccessful"
@@ -136,25 +134,23 @@ cleanup() {
 main() {
   local case_file="$CASE"
   local log_level="ALL"
-  local initialize_logging=true
+  local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
   local console_output_enabled=false
 
-  while getopts "c:h:l:p:o" flag; do
+while getopts "c:l:f:ho" flag; do
             case "$flag" in
                 c) case_file="$OPTARG" ;;
                 h) print_usage; exit 0 ;;
                 l) log_level="$OPTARG" ;;
-                p) initialize_logging=false ;;
+                f) log_file="$OPTARG" ;;
                 o) console_output_enabled=true ;;
                 *) print_usage; exit 1 ;;
             esac
       done
 
-  if [ "$initialize_logging" = true ]; then
-    initialize_logger "$log_level" "$console_output_enabled"
-  fi
-
+  initialize_logger "$log_level" "$console_output_enabled" "$log_file"
   check_shared_config
+  source_case_file "$case_file"
   create_required_directories
   run_portfolio_manager
   run_maven_command_portfolio_upload
