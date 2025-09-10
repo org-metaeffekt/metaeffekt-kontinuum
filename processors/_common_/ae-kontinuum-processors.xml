@@ -21,7 +21,7 @@
 
     <groupId>com.metaeffekt.kontinuum</groupId>
     <artifactId>ae-kontinuum-processors</artifactId>
-    <version>WORKBENCH-SNAPSHOT</version>
+    <version>KONTINUUM-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>

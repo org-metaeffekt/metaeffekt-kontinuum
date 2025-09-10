@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.metaeffekt.kontinuum</groupId>
         <artifactId>ae-kontinuum-processors</artifactId>
-        <version>WORKBENCH-SNAPSHOT</version>
+        <version>KONTINUUM-SNAPSHOT</version>
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 

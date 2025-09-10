@@ -23,7 +23,7 @@
     <parent>
         <groupId>com.metaeffekt.kontinuum</groupId>
         <artifactId>ae-kontinuum-processors</artifactId>
-        <version>WORKBENCH-SNAPSHOT</version>
+        <version>KONTINUUM-SNAPSHOT</version>
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
@@ -70,7 +70,7 @@
 
                                 <argument>-Dreference.license.path=${input.reference.license.dir}</argument>
                                 <argument>-Dreference.component.path=${input.reference.component.dir}</argument>
-                                <argument>-Dcomputed.inventory.path=${computed.inventory.path}</argument>
+                                <argument>-Dcomputed.inventory.path=${output.computed.inventory.path}</argument>
                                 <argument>-Dasset.descriptor.basedir=${input.asset.descriptor.dir}</argument>
                                 <argument>-Dasset.descriptor.path=${input.asset.descriptor.path}</argument>
 

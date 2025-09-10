@@ -1,6 +1,8 @@
 .idea
 .pre-commit-config.yaml
 .mirror
+.logs
+external-template.rc
 
 tests/target/
 
