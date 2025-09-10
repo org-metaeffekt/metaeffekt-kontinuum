@@ -9,7 +9,7 @@ CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 CASES_DIR="$SELF_DIR/../cases"
 LOG_FILE=${LOG_FILE:-"$SELF_DIR/../../../.logs/$(basename $0).log"}
-LOG_LEVEL=${LOG_LEVEL:-"ALL"}
+LOG_LEVEL=${LOG_LEVEL:-"CONFIG"}
 
 # Execution of single processors
-sh "$PROCESSOR_SCRIPTS_DIR/analyze/analyze_resolve-inventory.sh" -o -c "$CASES_DIR/analyze/analyze_resolve-inventory-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/analyze/analyze_resolve-inventory.sh" -c "$CASES_DIR/analyze/analyze_resolve-inventory-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
