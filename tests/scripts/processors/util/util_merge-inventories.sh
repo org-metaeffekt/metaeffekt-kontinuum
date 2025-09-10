@@ -48,9 +48,9 @@ run_maven_command() {
 
 main() {
   local case_file="$CASE"
-  local log_level="ALL"
+  local log_level="CONFIG"
   local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
-  local console_output_enabled=false
+  local console_output_enabled=true
 
   while getopts "c:l:f:ho" flag; do
             case "$flag" in
@@ -58,7 +58,7 @@ main() {
                 h) print_usage; exit 0 ;;
                 l) log_level="$OPTARG" ;;
                 f) log_file="$OPTARG" ;;
-                o) console_output_enabled=true ;;
+                o) console_output_enabled=false ;;
                 *) print_usage; exit 1 ;;
             esac
       done
