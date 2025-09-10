@@ -4,17 +4,28 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
+LOGGER_PATH="$SCRIPT_DIR/../log.sh"
 CASE="util/util_portfolio-transfer-01.sh"
 
-# Check if config.sh exists and source it
+
 check_shared_config() {
   if [[ -f "$CONFIG_PATH" ]]; then
       source "$CONFIG_PATH"
   else
-      echo "Error: config.sh not found at $CONFIG_PATH" >&2
+      log_error "Config file not found at $CONFIG_PATH"
       exit 1
   fi
 }
+
+initialize_logger() {
+    local log_level="$1"
+    local console_output_enabled="$2"
+    local log_file="$3"
+    source $LOGGER_PATH
+    logger_init "$log_level" "$log_file" "${console_output_enabled}"
+}
+
+
 
 create_required_directories() {
   if [ -d "$TARGET_DIR/portfolio-manager" ]; then
@@ -35,10 +46,10 @@ run_portfolio_manager() {
   echo "${CMD[@]}"
   "${CMD[@]}"
 
-  cd "$WORKBENCH_DIR/configs/portfolio-manager/service"
+  cd "$INTERNAL_WORKBENCH_DIR/configs/portfolio-manager/service"
   java -jar "$PORTFOLIO_MANAGER_JARS/ae-portfolio-manager-service-0.5.0.jar" &
 
-  cd "$WORKBENCH_DIR/configs/portfolio-manager/client"
+  cd "$INTERNAL_WORKBENCH_DIR/configs/portfolio-manager/client"
   OUTPUT=$(java -jar "$PORTFOLIO_MANAGER_JARS/ae-portfolio-manager-cli-0.5.0-exec.jar" create-project A)
   JSON_OUTPUT=$(echo "$OUTPUT" | sed -n '/^{/,$p')
   ADMIN_TOKEN=$(echo "$JSON_OUTPUT" | jq -r '.body.adminToken')
@@ -52,17 +63,30 @@ run_maven_command_portfolio_upload() {
   CMD+=("-Dparam.portfolio.manager.url=$PORTFOLIO_MANAGER_URL")
   CMD+=("-Dparam.portfolio.manager.token=$ADMIN_TOKEN")
   CMD+=("-Dinput.keystore.config.file=$KEYSTORE_CONFIG_FILE")
-  CMD+=("-Dparam.keystore.password=$KEYSTORE_PASSWORD")
+  CMD+=("-Dinput.file=$INPUT_FILE")
+  CMD+=("-Dinput.cli.dir=$PORTFOLIO_MANAGER_JARS")
   CMD+=("-Dinput.truststore.config.file=$TRUSTSTORE_CONFIG_FILE")
   CMD+=("-Dparam.truststore.password=$TRUSTSTORE_PASSWORD")
   CMD+=("-Dparam.product.name=$PRODUCT_NAME")
   CMD+=("-Dparam.product.version=$PRODUCT_VERSION")
   CMD+=("-Dparam.product.artifact.id=$PRODUCT_ARTIFACT_ID")
-  CMD+=("-Dinput.file=$INPUT_FILE")
-  CMD+=("-Dinput.cli.dir=$PORTFOLIO_MANAGER_JARS")
+  CMD+=("-Dparam.keystore.password=$KEYSTORE_PASSWORD")
 
-  echo "${CMD[@]}"
-  "${CMD[@]}"
+  log_info "Running processor $PROCESSORS_DIR/util/util_portfolio-upload.xml"
+
+  log_config "input.keystore.config.file=$KEYSTORE_CONFIG_FILE
+              input.file=$INPUT_FILE
+              input.cli.dir=$PORTFOLIO_MANAGER_JARS
+              input.truststore.config.file=$TRUSTSTORE_CONFIG_FILE" ""
+
+  log_cmd "${CMD[*]}"
+
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+      log_info "Successfully ran $PROCESSORS_DIR/util/util_portfolio-upload.xml"
+  else
+      log_error "Failed to run $PROCESSORS_DIR/util/util_portfolio-upload.xml because the maven execution was unsuccessful"
+      return 1
+  fi
 }
 
 run_maven_command_portfolio_download() {
@@ -81,8 +105,21 @@ run_maven_command_portfolio_download() {
   CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
   CMD+=("-Dinput.cli.dir=$PORTFOLIO_MANAGER_JARS")
 
-  echo "${CMD[@]}"
-  "${CMD[@]}"
+  log_info "Running processor $PROCESSORS_DIR/util/util_portfolio-download.xml"
+
+  log_config "input.keystore.config.file=$KEYSTORE_CONFIG_FILE
+              input.cli.dir=$PORTFOLIO_MANAGER_JARS
+              input.truststore.config.file=$TRUSTSTORE_CONFIG_FILE" "
+              output.inventory.dir=$OUTPUT_INVENTORY_DIR"
+
+  log_cmd "${CMD[*]}"
+
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_cmd "$line"; done; then
+      log_info "Successfully ran $PROCESSORS_DIR/util/util_portfolio-download.xml"
+  else
+      log_error "Failed to run $PROCESSORS_DIR/util/util_portfolio-download.xml because the maven execution was unsuccessful"
+      return 1
+  fi
 }
 
 cleanup() {
@@ -97,6 +134,26 @@ cleanup() {
 }
 
 main() {
+  local case_file="$CASE"
+  local log_level="ALL"
+  local initialize_logging=true
+  local console_output_enabled=false
+
+  while getopts "c:h:l:p:o" flag; do
+            case "$flag" in
+                c) case_file="$OPTARG" ;;
+                h) print_usage; exit 0 ;;
+                l) log_level="$OPTARG" ;;
+                p) initialize_logging=false ;;
+                o) console_output_enabled=true ;;
+                *) print_usage; exit 1 ;;
+            esac
+      done
+
+  if [ "$initialize_logging" = true ]; then
+    initialize_logger "$log_level" "$console_output_enabled"
+  fi
+
   check_shared_config
   create_required_directories
   run_portfolio_manager

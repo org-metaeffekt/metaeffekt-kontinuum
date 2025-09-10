@@ -14,16 +14,18 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Parameter                      | Required        | Description                                             |
-|--------------------------------|-----------------|---------------------------------------------------------|
-| input.asset.descriptor.dir     | yes             | The directory where the asset descriptors are located.  |
-| input.asset.descriptor.path    | yes             | The path of the asset descriptor used for the document. | 
-| input.inventory.file           | yes             | The path of the input inventory for the document.       |
-| input.reference.inventory.file | yes             | The path of the reference inventory for the document.   |
-| input.reference.license.dir    | yes             | The path to the reference license directory.            |
-| input.reference.component.dir  | yes             | The path to the reference component directory.          |
-| input.security.policy.dir      | no (VR/CR only) | The directory containing the security policy files.     | 
-| output.document.file           | yes             | The file where to store the resulting output document.  | 
+| Parameter                      | Required        | Description                                                     |
+|--------------------------------|-----------------|-----------------------------------------------------------------|
+| input.asset.descriptor.dir     | yes             | The directory where the asset descriptors are located.          |
+| input.asset.descriptor.path    | yes             | The path of the asset descriptor used for the document.         | 
+| input.inventory.file           | yes             | The path of the input inventory for the document.               |
+| input.reference.inventory.file | yes             | The path of the reference inventory for the document.           |
+| input.reference.license.dir    | yes             | The path to the reference license directory.                    |
+| input.reference.component.dir  | yes             | The path to the reference component directory.                  |
+| input.security.policy.dir      | no (VR/CR only) | The directory containing the security policy files.             | 
+| output.document.file           | yes             | The file where to store the resulting output document.          | 
+| output.computed.inventory.dir  | yes             | The directory where to store the computed (filtered) inventory. | 
+
 
 ### Parameters
 | Parameter                              | Required        | Description                                                                                                                                                                                     |

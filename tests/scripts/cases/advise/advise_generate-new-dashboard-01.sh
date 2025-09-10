@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export INPUT_INVENTORY_FILE="$PRODUCT_DIR/01_assets/example-004.xls"
-export SECURITY_POLICY="$WORKBENCH_DIR/policies/security-policy.json"
-export OUTPUT_DASHBOARD_FILE="$ADVISED_DIR/example-004-dashboard.html"
+export INPUT_INVENTORY_FILE="$WORKSPACE_001_DIR/sample-product-1.0.0/01_assets/example-004.xls"
+export SECURITY_POLICY="$INTERNAL_WORKBENCH_DIR/policies/security-policy.json"
+export OUTPUT_DASHBOARD_FILE="$ADVISED_DIR_001/example-004-dashboard.html"
 export PARAM_TIMELINE_CONF_ENABLED="true"
 export VULNERABILITY_MIRROR_DIR="$KONTINUUM_DIR/.mirror/.database"
 export PARAM_TIMELINE_MAX_THREADS="4"

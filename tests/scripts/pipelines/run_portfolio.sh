@@ -23,6 +23,6 @@ CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 
 # Portfolio
-sh "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_copy-resources.sh"
-# sh "$PROCESSOR_SCRIPTS_DIR/portfolio_create-overview.sh" currently disabled
+sh "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_copy-resources.sh -p"
+# sh "$PROCESSOR_SCRIPTS_DIR/portfolio_create-overview.sh -p" currently disabled
 

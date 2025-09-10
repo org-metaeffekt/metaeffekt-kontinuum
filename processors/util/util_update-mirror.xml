@@ -61,6 +61,11 @@
                                 </exclusions>
                             </dependency>
                         </dependencies>
+                        <configuration>
+                            <target>
+                                <delete dir="${project.build.directory}" quiet="true"/>
+                            </target>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>initialize-update-check</id>
@@ -250,6 +255,11 @@
                                 </exclusions>
                             </dependency>
                         </dependencies>
+                        <configuration>
+                            <target>
+                                <delete dir="${project.build.directory}" quiet="true"/>
+                            </target>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>initialize-update-check</id>

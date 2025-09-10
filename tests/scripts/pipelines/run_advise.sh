@@ -22,8 +22,8 @@ CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 
 # Advise
-sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_attach-metadata.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_create-dashboard.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-inventory.sh"
-sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-with-reference.sh"
+sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_attach-metadata.sh -p"
+sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_create-dashboard.sh -p"
+sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-inventory.sh -p"
+sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-with-reference.sh -p"
 
