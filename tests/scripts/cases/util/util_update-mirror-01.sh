@@ -1,5 +1,5 @@
 #!/bin/bash
 
-export MIRROR_TARGET_DIR="$KONTINUUM_DIR/.mirror"
-export MIRROR_ARCHIVE_URL="http://ae-scanner/mirror/index/index-database.zip"
+export MIRROR_TARGET_DIR="$MIRROR_DIR"
+export MIRROR_ARCHIVE_URL="$MIRROR_URL"
 export MIRROR_ARCHIVE_NAME="index-database.zip"

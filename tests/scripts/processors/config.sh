@@ -8,21 +8,8 @@ set -eo pipefail
 readonly SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 KONTINUUM_DIR="$(realpath "$SELF_DIR/../../../")"
 
-if [ -f "$KONTINUUM_DIR/external.rc" ]; then
-    source "$KONTINUUM_DIR/external.rc"
-else
-    log_error "Missing external.rc file in root of repository."
-    exit 1
-fi
-
-if [ -n "$EXTERNAL_WORKBENCH_DIR" ]; then
-    export WORKBENCH_DIR="$EXTERNAL_WORKBENCH_DIR"
-    log_info "Found workbench repository at $EXTERNAL_WORKBENCH_DIR"
-else
-  log_error "Could not find workbench repository at path specified in the external.rc file"
-fi
-
 # Export environment variables
+
 export KONTINUUM_DIR
 export PROCESSORS_DIR="$KONTINUUM_DIR/processors"
 export TESTS_DIR="$KONTINUUM_DIR/tests"
@@ -132,11 +119,46 @@ source_case_file() {
     fi
 }
 
+load_externalrc() {
+  if [ -f "$KONTINUUM_DIR/external.rc" ]; then
+      source "$KONTINUUM_DIR/external.rc"
+  else
+      log_error "Missing external.rc file in root of repository."
+      exit 1
+  fi
+
+  if [ -n "$EXTERNAL_WORKBENCH_DIR" ]; then
+      export WORKBENCH_DIR="$EXTERNAL_WORKBENCH_DIR"
+      log_info "Found workbench repository at $EXTERNAL_WORKBENCH_DIR"
+  else
+    log_error "Could not find workbench repository at path specified in the external.rc file"
+  fi
+
+  MIRROR_DIR="$KONTINUUM_DIR/.mirror"
+  if [ -n "$EXTERNAL_VULNERABILITY_MIRROR_DIR" ]; then
+      MIRROR_DIR="$EXTERNAL_VULNERABILITY_MIRROR_DIR"
+      log_info "Found external mirror at $EXTERNAL_VULNERABILITY_MIRROR_DIR"
+  else
+    log_info "No external mirror specified, switching to internal kontinuum mirror."
+  fi
+  export MIRROR_DIR
+
+  MIRROR_URL="http://ae-scanner/mirror/index/index-database.zip"
+  if [ -n "$EXTERNAL_VULNERABILITY_MIRROR_URL" ]; then
+      MIRROR_URL="$EXTERNAL_VULNERABILITY_MIRROR_URL"
+      log_info "External mirror URL specified: $EXTERNAL_VULNERABILITY_MIRROR_URL"
+  else
+    log_info "No external mirror URL specified. Using either mirror specified in external.rc file or repository-specific local mirror if exists."
+  fi
+  export MIRROR_URL
+}
+
 ########################################
 # Main Script Execution
 ########################################
 
 main() {
+    load_externalrc
     initialize_target_directories
 }
 

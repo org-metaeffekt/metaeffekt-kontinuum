@@ -17,7 +17,7 @@ check_shared_config() {
 }
 
 initialize_logger() {
-    local log_level="$1"1
+    local log_level="$1"
     local console_output_enabled="$2"
     local log_file="$3"
     source $LOGGER_PATH

@@ -1,4 +1,3 @@
-clear
 #!/bin/bash
 
 export INPUT_INVENTORY_FILE="$WORKSPACE_001_DIR/sample-product-1.0.0/01_assets/example-003.xlsx"
