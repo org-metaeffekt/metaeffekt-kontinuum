@@ -18,6 +18,21 @@ The **tests** section provides basic test infrastructure for:
 
 To better understand processor execution and requirements, we recommend reviewing the [Tests-Documentation](tests/README.md) before continuing.
 
+## Prerequisites
+
+To ensure all reference processes and pipelines in this repository can run, we need to create an external.rc file
+in the root of this repository. A template for this file has been provided here: [external-template.rc](external-template.rc).
+
+- EXTERNAL_KONTINUUM_DIR="/PATH/TO/KONTINUUM"
+    - Point this to the absolute path of a [metaeffekt-kontinuum](https://github.com/org-metaeffekt/metaeffekt-kontinuum) instance on branch 0.135.x
+- EXTERNAL_VULNERABILITY_MIRROR_DIR="/PATH/TO/MIRROR"
+    - Point this to an instance of a vulnerability mirror. If you are not sure what this means, or you don't have a local instance of
+      the mirror, point this to the metaeffekt-kontinuum/.mirror instead.
+- EXTERNAL_VULNERABILITY_MIRROR_URL="https://mirror-url/mirror.tar.gz"
+    - Point this to a valid URL where an instance of the mirror can be downloaded.
+- EXTERNAL_VULNERABILITY_MIRROR_NAME="mirror.tar.gz"
+    - The name of the mirror archive file
+
 ## Running the Reference Pipeline
 
 To get started with executing processors, you can either:
@@ -32,7 +47,7 @@ To get started with executing processors, you can either:
 Since only two processors currently require the vulnerability mirror, you can omit these processors from your pipeline:
 
 1. Copy the [`run-all.sh`](tests/scripts/pipelines/run-all.sh) script
-2. Remove the following entries:
+2. Remove the following entries from the underlying pipelines:
    ```bash
    sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh"
    sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_create-dashboard.sh"
@@ -40,17 +55,6 @@ Since only two processors currently require the vulnerability mirror, you can om
    ```
 3. Run the newly created pipeline script
 
-### Running With a Local Vulnerability Mirror
-
-To configure scripts to use your local vulnerability mirror instance:
-
-1. Navigate to the [`tests/scripts/cases`](tests/scripts/cases) directory
-2. Update the `MIRROR_ARCHIVE_URL` and `MIRROR_ARCHIVE_NAME` environment variable in the following file:
-    - [`util_update-mirror-01.sh`](tests/scripts/cases/util/util_update-mirror-01.sh)
-3. Since the `MIRROR_ARCHIVE_URL` requires a valid URL, local files need a file resource locator as a prefix.
-    ```bash
-   export MIRROR_ARCHIVE_URL="file:///absolute/path/index-database.tar.gz"
-   ```
 
 ## Running a Single Processor
 
@@ -78,26 +82,26 @@ While this repository is not designed as a custom workbench for executing proces
 * [Getting Started](GETTING_STARTED.md)
 * [Tests](tests/README.md)
 * [Processors](processors/README.md)
-  * [advise_attach-metadata](processors/advise/advise_attach-metadata.md)
-  * [advise_create-dashboard](processors/advise/advise_create-dashboard.md)
-  * [advise_enrich-inventory](processors/advise/advise_enrich-inventory.md)
-  * [advise_enrich-with-reference](processors/advise/advise_enrich-with-reference.md)
-  * [analyze_resolve-inventory](processors/analyze/analyze_resolve-inventory.md)
-  * [convert_cyclonedx-to-inventory](processors/convert/convert_cyclonedx-to-inventory.md)
-  * [convert_inventory-to-cyclonedx](processors/convert/convert_inventory-to-cyclonedx.md)
-  * [convert_inventory-to-spdx](processors/convert/convert_inventory-to-spdx.md)
-  * [portfolio_copy-resources](processors/portfolio/portfolio_copy-resources.md)
-  * [portfolio_create-overview](processors/portfolio/portfolio_create-overview.md)
-  * [report_create-document](processors/report/report_create-document.md)
-  * [scan_scan-inventory](processors/scan/scan_scan-inventory.md)
-  * [util_aggregate-sources](processors/util/util_aggregate-sources.md)
-  * [util_copy-inventories](processors/util/util_copy-inventories.md)
-  * [util_create-diff](processors/util/util_create-diff.md)
-  * [util_merge-filter](processors/util/util_merge-filter.md)
-  * [util_merge-inventories](processors/util/util_merge-inventories.md)
-  * [util_portfolio-download](processors/util/util_portfolio-download.md)
-  * [util_portfolio-download-jars](processors/util/util_portfolio-download-jars.md)
-  * [util_portfolio-upload](processors/util/util_portfolio-upload.md)
-  * [util_transform-inventories](processors/util/util_transform-inventories.md)
-  * [util_update-mirror](processors/util/util_update-mirror.md)
-  * [util_validate-reference-inventory](processors/util/util_validate-reference-inventory.md))
+    * [advise_attach-metadata](processors/advise/advise_attach-metadata.md)
+    * [advise_create-dashboard](processors/advise/advise_create-dashboard.md)
+    * [advise_enrich-inventory](processors/advise/advise_enrich-inventory.md)
+    * [advise_enrich-with-reference](processors/advise/advise_enrich-with-reference.md)
+    * [analyze_resolve-inventory](processors/analyze/analyze_resolve-inventory.md)
+    * [convert_cyclonedx-to-inventory](processors/convert/convert_cyclonedx-to-inventory.md)
+    * [convert_inventory-to-cyclonedx](processors/convert/convert_inventory-to-cyclonedx.md)
+    * [convert_inventory-to-spdx](processors/convert/convert_inventory-to-spdx.md)
+    * [portfolio_copy-resources](processors/portfolio/portfolio_copy-resources.md)
+    * [portfolio_create-overview](processors/portfolio/portfolio_create-overview.md)
+    * [report_create-document](processors/report/report_create-document.md)
+    * [scan_scan-inventory](processors/scan/scan_scan-inventory.md)
+    * [util_aggregate-sources](processors/util/util_aggregate-sources.md)
+    * [util_copy-inventories](processors/util/util_copy-inventories.md)
+      * [util_create-diff](processors/util/util_create-diff.md)
+    * [util_merge-filter](processors/util/util_merge-filter.md)
+    * [util_merge-inventories](processors/util/util_merge-inventories.md)
+    * [util_portfolio-download](processors/util/util_portfolio-download.md)
+    * [util_portfolio-download-jars](processors/util/util_portfolio-download-jars.md)
+    * [util_portfolio-upload](processors/util/util_portfolio-upload.md)
+    * [util_transform-inventories](processors/util/util_transform-inventories.md)
+    * [util_update-mirror](processors/util/util_update-mirror.md)
+    * [util_validate-reference-inventory](processors/util/util_validate-reference-inventory.md))

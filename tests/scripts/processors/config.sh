@@ -147,6 +147,13 @@ load_externalrc() {
     EXTERNAL_VULNERABILITY_MIRROR_URL="http://ae-scanner/mirror/index/index-database_legacy.zip"
     log_info "No external mirror URL specified. Using either mirror specified in external.rc file or repository-specific local mirror if exists."
   fi
+
+  if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_NAME:-}" ]; then
+        log_info "External mirror name specified: $EXTERNAL_VULNERABILITY_MIRROR_NAME"
+  else
+    EXTERNAL_VULNERABILITY_MIRROR_NAME="index-database_legacy.zip"
+    log_info "No external mirror name specified. Using default name index-database_legacy.zip."
+  fi
 }
 
 ########################################
@@ -154,8 +161,8 @@ load_externalrc() {
 ########################################
 
 main() {
-  load_externalrc
-  initialize_target_directories
+    load_externalrc
+    initialize_target_directories
 }
 
 main "$@"
