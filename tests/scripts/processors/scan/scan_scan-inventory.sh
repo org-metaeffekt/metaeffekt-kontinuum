@@ -44,6 +44,10 @@ run_maven_command() {
 
   log_mvn "${CMD[*]}"
 
+  if [ -f "$OUTPUT_INVENTORY_FILE" ];then
+    rm "$OUTPUT_INVENTORY_FILE"
+  fi
+
   if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
       log_info "Successfully ran $PROCESSORS_DIR/scan/scan_scan-inventory.xml"
   else

@@ -134,23 +134,19 @@ load_externalrc() {
     log_error "Could not find workbench repository at path specified in the external.rc file"
   fi
 
-  MIRROR_DIR="$KONTINUUM_DIR/.mirror"
-  if [ -n "$EXTERNAL_VULNERABILITY_MIRROR_DIR" ]; then
-      MIRROR_DIR="$EXTERNAL_VULNERABILITY_MIRROR_DIR"
-      log_info "Found external mirror at $EXTERNAL_VULNERABILITY_MIRROR_DIR"
+  if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_DIR:-}" ]; then
+    log_info "Found external mirror at $EXTERNAL_VULNERABILITY_MIRROR_DIR"
   else
+    EXTERNAL_VULNERABILITY_MIRROR_DIR="$KONTINUUM_DIR/.mirror"
     log_info "No external mirror specified, switching to internal kontinuum mirror."
   fi
-  export MIRROR_DIR
 
-  MIRROR_URL="http://ae-scanner/mirror/index/index-database_legacy.zip"
-  if [ -n "$EXTERNAL_VULNERABILITY_MIRROR_URL" ]; then
-      MIRROR_URL="$EXTERNAL_VULNERABILITY_MIRROR_URL"
+  if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_URL:-}" ]; then
       log_info "External mirror URL specified: $EXTERNAL_VULNERABILITY_MIRROR_URL"
   else
+    EXTERNAL_VULNERABILITY_MIRROR_URL="http://ae-scanner/mirror/index/index-database_legacy.zip"
     log_info "No external mirror URL specified. Using either mirror specified in external.rc file or repository-specific local mirror if exists."
   fi
-  export MIRROR_URL
 }
 
 ########################################
