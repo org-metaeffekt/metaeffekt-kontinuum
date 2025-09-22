@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <!--
+    Copyright 2024-2025 the original author or authors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    -->
+
+    <parent>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
+        <version>KONTINUUM-SNAPSHOT</version>
+        <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
+    </parent>
+
+    <artifactId>extract_scan-container-extract-directory</artifactId>
+    <packaging>pom</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.metaeffekt.core</groupId>
+                <artifactId>ae-inventory-maven-plugin</artifactId>
+                <version>${ae.core.version}</version>
+                <executions>
+                    <execution>
+                        <id>scan-directory</id>
+                        <goals>
+                            <goal>extract-scan-inventory</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <sourceInventoryDir>${input.reference.inventory.dir}</sourceInventoryDir>
+                            <inputDirectory>${input.extract.dir}</inputDirectory>
+                            <scanDirectory>${output.scan.dir}</scanDirectory>
+                            <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
+
+                            <sourceInventoryIncludes>*.xlsx,*.xls</sourceInventoryIncludes>
+                            <scanIncludes>**/*</scanIncludes>
+                            <!-- general exclude for containers; review constantly; minimize -->
+                            <scanExcludes>
+                                <exclude>**/var/log/**/*</exclude>
+
+                                <exclude>**/sys/**/*</exclude>
+                                <exclude>**/proc/**/*</exclude>
+
+                                <exclude>**/dev/*</exclude>
+
+                                <exclude>**/run/utmp</exclude>
+                                <exclude>**/var/lib/alternatives/*</exclude>
+
+                                <exclude>**/etc/**/*.bak</exclude>
+                                <exclude>**/etc/**/*.repo</exclude>
+
+                                <exclude>**/usr/share/terminfo/**/*</exclude>
+                                <exclude>**/var/lib/dnf/history.sqlite-shm/**/*</exclude>
+                            </scanExcludes>
+
+                            <enableImplicitUnpack>true</enableImplicitUnpack>
+                            <includeEmbedded>true</includeEmbedded>
+                            <enableDetectComponentPatterns>true</enableDetectComponentPatterns>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>  <!-- This plugin is only relevant to deliver better error messages to the caller of this pom. -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>input.reference.inventory.dir</property>
+                                    <message>You must set the parameter input.source.inventory.dir</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.extract.dir</property>
+                                    <message>You must set the parameter input.container.extract.dir</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.scan.dir</property>
+                                    <message>You must set the parameter output.scan.dir</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.inventory.file</property>
+                                    <message>You must set the parameter output.inventory.file</message>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

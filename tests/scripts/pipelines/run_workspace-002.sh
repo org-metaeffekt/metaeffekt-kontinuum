@@ -7,9 +7,15 @@ SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 CASES_DIR="$SELF_DIR/../cases"
 LOG_FILE="$SELF_DIR/../../../.logs/$(basename $0).log"
-LOG_LEVEL="CONFIG"
+LOG_LEVEL="ALL"
 
 sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+
+sh "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_save-inspect-image.sh" -c "$CASES_DIR/prepare/prepare_save-inspect-image-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_copy-pom-dependencies.sh" -c "$CASES_DIR/prepare/prepare_copy-pom-dependencies-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+
+sh "$PROCESSOR_SCRIPTS_DIR/extract/extract_scan-directory.sh" -c "$CASES_DIR/extract/extract_scan-directory-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/extract/extract_scan-directory.sh" -c "$CASES_DIR/extract/extract_scan-directory-03.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 
 sh "$PROCESSOR_SCRIPTS_DIR/analyze/analyze_resolve-inventory.sh" -c "$CASES_DIR/analyze/analyze_resolve-inventory-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 

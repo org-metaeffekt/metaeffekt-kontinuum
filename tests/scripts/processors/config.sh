@@ -25,27 +25,31 @@ readonly TARGET_DIR="$TESTS_DIR/target"
 export WORKSPACE_001_DIR="$TESTS_DIR/resources/workspace-001"
 
 readonly TARGET_WORKSPACE_001_DIR="$TARGET_DIR/workspace-001"
-readonly ANALYZED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/02_analyzed"
-readonly RESOLVED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/03_resolved"
+readonly AGGREGATED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/03_aggregated"
+readonly RESOLVED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/04_resolved"
 readonly ADVISED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/05_advised"
-readonly SCANNED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/04_scanned"
-readonly REPORTED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/06_reported"
+readonly SCANNED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/06_scanned"
+readonly REPORTED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/07_reported"
 readonly UTIL_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/00_util"
 readonly PORTFOLIO_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/00_portfolio"
 readonly CONVERTED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/00_converted"
+readonly PREPARED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/01_prepared"
+readonly EXTRACTED_DIR_001="$TARGET_WORKSPACE_001_DIR/sample-product-1.0.0/02_extracted"
 
 #Workspace 002
 export WORKSPACE_002_DIR="$TESTS_DIR/resources/workspace-002"
 
 readonly TARGET_WORKSPACE_002_DIR="$TARGET_DIR/workspace-002"
-readonly ANALYZED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/02_analyzed"
-readonly RESOLVED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/03_resolved"
+readonly AGGREGATED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/03_aggregated"
+readonly RESOLVED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/04_resolved"
 readonly ADVISED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/05_advised"
-readonly SCANNED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/04_scanned"
-readonly REPORTED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/06_reported"
+readonly SCANNED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/06_scanned"
+readonly REPORTED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/07_reported"
 readonly UTIL_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/00_util"
 readonly PORTFOLIO_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/00_portfolio"
 readonly CONVERTED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/00_converted"
+readonly PREPARED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/01_prepared"
+readonly EXTRACTED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/02_extracted"
 
 
 ########################################
@@ -81,21 +85,25 @@ initialize_target_directories() {
 
     local directories=(
         "$CONVERTED_DIR_001"
-        "$ANALYZED_DIR_001"
+        "$AGGREGATED_DIR_001"
         "$RESOLVED_DIR_001"
         "$ADVISED_DIR_001"
         "$SCANNED_DIR_001"
         "$REPORTED_DIR_001"
         "$UTIL_DIR_001"
         "$PORTFOLIO_DIR_001"
+        "$PREPARED_DIR_001"
+        "$EXTRACTED_DIR_001"
         "$CONVERTED_DIR_002"
-        "$ANALYZED_DIR_002"
+        "$AGGREGATED_DIR_002"
         "$RESOLVED_DIR_002"
         "$ADVISED_DIR_002"
         "$SCANNED_DIR_002"
         "$REPORTED_DIR_002"
         "$UTIL_DIR_002"
         "$PORTFOLIO_DIR_002"
+        "$PREPARED_DIR_002"
+        "$EXTRACTED_DIR_002"
     )
 
     if ! mkdir -p "${directories[@]}"; then

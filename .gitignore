@@ -1,6 +1,7 @@
 .idea
 .pre-commit-config.yaml
 .mirror
+.downloaded-mirror
 .logs
 external.rc
 
