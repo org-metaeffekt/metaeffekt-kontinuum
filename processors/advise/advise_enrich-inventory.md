@@ -10,18 +10,18 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Parameter                        | Required | Description                                                                                    |
-|----------------------------------|----------|------------------------------------------------------------------------------------------------|
-| input.inventory.file             | yes      | The input inventory file which will be enriched.                                               |
-| input.security.policy.file       | yes      | The security policy file to use.                                                               |
-| input.correlation.dir            | yes      | The directory containing vulnerability correlation information.                                |
-| input.context.dir                | yes      | The directory containing the vulnerability context information .                               |
-| input.assessment.dir             | yes      | The directory containing the vulnerability assessment information.                             |
-| input.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment                       |
-| output.inventory.file            | yes      | The file of the resulting output inventory.                                                    |
-| output.tmp.dir                   | yes      | The directory containing temporary files like intermediate inventories.                        |
-| output.inventory.name            | no       | The name of the resulting inventory file.                                                      |
-| output.inventory.correlation     | no       | The directory containing the correlation of the output directory.                              |
+| Parameter                        | Required | Description                                                               |
+|----------------------------------|----------|---------------------------------------------------------------------------|
+| input.inventory.file             | yes      | The input inventory file which will be enriched.                          |
+| input.security.policy.file       | yes      | The security policy file to use.                                          |
+| input.correlation.dir            | yes      | The directory containing vulnerability correlation information.           |
+| input.context.dir                | yes      | The directory containing the vulnerability context information .          |
+| input.assessment.dir             | yes      | The directory containing the vulnerability assessment information.        |
+| input.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment. |
+| output.inventory.file            | yes      | The file of the resulting output inventory.                               |
+| output.tmp.dir                   | yes      | The directory containing temporary files like intermediate inventories.   |
+| output.inventory.name            | no       | The name of the resulting inventory file.                                 |
+| output.inventory.correlation     | no       | The directory containing the correlation of the output directory.         |
 
 ### Parameters
 | Parameter                      | Required | Description                                                                                    |
