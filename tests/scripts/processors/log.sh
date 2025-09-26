@@ -6,7 +6,7 @@ CYAN='\033[36m'
 RESET='\033[0m'
 
 
-LOG_LEVEL="INFO"
+LOG_LEVEL="ALL"
 LOG_FILE=""
 LOG_TO_CONSOLE="true"
 
@@ -93,7 +93,7 @@ _log_output() {
                 ;;
         esac
         local console_entry="[$timestamp] ${color} $level ${RESET}: $message${RESET}"
-        echo "$console_entry" >&2
+        echo -e "$console_entry" >&2
     fi
 }
 

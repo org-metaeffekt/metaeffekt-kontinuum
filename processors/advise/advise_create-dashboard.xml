@@ -64,6 +64,7 @@
                                 <files>
                                     <file>${input.security.policy.file}</file>
                                 </files>
+                                <activeIds>${param.security.policy.active.ids}</activeIds>
                             </securityPolicy>
                         </configuration>
                     </execution>
@@ -85,6 +86,18 @@
                                     <property>input.inventory.file</property>
                                     <message>You must set the parameter 'input.inventory.file' to specify the input
                                         inventory to create the dashboard from.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.security.policy.file</property>
+                                    <message>You must set the parameter 'input.security.policy.file' to specify the security
+                                        policy used for enrichment.
+                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.security.policy.active.ids</property>
+                                    <message>You must set the parameter 'param.security.policy.active.ids' to specify the activeIds
+                                        of the security policy configuration used for enrichment.
                                     </message>
                                 </requireProperty>
                             </rules>
