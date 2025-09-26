@@ -37,7 +37,7 @@ in the root of this repository. A template for this file has been provided here:
 
 To get started with executing processors, you can either:
 
-1. Run the [`run-all.sh`](tests/scripts/pipelines/run-all.sh) pipeline script (produces all available results but may take several minutes)
+1. Run the [`run_all.sh`](tests/scripts/pipelines/run_all.sh) pipeline script (produces all available results but may take several minutes)
 2. Run any other pipeline script from the [`tests/scripts/pipelines`](tests/scripts/pipelines) directory
 
 **Note:** Scripts can be executed from any directory. All required resources for processor execution are included in this repository. The only additional requirement is a local instance of our vulnerability mirror (a public version will be available in the future).
@@ -46,7 +46,7 @@ To get started with executing processors, you can either:
 
 Since only two processors currently require the vulnerability mirror, you can omit these processors from your pipeline:
 
-1. Copy the [`run-all.sh`](tests/scripts/pipelines/run-all.sh) script
+1. Copy the [`run_all.sh`](tests/scripts/pipelines/run_all.sh) script
 2. Remove the following entries from the underlying pipelines:
    ```bash
    sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh"

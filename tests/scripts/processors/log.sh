@@ -93,7 +93,7 @@ _log_output() {
                 ;;
         esac
         local console_entry="[$timestamp] ${color} $level ${RESET}: $message${RESET}"
-        echo "$console_entry" >&2
+        echo -e "$console_entry" >&2
     fi
 }
 
