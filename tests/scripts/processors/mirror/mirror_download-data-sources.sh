@@ -25,20 +25,20 @@ initialize_logger() {
 }
 
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/util/util_download-mirror.xml" compile -P withoutProxy)
-  CMD+=("-Doutput.mirror.dir=$OUTPUT_MIRROR_DIR")
+  CMD=(mvn -f "$PROCESSORS_DIR/mirror/mirror_download-data-sources.xml" compile -P withoutProxy)
+  CMD+=("-Denv.mirror.dir=$OUTPUT_MIRROR_DIR")
   CMD+=("-Dparam.nvd.apikey=$PARAM_NVD_APIKEY")
 
-  log_info "Running processor $PROCESSORS_DIR/util/util_download-mirror.xml"
+  log_info "Running processor $PROCESSORS_DIR/mirror_download-data-sources.xml"
 
   log_config "" "output.mirror.dir=$OUTPUT_MIRROR_DIR"
 
   log_mvn "${CMD[*]}"
 
   if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
-      log_info "Successfully ran $PROCESSORS_DIR/util/util_download-mirror.xml"
+      log_info "Successfully ran $PROCESSORS_DIR/mirror_download-data-sources.xml"
   else
-      log_error "Failed to run $PROCESSORS_DIR/util/util_download-mirror.xml because the maven execution was unsuccessful"
+      log_error "Failed to run $PROCESSORS_DIR/mirror_download-data-sources.xml because the maven execution was unsuccessful"
       return 1
   fi
 }

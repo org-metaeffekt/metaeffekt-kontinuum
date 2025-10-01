@@ -1,7 +1,7 @@
-# Util - Download Mirror
+# Mirror - Update Index
 
-This process downloads the vulnerability mirror from different data sources and aggregates all the information into
-a single vulnerability index.
+This processor created or updates the indices of the mirror. It uses the previously downloaded data files of the
+external data sources. As an result the specified mirror directory is extended by the index files.
 
 ## Properties
 
@@ -9,15 +9,12 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Parameter         | Required | Description                                                             |
-|-------------------|----------|-------------------------------------------------------------------------|
-| output.mirror.dir | yes      | The output directory in which the mirror & index will be downloaded to. |
+None. This processor does not operate on workspace level.
 
 
 ### Parameters
 | Parameter          | Required | Description                            |
 |--------------------|----------|----------------------------------------|
-| param.nvd.apikey   | yes      | An API key to access the NVD database. |
 | param.proxy.scheme | no       | The proxy scheme.                      |
 | param.proxy.host   | no       | The proxy host.                        |
 | param.proxy.port   | no       | The proxy port.                        |
@@ -26,4 +23,6 @@ of this repository.
 
 
 ### Environment
-None
+| Parameter      | Required | Description                                              |
+|----------------|----------|----------------------------------------------------------|
+| env.mirror.dir | yes      | The directory in which index will be created or updated. |
