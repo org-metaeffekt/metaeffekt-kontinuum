@@ -3,6 +3,12 @@
 The {metæffekt} Kontinuum repository aggregates baseline configurations to support using the 
 {metæffekt} plugins, tools and content.
 
+
+## Getting started
+
+For getting started see [Getting Started](GETTING_STARTED.md). The readme provides some basic steps using the repository.
+
+
 ## Processors
 
 To enable broad adoption the Kontinuum uses Maven as integration level. Yet, for specific tasks, isolated
@@ -38,9 +44,6 @@ For further details see [Processors](processors/README.md).
   * [util_update-mirror](processors/util/util_update-mirror.md)
   * [util_validate-reference-inventory](processors/util/util_validate-reference-inventory.md))
 
-## Getting started
-
-For getting start check [Getting Started](GETTING_STARTED.md).
 
 ## Integration
 
