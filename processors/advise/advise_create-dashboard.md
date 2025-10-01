@@ -1,12 +1,12 @@
 # Advise - Create Dashboard
 
 This process takes an enriched input inventory (see [advise_enrich-inventory](advise_enrich-inventory.md)) and creates 
-a vulnerability assessment dashboard from it. Additional parameters can influence the information contained in the 
+a Vulnerability Assessment Dashboard from it. Additional parameters can influence the information contained in the 
 resulting dashboard which are listed in the table below.
 
 ## Future Developments
 
-The current implementation of the vulnerability assessment dashboard is under revision to allow more dynamic interactions with 
+The current implementation of the Vulnerability Assessment Dashboard is under revision to allow more dynamic interactions with 
 the dashboard.
 
 ## Properties
