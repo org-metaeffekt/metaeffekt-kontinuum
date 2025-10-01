@@ -143,8 +143,6 @@
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFillDetailsEnrichment>
 
-
-
                             <msrcAdvisorFillDetailsEnrichment>
                                 <active>${param.activate.msrc}</active>
                                 <excludeNvdEquivalent>${param.exclude.nvd.equivalent.msrc}</excludeNvdEquivalent>
@@ -202,33 +200,15 @@
                                 <active>${param.activate.csaf}</active>
                             </csafAdvisorEnrichment>
 
-                            <!--
-                            Review with YWT
-
-                            <curatedVersionFiles></curatedVersionFiles>
-                            <requireInventorySourceFileExists></requireInventorySourceFileExists>
-                            -->
-
-                            <!-- Not in enrichment order, might be done through OSV enrichment. Review with YWT -->
-                            <ghsaVulnerabilitiesEnrichment></ghsaVulnerabilitiesEnrichment>
-
-                            <ghsaAdvisorFillDetailsEnrichment>
-                                <active>${param.activate.ghsa}</active>
-                            </ghsaAdvisorFillDetailsEnrichment>
-
-
                             <!-- Review if listed properties are necessary -->
                             <eolEnrichment>
                                 <active>${param.activate.eol}</active>
-                                <warningThresholdDaysSupport>180</warningThresholdDaysSupport>
-                                <warningThresholdDaysExtendedSupport>180</warningThresholdDaysExtendedSupport>
                             </eolEnrichment>
 
                             <osvAdvisorFillDetailsEnrichment>
                                 <active>${param.activate.osv}</active>
                                 <includeAdvisoryProviders></includeAdvisoryProviders>
-                                <lastCachedIncludeAdvisoryProviders></lastCachedIncludeAdvisoryProviders>
-                                <cachedIncludeAdvisoryProviders></cachedIncludeAdvisoryProviders>
+                                <excludeNvdEquivalent></excludeNvdEquivalent> <!-- Ensure this is supported by other configurations as well (osv & msrc)-->
                             </osvAdvisorFillDetailsEnrichment>
 
                             <vulnerabilityStatusEnrichment>
@@ -236,10 +216,7 @@
                                 <statusFiles>
                                     <file>${input.assessment.dir}</file>
                                 </statusFiles>
-                                <additionalStatus></additionalStatus>
                                 <activeLabels>${assessment.labels}</activeLabels>
-                                <failOnValidationErrors></failOnValidationErrors>
-                                <failOnAmbiguousMatchingInformation></failOnAmbiguousMatchingInformation>
                             </vulnerabilityStatusEnrichment>
 
                             <vulnerabilityKeywordsEnrichment>
@@ -248,8 +225,6 @@
                                     <file>${input.context.dir}</file>
                                 </yamlFiles>
                                 <activeLabels>${keywords.labels}</activeLabels>
-                                <addonVulnerabilityKeywords></addonVulnerabilityKeywords>
-                                <failOnValidationErrors></failOnValidationErrors>
                             </vulnerabilityKeywordsEnrichment>
 
                             <inventoryValidationEnrichment>

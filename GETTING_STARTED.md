@@ -104,4 +104,4 @@ While this repository is not designed as a custom workbench for executing proces
   * [util_portfolio-upload](processors/util/util_portfolio-upload.md)
   * [util_transform-inventories](processors/util/util_transform-inventories.md)
   * [util_update-mirror](processors/util/util_update-mirror.md)
-  * [util_validate-reference-inventory](processors/util/util_validate-reference-inventory.md))
+  * [util_validate-reference-inventory](processors/util/util_validate-reference-inventory.md)

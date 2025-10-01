@@ -11,6 +11,13 @@ LOG_LEVEL="CONFIG"
 
 sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 
+sh "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_save-inspect-image.sh" -c "$CASES_DIR/prepare/prepare_save-inspect-image-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_copy-pom-dependencies.sh" -c "$CASES_DIR/prepare/prepare_copy-pom-dependencies-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+
+sh "$PROCESSOR_SCRIPTS_DIR/extract/extract_inventory-from-pom.sh" -c "$CASES_DIR/extract/extract_inventory-from-pom-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/extract/extract_scan-directory.sh" -c "$CASES_DIR/extract/extract_scan-directory-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/extract/extract_scan-directory.sh" -c "$CASES_DIR/extract/extract_scan-directory-03.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+
 sh "$PROCESSOR_SCRIPTS_DIR/analyze/analyze_resolve-inventory.sh" -c "$CASES_DIR/analyze/analyze_resolve-inventory-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 
 sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_attach-metadata.sh" -c "$CASES_DIR/advise/advise_attach-metadata-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
