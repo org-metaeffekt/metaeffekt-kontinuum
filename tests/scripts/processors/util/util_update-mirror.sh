@@ -25,7 +25,7 @@ initialize_logger() {
 }
 
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/util/util_update-mirror.xml" compile -P withoutProxy)
+  CMD=(mvn -f "$PROCESSORS_DIR/util/util_update-mirror.xml" compile)
   CMD+=("-Doutput.vulnerability.mirror.dir=$MIRROR_TARGET_DIR")
   CMD+=("-Dparam.mirror.archive.url=$MIRROR_ARCHIVE_URL")
   CMD+=("-Dparam.mirror.archive.name=$MIRROR_ARCHIVE_NAME")
