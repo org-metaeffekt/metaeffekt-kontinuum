@@ -2,10 +2,10 @@
 
 ## Purpose and Function
 
-This folder contains a set of maven POM files (ending with .xml) and a set of markdown files (ending with .md) 
+This folder contains a set of Maven POM files (ending with .xml) and a set of markdown files (ending with .md) 
 describing the purpose and details of the POM files. 
 
-Each POM file addresses a particular task in the pipeline. The POM files serve as blueprint for a task and can be 
+Each POM file addresses a particular task in the pipeline. The POM files serve as a blueprint for a task and can be 
 parameterized and executed. Please check the markdown files on the individual POMs for details.
 
 ![](../docs/concept-processor.png)

@@ -11,11 +11,11 @@ For getting started see [Getting Started](GETTING_STARTED.md). The readme provid
 
 ## Processors
 
-To enable broad adoption the Kontinuum uses Maven as integration level. Yet, for specific tasks, isolated
-task definitions are provided as individual .xml files in the `processors` folder. Every .xml files defines
+To enable broad adoption the Kontinuum uses Maven as an integration level. Yet, for specific tasks, isolated
+task definitions are provided as individual .xml files in the `processors` folder. Every .xml file defines
 a process step in analogy to an isolated workflow engine task.
 
-On integration level the processors can be combined to define pipelines and workflows.
+On the integration level the processors can be combined to define pipelines and workflows.
 
 For further details see [Processors](processors/README.md).
 
