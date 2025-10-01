@@ -51,7 +51,7 @@
                         </goals>
 
                         <configuration>
-                            <mirrorDirectory>${output.mirror.dir}</mirrorDirectory>
+                            <mirrorDirectory>${env.mirror.dir}</mirrorDirectory>
 
                             <proxyScheme>${param.proxy.scheme}</proxyScheme>
                             <proxyHost>${param.proxy.host}</proxyHost>

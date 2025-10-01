@@ -8,9 +8,7 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Parameter         | Required | Description                                                             |
-|-------------------|----------|-------------------------------------------------------------------------|
-| output.mirror.dir | yes      | The output directory in which the mirror & index will be downloaded to. |
+None. This processor does not operate on workspace level.
 
 
 ### Parameters
@@ -25,5 +23,9 @@ of this repository.
 
 
 ### Environment
-The parameter output.mirror.dir can be mapped to the settings of your environment. This is in the responsibility of the
-user.
+| Parameter      | Required | Description                                        |
+|----------------|----------|----------------------------------------------------|
+| env.mirror.dir | yes      | The directory to which the mirror data downloaded. |
+| env.nvd.apikey | yes      | An API key to access the NVD database.             |
+
+
