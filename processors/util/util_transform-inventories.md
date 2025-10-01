@@ -12,10 +12,11 @@ of this repository.
 |-----------------------------|----------|------------------------------------------------------------------------------------|
 | input.inventory.dir         | yes      | The directory containing the input inventories to perform the transformation with. |
 | output.inventory.dir        | yes      | The directory to which the output inventories will be saved after transformation.  |
-| input.kotlin.script.file    | yes      | The file of the kotlin script to be used for transforming inventories.             |
 
 ### Parameters
-None
+| Parameter                | Required | Description                                                                        |
+|--------------------------|----------|------------------------------------------------------------------------------------|
+| param.kotlin.script.file | yes      | The file of the kotlin script to be used for transforming inventories.             |
 
 ### Environment
 None

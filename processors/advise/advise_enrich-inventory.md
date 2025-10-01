@@ -6,26 +6,23 @@ many more, listed in the table below.
 
 ## Properties
 
-The different properties are sorted into three different groups which are explained in the top level [README](../../README.md)
+The different properties are sorted into three different groups which are explained in the top level [README](../README.md#processor-conventions)
 of this repository.
 
 ### Input / Output
-| Parameter                        | Required | Description                                                                                    |
-|----------------------------------|----------|------------------------------------------------------------------------------------------------|
-| input.inventory.file             | yes      | The input inventory file which will be enriched.                                               |
-| input.security.policy.file       | yes      | The security policy file to use.                                                               |
-| input.correlation.dir            | yes      | The directory containing vulnerability correlation information.                                |
-| input.context.dir                | yes      | The directory containing the vulnerability context information .                               |
-| input.assessment.dir             | yes      | The directory containing the vulnerability assessment information.                             |
-| input.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment                       |
-| output.inventory.file            | yes      | The file of the resulting output inventory.                                                    |
-| output.tmp.dir                   | yes      | The directory containing temporary files like intermediate inventories.                        |
-| output.inventory.name            | no       | The name of the resulting inventory file.                                                      |
-| output.inventory.correlation     | no       | The directory containing the correlation of the output directory.                              |
+| Parameter                        | Required | Description                                                               |
+|----------------------------------|----------|---------------------------------------------------------------------------|
+| input.inventory.file             | yes      | The input inventory file which will be enriched.                          |
+| input.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment. |
+| output.inventory.file            | yes      | The file of the resulting output inventory.                               |
 
 ### Parameters
 | Parameter                      | Required | Description                                                                                    |
 |--------------------------------|----------|------------------------------------------------------------------------------------------------|
+| param.correlation.dir          | yes      | The directory containing vulnerability correlation information.           |
+| param.assessment.dir           | yes      | The directory containing the vulnerability assessment information.        |
+| param.context.dir              | yes      | The directory containing the vulnerability context information.           |
+| param.security.policy.file     | yes      | The security policy file to use.                                          |
 | param.activate.*               | no       | Switches determining which vulnerability databases are utilized during the enrichment process. |
 | param.exclude.nvd.equivalent.* | no       | Switches determining if vulnerabilities equivalent to those found via nvd should be excluded.  |
 | param.dashboard.title          | ignore   | Title for a dashboard which could be generated during this process.                            |
@@ -33,6 +30,7 @@ of this repository.
 | param.dashboard.footer         | ignore   | Footer for a dashboard which could be generated during this process.                           |
 
 ### Environment
-| Parameter                        | Required | Description                                                                                    |
-|----------------------------------|----------|------------------------------------------------------------------------------------------------|
-| env.vulnerability.mirror.dir     | yes      | The directory of the vulnerability mirror / index.                                             |
+| Parameter                    | Required | Description                                                                                    |
+|------------------------------|----------|------------------------------------------------------------------------------------------------|
+| env.vulnerability.mirror.dir | yes      | The directory of the vulnerability mirror / index.                                             |
+| env.tmp.dir                  | yes      | The directory containing temporary files like intermediate inventories.   |
