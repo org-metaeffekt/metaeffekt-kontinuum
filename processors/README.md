@@ -50,6 +50,15 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 * Convert Inventory to CycloneDX [convert_inventory-to-cyclonedx](convert/convert_inventory-to-cyclonedx.md)
 * Convert Inventory to SPDX [convert_inventory-to-spdx](convert/convert_inventory-to-spdx.md)
 
+### Extract
+
+* Extract Scan Directory [extract_scan-directory](extract/extract_scan-directory.md)
+
+### Mirror
+
+* Download Data Sources [mirror_download-data-sources](mirror/mirror_download-data-sources.md)
+* Update Index [mirror_update-index](mirror/mirror_update-index.md)
+
 ### Portfolio Overview
 
 * Aggregate Portfolio Resources [portfolio_copy-resources](portfolio_copy-resources.md)
