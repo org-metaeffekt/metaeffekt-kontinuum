@@ -5,7 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
-CASE="scan/scan_scan-inventory-01.sh"
+CASE="extract/extract_inventory-from-pom-01.sh"
 
 
 check_shared_config() {
@@ -29,32 +29,22 @@ initialize_logger() {
 
 #Run maven command
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/scan/scan_scan-inventory.xml" process-resources)
-  CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
+  CMD=(mvn -f "$PROCESSORS_DIR/extract/extract_inventory-from-pom.xml" process-resources)
+  CMD+=("-Dinput.pom.file=$INPUT_POM_FILE")
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
-  CMD+=("-Dinput.output.analysis.base.dir=$ANALYSIS_BASE_DIR")
-  CMD+=("-Dinput.properties.file=$PROPERTIES_FILE")
-  CMD+=("-Denv.kosmos.password=$ENV_KOSMOS_PASSWORD")
-  CMD+=("-Denv.kosmos.userkeys.file=$ENV_KOSMOS_USERKEYS_FILE")
 
 
-  log_info "Running processor $PROCESSORS_DIR/scan/scan_scan-inventory.xml"
+  log_info "Running processor $PROCESSORS_DIR/extract/extract_inventory-from-pom.xml"
 
-  log_config "input.inventory.file=$INPUT_INVENTORY_FILE
-              input.output.analysis.base.dir=$ANALYSIS_BASE_DIR
-              input.properties.file=$PROPERTIES_FILE" "
+  log_config "input.pom.file=$INPUT_POM_FILE" "
               output.inventory.file=$OUTPUT_INVENTORY_FILE"
 
   log_mvn "${CMD[*]}"
 
-  if [ -f "$OUTPUT_INVENTORY_FILE" ];then
-    rm "$OUTPUT_INVENTORY_FILE"
-  fi
-
   if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
-      log_info "Successfully ran $PROCESSORS_DIR/scan/scan_scan-inventory.xml"
+      log_info "Successfully ran $PROCESSORS_DIR/extract/extract_inventory-from-pom.xml"
   else
-      log_error "Failed to run $PROCESSORS_DIR/scan/scan_scan-inventory.xml because the maven execution was unsuccessful"
+      log_error "Failed to run $PROCESSORS_DIR/extract/extract_inventory-from-pom.xml because the maven execution was unsuccessful"
       return 1
   fi
 }
