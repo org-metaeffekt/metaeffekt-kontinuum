@@ -72,6 +72,8 @@
                             <osvAdvisorIndex/>
                             <csafAdvisoryIndex/>
                             <csafVulnerabilityIndex/>
+                            <cweIndex/>
+                            <capecIndex/>
 
                             <!-- In some cases NVD introduced invalid CPEs; these mappings attempt to correct these CPEs -->
                             <cpeCorrections>
