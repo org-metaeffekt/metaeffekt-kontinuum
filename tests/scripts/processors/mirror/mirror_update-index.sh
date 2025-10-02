@@ -25,19 +25,19 @@ initialize_logger() {
 }
 
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/mirror/mirror_update-index.xml" compile)
+  CMD=(mvn -f "$PROCESSORS_DIR/$PROCESSOR_POM" compile)
   CMD+=("-Denv.mirror.dir=$OUTPUT_MIRROR_DIR")
 
-  log_info "Running processor $PROCESSORS_DIR/mirror/mirror_update-index.xml"
+  log_info "Running processor $PROCESSORS_DIR/$PROCESSOR_POM"
 
   log_config "" "output.mirror.dir=$OUTPUT_MIRROR_DIR"
 
   log_mvn "${CMD[*]}"
 
   if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
-      log_info "Successfully ran $PROCESSORS_DIR/mirror/mirror_update-index.xml"
+      log_info "Successfully ran $PROCESSORS_DIR/$PROCESSOR_POM"
   else
-      log_error "Failed to run $PROCESSORS_DIR/mirror/mirror_update-index.xml because the maven execution was unsuccessful"
+      log_error "Failed to run $PROCESSORS_DIR/$PROCESSOR_POM because the maven execution was unsuccessful"
       return 1
   fi
 }
