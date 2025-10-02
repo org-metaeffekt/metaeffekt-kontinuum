@@ -5,7 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
-CASE="mirror/mirror_download-data-sources-01.sh"
+CASE="mirror/mirror_update-index-01.sh"
 
 check_shared_config() {
   if [[ -f "$CONFIG_PATH" ]]; then
@@ -25,20 +25,19 @@ initialize_logger() {
 }
 
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/mirror/mirror_download-data-sources.xml" compile)
+  CMD=(mvn -f "$PROCESSORS_DIR/mirror/mirror_update-index.xml" compile)
   CMD+=("-Denv.mirror.dir=$OUTPUT_MIRROR_DIR")
-  CMD+=("-Dparam.nvd.apikey=$PARAM_NVD_APIKEY")
 
-  log_info "Running processor $PROCESSORS_DIR/mirror/mirror_download-data-sources.xml"
+  log_info "Running processor $PROCESSORS_DIR/mirror/mirror_update-index.xml"
 
   log_config "" "output.mirror.dir=$OUTPUT_MIRROR_DIR"
 
   log_mvn "${CMD[*]}"
 
   if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
-      log_info "Successfully ran $PROCESSORS_DIR/mirror/mirror_download-data-sources.xml"
+      log_info "Successfully ran $PROCESSORS_DIR/mirror/mirror_update-index.xml"
   else
-      log_error "Failed to run $PROCESSORS_DIR/mirror/mirror_download-data-sources.xml because the maven execution was unsuccessful"
+      log_error "Failed to run $PROCESSORS_DIR/mirror/mirror_update-index.xml because the maven execution was unsuccessful"
       return 1
   fi
 }
