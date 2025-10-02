@@ -10,8 +10,6 @@ of this repository.
 ### Input / Output
 | Parameter                    | Required | Description                          |
 |------------------------------|----------|--------------------------------------|
-| input.keystore.config.file   | yes      | Path to the keystore                 |
-| input.truststore.config.file | yes      | Path to the truststore               |
 | input.file                   | yes      | The SBOM or inventory file to upload |
 
 ### Parameters
@@ -19,11 +17,15 @@ of this repository.
 |-------------------------------|----------|-----------------------------------------------------------------|
 | param.portfolio.manager.url   | yes      | Url to the SwAM Portfolio Manager Endpoint                      |
 | param.portfolio.manager.token | yes      | Upload user token for project; always pass as credential/secret |
-| param.keystore.password       | yes      | Keystore password, always pass as credential/secret             |
-| param.truststore.password     | yes      | Truststore password, always pass as credential/secret           |
 | param.product.name            | yes      | The product name                                                |
 | param.product.version         | yes      | The product version                                             |
 | param.product.artifact.id     | yes      | The product artifact id                                         |
 
 ### Environment
+| Parameter                  | Required | Description                                           |
+|----------------------------|----------|-------------------------------------------------------|
+| env.keystore.config.file   | yes      | Path to the keystore                                  |
+| env.truststore.config.file | yes      | Path to the truststore                                |
+| env.keystore.password      | yes      | Keystore password, always pass as credential/secret   |
+| env.truststore.password    | yes      | Truststore password, always pass as credential/secret |
 None

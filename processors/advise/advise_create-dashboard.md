@@ -18,12 +18,12 @@ of this repository.
 | Parameter                                     | Required | Description                                                                      |
 |-----------------------------------------------|----------|----------------------------------------------------------------------------------|
 | input.inventory.file                          | yes      | The input inventory from which the dashboard will be generated.                  |
-| input.security.policy.file                    | yes      | The security policy file to use.                                                 |
 | output.dashboard.file                         | yes      | The file of the resulting vulnerability assessment dashboard.                    |
 
 ### Parameters
 | Parameter                          | Required | Description                                                       |
 |------------------------------------|----------|-------------------------------------------------------------------|
+| param.security.policy.file         | yes      | The security policy file to use.                                                 |
 | param.timeline.conf.enabled        | yes      | Enables the timeline configuration overall.                       | 
 | param.timeline.max.threads         | yes      | The maximum number of threads working on timelines.               |
 | param.timeline.time.spent.max      | yes      | The maximum number of seconds spent per timeline.                 |

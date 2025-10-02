@@ -13,11 +13,12 @@ of this repository.
 |-------------------------------------|----------|---------------------------------------------------------------|
 | input.inventory.file                | yes      | The input file path of the inventory which is to be resolved. |
 | output.inventory.file               | yes      | The output file path of the resolved inventory.               |
-| input.artifact.resolver.config.file | yes      | Yaml file containing config options for the resolver.         |
-| input.artifact.resolver.proxy.file  | yes      | Yaml file containing proxy information for the resolver.      |
 
 ### Parameters
-None
+| Property                            | Required | Explanation                                                   |
+|-------------------------------------|----------|---------------------------------------------------------------|
+| param.artifact.resolver.config.file | yes      | Yaml file containing config options for the resolver.         |
+| param.artifact.resolver.proxy.file  | yes      | Yaml file containing proxy information for the resolver.      |
 
 ### Environment
 | Property                            | Required | Explanation                                                   |
