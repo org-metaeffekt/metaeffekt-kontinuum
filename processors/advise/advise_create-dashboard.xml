@@ -94,12 +94,6 @@
                                         policy used for enrichment.
                                     </message>
                                 </requireProperty>
-                                <requireProperty>
-                                    <property>param.security.policy.active.ids</property>
-                                    <message>You must set the parameter 'param.security.policy.active.ids' to specify the activeIds
-                                        of the security policy configuration used for enrichment.
-                                    </message>
-                                </requireProperty>
                             </rules>
                             <fail>true</fail>
                         </configuration>

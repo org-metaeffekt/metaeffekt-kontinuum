@@ -304,12 +304,6 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.security.policy.active.ids</property>
-                                    <message>You must set the parameter 'param.security.policy.active.ids' to specify the activeIds
-                                        of the security policy configuration used for enrichment.
-                                    </message>
-                                </requireProperty>
-                                <requireProperty>
                                     <property>input.correlation.dir</property>
                                     <message>You must set the parameter 'input.correlation.dir' to locate the correlation data
                                         that is used for enrichment.
