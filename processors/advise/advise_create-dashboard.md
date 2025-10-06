@@ -22,12 +22,13 @@ of this repository.
 | output.dashboard.file                         | yes      | The file of the resulting vulnerability assessment dashboard.                    |
 
 ### Parameters
-| Parameter                          | Required | Description                                                       |
-|------------------------------------|----------|-------------------------------------------------------------------|
-| param.timeline.conf.enabled        | yes      | Enables the timeline configuration overall.                       | 
-| param.timeline.max.threads         | yes      | The maximum number of threads working on timelines.               |
-| param.timeline.time.spent.max      | yes      | The maximum number of seconds spent per timeline.                 |
-| param.timeline.vuln.providers.list | yes      | A list of vulnerability providers used to generate the timelines. |
+| Parameter                           | Required | Description                                                                |
+|-------------------------------------|----------|----------------------------------------------------------------------------|
+| param.timeline.conf.enabled         | yes      | Enables the timeline configuration overall.                                | 
+| param.timeline.max.threads          | yes      | The maximum number of threads working on timelines.                        |
+| param.timeline.time.spent.max       | yes      | The maximum number of seconds spent per timeline.                          |
+| param.timeline.vuln.providers.list  | yes      | A list of vulnerability providers used to generate the timelines.          |
+| param.security.policy.active.ids    | yes      | The activeIds of the security policy configurations to use for enrichment. | 
 
 ### Environment
 | Parameter                                          | Required | Description                                                                      |
