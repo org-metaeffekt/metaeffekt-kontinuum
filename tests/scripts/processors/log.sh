@@ -6,7 +6,7 @@ CYAN='\033[36m'
 RESET='\033[0m'
 
 
-LOG_LEVEL="ALL"
+LOG_LEVEL="INFO"
 LOG_FILE=""
 LOG_TO_CONSOLE="true"
 
@@ -78,12 +78,15 @@ _log_output() {
 
     if [[ "$LOG_TO_CONSOLE" == "true" ]]; then
         local color=""
+        local offset=""
         case "$level" in
             "ERROR")
                 color="$RED"
+                offset=" "
                 ;;
             "INFO")
                 color="$GREEN"
+                offset="  "
                 ;;
             "CONFIG")
                 color="$CYAN"
@@ -92,7 +95,7 @@ _log_output() {
                 color="$RESET"
                 ;;
         esac
-        local console_entry="[$timestamp] ${color} $level ${RESET}: $message${RESET}"
+        local console_entry="[$timestamp] ${color} $level $offset${RESET}: $message${RESET}"
         echo -e "$console_entry" >&2
     fi
 }

@@ -34,6 +34,9 @@ run_maven_command() {
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
   CMD+=("-Dinput.output.analysis.base.dir=$ANALYSIS_BASE_DIR")
   CMD+=("-Dinput.properties.file=$PROPERTIES_FILE")
+  CMD+=("-Denv.kosmos.password=$ENV_KOSMOS_PASSWORD")
+  CMD+=("-Denv.kosmos.userkeys.file=$ENV_KOSMOS_USERKEYS_FILE")
+
 
   log_info "Running processor $PROCESSORS_DIR/scan/scan_scan-inventory.xml"
 

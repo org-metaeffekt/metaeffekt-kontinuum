@@ -56,6 +56,14 @@
                             <targetFile>${output.inventory.file}</targetFile>
                             <analysisBaseDir>${input.output.analysis.base.dir}</analysisBaseDir>
                             <propertiesFile>${input.properties.file}</propertiesFile>
+
+                            <!-- We utilize the metaeffekt kosmos as our database for license information -->
+                            <tmdGroupId>com.metaeffekt.kosmos</tmdGroupId>
+                            <tmdArtifactId>ae-metaeffekt-kosmos</tmdArtifactId>
+                            <tmdVersion>0.1.0</tmdVersion>
+
+                            <userPassword>${env.kosmos.password}</userPassword>
+                            <userKeysFile>${env.kosmos.userkeys.file}</userKeysFile>
                         </configuration>
                     </execution>
                 </executions>

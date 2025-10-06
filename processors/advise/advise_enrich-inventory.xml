@@ -144,8 +144,6 @@
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFillDetailsEnrichment>
 
-
-
                             <msrcAdvisorFillDetailsEnrichment>
                                 <active>${param.activate.msrc}</active>
                                 <excludeNvdEquivalent>${param.exclude.nvd.equivalent.msrc}</excludeNvdEquivalent>
