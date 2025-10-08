@@ -10,8 +10,8 @@ of this repository.
 ### Input / Output
 | Parameter                     | Required | Description                                                        |
 |-------------------------------|----------|--------------------------------------------------------------------|
-| input.inventory.dir           | yes      | The directory of the input inventory for overview generation.      |
-| input.inventory.file          | yes      | The file path of the input inventory for overview generation.      |
+| input.inventory.dir           | yes      | The directory of the input inventory.                              |
+| input.inventory.subpath       | yes      | The input inventory's path relative to `input.inventory.dir`.      |
 | input.advisor.inventories.dir | yes      | The source directory containing advisor inventory files (`.xlsx`). |     
 | input.dashboards.dir          | yes      | The source directory containing dashboard files (`.html`).         |     
 | input.reports.dir             | yes      | The source directory containing report files (`.pdf`).             |     

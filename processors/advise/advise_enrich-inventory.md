@@ -15,6 +15,7 @@ of this repository.
 | input.inventory.file             | yes      | The input inventory file which will be enriched.                          |
 | input.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment. |
 | output.inventory.file            | yes      | The file of the resulting output inventory.                               |
+| output.tmp.dir                   | yes      | The directory containing temporary files like intermediate inventories.   |
 
 ### Parameters
 | Parameter                         | Required | Description                                                                                    |
@@ -34,4 +35,3 @@ of this repository.
 | Parameter                    | Required | Description                                                                                    |
 |------------------------------|----------|------------------------------------------------------------------------------------------------|
 | env.vulnerability.mirror.dir | yes      | The directory of the vulnerability mirror / index.                                             |
-| env.tmp.dir                  | yes      | The directory containing temporary files like intermediate inventories.   |
