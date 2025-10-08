@@ -26,7 +26,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>util_update-index</artifactId>
+    <artifactId>util_update-index_external</artifactId>
 
     <properties>
         <param.proxy.scheme>none</param.proxy.scheme>
@@ -60,16 +60,44 @@
                             <nvdVulnerabilityIndex/>
                             <nvdCpeIndex/>
                             <nvdCpeVendorProductIndex/>
-                            <msrcProductIndex/>
-                            <msrcAdvisorIndex/>
-                            <msrcKbChainIndex/>
+                            <!--<msrcProductIndex/>-->
+                            <!--<msrcAdvisorIndex/>-->
+                            <!--<msrcKbChainIndex/>-->
                             <certSeiAdvisorIndex/>
                             <certFrAdvisorIndex/>
                             <certEuAdvisorIndex/>
                             <kevIndex/>
                             <epssIndex/>
                             <eolIndex/>
-                            <osvAdvisorIndex/>
+                            <osvAdvisorIndex>
+                                <excludeAdvisoryProviders>
+                                    [
+                                        {"name":"OSV-UNKNOWN","implementation":"OSV"},
+                                        {"name":"CGA","implementation":"OSV"},
+                                        {"name":"MGASA","implementation":"OSV"},
+                                        {"name":"SUSE-SU","implementation":"OSV"},
+                                        {"name":"SUSE-RU","implementation":"OSV"},
+                                        {"name":"SUSE-FU","implementation":"OSV"},
+                                        {"name":"SUSE-OU","implementation":"OSV"},
+                                        {"name":"openSUSE-SU","implementation":"OSV"},
+                                        {"name":"USN","implementation":"OSV"},
+                                    ]
+                                    <!-- The advisories are currently excluded due to not clarified license conditions
+                                         regarding distribution of the data itself:
+
+                                        CGA         - https://www.chainguard.dev/legal/software-license-agreement
+                                        MGASA       - https://www.mageia.org/en/about/license/
+                                        SUSE-SU     - TBD
+                                        SUSE-RU     - TBD
+                                        SUSE-FU     - TBD
+                                        SUSE-OU     - TBD
+                                        openSUSE-SU - https://en.opensuse.org/openSUSE:License
+                                        USN         - https://github.com/canonical/ubuntu-security-notices/blob/main/LICENSE
+
+                                        Use a self-hosted nightly updated mirror of the data to evade.
+                                    -->
+                                </excludeAdvisoryProviders>
+                            </osvAdvisorIndex>
                             <csafAdvisoryIndex/>
                             <csafVulnerabilityIndex/>
                             <cweIndex/>

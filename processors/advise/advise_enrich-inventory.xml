@@ -103,6 +103,7 @@
                                 <files>
                                     <file>${input.security.policy.file}</file>
                                 </files>
+                                <activeIds>${param.security.policy.active.ids}</activeIds>
                             </securityPolicy>
 
                             <correlationYamlEnrichment>
