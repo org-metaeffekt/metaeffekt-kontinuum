@@ -1,9 +1,6 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent {
-        // bound to astronaut as various pre-conditions are required:
-        label 'metaeffekt-astronaut'
-    }
+    agent any
 
     stages {
         stage('Checkout metaeffekt-workbench') {
@@ -31,6 +28,14 @@ pipeline {
             }
         }
 
+        stage('Run workspace-002 tests') {
+            steps {
+                sh '''
+                    ./tests/scripts/pipelines/run_workspace-002.sh
+                '''
+            }
+        }
+
         stage('Run workspace-001 tests') {
             steps {
                 sh '''
@@ -39,13 +44,6 @@ pipeline {
             }
         }
 
-        stage('Run workspace-002 tests') {
-            steps {
-                sh '''
-                    ./tests/scripts/pipelines/run_workspace-001.sh
-                '''
-            }
-        }
 
     }
 
