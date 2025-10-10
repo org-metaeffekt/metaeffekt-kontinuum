@@ -9,7 +9,7 @@ logger_init "INFO" "$SELF_DIR/../../../.logs/run_all.log" "true"
 
 LOG_FILE="$SELF_DIR/../../../.logs/$(basename $0).log"
 export LOG_FILE
-export LOG_LEVEL="INFO"
+export LOG_LEVEL="ALL"
 
 bash "$SELF_DIR/run_util.sh"
 bash "$SELF_DIR/run_prepare.sh"
