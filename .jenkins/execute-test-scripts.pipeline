@@ -20,6 +20,50 @@ pipeline {
             }
         }
 
+        stage('Checkout metaeffekt-core') {
+            steps {
+                script {
+                    sh 'mkdir -p .metaeffekt-core'
+                    dir ('.metaeffekt-core') {
+                        withCredentials([usernamePassword(credentialsId: 'JenkinsGithubAccess', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            git url: 'https://github.com/org-metaeffekt/metaeffekt-core.git', branch: 'master', credentialsId: 'JenkinsGithubAccess'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build metaeffekt-core (skipping tests and javadoc)') {
+            steps {
+                dir ('.metaeffekt-core') {
+                    withMaven(jdk: 'ZULU8_mac_mini', maven: 'maven-3.9.6') {
+                        sh 'mvn -B clean install -DskipTests -Dmaven.javadoc.skip=true'
+                    }
+                }
+            }
+        }
+
+        stage('Checkout metaeffekt-artifact-analysis') {
+            steps {
+                script {
+                    sh 'mkdir -p .metaeffekt-artifact-analysis'
+                    dir ('.metaeffekt-artifact-analysis') {
+                        withCredentials([usernamePassword(credentialsId: 'JenkinsGithubAccess', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            git url: 'https://github.com/org-metaeffekt/metaeffekt-artifact-analysis.git', branch: 'main', credentialsId: 'JenkinsGithubAccess'
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build metaeffekt-artifact-analysis (skipping tests)') {
+            steps {
+                dir ('.metaeffekt-artifact-analysis') {
+                    withMaven(jdk: 'ZULU8_mac_mini', maven: 'maven-3.9.6') {
+                        sh 'mvn -B clean install -DskipTests  -Dmaven.javadoc.skip=true'
+                    }
+                }
+            }
+        }
+
         stage('Configure metaeffekt-kontinuum') {
             steps {
                 // prepare mirror dir
