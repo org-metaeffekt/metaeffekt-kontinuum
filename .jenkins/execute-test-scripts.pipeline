@@ -1,6 +1,9 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent any
+    agent {
+        // bound to astronaut as various pre-conditions are required:
+        label 'metaeffekt-astronaut'
+    }
 
     stages {
         stage('Checkout metaeffekt-workbench') {
