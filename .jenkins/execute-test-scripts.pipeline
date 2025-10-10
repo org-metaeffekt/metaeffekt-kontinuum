@@ -32,14 +32,6 @@ pipeline {
             }
         }
 
-        stage('Run workspace-002 tests') {
-            steps {
-                withMaven(maven: 'maven-3.9.6') {
-                    sh './tests/scripts/pipelines/run_workspace-002.sh'
-                }
-            }
-        }
-
         stage('Run workspace-001 tests') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
@@ -48,6 +40,13 @@ pipeline {
             }
         }
 
+        stage('Run workspace-002 tests') {
+            steps {
+                withMaven(maven: 'maven-3.9.6') {
+                    sh './tests/scripts/pipelines/run_workspace-002.sh'
+                }
+            }
+        }
 
     }
 
