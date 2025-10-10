@@ -14,7 +14,6 @@ None. This processor does not operate on workspace level.
 ### Parameters
 | Parameter          | Required | Description                            |
 |--------------------|----------|----------------------------------------|
-| param.nvd.apikey   | yes      | An API key to access the NVD database. |
 | param.proxy.scheme | no       | The proxy scheme.                      |
 | param.proxy.host   | no       | The proxy host.                        |
 | param.proxy.port   | no       | The proxy port.                        |
