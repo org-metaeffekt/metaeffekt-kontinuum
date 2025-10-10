@@ -7,7 +7,7 @@ SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 CASES_DIR="$SELF_DIR/../cases"
 LOG_FILE="$SELF_DIR/../../../.logs/$(basename $0).log"
-LOG_LEVEL="CONFIG"
+LOG_LEVEL="ALL"
 
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 
