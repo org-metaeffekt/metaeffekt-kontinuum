@@ -26,12 +26,12 @@ initialize_logger() {
 
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_download-mirror.xml" compile -P withoutProxy)
-  CMD+=("-Denv.mirror.dir=$OUTPUT_MIRROR_DIR")
-  CMD+=("-Denv.nvd.apikey=$PARAM_NVD_APIKEY")
+  CMD+=("-Denv.mirror.dir=$ENV_MIRROR_DIR")
+  CMD+=("-Denv.nvd.apikey=$ENV_NVD_APIKEY")
 
   log_info "Running processor $PROCESSORS_DIR/util/util_download-mirror.xml"
 
-  log_config "" "env.mirror.dir=$OUTPUT_MIRROR_DIR"
+  log_config "" "env.mirror.dir=$ENV_MIRROR_DIR"
 
   log_mvn "${CMD[*]}"
 

@@ -26,11 +26,11 @@ initialize_logger() {
 
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/$PROCESSOR_POM" compile)
-  CMD+=("-Denv.mirror.dir=$OUTPUT_MIRROR_DIR")
+  CMD+=("-Denv.mirror.dir=$ENV_MIRROR_DIR")
 
   log_info "Running processor $PROCESSORS_DIR/$PROCESSOR_POM"
 
-  log_config "output.mirror.dir=$OUTPUT_MIRROR_DIR"
+  log_config "" "env.mirror.dir=$ENV_MIRROR_DIR"
 
   log_mvn "${CMD[*]}"
 
