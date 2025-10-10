@@ -13,4 +13,6 @@ LOG_LEVEL=${LOG_LEVEL:-"CONFIG"}
 
 # Execution of single processors
 sh "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_copy-pom-dependencies.sh" -c "$CASES_DIR/prepare/prepare_copy-pom-dependencies-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
-sh "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_save-inspect-image.sh" -c "$CASES_DIR/prepare/prepare_save-inspect-image-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+
+# requires docker
+#sh "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_save-inspect-image.sh" -c "$CASES_DIR/prepare/prepare_save-inspect-image-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
