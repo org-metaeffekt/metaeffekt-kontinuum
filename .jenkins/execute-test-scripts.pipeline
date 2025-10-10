@@ -1,0 +1,49 @@
+#!/usr/bin/env groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout metaeffekt-workbench') {
+            steps {
+                script {
+                    sh 'mkdir -p .metaeffekt-workbench'
+                    dir ('.metaeffekt-workbench') {
+                        withCredentials([usernamePassword(credentialsId: 'JenkinsGithubAccess', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            git url: 'https://github.com/org-metaeffekt/metaeffekt-workbench.git', branch: 'main', credentialsId: 'JenkinsGithubAccess'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Configure metaeffekt-kontinuum') {
+            steps {
+                // prepare mirror dir
+                sh 'mkdir -p .vulnerability-mirror'
+
+                sh 'echo "EXTERNAL_WORKBENCH_DIR=\"$(pwd)\"" > external.rc'
+                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_DIR=\"$(dirname $(pwd))/.vulnerability-mirror\"" >> external.rc'
+                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_URL=\"http://ae-scanner/mirror/index/ae-mirror-index_gen4.tar.gz\"" >> external.rc'
+                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_NAME=\"ae-mirror-index_gen4.tar.gz\"" >> external.rc'
+            }
+        }
+
+        stage('Run workspace-001 tests') {
+            steps {
+                sh '''
+                    ./tests/scripts/pipelines/run_workspace-001.sh
+                '''
+            }
+        }
+
+        stage('Run workspace-002 tests') {
+            steps {
+                sh '''
+                    ./tests/scripts/pipelines/run_workspace-001.sh
+                '''
+            }
+        }
+
+    }
+
+}
