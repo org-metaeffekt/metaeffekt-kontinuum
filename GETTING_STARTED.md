@@ -1,12 +1,15 @@
 # Getting Started
 
-Before proceeding, please review the top-level [README](README.md) to understand this repository's purpose and intended use cases.
+Before proceeding, please review the top-level [README](README.md) to understand this repository's purpose and intended 
+use cases.
 
 ## Repository Structure
 
 This repository is organized into two main sections: **processors** and **tests**.
 
-The **processors** section contains Maven POM files that execute predefined parameterized steps. Each processor represents a specific isolated workflow or task. For detailed information about each processor's capabilities, usage instructions, and expected results, refer to the processor-specific README files.
+The **processors** section contains Maven POM files that execute predefined parameterized steps. Each processor 
+represents a specific isolated workflow or task. For detailed information about each processor's capabilities, usage 
+instructions, and expected results, refer to the processor-specific README files.
 
 The **tests** section provides basic test infrastructure for:
 - Testing individual processors
@@ -16,37 +19,31 @@ The **tests** section provides basic test infrastructure for:
 
 ## Scripts and Cases
 
-To better understand processor execution and requirements, we recommend reviewing the [Tests-Documentation](tests/README.md) before continuing.
+To better understand processor execution and requirements, we recommend reviewing the 
+[Tests-Documentation](tests/README.md) before continuing.
 
 ## Prerequisites
 
 To ensure all reference processes and pipelines in this repository can run, we need to create an external.rc file
-in the root of this repository. A template for this file has been provided here: [external-template.rc](external-template.rc).
-
-- EXTERNAL_KONTINUUM_DIR="/PATH/TO/KONTINUUM"
-    - Point this to the absolute path of a [metaeffekt-kontinuum](https://github.com/org-metaeffekt/metaeffekt-kontinuum) instance on branch 0.135.x
-- EXTERNAL_VULNERABILITY_MIRROR_DIR="/PATH/TO/MIRROR"
-    - Point this to an instance of a vulnerability mirror. If you are not sure what this means, or you don't have a local instance of
-      the mirror, point this to the metaeffekt-kontinuum/.mirror instead.
-- EXTERNAL_VULNERABILITY_MIRROR_URL="https://mirror-url/mirror.tar.gz"
-    - Point this to a valid URL where an instance of the mirror can be downloaded.
-- EXTERNAL_VULNERABILITY_MIRROR_NAME="mirror.tar.gz"
-    - The name of the mirror archive file
+in the root of this repository. A template for this file with additional hints and details has been provided here: 
+[external-template.rc](external-template.rc).
 
 ## Running the Reference Pipeline
 
 To get started with executing processors, you can either:
 
-1. Run the [`run-all.sh`](tests/scripts/pipelines/run-all.sh) pipeline script (produces all available results but may take several minutes)
+1. Run the [`run_workspace-001.sh`](tests/scripts/pipelines/run-all.sh) pipeline script (produces all available results but may take several minutes)
 2. Run any other pipeline script from the [`tests/scripts/pipelines`](tests/scripts/pipelines) directory
 
-**Note:** Scripts can be executed from any directory. All required resources for processor execution are included in this repository. The only additional requirement is a local instance of our vulnerability mirror (a public version will be available in the future).
+**Note:** Scripts can be executed from any directory. All required resources for processor execution are included in 
+this repository. The only additional requirement is a local instance of our vulnerability mirror (a public version will 
+be available in the future).
 
 ### Running Without a Vulnerability Mirror
 
 Since only two processors currently require the vulnerability mirror, you can omit these processors from your pipeline:
 
-1. Copy the [`run-all.sh`](tests/scripts/pipelines/run-all.sh) script
+1. Copy the [`run_workspace-001.sh`](tests/scripts/pipelines/run-all.sh) script
 2. Remove the following entries from the underlying pipelines:
    ```bash
    sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh"
@@ -58,50 +55,24 @@ Since only two processors currently require the vulnerability mirror, you can om
 
 ## Running a Single Processor
 
-To execute an individual processor, run the corresponding script in the [`processors`](tests/scripts/processors) directory. Note that some processors may require a vulnerability mirror instance.
+To execute an individual processor, run the corresponding script in the [`processors`](tests/scripts/processors) directory. Note that some 
+rocessors may require a vulnerability mirror instance.
 
 ## Results
 
-All processor results are stored in the [`target`](tests/target) directory. The target structure mirrors the *metaeffekt-space* organization, where:
+All processor results are stored in the [`target`](tests/target) directory. The target structure mirrors the *metaeffekt-space* 
+organization, where:
 - Each workspace contains multiple products
 - Each product contains multiple phases
 - The phases correspond to those in the [`processors`](processors) directory
 
 ## Creating Custom Implementations
 
-While this repository is not designed as a custom workbench for executing processors with arbitrary resources and parameters, it is technically possible. To create a custom script or processor execution:
+While this repository is not designed as a custom workbench for executing processors with arbitrary resources and 
+parameters, it is technically possible. To create a custom script or processor execution:
 
 1. Create a new "case script" defining all necessary parameters
 2. Call the processor script with your case as a parameter:
    ```bash
    sh your-processor.sh -c /path/to/your/case.sh
    ```
-
-### Table of Contents
-* [Introduction](README.md)
-* [Getting Started](GETTING_STARTED.md)
-* [Tests](tests/README.md)
-* [Processors](processors/README.md)
-  * [advise_attach-metadata](processors/advise/advise_attach-metadata.md)
-  * [advise_create-dashboard](processors/advise/advise_create-dashboard.md)
-  * [advise_enrich-inventory](processors/advise/advise_enrich-inventory.md)
-  * [advise_enrich-with-reference](processors/advise/advise_enrich-with-reference.md)
-  * [analyze_resolve-inventory](processors/analyze/analyze_resolve-inventory.md)
-  * [convert_cyclonedx-to-inventory](processors/convert/convert_cyclonedx-to-inventory.md)
-  * [convert_inventory-to-cyclonedx](processors/convert/convert_inventory-to-cyclonedx.md)
-  * [convert_inventory-to-spdx](processors/convert/convert_inventory-to-spdx.md)
-  * [portfolio_copy-resources](processors/portfolio/portfolio_copy-resources.md)
-  * [portfolio_create-overview](processors/portfolio/portfolio_create-overview.md)
-  * [report_create-document](processors/report/report_create-document.md)
-  * [scan_scan-inventory](processors/scan/scan_scan-inventory.md)
-  * [util_aggregate-sources](processors/util/util_aggregate-sources.md)
-  * [util_copy-inventories](processors/util/util_copy-inventories.md)
-  * [util_create-diff](processors/util/util_create-diff.md)
-  * [util_merge-filter](processors/util/util_merge-filter.md)
-  * [util_merge-inventories](processors/util/util_merge-inventories.md)
-  * [util_portfolio-download](processors/util/util_portfolio-download.md)
-  * [util_portfolio-download-jars](processors/util/util_portfolio-download-jars.md)
-  * [util_portfolio-upload](processors/util/util_portfolio-upload.md)
-  * [util_transform-inventories](processors/util/util_transform-inventories.md)
-  * [util_update-mirror](processors/util/util_update-mirror.md)
-  * [util_validate-reference-inventory](processors/util/util_validate-reference-inventory.md)
