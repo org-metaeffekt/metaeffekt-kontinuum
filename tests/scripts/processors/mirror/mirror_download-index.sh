@@ -5,7 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_PATH="$SCRIPT_DIR/../config.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
-CASE="util/util_update-mirror-01.sh"
+CASE="mirror/mirror_download-index-01.sh"
 
 check_shared_config() {
   if [[ -f "$CONFIG_PATH" ]]; then
@@ -25,12 +25,12 @@ initialize_logger() {
 }
 
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/util/util_update-mirror.xml" compile)
+  CMD=(mvn -f "$PROCESSORS_DIR/mirror/mirror_download-index.xml" compile)
   CMD+=("-Doutput.vulnerability.mirror.dir=$MIRROR_TARGET_DIR")
   CMD+=("-Dparam.mirror.archive.url=$MIRROR_ARCHIVE_URL")
   CMD+=("-Dparam.mirror.archive.name=$MIRROR_ARCHIVE_NAME")
 
-  log_info "Running processor $PROCESSORS_DIR/util/util_update-mirror.xml"
+  log_info "Running processor $PROCESSORS_DIR/mirror/mirror_download-index.xml"
 
   log_config "" "output.vulnerability.mirror.dir=$MIRROR_TARGET_DIR
                  param.mirror.archive.url=$MIRROR_ARCHIVE_URL
@@ -39,9 +39,9 @@ run_maven_command() {
   log_mvn "${CMD[*]}"
 
   if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
-      log_info "Successfully ran $PROCESSORS_DIR/util/util_update-mirror.xml"
+      log_info "Successfully ran $PROCESSORS_DIR/mirror/mirror_download-index.xml"
   else
-      log_error "Failed to run $PROCESSORS_DIR/util/util_update-mirror.xml because the maven execution was unsuccessful"
+      log_error "Failed to run $PROCESSORS_DIR/mirror/mirror_download-index.xml because the maven execution was unsuccessful"
       return 1
   fi
 }

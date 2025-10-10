@@ -32,7 +32,7 @@ in the root of this repository. A template for this file with additional hints a
 
 To get started with executing processors, you can either:
 
-1. Run the [`run_workspace-001.sh`](tests/scripts/pipelines/run-all.sh) pipeline script (produces all available results but may take several minutes)
+1. Run the [`run_workspace-001.sh`](tests/scripts/pipelines/run_workspace-001.sh) pipeline script (produces all available results but may take several minutes)
 2. Run any other pipeline script from the [`tests/scripts/pipelines`](tests/scripts/pipelines) directory
 
 **Note:** Scripts can be executed from any directory. All required resources for processor execution are included in 
@@ -43,10 +43,10 @@ be available in the future).
 
 Since only two processors currently require the vulnerability mirror, you can omit these processors from your pipeline:
 
-1. Copy the [`run_workspace-001.sh`](tests/scripts/pipelines/run-all.sh) script
+1. Copy the [`run_workspace-001.sh`](tests/scripts/pipelines/run_workspace-001.sh) script
 2. Remove the following entries from the underlying pipelines:
    ```bash
-   sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh"
+   sh "$PROCESSOR_SCRIPTS_DIR/mirror/mirror_download-index.sh"
    sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_create-dashboard.sh"
    sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-inventory.sh"
    ```
@@ -56,7 +56,8 @@ Since only two processors currently require the vulnerability mirror, you can om
 ## Running a Single Processor
 
 To execute an individual processor, run the corresponding script in the [`processors`](tests/scripts/processors) directory. Note that some 
-rocessors may require a vulnerability mirror instance.
+processors may require a vulnerability mirror instance.
+
 
 ## Results
 

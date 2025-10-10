@@ -12,7 +12,7 @@ LOG_FILE=${LOG_FILE:-"$SELF_DIR/../../../.logs/$(basename $0).log"}
 LOG_LEVEL=${LOG_LEVEL:-"CONFIG"}
 
 # Execution of single processors
-sh "$PROCESSOR_SCRIPTS_DIR/util/util_update-mirror.sh" -c "$CASES_DIR/util/util_update-mirror-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/util/mirror_download-index.sh" -c "$CASES_DIR/mirror/mirror_download-index-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 sh "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-sources.sh" -c "$CASES_DIR/util/util_aggregate-sources-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 sh "$PROCESSOR_SCRIPTS_DIR/util/util_copy-inventories.sh" -c "$CASES_DIR/util/util_copy-inventories-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 sh "$PROCESSOR_SCRIPTS_DIR/util/util_create-diff.sh" -c "$CASES_DIR/util/util_create-diff-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"

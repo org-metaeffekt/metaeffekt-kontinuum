@@ -57,6 +57,7 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 
 * Download Data Sources [mirror_download-data-sources](mirror/mirror_download-data-sources.md)
 * Update Index [mirror_update-index](mirror/mirror_update-index.md)
+* Download Index [mirror_download-index](mirror/mirror_download-index.md)
 
 ### Portfolio Overview
 
