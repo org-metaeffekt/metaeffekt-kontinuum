@@ -58,7 +58,7 @@
 
                             <securityPolicy>
                                 <files>
-                                    <file>${input.security.policy.file}</file>
+                                    <file>${param.security.policy.file}</file>
                                 </files>
                             </securityPolicy>
 
@@ -114,8 +114,8 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.security.policy.file</property>
-                                    <message>You must set the parameter 'input.security.policy.file' to specify the security
+                                    <property>param.security.policy.file</property>
+                                    <message>You must set the parameter 'param.security.policy.file' to specify the security
                                         policy used for enrichment.
                                     </message>
                                 </requireProperty>

@@ -12,5 +12,8 @@
   - log 1: only log inputs and outputs as well as processor name/success. 
   - log 2: only log executed commands as well as processor name/success.
   - log 3: full log of maven call, commands, processor name/success. (current console log)
-- [ ] add mirror download processor which downloads and builds the mirror from the different data sources instaed of
+- [ ] add mirror download processor which downloads and builds the mirror from the different data sources instead of
   our own server / a local instance.
+- [ ] log-level setting must be moved to external.rc
+- [ ] log colouring should be fixed; may require detection of environment to configure 
+- [ ] resolve FIXMEs in processor markdown files

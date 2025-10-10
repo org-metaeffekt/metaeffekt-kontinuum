@@ -32,7 +32,7 @@ run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_create-diff.xml" process-resources)
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
   CMD+=("-Dinput.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE")
-  CMD+=("-Dinput.security.policy.file=$SECURITY_POLICY_FILE")
+  CMD+=("-Dparam.security.policy.file=$SECURITY_POLICY_FILE")
   CMD+=("-Dparam.inventory.version=$INVENTORY_VERSION")
   CMD+=("-Dparam.inventory.compare.version=$INVENTORY_COMPARE_VERSION")
   CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
@@ -41,7 +41,8 @@ run_maven_command() {
 
   log_config "input.inventory.file=$INPUT_INVENTORY_FILE
               input.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE
-              input.security.policy.file=$SECURITY_POLICY_FILE" "output.inventory.dir=$OUTPUT_INVENTORY_DIR"
+              output.inventory.dir=$OUTPUT_INVENTORY_DIR
+              param.security.policy.file=$SECURITY_POLICY_FILE"
 
   log_mvn "${CMD[*]}"
 

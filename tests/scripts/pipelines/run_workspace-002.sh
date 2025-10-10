@@ -11,8 +11,8 @@ LOG_LEVEL="ALL"
 
 bash "$PROCESSOR_SCRIPTS_DIR/mirror/mirror_download-index.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 
-# requires docker; FIXME: check availability
-#bash "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_save-inspect-image.sh" -c "$CASES_DIR/prepare/prepare_save-inspect-image-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+# requires docker; FIXME: check availability before executing
+bash "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_save-inspect-image.sh" -c "$CASES_DIR/prepare/prepare_save-inspect-image-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 
 bash "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_copy-pom-dependencies.sh" -c "$CASES_DIR/prepare/prepare_copy-pom-dependencies-02.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 

@@ -31,18 +31,18 @@ initialize_logger() {
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/advise/advise_create-dashboard.xml" process-resources)
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-  CMD+=("-Dinput.security.policy.file=$SECURITY_POLICY")
   CMD+=("-Doutput.dashboard.file=$OUTPUT_DASHBOARD_FILE")
+  CMD+=("-Dparam.security.policy.file=$SECURITY_POLICY")
   CMD+=("-Dparam.timeline.conf.enabled=$PARAM_TIMELINE_CONF_ENABLED")
-  CMD+=("-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
   CMD+=("-Dparam.timeline.max.threads=$PARAM_TIMELINE_MAX_THREADS")
   CMD+=("-Dparam.timeline.time.spent.max=$PARAM_TIMELINE_TIME_SPENT_MAX")
   CMD+=("-Dparam.timeline.vuln.providers.list=$PARAM_TIMELINE_VULN_PROVIDERS_LIST")
+  CMD+=("-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
 
   log_info "Running processor $PROCESSORS_DIR/advise/advise_create-dashboard.xml"
 
   log_config "input.inventory.file=$INPUT_INVENTORY_FILE
-              input.security.policy.file=$SECURITY_POLICY" "
+              param.security.policy.file=$SECURITY_POLICY" "
               output.dashboard.file=$OUTPUT_DASHBOARD_FILE"
 
   log_mvn "${CMD[*]}"

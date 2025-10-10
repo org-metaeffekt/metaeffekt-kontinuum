@@ -32,20 +32,19 @@ run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/portfolio/portfolio_create-overview.xml" process-resources -X)
   CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
   CMD+=("-Dinput.inventory.path=$INPUT_INVENTORY_PATH")
-  CMD+=("-Dinput.security.policy.file=$INPUT_SECURITY_POLICY_FILE")
   CMD+=("-Dinput.advisor.inventories.dir=$INPUT_ADVISOR_INVENTORIES_DIR")
   CMD+=("-Dinput.dashboards.dir=$INPUT_DASHBOARDS_DIR")
   CMD+=("-Dinput.reports.dir=$INPUT_REPORTS_DIR")
   CMD+=("-Doutput.overview.file=$OUTPUT_OVERVIEW_FILE")
+  CMD+=("-Dparam.security.policy.file=$INPUT_SECURITY_POLICY_FILE")
 
   log_info "Running processor $PROCESSORS_DIR/portfolio/portfolio_create-overview.xml"
 
   log_config "input.inventory.dir=$INPUT_INVENTORY_DIR
               input.inventory.path=$INPUT_INVENTORY_PATH
-              input.security.policy.file=$INPUT_SECURITY_POLICY_FILE
               input.advisor.inventories.dir=$INPUT_ADVISOR_INVENTORIES_DIR
               input.dashboards.dir=$INPUT_DASHBOARDS_DIR
-              input.reports.dir=$INPUT_REPORTS_DIR" "
+              input.reports.dir=$INPUT_REPORTS_DIR
               output.overview.file=$OUTPUT_OVERVIEW_FILE"
 
   log_mvn "${CMD[*]}"

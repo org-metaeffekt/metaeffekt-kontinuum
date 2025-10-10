@@ -31,13 +31,13 @@ initialize_logger() {
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/advise/advise_enrich-inventory.xml" process-resources)
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-  CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
-  CMD+=("-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
-  CMD+=("-Dinput.security.policy.file=$SECURITY_POLICY")
-  CMD+=("-Doutput.tmp.dir=$PROCESSOR_TMP_DIR")
-  CMD+=("-Dinput.correlation.dir=$CORRELATION_DIR")
   CMD+=("-Dinput.context.dir=$CONTEXT_DIR")
   CMD+=("-Dinput.assessment.dir=$ASSESSMENT_DIR")
+  CMD+=("-Dinput.correlation.dir=$CORRELATION_DIR")
+  CMD+=("-Doutput.tmp.dir=$PROCESSOR_TMP_DIR")
+  CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
+  CMD+=("-Dparam.security.policy.file=$SECURITY_POLICY")
+  CMD+=("-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
 
   log_info "Running processor $PROCESSORS_DIR/advise/advise_enrich-inventory.xml"
 
@@ -45,7 +45,7 @@ run_maven_command() {
               input.context.dir=$CONTEXT_DIR
               input.assessment.dir=$ASSESSMENT_DIR
               input.inventory.file=$INPUT_INVENTORY_FILE
-              input.security.policy.file=$SECURITY_POLICY" "
+              param.security.policy.file=$SECURITY_POLICY" "
 
               output.tmp.dir=$PROCESSOR_TMP_DIR
               output.inventory.file=$OUTPUT_INVENTORY_FILE"

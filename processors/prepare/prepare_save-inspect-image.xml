@@ -39,6 +39,20 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
+                        <id>pull-image</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <executable>docker</executable>
+                            <arguments>
+                                <argument>pull</argument>
+                                <argument>${param.image.id}:${param.image.version}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>run-image-inspect</id>
                         <goals>
                             <goal>exec</goal>

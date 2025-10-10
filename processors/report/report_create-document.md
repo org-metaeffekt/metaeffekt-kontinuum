@@ -57,3 +57,5 @@ of this repository.
 * asset.* should be optional; what about product.*; could be also optional falling back on asset
 * the input inventory path should be redundant; maybe required as placeholder
 * the reference inventory path should be redundant; maybe required as placeholder
+* in case the security.policy.file is only used by descriptors; we do not require to pass it in here. The
+  file path can then be expressed relative to env.workbench.base.dir; this would enable more flexibility

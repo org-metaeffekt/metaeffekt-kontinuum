@@ -20,6 +20,9 @@ of this repository.
 | param.image.version   | yes      | The image version tag.                                                                                                                        |
 
 ### Environment
-None
+None.
+
+# FIXMEs
+* provide parameter to enable implicit pull. Default to false.
 
 

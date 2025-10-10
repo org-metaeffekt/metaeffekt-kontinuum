@@ -15,24 +15,24 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Parameter                                     | Required | Description                                                                      |
-|-----------------------------------------------|----------|----------------------------------------------------------------------------------|
-| input.inventory.file                          | yes      | The input inventory from which the dashboard will be generated.                  |
-| output.dashboard.file                         | yes      | The file of the resulting vulnerability assessment dashboard.                    |
+| Parameter             | Required | Description                                                     |
+|-----------------------|----------|-----------------------------------------------------------------|
+| input.inventory.file  | yes      | The input inventory from which the dashboard will be generated. |
+| output.dashboard.file | yes      | The file of the resulting vulnerability assessment dashboard.   |
 
 ### Parameters
-| Parameter                           | Required | Description                                                                |
-|-------------------------------------|----------|----------------------------------------------------------------------------|
-| param.security.policy.file         | yes      | The security policy file to use.                                                 |
-| param.timeline.conf.enabled         | yes      | Enables the timeline configuration overall.                                | 
-| param.timeline.max.threads          | yes      | The maximum number of threads working on timelines.                        |
-| param.timeline.time.spent.max       | yes      | The maximum number of seconds spent per timeline.                          |
-| param.timeline.vuln.providers.list  | yes      | A list of vulnerability providers used to generate the timelines.          |
-| param.security.policy.active.ids    | no       | The activeIds of the security policy configurations to use for enrichment. | 
+| Parameter                          | Required | Description                                                                |
+|------------------------------------|----------|----------------------------------------------------------------------------|
+| param.security.policy.file         | yes      | The security policy file to use.                                           |
+| param.security.policy.active.ids   | no       | The activeIds of the security policy configurations to use for enrichment. | 
+| param.timeline.conf.enabled        | yes      | Enables the timeline configuration overall.                                | 
+| param.timeline.max.threads         | yes      | The maximum number of threads working on timelines.                        |
+| param.timeline.time.spent.max      | yes      | The maximum number of seconds spent per timeline.                          |
+| param.timeline.vuln.providers.list | yes      | A list of vulnerability providers used to generate the timelines.          |
 
 ### Environment
-| Parameter                         | Required | Description                                                        |
-|-----------------------------------|----------|--------------------------------------------------------------------|
-| env.vulnerability.mirror.dir      | yes      | The directory containing the vulnerability database/index.         |
-| env.vulnerability.assessment.api  | no       | Backend for dynamic vulnerability assessment. Disabled by default. |
+| Parameter                        | Required | Description                                                        |
+|----------------------------------|----------|--------------------------------------------------------------------|
+| env.vulnerability.mirror.dir     | yes      | The directory containing the vulnerability database/index.         |
+| env.vulnerability.assessment.api | no       | Backend for dynamic vulnerability assessment. Disabled by default. |
 
