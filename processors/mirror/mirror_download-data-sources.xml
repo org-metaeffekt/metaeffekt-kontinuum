@@ -120,7 +120,7 @@
                                 <!-- you will need an API key in order to download the NVD data:
                                      https://nvd.nist.gov/developers/request-an-api-key
                                      more information: https://nvd.nist.gov/developers/start-here -->
-                                <apiKey>${param.nvd.apikey}</apiKey>
+                                <apiKey>${env.nvd.apikey}</apiKey>
 
                                 <resourceLocations>
                                     <!-- - %d startIndex: 0-based index of the first CVE to be returned in the response data -->
@@ -140,7 +140,7 @@
                                 <!-- you will need an API key in order to download the NVD data:
                                      https://nvd.nist.gov/developers/request-an-api-key
                                      more information: https://nvd.nist.gov/developers/start-here -->
-                                <apiKey>${param.nvd.apikey}</apiKey>
+                                <apiKey>${env.nvd.apikey}</apiKey>
 
                                 <resourceLocations>
                                     <!-- API URL for the NVD CPE API (cpes) with a start index parameter.

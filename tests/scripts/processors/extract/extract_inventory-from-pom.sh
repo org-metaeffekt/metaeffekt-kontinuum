@@ -36,8 +36,7 @@ run_maven_command() {
 
   log_info "Running processor $PROCESSORS_DIR/extract/extract_inventory-from-pom.xml"
 
-  log_config "input.pom.file=$INPUT_POM_FILE" "
-              output.inventory.file=$OUTPUT_INVENTORY_FILE"
+  log_config "input.pom.file=$INPUT_POM_FILE" "output.inventory.file=$OUTPUT_INVENTORY_FILE"
 
   log_mvn "${CMD[*]}"
 

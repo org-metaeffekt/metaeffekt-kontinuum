@@ -31,22 +31,17 @@ initialize_logger() {
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/advise/advise_enrich-inventory.xml" process-resources)
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-  CMD+=("-Dinput.context.dir=$CONTEXT_DIR")
-  CMD+=("-Dinput.assessment.dir=$ASSESSMENT_DIR")
-  CMD+=("-Dinput.correlation.dir=$CORRELATION_DIR")
   CMD+=("-Doutput.tmp.dir=$PROCESSOR_TMP_DIR")
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
+  CMD+=("-Dparam.context.dir=$CONTEXT_DIR")
+  CMD+=("-Dparam.assessment.dir=$ASSESSMENT_DIR")
+  CMD+=("-Dparam.correlation.dir=$CORRELATION_DIR")
   CMD+=("-Dparam.security.policy.file=$SECURITY_POLICY")
   CMD+=("-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
 
   log_info "Running processor $PROCESSORS_DIR/advise/advise_enrich-inventory.xml"
 
-  log_config "input.correlation.dir=$CORRELATION_DIR
-              input.context.dir=$CONTEXT_DIR
-              input.assessment.dir=$ASSESSMENT_DIR
-              input.inventory.file=$INPUT_INVENTORY_FILE
-              param.security.policy.file=$SECURITY_POLICY" "
-
+  log_config "input.inventory.file=$INPUT_INVENTORY_FILE" "
               output.tmp.dir=$PROCESSOR_TMP_DIR
               output.inventory.file=$OUTPUT_INVENTORY_FILE"
 

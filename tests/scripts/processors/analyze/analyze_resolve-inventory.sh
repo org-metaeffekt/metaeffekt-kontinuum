@@ -30,17 +30,14 @@ initialize_logger() {
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/analyze/analyze_resolve-inventory.xml" process-resources)
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-  CMD+=("-Dinput.artifact.resolver.config.file=$ARTIFACT_RESOLVER_CONFIG")
-  CMD+=("-Dinput.artifact.resolver.proxy.file=$PROXY_CONFIG")
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
+  CMD+=("-Dparam.artifact.resolver.config.file=$ARTIFACT_RESOLVER_CONFIG")
+  CMD+=("-Dparam.artifact.resolver.proxy.file=$PROXY_CONFIG")
   CMD+=("-Denv.maven.index.dir=$DOWNLOAD_BASE_DIR")
 
   log_info "Running processor $PROCESSORS_DIR/analyze/analyze_resolve-inventory.xml"
 
-  log_config "input.inventory.file=$INPUT_INVENTORY_FILE
-              input.artifact.resolver.config.file=$ARTIFACT_RESOLVER_CONFIG
-              input.artifact.resolver.proxy.file=$PROXY_CONFIG" "
-              output.inventory.file=$OUTPUT_INVENTORY_FILE"
+  log_config "input.inventory.file=$INPUT_INVENTORY_FILE" "output.inventory.file=$OUTPUT_INVENTORY_FILE"
 
   log_mvn "${CMD[*]}"
 

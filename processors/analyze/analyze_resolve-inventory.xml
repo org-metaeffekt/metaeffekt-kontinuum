@@ -45,8 +45,8 @@
                             <inputInventoryFile>${input.inventory.file}</inputInventoryFile>
                             <outputInventoryFile>${output.inventory.file}</outputInventoryFile>
                             <downloadBaseDir>${env.maven.index.dir}</downloadBaseDir>
-                            <artifactResolverConfig>${input.artifact.resolver.config.file}</artifactResolverConfig>
-                            <proxyConfig>${input.artifact.resolver.proxy.file}</proxyConfig>
+                            <artifactResolverConfig>${param.artifact.resolver.config.file}</artifactResolverConfig>
+                            <proxyConfig>${param.artifact.resolver.proxy.file}</proxyConfig>
                         </configuration>
                     </execution>
                 </executions>
@@ -76,12 +76,12 @@
                                     <message>You must set the parameter 'env.maven.index.dir'</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.artifact.resolver.config.file</property>
-                                    <message>You must set the parameter 'input.artifact.resolver.config.file'</message>
+                                    <property>param.artifact.resolver.config.file</property>
+                                    <message>You must set the parameter 'param.artifact.resolver.config.file'</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.artifact.resolver.proxy.file</property>
-                                    <message>You must set the parameter 'input.artifact.resolver.proxy.file'</message>
+                                    <property>param.artifact.resolver.proxy.file</property>
+                                    <message>You must set the parameter 'param.artifact.resolver.proxy.file'</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

@@ -109,7 +109,7 @@
                             <correlationYamlEnrichment>
                                 <active>${param.activate.correlation}</active>
                                 <yamlFiles>
-                                    <file>${input.correlation.dir}</file>
+                                    <file>${param.correlation.dir}</file>
                                 </yamlFiles>
                             </correlationYamlEnrichment>
 
@@ -215,7 +215,7 @@
                             <vulnerabilityStatusEnrichment>
                                 <active>${param.activate.status}</active>
                                 <statusFiles>
-                                    <file>${input.assessment.dir}</file>
+                                    <file>${param.assessment.dir}</file>
                                 </statusFiles>
                                 <activeLabels>${assessment.labels}</activeLabels>
                             </vulnerabilityStatusEnrichment>
@@ -223,7 +223,7 @@
                             <vulnerabilityKeywordsEnrichment>
                                 <active>${param.activate.keywords}</active>
                                 <yamlFiles>
-                                    <file>${input.context.dir}</file>
+                                    <file>${param.context.dir}</file>
                                 </yamlFiles>
                                 <activeLabels>${keywords.labels}</activeLabels>
                             </vulnerabilityKeywordsEnrichment>
@@ -286,14 +286,14 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.context.dir</property>
-                                    <message>You must set the parameter 'input.context.dir' to locate the context data that is
+                                    <property>param.context.dir</property>
+                                    <message>You must set the parameter 'param.context.dir' to locate the context data that is
                                         used for enrichment.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.assessment.dir</property>
-                                    <message>You must set the parameter 'input.assessment.dir' to locate the assessment data
+                                    <property>param.assessment.dir</property>
+                                    <message>You must set the parameter 'param.assessment.dir' to locate the assessment data
                                         that is used for enrichment.
                                     </message>
                                 </requireProperty>
@@ -304,8 +304,8 @@
                                     </message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.correlation.dir</property>
-                                    <message>You must set the parameter 'input.correlation.dir' to locate the correlation data
+                                    <property>param.correlation.dir</property>
+                                    <message>You must set the parameter 'param.correlation.dir' to locate the correlation data
                                         that is used for enrichment.
                                     </message>
                                 </requireProperty>

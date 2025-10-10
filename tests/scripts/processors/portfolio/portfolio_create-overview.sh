@@ -44,7 +44,7 @@ run_maven_command() {
               input.inventory.path=$INPUT_INVENTORY_PATH
               input.advisor.inventories.dir=$INPUT_ADVISOR_INVENTORIES_DIR
               input.dashboards.dir=$INPUT_DASHBOARDS_DIR
-              input.reports.dir=$INPUT_REPORTS_DIR
+              input.reports.dir=$INPUT_REPORTS_DIR" "
               output.overview.file=$OUTPUT_OVERVIEW_FILE"
 
   log_mvn "${CMD[*]}"

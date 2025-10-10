@@ -39,7 +39,6 @@ run_maven_command() {
 
   log_config "input.inventory.file=$INPUT_INVENTORY_FILE
               input.reference.inventory.dir=$INPUT_REFERENCE_INVENTORY_DIR" "
-
               output.inventory.dir=$OUTPUT_INVENTORY_DIR
               output.inventory.path=$OUTPUT_INVENTORY_PATH"
 

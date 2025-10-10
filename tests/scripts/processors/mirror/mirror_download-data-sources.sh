@@ -27,7 +27,7 @@ initialize_logger() {
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/mirror/mirror_download-data-sources.xml" compile)
   CMD+=("-Denv.mirror.dir=$OUTPUT_MIRROR_DIR")
-  CMD+=("-Dparam.nvd.apikey=$PARAM_NVD_APIKEY")
+  CMD+=("-Denv.nvd.apikey=$PARAM_NVD_APIKEY")
 
   log_info "Running processor $PROCESSORS_DIR/mirror/mirror_download-data-sources.xml"
 

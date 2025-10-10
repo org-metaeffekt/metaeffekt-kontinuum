@@ -30,7 +30,7 @@ run_maven_command() {
 
   log_info "Running processor $PROCESSORS_DIR/$PROCESSOR_POM"
 
-  log_config "" "output.mirror.dir=$OUTPUT_MIRROR_DIR"
+  log_config "output.mirror.dir=$OUTPUT_MIRROR_DIR"
 
   log_mvn "${CMD[*]}"
 

@@ -32,9 +32,7 @@ run_maven_command() {
 
   log_info "Running processor $PROCESSORS_DIR/mirror/mirror_download-index.xml"
 
-  log_config "" "output.vulnerability.mirror.dir=$MIRROR_TARGET_DIR
-                 param.mirror.archive.url=$MIRROR_ARCHIVE_URL
-                 param.mirror.archive.name=$MIRROR_ARCHIVE_NAME"
+  log_config "" "output.vulnerability.mirror.dir=$MIRROR_TARGET_DIR"
 
   log_mvn "${CMD[*]}"
 

@@ -40,9 +40,8 @@ run_maven_command() {
   log_info "Running processor $PROCESSORS_DIR/util/util_create-diff.xml"
 
   log_config "input.inventory.file=$INPUT_INVENTORY_FILE
-              input.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE
-              output.inventory.dir=$OUTPUT_INVENTORY_DIR
-              param.security.policy.file=$SECURITY_POLICY_FILE"
+              input.inventory.compare.file=$INPUT_INVENTORY_COMPARE_FILE" "
+              output.inventory.dir=$OUTPUT_INVENTORY_DIR"
 
   log_mvn "${CMD[*]}"
 

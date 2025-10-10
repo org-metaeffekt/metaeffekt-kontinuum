@@ -41,9 +41,7 @@ run_maven_command() {
 
   log_info "Running processor $PROCESSORS_DIR/advise/advise_create-dashboard.xml"
 
-  log_config "input.inventory.file=$INPUT_INVENTORY_FILE
-              param.security.policy.file=$SECURITY_POLICY" "
-              output.dashboard.file=$OUTPUT_DASHBOARD_FILE"
+  log_config "input.inventory.file=$INPUT_INVENTORY_FILE" "output.dashboard.file=$OUTPUT_DASHBOARD_FILE"
 
   log_mvn "${CMD[*]}"
 
