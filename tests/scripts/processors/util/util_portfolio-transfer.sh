@@ -58,21 +58,21 @@ run_maven_command_portfolio_upload() {
   cd "$SCRIPT_DIR"
 
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_portfolio-upload.xml" process-resources)
-  CMD+=("-Dparam.portfolio.manager.url=$PORTFOLIO_MANAGER_URL")
-  CMD+=("-Dparam.portfolio.manager.token=$ADMIN_TOKEN")
-  CMD+=("-Dinput.keystore.config.file=$KEYSTORE_CONFIG_FILE")
   CMD+=("-Dinput.file=$INPUT_FILE")
   CMD+=("-Dinput.cli.dir=$PORTFOLIO_MANAGER_JARS")
-  CMD+=("-Dinput.truststore.config.file=$TRUSTSTORE_CONFIG_FILE")
-  CMD+=("-Dparam.truststore.password=$TRUSTSTORE_PASSWORD")
+  CMD+=("-Dparam.portfolio.manager.url=$PORTFOLIO_MANAGER_URL")
+  CMD+=("-Dparam.portfolio.manager.token=$ADMIN_TOKEN")
   CMD+=("-Dparam.product.name=$PRODUCT_NAME")
   CMD+=("-Dparam.product.version=$PRODUCT_VERSION")
   CMD+=("-Dparam.product.artifact.id=$PRODUCT_ARTIFACT_ID")
-  CMD+=("-Dparam.keystore.password=$KEYSTORE_PASSWORD")
+  CMD+=("-Denv.truststore.config.file=$TRUSTSTORE_CONFIG_FILE")
+  CMD+=("-Denv.truststore.password=$TRUSTSTORE_PASSWORD")
+  CMD+=("-Denv.keystore.config.file=$KEYSTORE_CONFIG_FILE")
+  CMD+=("-Denv.keystore.password=$KEYSTORE_PASSWORD")
 
   log_info "Running processor $PROCESSORS_DIR/util/util_portfolio-upload.xml"
 
-  log_config "input.keystore.config.file=$KEYSTORE_CONFIG_FILE
+  log_config "env.keystore.config.file=$KEYSTORE_CONFIG_FILE
               input.file=$INPUT_FILE
               input.cli.dir=$PORTFOLIO_MANAGER_JARS
               input.truststore.config.file=$TRUSTSTORE_CONFIG_FILE" ""
@@ -93,21 +93,19 @@ run_maven_command_portfolio_download() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_portfolio-download.xml" process-resources)
   CMD+=("-Dparam.portfolio.manager.url=$PORTFOLIO_MANAGER_URL")
   CMD+=("-Dparam.portfolio.manager.token=$ADMIN_TOKEN")
-  CMD+=("-Dinput.keystore.config.file=$KEYSTORE_CONFIG_FILE")
-  CMD+=("-Dparam.keystore.password=$KEYSTORE_PASSWORD")
-  CMD+=("-Dinput.truststore.config.file=$TRUSTSTORE_CONFIG_FILE")
-  CMD+=("-Dparam.truststore.password=$TRUSTSTORE_PASSWORD")
   CMD+=("-Dparam.product.name=$PRODUCT_NAME")
   CMD+=("-Dparam.product.version=$PRODUCT_VERSION")
   CMD+=("-Dparam.product.artifact.id=$PRODUCT_ARTIFACT_ID")
   CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
   CMD+=("-Dinput.cli.dir=$PORTFOLIO_MANAGER_JARS")
+  CMD+=("-Denv.truststore.config.file=$TRUSTSTORE_CONFIG_FILE")
+  CMD+=("-Denv.truststore.password=$TRUSTSTORE_PASSWORD")
+  CMD+=("-Denv.keystore.config.file=$KEYSTORE_CONFIG_FILE")
+  CMD+=("-Denv.keystore.password=$KEYSTORE_PASSWORD")
 
   log_info "Running processor $PROCESSORS_DIR/util/util_portfolio-download.xml"
 
-  log_config "input.keystore.config.file=$KEYSTORE_CONFIG_FILE
-              input.cli.dir=$PORTFOLIO_MANAGER_JARS
-              input.truststore.config.file=$TRUSTSTORE_CONFIG_FILE" "
+  log_config "input.cli.dir=$PORTFOLIO_MANAGER_JARS" "
               output.inventory.dir=$OUTPUT_INVENTORY_DIR"
 
   log_mvn "${CMD[*]}"

@@ -27,7 +27,7 @@
                             <goal>execute-script</goal>
                         </goals>
                         <configuration>
-                            <kotlinScript>${input.kotlin.script.file}</kotlinScript>
+                            <kotlinScript>${param.kotlin.script.file}</kotlinScript>
                             <parameterMap>
                                 <input.inventory.dir>${input.inventory.dir}</input.inventory.dir>
                                 <output.inventory.dir>${output.inventory.dir}</output.inventory.dir>
@@ -50,9 +50,9 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.kotlin.script.file</property>
+                                    <property>param.kotlin.script.file</property>
                                     <message>
-                                        You must set the parameter 'input.kotlin.script.file' to specify the file of the kotlin script to be used for transformation.
+                                        You must set the parameter 'param.kotlin.script.file' to specify the file of the kotlin script to be used for transformation.
                                     </message>
                                 </requireProperty>
                                 <requireProperty>

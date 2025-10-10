@@ -34,14 +34,14 @@
                             <modifier>initial</modifier>
 
                             <!-- path to the keystore; replace or configure -->
-                            <keyStoreFile>${input.keystore.config.file}</keyStoreFile>
+                            <keyStoreFile>${env.keystore.config.file}</keyStoreFile>
                             <!-- keystore password; always pass as credential/secret -->
-                            <keyStorePassword>${param.keystore.password}</keyStorePassword>
+                            <keyStorePassword>${env.keystore.password}</keyStorePassword>
 
                             <!-- path to the truststore; replace or configure -->
-                            <trustStoreFile>${input.truststore.config.file}</trustStoreFile>
+                            <trustStoreFile>${env.truststore.config.file}</trustStoreFile>
                             <!-- truststore password; always pass as credential/secret -->
-                            <trustStorePassword>${param.truststore.password}</trustStorePassword>
+                            <trustStorePassword>${env.truststore.password}</trustStorePassword>
 
                             <!-- the project name to upload to -->
                             <projectName>${param.product.name}</projectName>
@@ -78,20 +78,20 @@
                                     <message>You must set the parameter 'param.portfolio.manager.token'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.keystore.config.file</property>
-                                    <message>You must set the parameter 'input.keystore.config.file'.</message>
+                                    <property>env.keystore.config.file</property>
+                                    <message>You must set the parameter 'env.keystore.config.file'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.keystore.password</property>
-                                    <message>You must set the parameter 'param.keystore.password'.</message>
+                                    <property>env.keystore.password</property>
+                                    <message>You must set the parameter 'env.keystore.password'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.truststore.config.file</property>
-                                    <message>You must set the parameter 'input.truststore.config.file'.</message>
+                                    <property>env.truststore.config.file</property>
+                                    <message>You must set the parameter 'env.truststore.config.file'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.truststore.password</property>
-                                    <message>You must set the parameter 'param.truststore.password'.</message>
+                                    <property>env.truststore.password</property>
+                                    <message>You must set the parameter 'env.truststore.password'.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.product.name</property>

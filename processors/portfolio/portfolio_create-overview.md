@@ -11,7 +11,7 @@ of this repository.
 | Parameter                     | Required | Description                                                        |
 |-------------------------------|----------|--------------------------------------------------------------------|
 | input.inventory.dir           | yes      | The directory of the input inventory.                              |
-| input.inventory.subpath       | yes      | The input inventory's path relative to `input.inventory.dir`.      |
+| input.inventory.path          | yes      | The input inventory's path relative to `input.inventory.dir`.      |
 | input.advisor.inventories.dir | yes      | The source directory containing advisor inventory files (`.xlsx`). |     
 | input.dashboards.dir          | yes      | The source directory containing dashboard files (`.html`).         |     
 | input.reports.dir             | yes      | The source directory containing report files (`.pdf`).             |     
@@ -27,3 +27,4 @@ None.
 
 # FIXMEs
 * do we need param.security.policy.active.ids also here?
+* discuss: use subpath instead of path when expecting a relative path

@@ -31,13 +31,13 @@ initialize_logger() {
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_transform-inventories.xml" process-resources)
   CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
-  CMD+=("-Dinput.kotlin.script.file=$KOTLIN_SCRIPT_FILE")
   CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
+  CMD+=("-Dparam.kotlin.script.file=$KOTLIN_SCRIPT_FILE")
 
   log_info "Running processor $PROCESSORS_DIR/util/util_transform-inventories.xml"
 
   log_config "input.inventory.dir=$INPUT_INVENTORY_DIR
-              input.kotlin.script.file=$KOTLIN_SCRIPT_FILE" "
+              param.kotlin.script.file=$KOTLIN_SCRIPT_FILE" "
               output.inventory.dir=$OUTPUT_INVENTORY_DIR"
 
   log_mvn "${CMD[*]}"
