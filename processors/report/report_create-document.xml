@@ -74,7 +74,7 @@
                                 <argument>-Dasset.descriptor.basedir=${input.asset.descriptor.dir}</argument>
                                 <argument>-Dasset.descriptor.path=${input.asset.descriptor.path}</argument>
 
-                                <argument>-Dparam.security.policy.file=${param.security.policy.file}</argument>
+                                <argument>-Dsecurity.policy.file=${param.security.policy.file}</argument>
                                 <argument>-Dinput.database=${env.vulnerability.mirror.dir}</argument>
 
                                 <argument>-Doverview.advisors=${param.overview.advisors}</argument>

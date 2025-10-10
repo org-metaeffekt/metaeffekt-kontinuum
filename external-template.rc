@@ -5,12 +5,13 @@ EXTERNAL_WORKBENCH_DIR="/PATH/TO/WORKBENCH"
 EXTERNAL_VULNERABILITY_MIRROR_DIR="/PATH/TO/MIRROR"
 
 # In case an index in consumed, it is downloaded from an the given url.
-EXTERNAL_VULNERABILITY_MIRROR_URL="https://MIRROR_URL/mirror.tar.gz"
-# FIXME-JFU: we should try to get rid of this as it is redundant
-EXTERNAL_VULNERABILITY_MIRROR_NAME="mirror.tar.gz"
+# For testing purposes you can use the provided URL. In case you have access to a full internal mirror replace the URL accordingly.
+EXTERNAL_VULNERABILITY_MIRROR_URL="https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen4-external.tar.gz"
+# FIXME-JFU: we should try to get rid of this as it is redundant/irrelevant
+EXTERNAL_VULNERABILITY_MIRROR_NAME="ae-mirror-index_gen4-external.tar.gz"
 
 # The NVD_API_KEY is only required when building the vulnerability mirror locally. Usually a pre-built index is consumed.
 NVD_API_KEY="<nvd-api-key>"
 
 # FIXME-JFU: remove by only using the scancode-service; we will not use scancode directly any longer
-SCANCODE_TOOLKIT_PATH="/PATH/TO/SCANCODE_BINARY"
+SCANCODE_TOOLKIT_PATH="<path-to-scancode-executable>"

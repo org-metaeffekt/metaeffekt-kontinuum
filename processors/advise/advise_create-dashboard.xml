@@ -29,6 +29,10 @@
     <artifactId>advise_create-dashboard</artifactId>
     <packaging>pom</packaging>
 
+    <properties>
+        <env.vulnerability.assessment.api>NONE</env.vulnerability.assessment.api>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -49,8 +53,19 @@
 
                             <reportConfiguration>
                                 <apiConfiguration>
-                                    <apiType>NONE</apiType>
+                                    <apiType>${env.vulnerability.assessment.api}</apiType>
+                                    <apiA>
+                                        <baseUrl>api/v2</baseUrl>
+                                        <ping>ping</ping>
+                                        <currentUser>current_user</currentUser>
+                                        <reserveAssessmentEventId>entity_id/assessment_event</reserveAssessmentEventId>
+                                        <eventsSinceTimestampForDashboard>$[asset.current.Asset Id]/assessment_event/$[since_time]/$[asset.current.Version]</eventsSinceTimestampForDashboard>
+                                        <putEventForDashboard>$[asset.current.Asset Id]/assessment_event/$[creation_time]/$[asset.current.Version]</putEventForDashboard>
+                                        <logout>/logout</logout>
+                                        <logoutMode>REDIRECT</logoutMode>
+                                    </apiA>
                                 </apiConfiguration>
+
                             </reportConfiguration>
 
                             <timelines>

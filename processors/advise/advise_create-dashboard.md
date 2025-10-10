@@ -31,7 +31,8 @@ of this repository.
 | param.security.policy.active.ids    | no       | The activeIds of the security policy configurations to use for enrichment. | 
 
 ### Environment
-| Parameter                                          | Required | Description                                                                      |
-|----------------------------------------------------|----------|----------------------------------------------------------------------------------|
-| env.vulnerability.mirror.dir                       | yes      | The directory containing the vulnerability database/index.                       |
+| Parameter                         | Required | Description                                                        |
+|-----------------------------------|----------|--------------------------------------------------------------------|
+| env.vulnerability.mirror.dir      | yes      | The directory containing the vulnerability database/index.         |
+| env.vulnerability.assessment.api  | no       | Backend for dynamic vulnerability assessment. Disabled by default. |
 
