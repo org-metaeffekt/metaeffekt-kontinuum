@@ -7,7 +7,7 @@ SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 CASES_DIR="$SELF_DIR/../cases"
 LOG_FILE="$SELF_DIR/../../../.logs/$(basename $0).log"
-LOG_LEVEL="ALL"
+LOG_LEVEL="CONFIG"
 
 bash "$PROCESSOR_SCRIPTS_DIR/mirror/mirror_download-index.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
 

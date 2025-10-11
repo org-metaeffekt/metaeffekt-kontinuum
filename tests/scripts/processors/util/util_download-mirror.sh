@@ -25,7 +25,7 @@ initialize_logger() {
 }
 
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/util/util_download-mirror.xml" compile -P withoutProxy)
+  CMD=(mvn -f "$PROCESSORS_DIR/util/util_download-mirror.xml" compile)
   CMD+=("-Denv.mirror.dir=$ENV_MIRROR_DIR")
   CMD+=("-Denv.nvd.apikey=$ENV_NVD_APIKEY")
 
