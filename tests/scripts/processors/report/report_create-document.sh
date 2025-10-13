@@ -62,7 +62,7 @@ run_maven_command() {
               input.reference.inventory.file=$INPUT_REFERENCE_INVENTORY_FILE
               input.reference.license.dir=$INPUT_REFERENCE_LICENSE_DIR
               input.reference.component.dir=$INPUT_REFERENCE_COMPONENT_DIR
-              input.security.policy.dir=$PARAM_SECURITY_POLICY_FILE" "
+              param.security.policy.dir=$PARAM_SECURITY_POLICY_FILE" "
               output.document.file=$OUTPUT_DOCUMENT_FILE
               output.computed.inventory.path=$OUTPUT_COMPUTED_INVENTORY_DIR"
 
