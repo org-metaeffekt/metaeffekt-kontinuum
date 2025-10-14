@@ -31,6 +31,13 @@
 
     <properties>
         <env.vulnerability.assessment.api>NONE</env.vulnerability.assessment.api>
+
+        <param.timeline.conf.enabled>true</param.timeline.conf.enabled>
+        <param.timeline.max.threads>4</param.timeline.max.threads>
+        <param.timeline.time.spent.max>10000</param.timeline.time.spent.max>
+
+        <!-- FIXME-YWI: what is expected here as default -->
+        <!-- <param.timeline.vuln.providers.list></param.timeline.vuln.providers.list> -->
     </properties>
 
     <build>
