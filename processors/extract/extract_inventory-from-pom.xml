@@ -51,7 +51,7 @@
                                 <argument>-f</argument>
                                 <argument>${input.pom.file}</argument>
                                 <argument>org.metaeffekt.core:ae-inventory-maven-plugin:${ae.core.version}:create-pom-inventory</argument>
-                                <argument>-Dae.create.pom.inventory.includeScopeProvided=${param.include.scop.provided}</argument>
+                                <argument>-Dae.create.pom.inventory.includeScopeProvided=${param.include.scope.provided}</argument>
                                 <argument>-Dae.create.pom.inventory.includeScopeSystem=${param.include.scope.system}</argument>
                                 <argument>-Dae.create.pom.inventory.includeScopeTest=${param.include.scope.test}</argument>
                                 <argument>-Dae.create.pom.inventory.includeOptional=${param.include.optional}</argument>
