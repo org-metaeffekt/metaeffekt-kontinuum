@@ -32,7 +32,11 @@ run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/extract/extract_inventory-from-pom.xml" process-resources)
   CMD+=("-Dinput.pom.file=$INPUT_POM_FILE")
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
-
+  CMD+=("-Dparam.include.scope.provided=$PARAM_INCLUDE_SCOPE_PROVIDED")
+  CMD+=("-Dparam.include.scope.system=$PARAM_INCLUDE_SCOPE_SYSTEM")
+  CMD+=("-Dparam.include.scope.test=$PARAM_INCLUDE_SCOPE_TEST")
+  CMD+=("-Dparam.include.optional=$PARAM_INCLUDE_SCOPE_OPTIONAL")
+  CMD+=("-Dparam.include.scope.plugins=$PARAM_INCLUDE_SCOPE_PLUGINS")
 
   log_info "Running processor $PROCESSORS_DIR/extract/extract_inventory-from-pom.xml"
 

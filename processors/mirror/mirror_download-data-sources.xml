@@ -291,6 +291,16 @@
                                 </resourceLocations>
                             </capecDownload>
 
+                            <cveListDownload>
+                                <useGitCommand>true</useGitCommand>
+                                <resourceLocations>
+                                    <!-- Remote repository URL of the CVEProject/cvelistV5 repository -->
+                                    <!-- <GIT_URL>https://github.com/CVEProject/cvelistV5</GIT_URL>-->
+                                    <!-- Remote URL of the zip download of the CVEProject/cvelistV5 repository -->
+                                    <!-- <GIT_ZIP_DOWNLOAD_URL>https://github.com/CVEProject/cvelistV5/archive/refs/heads/main.zip</GIT_ZIP_DOWNLOAD_URL>-->
+                                </resourceLocations>
+                            </cveListDownload>
+
                         </configuration>
                     </execution>
                 </executions>
