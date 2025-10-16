@@ -26,13 +26,13 @@ initialize_logger() {
 
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/mirror/mirror_download-index.xml" compile)
-  CMD+=("-Doutput.vulnerability.mirror.dir=$MIRROR_TARGET_DIR")
+  CMD+=("-Denv.vulnerability.mirror.dir=$MIRROR_TARGET_DIR")
   CMD+=("-Dparam.mirror.archive.url=$MIRROR_ARCHIVE_URL")
   CMD+=("-Dparam.mirror.archive.name=$MIRROR_ARCHIVE_NAME")
 
   log_info "Running processor $PROCESSORS_DIR/mirror/mirror_download-index.xml"
 
-  log_config "" "output.vulnerability.mirror.dir=$MIRROR_TARGET_DIR"
+  log_config "" "env.vulnerability.mirror.dir=$MIRROR_TARGET_DIR"
 
   log_mvn "${CMD[*]}"
 
