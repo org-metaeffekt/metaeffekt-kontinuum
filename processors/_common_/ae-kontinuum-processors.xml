@@ -25,8 +25,12 @@
     <packaging>pom</packaging>
 
     <properties>
-        <ae.core.version>0.145.2</ae.core.version>
-        <ae.artifact.analysis.version>0.148.1</ae.artifact.analysis.version>
+        <!-- NOTE: for continuous integration these must stick to the HEAD-SNAPSHOT on the main-line.
+            We should make these configurable via external.rc and replace the HEAD-SNAPSHOTS at release, such
+            that users of a released kontinuum do not need to configure the versions in their external.rc.
+        -->
+        <ae.core.version>HEAD-SNAPSHOT</ae.core.version>
+        <ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
