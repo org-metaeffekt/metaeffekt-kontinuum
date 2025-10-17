@@ -29,6 +29,8 @@ initialize_logger() {
 #Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_aggregate-sources.xml" process-resources)
+  CMD+=("-Dae.core.version=$AE_CORE_VERSION")
+  CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
   CMD+=("-Dtarget.dir=$CURRENT_TARGET_DIR")
   CMD+=("-Dannex.source.dir=$ANNEX_SOURCE_DIR")

@@ -31,7 +31,6 @@
 
     <properties>
         <mirror.target.tmp>${env.vulnerability.mirror.dir}/download</mirror.target.tmp>
-        <mirror.target.database>${env.vulnerability.mirror.dir}/.database</mirror.target.database>
     </properties>
 
     <build>
@@ -67,8 +66,8 @@
                         </goals>
                         <configuration>
                             <target>
-                                <mkdir dir="${output.vulnerability.mirror.dir}/.database" />
-                                <available file="${output.vulnerability.mirror.dir}/next-update" property="next-update-file-exists" />
+                                <mkdir dir="${env.vulnerability.mirror.dir}/.database" />
+                                <available file="${env.vulnerability.mirror.dir}/next-update" property="next-update-file-exists" />
                             </target>
                             <exportAntProperties>true</exportAntProperties>
                         </configuration>
@@ -86,7 +85,7 @@
                                 <tstamp>
                                     <format property="next.update" offset="-4" unit="hour" pattern="MM/dd/yyyy hh:mm:ss aa"/>
                                 </tstamp>
-                                <touch file="${output.vulnerability.mirror.dir}/next-update" datetime="${next.update}" pattern="MM/dd/yyyy hh:mm:ss aa" />
+                                <touch file="${env.vulnerability.mirror.dir}/next-update" datetime="${next.update}" pattern="MM/dd/yyyy hh:mm:ss aa" />
                             </target>
                         </configuration>
                     </execution>
@@ -99,11 +98,11 @@
                         </goals>
                         <configuration>
                             <target>
-                                <touch file="${output.vulnerability.mirror.dir}/last-update" />
+                                <touch file="${env.vulnerability.mirror.dir}/last-update" />
 
                                 <uptodate property="update.required" value="true"
-                                          srcfile="${output.vulnerability.mirror.dir}/next-update"
-                                          targetfile="${output.vulnerability.mirror.dir}/last-update" />
+                                          srcfile="${env.vulnerability.mirror.dir}/next-update"
+                                          targetfile="${env.vulnerability.mirror.dir}/last-update" />
 
                                 <echo message="Update Required: ${update.required}" />
                             </target>
@@ -148,12 +147,12 @@
                                 <if>
                                     <isset property="is.zip" />
                                     <then>
-                                        <unzip src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" />
+                                        <unzip src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${env.vulnerability.mirror.dir}/.database_update" />
                                     </then>
                                     <elseif>
                                         <isset property="is.tar.gz" />
                                         <then>
-                                            <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${output.vulnerability.mirror.dir}/.database_update" compression="gzip" />
+                                            <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${env.vulnerability.mirror.dir}/.database_update" compression="gzip" />
                                         </then>
                                     </elseif>
                                 </if>
@@ -169,9 +168,9 @@
                         </goals>
                         <configuration>
                             <target if="update.required">
-                                <echo message="Patching ${output.vulnerability.mirror.dir}/.database_update" />
-                                <copy todir="${output.vulnerability.mirror.dir}/.database_update" overwrite="true" failonerror="false">
-                                    <fileset dir="${output.vulnerability.mirror.dir}/.database_patch" includes="**/*" />
+                                <echo message="Patching ${env.vulnerability.mirror.dir}/.database_update" />
+                                <copy todir="${env.vulnerability.mirror.dir}/.database_update" overwrite="true" failonerror="false">
+                                    <fileset dir="${env.vulnerability.mirror.dir}/.database_patch" includes="**/*" />
                                 </copy>
                             </target>
                         </configuration>
@@ -185,15 +184,15 @@
                         </goals>
                         <configuration>
                             <target if="update.required">
-                                <echo message="Backing up mirror data to ${output.vulnerability.mirror.dir}/.database_backup" />
-                                <mkdir dir="${output.vulnerability.mirror.dir}/.database" />
-                                <move file="${output.vulnerability.mirror.dir}/.database" tofile="${output.vulnerability.mirror.dir}/.database_backup" />
-                                <echo message="Updating new mirror to ${output.vulnerability.mirror.dir}/.database" />
-                                <move file="${output.vulnerability.mirror.dir}/.database_update" tofile="${output.vulnerability.mirror.dir}/.database" />
-                                <echo message="Deleting backup mirror data ${output.vulnerability.mirror.dir}/.database_backup" />
-                                <delete dir="${output.vulnerability.mirror.dir}/.database_backup" />
+                                <echo message="Backing up mirror data to ${env.vulnerability.mirror.dir}/.database_backup" />
+                                <mkdir dir="${env.vulnerability.mirror.dir}/.database" />
+                                <move file="${env.vulnerability.mirror.dir}/.database" tofile="${env.vulnerability.mirror.dir}/.database_backup" />
+                                <echo message="Updating new mirror to ${env.vulnerability.mirror.dir}/.database" />
+                                <move file="${env.vulnerability.mirror.dir}/.database_update" tofile="${env.vulnerability.mirror.dir}/.database" />
+                                <echo message="Deleting backup mirror data ${env.vulnerability.mirror.dir}/.database_backup" />
+                                <delete dir="${env.vulnerability.mirror.dir}/.database_backup" />
 
-                                <touch file="${output.vulnerability.mirror.dir}/last-update" />
+                                <touch file="${env.vulnerability.mirror.dir}/last-update" />
                             </target>
                         </configuration>
                     </execution>
@@ -209,7 +208,7 @@
                                 <tstamp>
                                     <format property="next.update" offset="+24" unit="hour" pattern="MM/dd/yyyy hh:mm:ss aa"/>
                                 </tstamp>
-                                <touch file="${output.vulnerability.mirror.dir}/next-update" datetime="${next.update}" pattern="MM/dd/yyyy hh:mm:ss aa" />
+                                <touch file="${env.vulnerability.mirror.dir}/next-update" datetime="${next.update}" pattern="MM/dd/yyyy hh:mm:ss aa" />
                                 <echo message="Next update scheduled for: ${next.update}" />
                             </target>
                         </configuration>

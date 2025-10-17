@@ -30,6 +30,8 @@ initialize_logger() {
 #Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/report/report_create-document.xml" verify)
+  CMD+=("-Dae.core.version=$AE_CORE_VERSION")
+  CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dinput.asset.descriptor.dir=$INPUT_ASSET_DESCRIPTOR_DIR")
   CMD+=("-Dinput.asset.descriptor.path=$INPUT_ASSET_DESCRIPTOR_PATH")
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")

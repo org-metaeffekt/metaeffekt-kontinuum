@@ -139,28 +139,44 @@ load_externalrc() {
       export WORKBENCH_DIR="$EXTERNAL_WORKBENCH_DIR"
       log_info "Found workbench repository at $EXTERNAL_WORKBENCH_DIR"
   else
-    log_error "Could not find workbench repository at path specified in the external.rc file"
+    log_error "No EXTERNAL_WORKBENCH_DIR specified in the external.rc file"
   fi
 
   if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_DIR:-}" ]; then
     log_info "Found external mirror at $EXTERNAL_VULNERABILITY_MIRROR_DIR"
   else
     EXTERNAL_VULNERABILITY_MIRROR_DIR="$KONTINUUM_DIR/.mirror"
-    log_info "No external mirror specified, switching to internal kontinuum mirror."
+    log_info "No EXTERNAL_VULNERABILITY_MIRROR_DIR specified in external.rc, switching to internal kontinuum mirror."
   fi
 
   if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_URL:-}" ]; then
       log_info "External mirror URL specified: $EXTERNAL_VULNERABILITY_MIRROR_URL"
   else
     EXTERNAL_VULNERABILITY_MIRROR_URL="http://ae-scanner/mirror/index/index-database_legacy.zip"
-    log_info "No external mirror URL specified. Using either mirror specified in external.rc file or repository-specific local mirror if exists."
+    log_info "No EXTERNAL_VULNERABILITY_MIRROR_URL specified in external.rc. Using either mirror specified in external.rc file or repository-specific local mirror if exists."
   fi
 
   if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_NAME:-}" ]; then
         log_info "External mirror name specified: $EXTERNAL_VULNERABILITY_MIRROR_NAME"
   else
     EXTERNAL_VULNERABILITY_MIRROR_NAME="index-database_legacy.zip"
-    log_info "No external mirror name specified. Using default name index-database_legacy.zip."
+    log_info "No EXTERNAL_VULNERABILITY_MIRROR_NAME specified in external.rc. Using default name index-database_legacy.zip."
+  fi
+
+  if [ -n "${AE_CORE_VERSION:-}" ]; then
+    log_info "Core version specified: $AE_CORE_VERSION"
+    export AE_CORE_VERSION
+  else
+    log_error "No AE_CORE_VERSION specified in external.rc file."
+    exit 1
+  fi
+
+  if [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ]; then
+    log_info "Artifact analysis version specified: $AE_ARTIFACT_ANALYSIS_VERSION"
+    export AE_ARTIFACT_ANALYSIS_VERSION
+  else
+    log_error "No AE_ARTIFACT_ANALYSIS_VERSION specified in external.rc file."
+    exit 1
   fi
 }
 

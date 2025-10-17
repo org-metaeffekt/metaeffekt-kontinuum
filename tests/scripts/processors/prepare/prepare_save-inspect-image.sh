@@ -30,6 +30,8 @@ initialize_logger() {
 #Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/prepare/prepare_save-inspect-image.xml" process-resources)
+  CMD+=("-Dae.core.version=$AE_CORE_VERSION")
+  CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dparam.image.id=$PARAM_IMAGE_ID")
   CMD+=("-Dparam.image.version=$PARAM_IMAGE_VERSION")
   CMD+=("-Doutput.dir=$OUTPUT_DIR")

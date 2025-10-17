@@ -30,6 +30,8 @@ initialize_logger() {
 #Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/advise/advise_create-dashboard.xml" process-resources)
+  CMD+=("-Dae.core.version=$AE_CORE_VERSION")
+  CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
   CMD+=("-Doutput.dashboard.file=$OUTPUT_DASHBOARD_FILE")
   CMD+=("-Dparam.security.policy.file=$SECURITY_POLICY")

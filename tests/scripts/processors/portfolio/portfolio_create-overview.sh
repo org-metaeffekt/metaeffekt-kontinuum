@@ -30,6 +30,8 @@ initialize_logger() {
 #Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/portfolio/portfolio_create-overview.xml" process-resources -X)
+  CMD+=("-Dae.core.version=$AE_CORE_VERSION")
+  CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
   CMD+=("-Dinput.inventory.path=$INPUT_INVENTORY_PATH")
   CMD+=("-Dinput.advisor.inventories.dir=$INPUT_ADVISOR_INVENTORIES_DIR")

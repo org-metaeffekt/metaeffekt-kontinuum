@@ -30,6 +30,8 @@ initialize_logger() {
 # Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/advise/advise_enrich-inventory.xml" process-resources)
+  CMD+=("-Dae.core.version=$AE_CORE_VERSION")
+  CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
   CMD+=("-Doutput.tmp.dir=$PROCESSOR_TMP_DIR")
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
