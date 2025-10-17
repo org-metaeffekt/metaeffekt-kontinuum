@@ -25,6 +25,10 @@
     <packaging>pom</packaging>
 
     <properties>
+        <!-- NOTE: for continuous integration these must stick to the HEAD-SNAPSHOT on the main-line.
+            We should make these configurable via external.rc and replace the HEAD-SNAPSHOTS at release, such
+            that users of a released kontinuum do not need to configure the versions in their external.rc.
+        -->
         <ae.core.version>0.146.0</ae.core.version>
         <ae.artifact.analysis.version>0.149.0</ae.artifact.analysis.version>
 
