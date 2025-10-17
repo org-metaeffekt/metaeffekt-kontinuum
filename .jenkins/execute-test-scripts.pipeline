@@ -72,6 +72,10 @@ pipeline {
                 sh 'echo "EXTERNAL_WORKBENCH_DIR=\"$(pwd)/.metaeffekt-workbench\"" > external.rc'
                 sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_URL=\"http://ae-scanner/mirror/index/ae-mirror-index_gen4.tar.gz\"" >> external.rc'
                 sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_NAME=\"ae-mirror-index_gen4.tar.gz\"" >> external.rc'
+                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_NAME=\"ae-mirror-index_gen4.tar.gz\"" >> external.rc'
+
+                sh 'echo "AE_CORE_VERSION=\"HEAD-SNAPSHOT\"" >> external.rc'
+                sh 'echo "AE_ARTIFACT_ANALYSIS_VERSION=\"HEAD-SNAPSHOT\"" >> external.rc'
             }
         }
 
