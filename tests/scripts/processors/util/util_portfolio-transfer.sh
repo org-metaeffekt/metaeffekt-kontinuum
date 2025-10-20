@@ -58,8 +58,8 @@ run_maven_command_portfolio_upload() {
   cd "$SCRIPT_DIR"
 
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_portfolio-upload.xml" process-resources)
-  CMD+=("-Dae.core.version=$AE_CORE_VERSION")
-  CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
+  [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
+  [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dinput.file=$INPUT_FILE")
   CMD+=("-Dinput.cli.dir=$PORTFOLIO_MANAGER_JARS")
   CMD+=("-Dparam.portfolio.manager.url=$PORTFOLIO_MANAGER_URL")
@@ -93,8 +93,8 @@ run_maven_command_portfolio_download() {
   cd "$SCRIPT_DIR"
 
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_portfolio-download.xml" process-resources)
-  CMD+=("-Dae.core.version=$AE_CORE_VERSION")
-  CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
+  [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
+  [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dparam.portfolio.manager.url=$PORTFOLIO_MANAGER_URL")
   CMD+=("-Dparam.portfolio.manager.token=$ADMIN_TOKEN")
   CMD+=("-Dparam.product.name=$PRODUCT_NAME")

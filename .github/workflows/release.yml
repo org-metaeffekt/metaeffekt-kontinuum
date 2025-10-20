@@ -1,0 +1,85 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version. Must be valid semantic versioning.'
+        required: true
+        type: string
+      ae-core-version:
+        description: 'Metaeffekt Core version to use for this release.'
+        required: true
+        type: string
+      ae-artifact-analysis-version:
+        description: 'Metaeffekt Artifact Analysis version to use for this release.'
+        required: true
+        type: string
+      metaeffekt-workbench-version:
+        description: 'Metaeffekt Workbench version tag or branch to utilize for testing.'
+        default: main
+        required: false
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Replace versions in parent processor
+        run: |
+          sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|g' \
+            processors/_common_/ae-kontinuum-processors.xml
+          sed -i 's|<ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|g' \
+            processors/_common_/ae-kontinuum-processors.xml
+
+      - name: Checkout metaeffekt-workbench
+        run: |
+          git clone https://github.com/org-metaeffekt/metaeffekt-workbench.git .metaeffekt-workbench
+          cd .metaeffekt-workbench
+          git checkout ${{ inputs.metaeffekt-workbench-version }}
+          cd ..
+
+      - name: Create external.rc file
+        run: |
+          touch external.rc
+          echo "EXTERNAL_WORKBENCH_DIR=.metaeffekt-workbench" >> external.rc
+          echo "EXTERNAL_VULNERABILITY_MIRROR_URL=https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen4-external.tar.gz" >> external.rc
+          echo "EXTERNAL_VULNERABILITY_MIRROR_NAME=ae-mirror-index_gen4-external.tar.gz" >> external.rc
+          echo "NVD_API_KEY=${{ secrets.NVD_API_KEY }}" >> external.rc
+          echo "AE_CORE_VERSION=${{ inputs.ae-core-version }}" >> external.rc
+          echo "AE_ARTIFACT_ANALYSIS_VERSION=${{ inputs.ae-artifact-analysis-version }}" >> external.rc
+
+      - name: Cache artifacts
+        uses: actions/cache@v4
+        with:
+          key: simple-key
+          path: |
+            .mirror
+            .maven-index
+
+      - name: Run tests
+        run: |
+          ./tests/scripts/pipelines/run_workspace-001.sh
+          ./tests/scripts/pipelines/run_workspace-002.sh
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@metaeffekt.com"
+          git config --local user.name "github-actions[bot]"
+          git add processors/_common_/ae-kontinuum-processors.xml
+          git commit -m "Release ${{ inputs.version }}" || echo "No changes to commit"
+
+      - name: Push changes
+        run: git push
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ inputs.version }}
+          name: Release ${{ inputs.version }}
+          draft: false
+          prerelease: false

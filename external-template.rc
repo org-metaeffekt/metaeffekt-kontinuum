@@ -13,9 +13,6 @@ EXTERNAL_VULNERABILITY_MIRROR_NAME="ae-mirror-index_gen4-external.tar.gz"
 # The NVD_API_KEY is only required when building the vulnerability mirror locally. Usually a pre-built index is consumed.
 NVD_API_KEY="<nvd-api-key>"
 
-# FIXME-JFU: remove by only using the scancode-service; we will not use scancode directly any longer
-SCANCODE_TOOLKIT_PATH="<path-to-scancode-executable>"
-
 # Controls the versions of core and artifact-analysis. Only applicable for scripts run in this repository.
 AE_CORE_VERSION=HEAD-SNAPSHOT
 AE_ARTIFACT_ANALYSIS_VERSION=HEAD-SNAPSHOT
