@@ -22,9 +22,9 @@ of this repository.
 | param.product.artifact.id     | yes      | The product artifact id                                         |
 
 ### Environment
-| Parameter                  | Required | Description                                                     |
-|----------------------------|----------|-----------------------------------------------------------------|
-| env.keystore.password      | yes      | Keystore password, always pass as credential/secret             |
-| env.truststore.password    | yes      | Truststore password, always pass as credential/secret           |
-| env.keystore.config.file   | yes      | Path to the keystore                                       |
-| env.truststore.config.file | yes      | Path to the truststore                                     |
+| Parameter                  | Required | Description                                           |
+|----------------------------|----------|-------------------------------------------------------|
+| env.keystore.password      | yes      | Keystore password, always pass as credential/secret   |
+| env.truststore.password    | yes      | Truststore password, always pass as credential/secret |
+| env.keystore.config.file   | yes      | Path to the keystore                                  |
+| env.truststore.config.file | yes      | Path to the truststore                                |
