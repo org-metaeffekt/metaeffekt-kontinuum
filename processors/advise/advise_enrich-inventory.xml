@@ -30,6 +30,7 @@
     <packaging>pom</packaging>
 
     <properties>
+        <!-- enricher -->
         <param.activate.msrc>true</param.activate.msrc>
         <param.activate.nvd>true</param.activate.nvd>
         <param.activate.certfr>true</param.activate.certfr>
@@ -40,10 +41,25 @@
         <param.activate.kev>true</param.activate.kev>
         <param.activate.epss>true</param.activate.epss>
         <param.activate.eol>true</param.activate.eol>
+        <param.activate.osv>true</param.activate.osv>
 
         <param.activate.status>true</param.activate.status>
         <param.activate.keywords>true</param.activate.keywords>
         <param.activate.validation>false</param.activate.validation>
+
+        <!-- osv ecosystem matcher -->
+        <param.osv.matcher.maven>true</param.osv.matcher.maven>
+        <param.osv.matcher.packagist>true</param.osv.matcher.packagist>
+        <param.osv.matcher.rubygems>true</param.osv.matcher.rubygems>
+        <param.osv.matcher.pypi>true</param.osv.matcher.pypi>
+        <param.osv.matcher.hex>true</param.osv.matcher.hex>
+        <param.osv.matcher.npm>true</param.osv.matcher.npm>
+        <param.osv.matcher.crates_io>true</param.osv.matcher.crates_io>
+        <param.osv.matcher.nuget>true</param.osv.matcher.nuget>
+        <param.osv.matcher.cran>true</param.osv.matcher.cran>
+
+        <!-- ghsa unreviewed filter -->
+        <param.remove.ghsa.unreviewed>false</param.remove.ghsa.unreviewed>
 
         <param.exclude.nvd.equivalent.msrc>true</param.exclude.nvd.equivalent.msrc>
         <param.exclude.nvd.equivalent.osv>true</param.exclude.nvd.equivalent.osv>
@@ -171,18 +187,25 @@
 
                             <osvVulnerabilitiesEnrichment>
                                 <active>${param.activate.osv}</active>
-                                <maven>${param.osv.matcher.maven.active}</maven>
-                                <packagist>${param.osv.matcher.packagist.active}</packagist>
-                                <rubygems>${param.osv.matcher.rubygems.active}</rubygems>
-                                <pypi>${param.osv.matcher.pypi.active}</pypi>
-                                <hex>${param.osv.matcher.hex.active}</hex>
-                                <npm>${param.osv.matcher.npm.active}</npm>
-                                <crates_io>${param.osv.matcher.crates_io.active}</crates_io>
-                                <nuget>${param.osv.matcher.nuget.active}</nuget>
-                                <githubReviewed>${param.osv.matcher.githubReviewed.active}</githubReviewed>
-                                <cran>${param.osv.matcher.cran.active}</cran>
+
+                                <!-- ecosystem configurations -->
+                                <maven>${param.osv.matcher.maven}</maven>
+                                <packagist>${param.osv.matcher.packagist}</packagist>
+                                <rubygems>${param.osv.matcher.rubygems}</rubygems>
+                                <pypi>${param.osv.matcher.pypi}</pypi>
+                                <hex>${param.osv.matcher.hex}</hex>
+                                <npm>${param.osv.matcher.npm}</npm>
+                                <crates_io>${param.osv.matcher.crates_io}</crates_io>
+                                <nuget>${param.osv.matcher.nuget}</nuget>
+                                <cran>${param.osv.matcher.cran}</cran>
+
+                                <!-- FIXME-KKL we need to desparately fix this; this naming very irritating -->
+                                <!-- true: removes unreviewed entries -->
+                                <!-- false: keep unreviewed entries (default) -->
+                                <githubReviewed>${param.remove.ghsa.unreviewed}</githubReviewed>
 
                                 <excludeNvdEquivalent>${param.exclude.nvd.equivalent.osv}</excludeNvdEquivalent>
+
                             </osvVulnerabilitiesEnrichment>
 
                             <cweFillDetailsEnrichment>
@@ -241,6 +264,7 @@
                                 <vulnerabilityInvalidNameValidator/>
                             </inventoryValidationEnrichment>
 
+                            <!-- FIXME-KKL: review with YWI -->
                             <!-- Always active / inactive -->
                             <vulnerabilityFilterEnrichment>
                                 <active>false</active>

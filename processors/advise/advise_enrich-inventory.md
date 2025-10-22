@@ -26,6 +26,7 @@ of this repository.
 | param.security.policy.file       | yes      | The security policy file to use.                                                               |
 | param.security.policy.active.ids | no       | The activeIds of the security policy configurations to use for enrichment.                     |
 | param.activate.*                 | no       | Switches determining which vulnerability databases are utilized during the enrichment process. |
+| param.osv.matcher.*              | no       | Enable ecosystem specific matchers.                                                            |
 | param.exclude.nvd.equivalent.*   | no       | Switches determining if vulnerabilities equivalent to those found via nvd should be excluded.  |
 | param.dashboard.title            | ignore   | Title for a dashboard which could be generated during this process.                            |
 | param.dashboard.subtitle         | ignore   | Subtitle for a dashboard which could be generated during this process.                         |
