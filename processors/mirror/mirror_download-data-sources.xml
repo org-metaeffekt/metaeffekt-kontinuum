@@ -244,6 +244,11 @@
                                         <name>huawei_psirt</name>
                                         <url>https://www.huawei.com/.well-known/csaf/provider-metadata.json</url>
                                     </exclude>
+                                    <exclude>
+                                        <!-- reason for exclusion: requires additional authentication -->
+                                        <name>kunbus_psirt</name>
+                                        <url>https://psirt.kunbus.com/.well-known/csaf/provider-metadata.json</url>
+                                    </exclude>
                                 </excludeList>
                                 <!--<includeList></includeList>-->
                             </csafDownload>
