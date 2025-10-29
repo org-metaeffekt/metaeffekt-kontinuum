@@ -5,24 +5,10 @@ GREEN='\033[32m'
 CYAN='\033[36m'
 RESET='\033[0m'
 
-
-LOG_LEVEL="INFO"
 LOG_FILE=""
-LOG_TO_CONSOLE="true"
 
 logger_init() {
-    LOG_LEVEL="${1:-INFO}"
-    LOG_FILE="$2"
-    LOG_TO_CONSOLE="${3:-true}"
-
-    case "$LOG_LEVEL" in
-        "ALL"|"MVN"|"CONFIG"|"INFO"|"ERROR")
-            ;;
-        *)
-            echo "Warning: Invalid log level '$LOG_LEVEL'. Defaulting to INFO." >&2
-            LOG_LEVEL="INFO"
-            ;;
-    esac
+    LOG_FILE="$1"
 
     if [[ -n "$LOG_FILE" ]]; then
         local dir=$(dirname "$LOG_FILE")
@@ -35,37 +21,10 @@ logger_init() {
     fi
 }
 
-should_log() {
-    local log_type="$1"
-    case "$LOG_LEVEL" in
-        "ALL")
-            return 0  # Log everything
-            ;;
-        "MVN")
-            [[ "$log_type" == "MVN" || "$log_type" == "INFO" || "$log_type" == "ERROR" ]]
-            return $?
-            ;;
-        "CONFIG")
-            [[ "$log_type" == "CONFIG" || "$log_type" == "INFO" || "$log_type" == "ERROR" ]]
-            return $?
-            ;;
-        "INFO")
-            [[ "$log_type" == "INFO" || "$log_type" == "ERROR" ]]
-            return $?
-            ;;
-        "ERROR")
-            [[ "$log_type" == "ERROR" ]]
-            return $?
-            ;;
-        *)
-            return 1  # Should not log
-            ;;
-    esac
-}
-
 _log_output() {
     local level="$1"
     local message="$2"
+    local log_to_console="$3"
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
 
     local log_entry="[$timestamp] $level: $message"
@@ -76,7 +35,7 @@ _log_output() {
         }
     fi
 
-    if [[ "$LOG_TO_CONSOLE" == "true" ]]; then
+    if [[ "$log_to_console" == "true" ]]; then
         local color=""
         local offset=""
         case "$level" in
@@ -88,7 +47,7 @@ _log_output() {
                 color="$GREEN"
                 offset="  "
                 ;;
-            "CONFIG")
+            "DEBUG")
                 color="$CYAN"
                 ;;
             *)
@@ -100,46 +59,36 @@ _log_output() {
     fi
 }
 
-log_mvn() {
-    local message="$*"
-    if should_log "MVN"; then
-        _log_output "MVN" "$message"
-    fi
-}
-
-log_config() {
-    local inputs="$1"
-    local outputs="$2"
-
-    if [ -n "$inputs" ]; then
-      for input in $inputs; do
-          if should_log "CONFIG"; then
-            _log_output "CONFIG" "Input - $input"
-          fi
-      done
-    fi
-
-    if [ -n "$outputs" ]; then
-      for output in $outputs; do
-        if should_log "CONFIG"; then
-          _log_output "CONFIG" "Output - $output"
-        fi
-      done
-    fi
+log_debug() {
+  local message="$*"
+  _log_output "DEBUG" "$message" "false"
 }
 
 log_info() {
-    local message="$*"
-    if should_log "INFO"; then
-        _log_output "INFO" "$message"
+  local message="$*"
+  _log_output "INFO" "$message" "true"
+}
+
+log_maven_params() {
+  local params=()
+
+  for arg in "${CMD[@]}"; do
+    if [[ $arg =~ ^-D(input|output|env)\. ]]; then
+      # Remove the -D prefix and add to params array
+      params+=("${arg#-D}")
     fi
+  done
+
+  if [ ${#params[@]} -gt 0 ]; then
+    for param in "${params[@]}"; do
+      log_info "$param"
+    done
+  fi
 }
 
 log_error() {
-    local message="$*"
-    if should_log "ERROR"; then
-        _log_output "ERROR" "$message"
-    fi
+  local message="$*"
+  _log_output "ERROR" "$message" "true"
 }
 
-export log_mvn log_config log_info log_error
+export log_debug log_info log_error log_maven_params
