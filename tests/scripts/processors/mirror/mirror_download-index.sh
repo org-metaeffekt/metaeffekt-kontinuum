@@ -3,25 +3,28 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONFIG_PATH="$SCRIPT_DIR/../config.sh"
+SHARED_SCRIPT_PATH="$SCRIPT_DIR/../shared.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
 CASE="mirror/mirror_download-index-01.sh"
 
 check_shared_config() {
-  if [[ -f "$CONFIG_PATH" ]]; then
-      source "$CONFIG_PATH"
-  else
-      log_error "Config file not found at $CONFIG_PATH"
-      exit 1
+  if [ -z "${SHARED_CONFIG_LOADED:-}" ]; then
+    SHARED_CONFIG_LOADED="true"
+    export SHARED_CONFIG_LOADED
+
+    if [[ -f "$SHARED_SCRIPT_PATH" ]]; then
+        source "$SHARED_SCRIPT_PATH"
+    else
+        log_error "Config file not found at $SHARED_SCRIPT_PATH"
+        exit 1
+    fi
   fi
 }
 
 initialize_logger() {
-    local log_level="$1"
-    local console_output_enabled="$2"
-    local log_file="$3"
+    local log_file="$1"
     source $LOGGER_PATH
-    logger_init "$log_level" "$log_file" "${console_output_enabled}"
+    logger_init "$log_file"
 }
 
 run_maven_command() {
@@ -32,40 +35,24 @@ run_maven_command() {
   CMD+=("-Dparam.mirror.archive.url=$MIRROR_ARCHIVE_URL")
   CMD+=("-Dparam.mirror.archive.name=$MIRROR_ARCHIVE_NAME")
 
-  log_info "Running processor $PROCESSORS_DIR/mirror/mirror_download-index.xml"
-
-  log_config "" ""
-
-  log_mvn "${CMD[*]}"
-
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
-      log_info "Successfully ran $PROCESSORS_DIR/mirror/mirror_download-index.xml"
-  else
-      log_error "Failed to run $PROCESSORS_DIR/mirror/mirror_download-index.xml because the maven execution was unsuccessful"
-      return 1
-  fi
+  pass_command_info_to_logger "$(basename "$0")"
 }
 
 main() {
-  local case_file="$CASE"
-  local log_level="CONFIG"
   local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
-  local console_output_enabled=true
 
-  while getopts "c:l:f:ho" flag; do
+  while getopts "c:f:h" flag; do
             case "$flag" in
-                c) case_file="$OPTARG" ;;
+                c) CASE="$OPTARG" ;;
                 h) print_usage; exit 0 ;;
-                l) log_level="$OPTARG" ;;
                 f) log_file="$OPTARG" ;;
-                o) console_output_enabled=false ;;
                 *) print_usage; exit 1 ;;
             esac
       done
 
-  initialize_logger "$log_level" "$console_output_enabled" "$log_file"
+  initialize_logger "$log_file"
   check_shared_config
-  source_case_file "$case_file"
+  source_case_file "$CASE"
 
   run_maven_command
 }
