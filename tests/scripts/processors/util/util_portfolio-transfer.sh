@@ -3,29 +3,26 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SHARED_SCRIPT_PATH="$SCRIPT_DIR/../shared.sh"
+CONFIG_PATH="$SCRIPT_DIR/../config.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
 CASE="util/util_portfolio-transfer-01.sh"
 
 
 check_shared_config() {
-  if [ -z "${SHARED_CONFIG_LOADED:-}" ]; then
-    SHARED_CONFIG_LOADED="true"
-    export SHARED_CONFIG_LOADED
-
-    if [[ -f "$SHARED_SCRIPT_PATH" ]]; then
-        source "$SHARED_SCRIPT_PATH"
-    else
-        log_error "Config file not found at $SHARED_SCRIPT_PATH"
-        exit 1
-    fi
+  if [[ -f "$CONFIG_PATH" ]]; then
+      source "$CONFIG_PATH"
+  else
+      log_error "Config file not found at $CONFIG_PATH"
+      exit 1
   fi
 }
 
 initialize_logger() {
-    local log_file="$1"
+    local log_level="$1"
+    local console_output_enabled="$2"
+    local log_file="$3"
     source $LOGGER_PATH
-    logger_init "$log_file"
+    logger_init "$log_level" "$log_file" "${console_output_enabled}"
 }
 
 create_required_directories() {
@@ -75,7 +72,21 @@ run_maven_command_portfolio_upload() {
   CMD+=("-Denv.keystore.config.file=$KEYSTORE_CONFIG_FILE")
   CMD+=("-Denv.keystore.password=$KEYSTORE_PASSWORD")
 
-  pass_command_info_to_logger "$(basename "$0")"
+  log_info "Running processor $PROCESSORS_DIR/util/util_portfolio-upload.xml"
+
+  log_config "env.keystore.config.file=$KEYSTORE_CONFIG_FILE
+              input.file=$INPUT_FILE
+              input.cli.dir=$PORTFOLIO_MANAGER_JARS
+              input.truststore.config.file=$TRUSTSTORE_CONFIG_FILE" ""
+
+  log_mvn "${CMD[*]}"
+
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
+      log_info "Successfully ran $PROCESSORS_DIR/util/util_portfolio-upload.xml"
+  else
+      log_error "Failed to run $PROCESSORS_DIR/util/util_portfolio-upload.xml because the maven execution was unsuccessful"
+      return 1
+  fi
 }
 
 run_maven_command_portfolio_download() {
@@ -96,7 +107,19 @@ run_maven_command_portfolio_download() {
   CMD+=("-Denv.keystore.config.file=$KEYSTORE_CONFIG_FILE")
   CMD+=("-Denv.keystore.password=$KEYSTORE_PASSWORD")
 
-  pass_command_info_to_logger "$(basename "$0")"
+  log_info "Running processor $PROCESSORS_DIR/util/util_portfolio-download.xml"
+
+  log_config "input.cli.dir=$PORTFOLIO_MANAGER_JARS" "
+              output.inventory.dir=$OUTPUT_INVENTORY_DIR"
+
+  log_mvn "${CMD[*]}"
+
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
+      log_info "Successfully ran $PROCESSORS_DIR/util/util_portfolio-download.xml"
+  else
+      log_error "Failed to run $PROCESSORS_DIR/util/util_portfolio-download.xml because the maven execution was unsuccessful"
+      return 1
+  fi
 }
 
 cleanup() {
@@ -112,9 +135,9 @@ cleanup() {
 
 main() {
   local case_file="$CASE"
-
+  local log_level="CONFIG"
   local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
-
+  local console_output_enabled=true
 
 while getopts "c:l:f:ho" flag; do
             case "$flag" in

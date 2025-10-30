@@ -3,29 +3,26 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SHARED_SCRIPT_PATH="$SCRIPT_DIR/../shared.sh"
+CONFIG_PATH="$SCRIPT_DIR/../config.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
 CASE="util/util_validate-reference-inventory-01.sh"
 
 
 check_shared_config() {
-  if [ -z "${SHARED_CONFIG_LOADED:-}" ]; then
-    SHARED_CONFIG_LOADED="true"
-    export SHARED_CONFIG_LOADED
-
-    if [[ -f "$SHARED_SCRIPT_PATH" ]]; then
-        source "$SHARED_SCRIPT_PATH"
-    else
-        log_error "Config file not found at $SHARED_SCRIPT_PATH"
-        exit 1
-    fi
+  if [[ -f "$CONFIG_PATH" ]]; then
+      source "$CONFIG_PATH"
+  else
+      log_error "Config file not found at $CONFIG_PATH"
+      exit 1
   fi
 }
 
 initialize_logger() {
-    local log_file="$1"
+    local log_level="$1"
+    local console_output_enabled="$2"
+    local log_file="$3"
     source $LOGGER_PATH
-    logger_init "$log_file"
+    logger_init "$log_level" "$log_file" "${console_output_enabled}"
 }
 
 
@@ -37,24 +34,40 @@ run_maven_command() {
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
 
-  pass_command_info_to_logger "$(basename "$0")"
+  log_info "Running processor $PROCESSORS_DIR/util/util_validate-reference-inventory.xml"
+
+  log_config "input.inventory.dir=$INPUT_INVENTORY_DIR" ""
+
+  log_mvn "${CMD[*]}"
+
+  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_mvn "$line"; done; then
+      log_info "Successfully ran $PROCESSORS_DIR/util/util_validate-reference-inventory.xml"
+  else
+      log_error "Failed to run $PROCESSORS_DIR/util/util_validate-reference-inventory.xml because the maven execution was unsuccessful"
+      return 1
+  fi
 }
 
 main() {
+  local case_file="$CASE"
+  local log_level="CONFIG"
   local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
+  local console_output_enabled=true
 
-  while getopts "c:f:h" flag; do
+  while getopts "c:l:f:ho" flag; do
             case "$flag" in
-                c) CASE="$OPTARG" ;;
+                c) case_file="$OPTARG" ;;
                 h) print_usage; exit 0 ;;
+                l) log_level="$OPTARG" ;;
                 f) log_file="$OPTARG" ;;
+                o) console_output_enabled=false ;;
                 *) print_usage; exit 1 ;;
             esac
       done
 
-  initialize_logger "$log_file"
+  initialize_logger "$log_level" "$console_output_enabled" "$log_file"
   check_shared_config
-  source_case_file "$CASE"
+  source_case_file "$case_file"
 
   run_maven_command
 }

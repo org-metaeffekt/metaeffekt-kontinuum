@@ -5,13 +5,13 @@ set -euo pipefail
 
 # Configuration
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SHARED_SCRIPT_PATH="$SELF_DIR/../shared.sh"
+CONFIG_PATH="$SELF_DIR/../config.sh"
 PROCESSOR_SCRIPTS_DIR="$SELF_DIR/../processors"
 CASES_DIR="$SELF_DIR/../cases"
 LOG_FILE=${LOG_FILE:-"$SELF_DIR/../../../.logs/$(basename $0).log"}
-
+LOG_LEVEL=${LOG_LEVEL:-"CONFIG"}
 
 # Execution of single processors
-sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_cyclonedx-to-inventory.sh" -c "$CASES_DIR/convert/convert_cyclonedx-to-inventory-01.sh" -f "$LOG_FILE"
-sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-cyclonedx.sh" -c "$CASES_DIR/convert/convert_inventory-to-cyclonedx-01.sh" -f "$LOG_FILE"
-sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-spdx.sh" -c "$CASES_DIR/convert/convert_inventory-to-spdx-01.sh" -f "$LOG_FILE"
+sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_cyclonedx-to-inventory.sh" -c "$CASES_DIR/convert/convert_cyclonedx-to-inventory-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-cyclonedx.sh" -c "$CASES_DIR/convert/convert_inventory-to-cyclonedx-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
+sh "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-spdx.sh" -c "$CASES_DIR/convert/convert_inventory-to-spdx-01.sh" -f "$LOG_FILE" -l "$LOG_LEVEL"
