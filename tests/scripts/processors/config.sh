@@ -75,6 +75,8 @@ EOF
 
 # Initialize target directory structure
 initialize_target_directories() {
+    log_info "Creating target directories if missing"
+
     if [[ ! -d "$TARGET_DIR" ]]; then
         mkdir -p "$TARGET_DIR"
         cp -r "$WORKSPACE_001_DIR" "$TARGET_DIR"
@@ -105,9 +107,9 @@ initialize_target_directories() {
     )
 
     if ! mkdir -p "${directories[@]}"; then
-      log_error "Failed to create missing target directories."
+      log_error "Failed to create target directories"
     else
-      log_info "Successfully created missing target directories."
+      log_info "Target directories successfully created"
     fi
 }
 
@@ -120,14 +122,12 @@ source_case_file() {
         source "$case_file"
         log_info "Successfully sourced case file $(realpath "$case_file")"
     else
-        log_error "Failed to source case file: [$case_file]. The path must either be relative [$CASES_DIR] or an absolute path."
+        log_error "Case [$case_file] does not exist. Must be either relative to [$CASES_DIR] or an absolute path."
         exit 1
     fi
 }
 
 load_externalrc() {
-  log_info ""
-
   if [ -f "$KONTINUUM_DIR/external.rc" ]; then
     source "$KONTINUUM_DIR/external.rc"
   else
@@ -136,55 +136,39 @@ load_externalrc() {
   fi
 
   if [ -n "${EXTERNAL_WORKBENCH_DIR:-}" ]; then
-    log_info "Found workbench at $EXTERNAL_WORKBENCH_DIR."
+    log_info "Found workbench repository at $EXTERNAL_WORKBENCH_DIR"
   else
     log_info "No EXTERNAL_WORKBENCH_DIR specified in the external.rc file, this might result in scripts failing."
   fi
 
   if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_DIR:-}" ]; then
-    log_info "Found vulnerability mirror at $EXTERNAL_VULNERABILITY_MIRROR_DIR."
+    log_info "Found external mirror at $EXTERNAL_VULNERABILITY_MIRROR_DIR"
   else
     log_info "No EXTERNAL_VULNERABILITY_MIRROR_DIR specified in external.rc, this might result in scripts failing."
   fi
 
   if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_URL:-}" ]; then
-    log_info "Vulnerability mirror URL specified: $EXTERNAL_VULNERABILITY_MIRROR_URL."
+    log_info "External mirror URL specified: $EXTERNAL_VULNERABILITY_MIRROR_URL"
   else
     log_info "No EXTERNAL_VULNERABILITY_MIRROR_URL specified in external.rc, this might result in scripts failing."
   fi
 
   if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_NAME:-}" ]; then
-    log_info "Vulnerability mirror name specified: $EXTERNAL_VULNERABILITY_MIRROR_NAME."
+    log_info "External mirror name specified: $EXTERNAL_VULNERABILITY_MIRROR_NAME"
   else
     log_info "No EXTERNAL_VULNERABILITY_MIRROR_NAME specified in external.rc, this might result in scripts failing."
   fi
 
   if [ -n "${AE_CORE_VERSION:-}" ]; then
-    log_info "Metaeffekt core version specified: $AE_CORE_VERSION."
+    log_info "Core version specified: $AE_CORE_VERSION"
   else
     log_info "No AE_CORE_VERSION specified in external.rc file, using HEAD-SNAPSHOT."
   fi
 
   if [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ]; then
-    log_info "Metaeffekt artifact-analysis version specified: $AE_ARTIFACT_ANALYSIS_VERSION."
+    log_info "Artifact analysis version specified: $AE_ARTIFACT_ANALYSIS_VERSION"
   else
     log_info "No AE_ARTIFACT_ANALYSIS_VERSION specified in external.rc file, using HEAD-SNAPSHOT"
-  fi
-}
-
-pass_command_info_to_logger() {
-  local processor_name="$1"
-
-  log_info ""
-  log_info "Running $processor_name"
-  log_maven_params
-  log_debug "${CMD[*]}"
-
-  if "${CMD[@]}" 2>&1 | while IFS= read -r line; do log_debug "$line"; done; then
-      log_info "Successfully ran $processor_name"
-  else
-      log_error "Failed to run $processor_name because the underlying maven call failed."
-      return 1
   fi
 }
 
