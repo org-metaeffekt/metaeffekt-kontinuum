@@ -39,7 +39,7 @@ run_maven_command() {
 }
 
 main() {
- local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0 .sh).log"
+  local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0 .sh).log"
 
   initialize_logger "$log_file"
   check_shared_config
