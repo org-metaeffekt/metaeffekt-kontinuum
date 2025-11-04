@@ -37,19 +37,20 @@ run_maven_command() {
 }
 
 main() {
-  local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
+ local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0 .sh).log"
+
+  initialize_logger "$log_file"
+  check_shared_config
 
   while getopts "c:f:h" flag; do
             case "$flag" in
                 c) CASE="$OPTARG" ;;
                 h) print_usage; exit 0 ;;
-                f) log_file="$OPTARG" ;;
+                f) export LOG_FILE="$OPTARG" ;;
                 *) print_usage; exit 1 ;;
             esac
       done
 
-  initialize_logger "$log_file"
-  check_shared_config
   source_case_file "$CASE"
 
   run_maven_command
