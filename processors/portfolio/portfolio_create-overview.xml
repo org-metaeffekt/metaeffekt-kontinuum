@@ -57,6 +57,7 @@
                         <files>
                             <file>${param.security.policy.file}</file>
                         </files>
+                        <activeIds>${param.security.policy.active.ids}</activeIds>
                     </securityPolicy>
 
                 </configuration>
