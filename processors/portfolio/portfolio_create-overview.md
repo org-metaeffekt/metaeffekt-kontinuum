@@ -18,9 +18,10 @@ of this repository.
 | output.overview.file          | yes      | The name of the output overview file.                              | 
 
 ### Parameters
-| Parameter                  | Required | Description                                                        |
-|----------------------------|----------|--------------------------------------------------------------------|
-| param.security.policy.file | yes      | The security policy file used for the overview.                    |     
+| Parameter                         | Required | Description                                                                       |
+|-----------------------------------|----------|-----------------------------------------------------------------------------------|
+| param.security.policy.file        | yes      | The security policy file used for the overview.                                   |     
+| param.security.policy.active.ids  | no       | The activeIds of the security policy configurations to use for overview creation. |
 
 ### Environment
 None.
