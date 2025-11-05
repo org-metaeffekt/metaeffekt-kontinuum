@@ -3,20 +3,30 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PRELOAD_SCRIPT_PATH="$SCRIPT_DIR/../preload.sh"
 SHARED_SCRIPT_PATH="$SCRIPT_DIR/../shared.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
 CASE="util/util_portfolio-transfer-01.sh"
 
 
-check_shared_config() {
-  if [ -z "${SHARED_CONFIG_LOADED:-}" ]; then
-    SHARED_CONFIG_LOADED="true"
-    export SHARED_CONFIG_LOADED
+source_shared() {
+  if [[ -f "$SHARED_SCRIPT_PATH" ]]; then
+      source "$SHARED_SCRIPT_PATH"
+  else
+      log_error "Config file not found at $SHARED_SCRIPT_PATH"
+      exit 1
+  fi
+}
 
-    if [[ -f "$SHARED_SCRIPT_PATH" ]]; then
-        source "$SHARED_SCRIPT_PATH"
+source_preload() {
+  if [ -z "${PRELOAD_LOADED:-}" ]; then
+    PRELOAD_LOADED="true"
+    export PRELOAD_LOADED
+
+    if [[ -f "$PRELOAD_SCRIPT_PATH" ]]; then
+        source "$PRELOAD_SCRIPT_PATH"
     else
-        log_error "Config file not found at $SHARED_SCRIPT_PATH"
+        log_error "Config file not found at $PRELOAD_SCRIPT_PATH"
         exit 1
     fi
   fi
