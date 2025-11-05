@@ -3,20 +3,30 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PRELOAD_SCRIPT_PATH="$SCRIPT_DIR/../preload.sh"
 SHARED_SCRIPT_PATH="$SCRIPT_DIR/../shared.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
 CASE="extract/extract_scan-directory-01.sh"
 
 
-check_shared_config() {
-  if [ -z "${SHARED_CONFIG_LOADED:-}" ]; then
-    SHARED_CONFIG_LOADED="true"
-    export SHARED_CONFIG_LOADED
+source_shared() {
+  if [[ -f "$SHARED_SCRIPT_PATH" ]]; then
+      source "$SHARED_SCRIPT_PATH"
+  else
+      log_error "Config file not found at $SHARED_SCRIPT_PATH"
+      exit 1
+  fi
+}
 
-    if [[ -f "$SHARED_SCRIPT_PATH" ]]; then
-        source "$SHARED_SCRIPT_PATH"
+source_preload() {
+  if [ -z "${PRELOAD_LOADED:-}" ]; then
+    PRELOAD_LOADED="true"
+    export PRELOAD_LOADED
+
+    if [[ -f "$PRELOAD_SCRIPT_PATH" ]]; then
+        source "$PRELOAD_SCRIPT_PATH"
     else
-        log_error "Config file not found at $SHARED_SCRIPT_PATH"
+        log_error "Config file not found at $PRELOAD_SCRIPT_PATH"
         exit 1
     fi
   fi
@@ -44,7 +54,9 @@ run_maven_command() {
 }
 
 main() {
-  local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
+  local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0 .sh).log"
+
+  source_shared
 
   while getopts "c:f:h" flag; do
             case "$flag" in
@@ -56,9 +68,8 @@ main() {
       done
 
   initialize_logger "$log_file"
-  check_shared_config
+  source_preload
   source_case_file "$CASE"
-
   run_maven_command
 }
 
