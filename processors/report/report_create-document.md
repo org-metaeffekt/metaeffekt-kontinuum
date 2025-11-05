@@ -60,7 +60,9 @@ each document part and each transformation as well.
 
 # FIXMEs
 
-* do we require the asset descriptor separated into two parameters?
+* do we require the asset descriptor separated into two parameters? --> currently the asset descriptor is provided only 
+  as the filename, we could however require the full path and then using an antrun plugin separate them into the 
+  directory and the filename as required by the document generation
 * asset.* should be optional; what about product.*; could be also optional falling back on asset
 * the input inventory path should be redundant; maybe required as placeholder
 * the reference inventory path should be redundant; maybe required as placeholder
@@ -68,3 +70,5 @@ each document part and each transformation as well.
   file path can then be expressed relative to env.workbench.base.dir; this would enable more flexibility --> the 
   security policy file is required at different steps of creating VR/CR this means that the descriptors as well as the 
   template poms require it
+* insert default values for reference license dir and reference component dir and make them optional
+* pass workbench dir into the asset descriptor and build relative paths for properties from this (e.g. workbench.dir/reference.license.dir with a default value for reference.license.dir on pom level)
