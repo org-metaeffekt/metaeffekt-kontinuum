@@ -8,9 +8,11 @@ pipeline {
 
     stages {
         stage('Clean Up') {
-            script {
-                sh 'rm -rf .logs'
-                sh 'rm -rf tests/target'
+            steps {
+                script {
+                    sh 'rm -rf .logs'
+                    sh 'rm -rf tests/target'
+                }
             }
         }
 
