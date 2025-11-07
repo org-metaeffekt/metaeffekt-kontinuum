@@ -47,6 +47,7 @@ jobs:
         run: |
           touch external.rc
           echo "EXTERNAL_WORKBENCH_DIR=.metaeffekt-workbench" >> external.rc
+          echo "EXTERNAL_VULNERABILITY_MIRROR_DIR=.mirror" >> external.rc
           echo "EXTERNAL_VULNERABILITY_MIRROR_URL=https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen4-external.tar.gz" >> external.rc
           echo "EXTERNAL_VULNERABILITY_MIRROR_NAME=ae-mirror-index_gen4-external.tar.gz" >> external.rc
           echo "NVD_API_KEY=${{ secrets.NVD_API_KEY }}" >> external.rc
