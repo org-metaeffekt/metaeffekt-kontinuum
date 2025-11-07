@@ -68,11 +68,9 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.dir</property>
-                                    <message>You must set the parameter 'input.inventory.dir' to specify the directory containing the inventories to be merged.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
-                                    <message>You must set the parameter 'output.inventory.file' to specify the merged output inventory's name and location.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

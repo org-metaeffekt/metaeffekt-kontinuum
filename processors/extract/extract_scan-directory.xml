@@ -92,19 +92,15 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.reference.inventory.dir</property>
-                                    <message>You must set the parameter input.source.inventory.dir</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.extract.dir</property>
-                                    <message>You must set the parameter input.container.extract.dir</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.scan.dir</property>
-                                    <message>You must set the parameter output.scan.dir</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
-                                    <message>You must set the parameter output.inventory.file</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

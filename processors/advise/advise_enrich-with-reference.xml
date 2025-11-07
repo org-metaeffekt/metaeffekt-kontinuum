@@ -90,23 +90,15 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter 'input.inventory.file' to specify the input
-                                        inventory to be enriched.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.dir</property>
-                                    <message>You must set the parameter 'output.inventory.dir' to specify the directory
-                                        where the output inventory is generated.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.path</property>
-                                    <message>You must set the parameter 'output.inventory.path' to specify the path of
-                                        the output inventory.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.reference.inventory.dir</property>
-                                    <message>You must set the parameter 'input.reference.inventory.dir' to specify the
-                                        directory containing the reference inventory files.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

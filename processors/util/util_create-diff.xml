@@ -81,44 +81,21 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>
-                                        You must set the parameter 'input.inventory.file' to specify the base inventory
-                                        to be compared.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.inventory.compare.file</property>
-                                    <message>
-                                        You must set the parameter 'input.inventory.compare.file' to specify the
-                                        inventory to be compared with the base inventory.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.dir</property>
-                                    <message>
-                                        You must set the parameter 'output.inventory.dir' to specify the directory
-                                        to which the output files should be saved.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.inventory.version</property>
-                                    <message>
-                                        You must set the parameter 'param.inventory.version' to specify the version
-                                        of the base inventory which will be used for naming the output files.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.inventory.compare.version</property>
-                                    <message>
-                                        You must set the parameter 'param.inventory.compare.version' to specify the version
-                                        of the compare inventory which will be used for naming the output files.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.security.policy.file</property>
-                                    <message>You must set the parameter 'param.security.policy.file' to specify the security
-                                        policy used for enrichment.
-                                    </message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

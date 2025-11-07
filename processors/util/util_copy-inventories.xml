@@ -71,11 +71,9 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventories.list</property>
-                                    <message>You must set the parameter 'input.inventories.list' to specify the inventories you want to copy.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventories.dir</property>
-                                    <message>You must set the parameter 'output.inventories.dir' to specify to which directory the provided list of files should be copied.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

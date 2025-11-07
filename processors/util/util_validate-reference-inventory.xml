@@ -64,9 +64,6 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.dir</property>
-                                    <message>
-                                        You must set the parameter 'input.inventory.dir' to specify the directory in which the validation should be applied.
-                                    </message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
