@@ -33,6 +33,17 @@
     <properties>
         <param.property.selector.classification>DEFAULT</param.property.selector.classification>
         <param.property.selector.control>DEFAULT</param.property.selector.control>
+
+        <!-- default values for report parameters -->
+        <param.document.language>en</param.document.language>
+        <input.asset.descriptor.dir>${env.workbench.dir}/descriptors</input.asset.descriptor.dir>
+        <input.reference.license.dir>${param.reference.inventory.dir}/../licenses</input.reference.license.dir>
+        <input.reference.component.dir>${param.reference.inventory.dir}/../components</input.reference.component.dir>
+        <param.template.dir>${env.workbench.dir}/templates/report-template</param.template.dir>
+        <param.computed.inventory.dir>${param.template.dir}/target/tmp</param.computed.inventory.dir>
+        <env.workbench.processors.dir>${env.workbench.dir}/processors</env.workbench.processors.dir>
+        <env.kontinuum.processors.dir>${env.kontinuum.dir}/processors</env.kontinuum.processors.dir>
+        <param.security.policy.file>${env.workbench.dir}/policies/security-policy/security-policy.json</param.security.policy.file>
     </properties>
 
     <build>
@@ -68,9 +79,10 @@
                                 <argument>-Dinventory.path=${input.inventory.file}</argument>
                                 <argument>-Dreference.inventory.path=${input.reference.inventory.file}</argument>
 
+                                <argument>-Dreference.license.path=${param.reference.inventory.dir}</argument>
                                 <argument>-Dreference.license.path=${input.reference.license.dir}</argument>
                                 <argument>-Dreference.component.path=${input.reference.component.dir}</argument>
-                                <argument>-Doutput.computed.inventory.dir=${output.computed.inventory.dir}</argument>
+                                <argument>-Doutput.computed.inventory.dir=${param.computed.inventory.dir}</argument>
                                 <argument>-Dasset.descriptor.basedir=${input.asset.descriptor.dir}</argument>
                                 <argument>-Dasset.descriptor.path=${input.asset.descriptor.path}</argument>
 
@@ -88,6 +100,8 @@
                                 <argument>-Dtemplate.dir=${param.template.dir}</argument>
 
                                 <argument>-Dworkbench.processors.dir=${env.workbench.processors.dir}</argument>
+                                <argument>-Dworkbench.dir=${env.workbench.dir}</argument>
+                                <argument>-Dkontinuum.dir=${env.kontinuum.dir}</argument>
                                 <argument>-Dkontinuum.processors.dir=${env.kontinuum.processors.dir}</argument>
                             </arguments>
                         </configuration>
@@ -107,9 +121,6 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.asset.descriptor.dir</property>
-                                </requireProperty>
-                                <requireProperty>
                                     <property>input.asset.descriptor.path</property>
                                 </requireProperty>
                                 <requireProperty>
@@ -119,25 +130,13 @@
                                     <property>input.reference.inventory.file</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.reference.license.dir</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>input.reference.component.dir</property>
+                                    <property>param.reference.inventory.dir</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.document.file</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.computed.inventory.dir</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.template.dir</property>
-                                </requireProperty>
-                                <requireProperty>
                                     <property>param.document.type</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.document.language</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.asset.id</property>
@@ -161,10 +160,10 @@
                                     <property>param.property.selector.organization</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>env.kontinuum.processors.dir</property>
+                                    <property>env.workbench.dir</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>env.workbench.processors.dir</property>
+                                    <property>env.kontinuum.dir</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
