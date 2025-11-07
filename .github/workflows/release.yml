@@ -62,6 +62,7 @@ jobs:
             .maven-index
 
       - name: Run tests
+        shell: bash
         run: |
           ./tests/scripts/pipelines/run_workspace-001.sh
           ./tests/scripts/pipelines/run_workspace-002.sh
