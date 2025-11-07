@@ -78,23 +78,18 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter input.inventory.file</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.bom.file</property>
-                                    <message>You must set the parameter output.bom</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.document.organization</property>
-                                    <message>You must set the parameter param.document.organization</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.document.organization.url</property>
-                                    <message>You must set the parameter param.document.organization.url</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.document.name</property>
-                                    <message>You must set the parameter param.document.name</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

@@ -40,7 +40,7 @@ run_maven_command() {
   CMD+=("-Dinput.reference.license.dir=$INPUT_REFERENCE_LICENSE_DIR")
   CMD+=("-Dinput.reference.component.dir=$INPUT_REFERENCE_COMPONENT_DIR")
   CMD+=("-Doutput.document.file=$OUTPUT_DOCUMENT_FILE")
-  CMD+=("-Doutput.computed.inventory.path=$OUTPUT_COMPUTED_INVENTORY_DIR")
+  CMD+=("-Doutput.computed.inventory.dir=$OUTPUT_COMPUTED_INVENTORY_DIR")
   CMD+=("-Dparam.security.policy.file=$PARAM_SECURITY_POLICY_FILE")
   CMD+=("-Dparam.template.dir=$PARAM_TEMPLATE_DIR")
   CMD+=("-Dparam.document.type=$PARAM_DOCUMENT_TYPE")

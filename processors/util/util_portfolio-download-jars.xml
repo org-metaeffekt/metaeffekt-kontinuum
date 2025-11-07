@@ -74,7 +74,6 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.cli.dir</property>
-                                    <message>You must set the parameter 'input.cli.dir'.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

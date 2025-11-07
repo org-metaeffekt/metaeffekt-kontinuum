@@ -299,51 +299,27 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter 'input.inventory.file' to specify the input
-                                        inventory to be enriched.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
-                                    <message>You must set the parameter 'output.inventory.file' to specify the output
-                                        inventory.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.context.dir</property>
-                                    <message>You must set the parameter 'param.context.dir' to locate the context data that is
-                                        used for enrichment.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.assessment.dir</property>
-                                    <message>You must set the parameter 'param.assessment.dir' to locate the assessment data
-                                        that is used for enrichment.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.security.policy.file</property>
-                                    <message>You must set the parameter 'param.security.policy.file' to specify the security
-                                        policy used for enrichment.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.correlation.dir</property>
-                                    <message>You must set the parameter 'param.correlation.dir' to locate the correlation data
-                                        that is used for enrichment.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>env.vulnerability.mirror.dir</property>
-                                    <message>You must set the parameter 'env.vulnerability.mirror.dir' to locate the
-                                        vulnerability mirror data local on the system.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.tmp.dir</property>
-                                    <message>You must set the parameter 'output.tmp.dir' to specify where temporary
-                                        files like intermediate inventories should be saved.
-                                    </message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

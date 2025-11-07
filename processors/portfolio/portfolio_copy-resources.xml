@@ -127,34 +127,19 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>output.resources.dir</property>
-                                    <message>
-                                        You must set the parameter 'output.resources.dir' to specify the directory to which the files should be copied.
-                                    </message>
-                                </requireProperty>
-                                <requireProperty>
                                     <property>input.inventories.dir</property>
-                                    <message>
-                                        You must set the parameter 'input.inventories.dir' to specify the directory of the source inventories to be copied.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.dashboards.dir</property>
-                                    <message>
-                                        You must set the parameter 'input.dashboards.dir' to specify the directory of the dashboards to be copied.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.reports.dir</property>
-                                    <message>
-                                        You must set the parameter 'input.reports.dir' to specify the directory of the reports to be copied.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.advisor.inventories.dir</property>
-                                    <message>
-                                        You must set the parameter 'input.advisor.inventories.dir' to specify the directory of the advisor inventories to be copied.
-                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.resources.dir</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

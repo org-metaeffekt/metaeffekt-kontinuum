@@ -67,11 +67,9 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.bom.file</property>
-                                    <message>You must set the parameter input.bom</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
-                                    <message>You must set the parameter output.inventory</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

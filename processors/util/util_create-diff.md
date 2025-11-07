@@ -22,7 +22,7 @@ of this repository.
 |----------------------------------|----------|------------------------------------------------------|
 | param.inventory.version          | yes      | The version of the base inventory.                   |
 | param.inventory.compare.version  | yes      | The version of the compare inventory.                |
-| param.security.policy.file       | no       | The security policy file to use for the diff.        |
+| param.security.policy.file       | yes      | The security policy file to use for the diff.        |
 | param.security.policy.active.ids | no       | The active ids of the security policy configuration. |
 
 ### Environment
