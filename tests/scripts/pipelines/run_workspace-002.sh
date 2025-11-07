@@ -16,7 +16,7 @@ bash "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_save-inspect-image.sh" -c "$CASES_D
 bash "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_copy-pom-dependencies.sh" -c "$CASES_DIR/prepare/prepare_copy-pom-dependencies-02.sh" -f "$LOG_FILE"
 
 # FIXME-JFU: why is this disabled? remove?
-# sh "$PROCESSOR_SCRIPTS_DIR/extract/extract_inventory-from-pom.sh" -c "$CASES_DIR/extract/extract_inventory-from-pom-02.sh" -f "$LOG_FILE"
+# bash "$PROCESSOR_SCRIPTS_DIR/extract/extract_inventory-from-pom.sh" -c "$CASES_DIR/extract/extract_inventory-from-pom-02.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/extract/extract_scan-directory.sh" -c "$CASES_DIR/extract/extract_scan-directory-02.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/extract/extract_scan-directory.sh" -c "$CASES_DIR/extract/extract_scan-directory-03.sh" -f "$LOG_FILE"
 
