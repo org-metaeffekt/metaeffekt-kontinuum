@@ -12,4 +12,4 @@ LOG_FILE=${LOG_FILE:-"$SELF_DIR/../../../.logs/$(basename $0).log"}
 
 
 # Execution of single processors
-sh "$PROCESSOR_SCRIPTS_DIR/analyze/analyze_resolve-inventory.sh" -c "$CASES_DIR/analyze/analyze_resolve-inventory-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/analyze/analyze_resolve-inventory.sh" -c "$CASES_DIR/analyze/analyze_resolve-inventory-01.sh" -f "$LOG_FILE"
