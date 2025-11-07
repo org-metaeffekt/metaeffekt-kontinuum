@@ -2,15 +2,15 @@
 
 ## Purpose and Function
 
-This folder contains a set of Maven POM files (ending with .xml) and a set of markdown files (ending with .md) 
-describing the purpose and details of the POM files. 
+This folder contains a set of Maven POM files (ending with .xml) and a set of corresponding markdown files (ending with 
+.md) describing the purpose and details of the POM files. 
 
 Each POM file addresses a particular task in the pipeline. The POM files serve as a blueprint for a task and can be 
 parameterized and executed. Please check the markdown files on the individual POMs for details.
 
 ![](../docs/concept-processor.png)
 
-Each processor has user-controlled input, output and other params and environment settings. The user does not need a 
+Each processor has user-controlled inputs, outputs and other params and environment settings. The user does not need a 
 full understanding of the implementation of each processor. For detailed examples of how to control the processors and 
 structure a project, please refer to the scripts at test/scripts/scripts-sh. The scripts show a basic execution of each 
 processor with minimal parameterization, for optional parameters to further control each processor, please refer to the 
@@ -112,6 +112,12 @@ shared project wide. Examples are the vulnerability database, maven mirror etc.
 
 Parameters in this category are prefixed with:
 - env
+
+### Enforcers
+
+Each processor needs to enforce it's required parameters using the maven enforcer plugin. Please refer to any processor
+for an example usage of such enforcers. The enforcer plugin is the very last plugin each processor contains. It defines 
+each required parameter listed in the corresponding .md as 'requireProperty' without using the 'message' tag.
 
 ### Further Reading
 * [Getting Started](GETTING_STARTED.md)

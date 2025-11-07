@@ -65,23 +65,18 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter 'input.inventory.file'</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
-                                    <message>You must set the parameter 'output.inventory.file'</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>env.maven.index.dir</property>
-                                    <message>You must set the parameter 'env.maven.index.dir'</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.artifact.resolver.config.file</property>
-                                    <message>You must set the parameter 'param.artifact.resolver.config.file'</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.artifact.resolver.proxy.file</property>
-                                    <message>You must set the parameter 'param.artifact.resolver.proxy.file'</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

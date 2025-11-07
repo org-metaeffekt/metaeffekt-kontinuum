@@ -1,6 +1,6 @@
 # Extract - Scan Directory
 
-This process converts scans a directory containing extracted / prepared artifacts into an inventory. The artifacts contained
+This process scans a directory containing extracted / prepared artifacts into an inventory. The artifacts contained
 in the input directory are usually a result of the "prepare" process which extracts information from container images, dependencies
 listed in poms and so on.
 

@@ -27,5 +27,4 @@ of this repository.
 None.
 
 # FIXMEs
-* do we need param.security.policy.active.ids also here?
 * discuss: use subpath instead of path when expecting a relative path

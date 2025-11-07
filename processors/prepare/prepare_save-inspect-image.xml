@@ -98,16 +98,13 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
+                                    <property>output.dir</property>
+                                </requireProperty>
+                                <requireProperty>
                                     <property>param.image.id</property>
-                                    <message>You must set the parameter param.image.id</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.image.version</property>
-                                    <message>You must set the parameter param.image.version</message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>output.dir</property>
-                                    <message>You must set the parameter output.dir</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
