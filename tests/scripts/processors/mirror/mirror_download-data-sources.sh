@@ -43,7 +43,6 @@ run_maven_command() {
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Denv.mirror.dir=$ENV_MIRROR_DIR")
   CMD+=("-Denv.nvd.apikey=$ENV_NVD_APIKEY")
-  CMD+=("-X")
 
   pass_command_info_to_logger "$(basename "$0")"
 }
