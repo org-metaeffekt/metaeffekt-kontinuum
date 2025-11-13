@@ -18,4 +18,6 @@ bash "$SELF_DIR/run_convert.sh"
 bash "$SELF_DIR/run_advise.sh"
 bash "$SELF_DIR/run_portfolio.sh"
 bash "$SELF_DIR/run_report.sh"
-bash "$SELF_DIR/run_scan.sh"
+
+# Disabled due to a dependency on a running scancode service
+# bash "$SELF_DIR/run_scan.sh"

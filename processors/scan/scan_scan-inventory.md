@@ -14,8 +14,3 @@ of this repository.
 | output.inventory.file              | yes      | The scanned output inventory file path.                                                                                        |
 | input.output.analysis.base.dir     | yes      | The directory in which the scanner caches information on artifacts. Increases speed drastically between multiple scanner runs. |
 | input.properties.file              | yes      | Yaml file containing properties to configure the scanners behaviour.                                                           |
-
-### Environment
-| Property                      | Required | Explanation                                                                                                                    |
-|-------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------|
-| env.scancode.binary.file      | yes      | The path where the ScanCode Toolkit is installed.                                                                              |

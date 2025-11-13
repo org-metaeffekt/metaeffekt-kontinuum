@@ -82,9 +82,6 @@
                                 <requireProperty>
                                     <property>input.properties.file</property>
                                 </requireProperty>
-                                <requireProperty>
-                                    <property>env.scancode.binary.file</property>
-                                </requireProperty>
                             </rules>
                             <fail>true</fail>
                         </configuration>

@@ -62,9 +62,17 @@ jobs:
             .mirror
             .maven-index
 
+      - name: Install Maven
+        run: |
+          MVN_VER=3.9.11
+          wget -q https://downloads.apache.org/maven/maven-3/${MVN_VER}/binaries/apache-maven-${MVN_VER}-bin.tar.gz
+          sudo tar -xzf apache-maven-${MVN_VER}-bin.tar.gz -C /opt/
+          sudo mv /opt/apache-maven-${MVN_VER} /opt/maven
+          echo "/opt/maven/bin" >> "$GITHUB_PATH"
+
       - name: Run tests
         shell: bash
-        run: |
+        run: |          
           ./tests/scripts/pipelines/run_workspace-001.sh
           ./tests/scripts/pipelines/run_workspace-002.sh
 

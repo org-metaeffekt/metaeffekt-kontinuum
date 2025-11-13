@@ -1,8 +1,7 @@
 # Mirror - Update Index external
 
 This processor created or updates the indices of the mirror. It uses the previously downloaded data files of the
-external data sources. As a result the specified mirror directory is extended by the index files. The main difference to
-the processor [extract_inventory-from-pom](../extract/extract_inventory-from-pom.md) is that some advisories are excluded.
+external data sources. As a result the specified mirror directory is extended by the index files.
 
 ## Properties
 
