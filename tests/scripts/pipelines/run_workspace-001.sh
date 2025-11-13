@@ -5,7 +5,7 @@ set -euo pipefail
 
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SELF_DIR/../processors/log.sh"
-logger_init "$SELF_DIR/../../../.logs/run_all.log"
+logger_init "$SELF_DIR/../../../.logs/run_workspace-001.log"
 
 LOG_FILE="$SELF_DIR/../../../.logs/$(basename $0).log"
 export LOG_FILE
