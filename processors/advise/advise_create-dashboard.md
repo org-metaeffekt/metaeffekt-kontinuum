@@ -21,13 +21,13 @@ of this repository.
 | output.dashboard.file | yes      | The file of the resulting vulnerability assessment dashboard.   |
 
 ### Parameters
-| Parameter                          | Required | Description                                                                         |
-|------------------------------------|----------|-------------------------------------------------------------------------------------|
-| param.security.policy.file         | yes      | The security policy file to use.                                                    |
-| param.security.policy.active.ids   | no       | The activeIds of the security policy configurations to use for enrichment.          | 
-| param.timeline.conf.enabled        | no       | Enables the timeline configuration overall. Enabled by default.                     | 
-| param.timeline.max.threads         | no       | The maximum number of threads working on timelines. Defaults to 4.                  |
-| param.timeline.time.spent.max      | no       | The maximum number of seconds spent per timeline. Defaults to 10000ms.              |
+| Parameter                          | Required | Description                                                                        |
+|------------------------------------|----------|------------------------------------------------------------------------------------|
+| param.security.policy.file         | yes      | The security policy file to use.                                                   |
+| param.security.policy.active.ids   | no       | The activeIds of the security policy configurations to use for enrichment.         | 
+| param.timeline.conf.enabled        | no       | Enables the timeline configuration overall. Enabled by default.                    | 
+| param.timeline.max.threads         | no       | The maximum number of threads working on timelines. Defaults to 4.                 |
+| param.timeline.time.spent.max      | no       | The maximum number of seconds spent per timeline. Defaults to 10000ms.             |
 | param.timeline.vuln.providers.list | no       | A list of vulnerability providers used to generate the timelines. Empty by default. |
 
 ### Environment
