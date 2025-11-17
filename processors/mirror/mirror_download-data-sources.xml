@@ -246,6 +246,8 @@
                                     <url>https://psirt.kunbus.com/.well-known/csaf/amber</url>
                                     <!-- reason for exclusion: requires additional authentication -->
                                     <url>https://psirt.kunbus.com/.well-known/csaf/red</url>
+                                    <!-- reason for exclusion: unconsumable data entries -->
+                                    <url>https://www.cisa.gov/sites/default/files/csaf/provider-metadata.json</url>
                                 </excludeList>
                                 <!--<includeList></includeList>-->
                             </csafDownload>
