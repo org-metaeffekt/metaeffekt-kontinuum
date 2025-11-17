@@ -4,6 +4,7 @@
 .maven-index
 .downloaded-mirror
 .logs
+.github/act-runner-config.json
 external.rc
 
 **/target/
