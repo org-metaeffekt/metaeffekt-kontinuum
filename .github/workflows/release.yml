@@ -20,14 +20,34 @@ on:
         default: main
         required: false
         type: string
-
+      trigger-workbench-release:
+        description: 'Triggers the release pipeline in the metaeffekt-workbench repository, preparing a release with the same version as defined in the "version" input.'
+        default: false
+        required: false
+        type: boolean
 jobs:
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Install Maven
+        run: |
+          MVN_VER=3.9.11
+          wget -q https://downloads.apache.org/maven/maven-3/${MVN_VER}/binaries/apache-maven-${MVN_VER}-bin.tar.gz
+          sudo tar -xzf apache-maven-${MVN_VER}-bin.tar.gz -C /opt/
+          sudo mv /opt/apache-maven-${MVN_VER} /opt/maven
+          echo "/opt/maven/bin" >> "$GITHUB_PATH"
+          pwd
 
       - name: Replace versions in parent processor
         run: |
@@ -64,24 +84,10 @@ jobs:
 
           cat ${{ github.workspace }}/external.rc
 
-      - name: Install Maven
-        run: |
-          MVN_VER=3.9.11
-          wget -q https://downloads.apache.org/maven/maven-3/${MVN_VER}/binaries/apache-maven-${MVN_VER}-bin.tar.gz
-          sudo tar -xzf apache-maven-${MVN_VER}-bin.tar.gz -C /opt/
-          sudo mv /opt/apache-maven-${MVN_VER} /opt/maven
-          echo "/opt/maven/bin" >> "$GITHUB_PATH"
-          pwd
-
-      - name: Enable log dump on console
-        shell: bash
-        run: |
-          sed -i 's/local log_to_console="\$3"/local log_to_console="true"/' ./tests/scripts/processors/log.sh
-
       - name: Restore vulnerability mirror and maven index cache
         uses: actions/cache/restore@v4
         with:
-          key: simple-key
+          key: key-${{ inputs.ae-core-version }}-${{ inputs.ae-artifact-analysis-version }}
           path: |
             .mirror
             .maven-index
@@ -92,14 +98,13 @@ jobs:
           AE_CORE_VERSION: ${{ inputs.ae-core-version }}
           AE_ARTIFACT_ANALYSIS_VERSION: ${{ inputs.ae-artifact-analysis-version }}
         run: |          
-          ./tests/scripts/pipelines/run_workspace-001.sh
-          ./tests/scripts/pipelines/run_workspace-002.sh
+          ./tests/scripts/pipelines/run_workspace-remote.sh
 
       - name: Save vulnerability mirror and maven index cache
         uses: actions/cache/save@v4
         if: ${{ always() }}
         with:
-          key: simple-key
+          key: key-${{ inputs.ae-core-version }}-${{ inputs.ae-artifact-analysis-version }}
           path: |
             .mirror
             .maven-index
@@ -109,6 +114,16 @@ jobs:
         with:
           name: logs
           path: .logs
+
+      - name: Dump last 100 lines of log file
+        if: always()
+        shell: bash
+        run: |
+          shopt -s nullglob
+          for f in metaeffekt-kontinuum/.logs/*; do
+            echo "- $f -"
+            tail -n 100 "$f"
+          done
 
       - name: Commit changes
         if: ${{ !env.ACT }}
@@ -130,3 +145,12 @@ jobs:
           name: Release ${{ inputs.version }}
           draft: false
           prerelease: false
+
+      - name: Trigger workbench release
+        if: ${{ inputs.trigger-workbench-release }}
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: release
+          repo: metaeffekt/metaeffekt-workbench
+          token: ${{ secrets.GITHUB_TOKEN }}
+          inputs: '{"ae-kontinuum-version": ${{ inputs.version }}, "ae-core-version": ${{ inputs.ae-core-version }}, "ae-artifact-analysis-version": ${{ inputs.ae-artifact-analysis-version }}, "version": ${{ inputs.version }}}'
