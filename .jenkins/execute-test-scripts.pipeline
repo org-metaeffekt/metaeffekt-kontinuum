@@ -57,7 +57,7 @@ pipeline {
                     sh 'mkdir -p .metaeffekt-artifact-analysis'
                     dir ('.metaeffekt-artifact-analysis') {
                         withCredentials([usernamePassword(credentialsId: 'JenkinsGithubAccess', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            git url: 'https://github.com/org-metaeffekt/metaeffekt-artifact-analysis.git', branch: 'AE-1489-csaf-download-enhance-filter', credentialsId: 'JenkinsGithubAccess'
+                            git url: 'https://github.com/org-metaeffekt/metaeffekt-artifact-analysis.git', branch: 'main', credentialsId: 'JenkinsGithubAccess'
                         }
                     }
                 }
