@@ -70,44 +70,34 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
+                                    <property>output.inventory.dir</property>
+                                </requireProperty>
+                                <requireProperty>
                                     <property>param.portfolio.manager.url</property>
-                                    <message>You must set the parameter 'param.portfolio.manager.url'.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.portfolio.manager.token</property>
-                                    <message>You must set the parameter 'param.portfolio.manager.token'.</message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>env.keystore.config.file</property>
-                                    <message>You must set the parameter 'env.keystore.config.file'.</message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>env.keystore.password</property>
-                                    <message>You must set the parameter 'env.keystore.password'.</message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>env.truststore.config.file</property>
-                                    <message>You must set the parameter 'env.truststore.config.file'.</message>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>env.truststore.password</property>
-                                    <message>You must set the parameter 'env.truststore.password'.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.product.name</property>
-                                    <message>You must set the parameter 'param.product.name'.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.product.version</property>
-                                    <message>You must set the parameter 'param.product.version'.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.product.artifact.id</property>
-                                    <message>You must set the parameter 'param.product.artifact.id'.</message>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory.dir</property>
-                                    <message>You must set the parameter 'output.inventory.dir'.</message>
+                                    <property>env.keystore.password</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.truststore.password</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.keystore.config.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.truststore.config.file</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

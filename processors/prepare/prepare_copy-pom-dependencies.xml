@@ -63,8 +63,18 @@
                             <rules>
                                 <requireProperty>
                                     <property>output.dependencies.dir</property>
-                                    <message>You must set the parameter 'output.dependencies.dir'
-                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.group.id</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.artifact.id </property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.version</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.exclude.transitive.enabled</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

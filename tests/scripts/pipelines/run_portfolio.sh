@@ -12,6 +12,6 @@ LOG_FILE=${LOG_FILE:-"$SELF_DIR/../../../.logs/$(basename $0).log"}
 
 
 # Execution of single processors
-sh "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_copy-resources.sh" -c "$CASES_DIR/portfolio/portfolio_copy-resources-01.sh" -f "$LOG_FILE"
-# sh "$PROCESSOR_SCRIPTS_DIR/portfolio_create-overview.sh -p" currently disabled
+bash "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_copy-resources.sh" -c "$CASES_DIR/portfolio/portfolio_copy-resources-01.sh" -f "$LOG_FILE"
+# bash "$PROCESSOR_SCRIPTS_DIR/portfolio_create-overview.sh -p" currently disabled
 

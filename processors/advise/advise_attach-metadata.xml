@@ -71,15 +71,12 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter 'input.inventory.file' to specify the input inventory for metadata attachment.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
-                                    <message>You must set the parameter 'output.inventory.file' to specify the output inventory with attached metadata.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.metadata.asset.id</property>
-                                    <message>You must set the parameter 'param.metadata.asset.id' to specify the asset id to be attached to the inventory.</message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

@@ -1,4 +1,4 @@
-# Mirror - Update Index
+# Mirror - Update Index external
 
 This processor created or updates the indices of the mirror. It uses the previously downloaded data files of the
 external data sources. As a result the specified mirror directory is extended by the index files.

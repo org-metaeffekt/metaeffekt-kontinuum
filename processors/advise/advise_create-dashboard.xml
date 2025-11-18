@@ -106,15 +106,15 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter 'input.inventory.file' to specify the input
-                                        inventory to create the dashboard from.
-                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.dashboard.file</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.security.policy.file</property>
-                                    <message>You must set the parameter 'param.security.policy.file' to specify the security
-                                        policy used for enrichment.
-                                    </message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.vulnerability.mirror.dir</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

@@ -36,27 +36,15 @@
         <param.activate.certfr>true</param.activate.certfr>
         <param.activate.certeu>true</param.activate.certeu>
         <param.activate.certsei>true</param.activate.certsei>
-        <param.activate.ghsa>true</param.activate.ghsa>
-        <param.activate.ghsa.correlation>true</param.activate.ghsa.correlation>
         <param.activate.kev>true</param.activate.kev>
         <param.activate.epss>true</param.activate.epss>
         <param.activate.eol>true</param.activate.eol>
         <param.activate.osv>true</param.activate.osv>
+        <param.activate.purl.derivation>true</param.activate.purl.derivation>
 
         <param.activate.status>true</param.activate.status>
         <param.activate.keywords>true</param.activate.keywords>
         <param.activate.validation>false</param.activate.validation>
-
-        <!-- osv ecosystem matcher -->
-        <param.osv.matcher.maven>true</param.osv.matcher.maven>
-        <param.osv.matcher.packagist>true</param.osv.matcher.packagist>
-        <param.osv.matcher.rubygems>true</param.osv.matcher.rubygems>
-        <param.osv.matcher.pypi>true</param.osv.matcher.pypi>
-        <param.osv.matcher.hex>true</param.osv.matcher.hex>
-        <param.osv.matcher.npm>true</param.osv.matcher.npm>
-        <param.osv.matcher.crates_io>true</param.osv.matcher.crates_io>
-        <param.osv.matcher.nuget>true</param.osv.matcher.nuget>
-        <param.osv.matcher.cran>true</param.osv.matcher.cran>
 
         <!-- ghsa unreviewed filter -->
         <param.remove.ghsa.unreviewed>false</param.remove.ghsa.unreviewed>
@@ -129,6 +117,10 @@
                                 </yamlFiles>
                             </correlationYamlEnrichment>
 
+                            <purlDerivationEnrichment>
+                                <active>${param.activate.purl.derivation}</active>
+                            </purlDerivationEnrichment>
+
                             <cpeDerivationEnrichment>
                                 <active>${param.activate.nvd}</active>
                                 <maxCorrelatedCpePerArtifact>${ae.cpe.correlation.limit}</maxCorrelatedCpePerArtifact>
@@ -187,17 +179,6 @@
 
                             <osvVulnerabilitiesEnrichment>
                                 <active>${param.activate.osv}</active>
-
-                                <!-- ecosystem configurations -->
-                                <maven>${param.osv.matcher.maven}</maven>
-                                <packagist>${param.osv.matcher.packagist}</packagist>
-                                <rubygems>${param.osv.matcher.rubygems}</rubygems>
-                                <pypi>${param.osv.matcher.pypi}</pypi>
-                                <hex>${param.osv.matcher.hex}</hex>
-                                <npm>${param.osv.matcher.npm}</npm>
-                                <crates_io>${param.osv.matcher.crates_io}</crates_io>
-                                <nuget>${param.osv.matcher.nuget}</nuget>
-                                <cran>${param.osv.matcher.cran}</cran>
 
                                 <!-- FIXME-KKL we need to desparately fix this; this naming very irritating -->
                                 <!-- true: removes unreviewed entries -->
@@ -264,6 +245,10 @@
                                 <vulnerabilityInvalidNameValidator/>
                             </inventoryValidationEnrichment>
 
+                            <inventoryPostProcessingEnrichment>
+                                <active>true</active>
+                            </inventoryPostProcessingEnrichment>
+
                             <!-- FIXME-KKL: review with YWI -->
                             <!-- Always active / inactive -->
                             <vulnerabilityFilterEnrichment>
@@ -299,51 +284,27 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter 'input.inventory.file' to specify the input
-                                        inventory to be enriched.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
-                                    <message>You must set the parameter 'output.inventory.file' to specify the output
-                                        inventory.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.context.dir</property>
-                                    <message>You must set the parameter 'param.context.dir' to locate the context data that is
-                                        used for enrichment.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.assessment.dir</property>
-                                    <message>You must set the parameter 'param.assessment.dir' to locate the assessment data
-                                        that is used for enrichment.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.security.policy.file</property>
-                                    <message>You must set the parameter 'param.security.policy.file' to specify the security
-                                        policy used for enrichment.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.correlation.dir</property>
-                                    <message>You must set the parameter 'param.correlation.dir' to locate the correlation data
-                                        that is used for enrichment.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>env.vulnerability.mirror.dir</property>
-                                    <message>You must set the parameter 'env.vulnerability.mirror.dir' to locate the
-                                        vulnerability mirror data local on the system.
-                                    </message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.tmp.dir</property>
-                                    <message>You must set the parameter 'output.tmp.dir' to specify where temporary
-                                        files like intermediate inventories should be saved.
-                                    </message>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

@@ -72,11 +72,15 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                    <message>You must set the parameter 'input.inventory.file' to specify the input inventory for the scanning process.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
-                                    <message>You must set the parameter 'output.inventory.file' to specify the output inventory of the scanning process</message>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.output.analysis.base.dir</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.properties.file</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
