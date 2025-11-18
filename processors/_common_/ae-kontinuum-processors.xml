@@ -29,8 +29,8 @@
             We should make these configurable via external.rc and replace the HEAD-SNAPSHOTS at release, such
             that users of a released kontinuum do not need to configure the versions in their external.rc.
         -->
-        <ae.core.version>0.147.0</ae.core.version>
-        <ae.artifact.analysis.version>0.150.0</ae.artifact.analysis.version>
+        <ae.core.version>HEAD-SNAPSHOT</ae.core.version>
+        <ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
