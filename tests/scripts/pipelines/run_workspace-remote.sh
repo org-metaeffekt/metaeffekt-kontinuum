@@ -32,4 +32,3 @@ bash "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-spdx.sh" -c "$CASES_DI
 bash "$PROCESSOR_SCRIPTS_DIR/report/report_create-document.sh" -c "$CASES_DIR/report/report_create-document-02.sh" -f "$LOG_FILE"
 
 bash "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_copy-resources.sh" -c "$CASES_DIR/portfolio/portfolio_copy-resources-02.sh" -f "$LOG_FILE"
-bash "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_create-overview.sh" -c "$CASES_DIR/portfolio/portfolio_create-overview-02.sh" -f "$LOG_FILE"
