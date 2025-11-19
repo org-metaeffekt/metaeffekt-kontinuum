@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export INPUT_INVENTORY_FILE="$ADVISED_DIR_002/asset-enriched-with-reference.xlsx"
-export OUTPUT_INVENTORY_FILE="$ADVISED_DIR_002/asset-enriched.xlsx"
+export INPUT_INVENTORY_FILE="$ADVISED_DIR_002/busybox-1.35.0-enriched-with-reference.xlsx"
+export OUTPUT_INVENTORY_FILE="$ADVISED_DIR_002/busybox-1.35.0-enriched.xlsx"
 export VULNERABILITY_MIRROR_DIR="$EXTERNAL_VULNERABILITY_MIRROR_DIR/.database"
 export SECURITY_POLICY="$EXTERNAL_WORKBENCH_DIR/policies/security-policy.json"
 export PROCESSOR_TMP_DIR="$ADVISED_DIR_002/tmp"

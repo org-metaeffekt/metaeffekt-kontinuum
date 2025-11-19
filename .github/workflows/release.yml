@@ -15,19 +15,33 @@ on:
         description: 'Metaeffekt Artifact Analysis version to use for this release.'
         required: true
         type: string
-      metaeffekt-workbench-version:
+      ae-workbench-version:
         description: 'Metaeffekt Workbench version tag or branch to utilize for testing.'
         default: main
         required: false
         type: string
-
+      trigger-workbench-release:
+        description: 'Triggers the release pipeline in the metaeffekt-workbench repository, preparing a release with the same version as defined in the "version" input.'
+        default: false
+        required: false
+        type: boolean
 jobs:
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install Maven
+        run: |
+          MVN_VER=3.9.11
+          wget -q https://downloads.apache.org/maven/maven-3/${MVN_VER}/binaries/apache-maven-${MVN_VER}-bin.tar.gz
+          sudo tar -xzf apache-maven-${MVN_VER}-bin.tar.gz -C /opt/
+          sudo mv /opt/apache-maven-${MVN_VER} /opt/maven
+          echo "/opt/maven/bin" >> "$GITHUB_PATH"
+          pwd
 
       - name: Replace versions in parent processor
         run: |
@@ -38,35 +52,56 @@ jobs:
 
       - name: Checkout metaeffekt-workbench
         run: |
-          git clone https://github.com/org-metaeffekt/metaeffekt-workbench.git .metaeffekt-workbench
-          cd .metaeffekt-workbench
+          git clone https://github.com/org-metaeffekt/metaeffekt-workbench.git ${{ github.workspace }}/.metaeffekt-workbench
+          cd ${{ github.workspace }}/.metaeffekt-workbench
           git checkout ${{ inputs.metaeffekt-workbench-version }}
-          cd ..
+
+      - name: Change metaeffekt-workbench versioning
+        run: |
+          cd ${{ github.workspace }}/.metaeffekt-workbench
+          sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|' templates/report-template/pom.xml
+          sed -i 's|<ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|' templates/report-template/pom.xml
+          
+          sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|' processors/workbench-parent.xml
+          sed -i 's|<ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|' processors/workbench-parent.xml
 
       - name: Create external.rc file
         run: |
-          touch external.rc
-          echo "EXTERNAL_WORKBENCH_DIR=.metaeffekt-workbench" >> external.rc
-          echo "EXTERNAL_VULNERABILITY_MIRROR_DIR=.mirror" >> external.rc
-          echo "EXTERNAL_VULNERABILITY_MIRROR_URL=https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen4-external.tar.gz" >> external.rc
-          echo "EXTERNAL_VULNERABILITY_MIRROR_NAME=ae-mirror-index_gen4-external.tar.gz" >> external.rc
-          echo "NVD_API_KEY=${{ secrets.NVD_API_KEY }}" >> external.rc
-          echo "AE_CORE_VERSION=${{ inputs.ae-core-version }}" >> external.rc
-          echo "AE_ARTIFACT_ANALYSIS_VERSION=${{ inputs.ae-artifact-analysis-version }}" >> external.rc
+          touch ${{ github.workspace }}/external.rc
+          echo "EXTERNAL_WORKBENCH_DIR=${{ github.workspace }}/.metaeffekt-workbench" >> ${{ github.workspace }}/external.rc
+          echo "EXTERNAL_VULNERABILITY_MIRROR_DIR=${{ github.workspace }}/.mirror" >> ${{ github.workspace }}/external.rc
+          echo "EXTERNAL_VULNERABILITY_MIRROR_URL=https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen4-external.tar.gz" >> ${{ github.workspace }}/external.rc
+          echo "EXTERNAL_VULNERABILITY_MIRROR_NAME=ae-mirror-index_gen4-external.tar.gz" >> ${{ github.workspace }}/external.rc
+          echo "NVD_API_KEY=${{ secrets.NVD_API_KEY }}" >> ${{ github.workspace }}/external.rc
+          echo "AE_CORE_VERSION=${{ inputs.ae-core-version }}" >> ${{ github.workspace }}/external.rc
+          echo "AE_ARTIFACT_ANALYSIS_VERSION=${{ inputs.ae-artifact-analysis-version }}" >> ${{ github.workspace }}/external.rc
 
-      - name: Cache artifacts
-        uses: actions/cache@v4
+          cat ${{ github.workspace }}/external.rc
+
+      - name: Restore vulnerability mirror and maven index cache
+        uses: actions/cache/restore@v4
         with:
-          key: simple-key
+          key: key-${{ inputs.ae-core-version }}-${{ inputs.ae-artifact-analysis-version }}
           path: |
             .mirror
             .maven-index
 
-      - name: Run tests
+      - name: Run test pipelines
         shell: bash
-        run: |
-          ./tests/scripts/pipelines/run_workspace-001.sh
-          ./tests/scripts/pipelines/run_workspace-002.sh
+        env:
+          AE_CORE_VERSION: ${{ inputs.ae-core-version }}
+          AE_ARTIFACT_ANALYSIS_VERSION: ${{ inputs.ae-artifact-analysis-version }}
+        run: |          
+          ./tests/scripts/pipelines/run_workspace-remote.sh
+
+      - name: Save vulnerability mirror and maven index cache
+        uses: actions/cache/save@v4
+        if: ${{ always() }}
+        with:
+          key: key-${{ inputs.ae-core-version }}-${{ inputs.ae-artifact-analysis-version }}
+          path: |
+            .mirror
+            .maven-index
 
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
@@ -74,7 +109,18 @@ jobs:
           name: logs
           path: .logs
 
+      - name: Dump last 100 lines of log file
+        if: always()
+        shell: bash
+        run: |
+          shopt -s nullglob
+          for f in metaeffekt-kontinuum/.logs/*; do
+            echo "- $f -"
+            tail -n 100 "$f"
+          done
+
       - name: Commit changes
+        if: ${{ !env.ACT }}
         run: |
           git config --local user.email "github-actions[bot]@metaeffekt.com"
           git config --local user.name "github-actions[bot]"
@@ -82,12 +128,23 @@ jobs:
           git commit -m "Release ${{ inputs.version }}" || echo "No changes to commit"
 
       - name: Push changes
+        if: ${{ !env.ACT }}
         run: git push
 
       - name: Create Release
+        if: ${{ !env.ACT }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ inputs.version }}
           name: Release ${{ inputs.version }}
           draft: false
           prerelease: false
+
+      - name: Trigger workbench release
+        if: ${{ inputs.trigger-workbench-release }}
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: release
+          repo: metaeffekt/metaeffekt-workbench
+          token: ${{ secrets.GITHUB_TOKEN }}
+          inputs: '{"ae-kontinuum-version": ${{ inputs.version }}, "ae-core-version": ${{ inputs.ae-core-version }}, "ae-artifact-analysis-version": ${{ inputs.ae-artifact-analysis-version }}, "version": ${{ inputs.version }}}'

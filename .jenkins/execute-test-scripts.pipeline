@@ -7,6 +7,15 @@ pipeline {
     }
 
     stages {
+        stage('Clean Up') {
+            steps {
+                script {
+                    sh 'rm -rf .logs'
+                    sh 'rm -rf tests/target'
+                }
+            }
+        }
+
         stage('Checkout metaeffekt-workbench') {
             steps {
                 script {

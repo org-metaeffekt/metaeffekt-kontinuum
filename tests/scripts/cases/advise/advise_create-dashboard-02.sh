@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export INPUT_INVENTORY_FILE="$ADVISED_DIR_002/asset-enriched.xlsx"
+export INPUT_INVENTORY_FILE="$ADVISED_DIR_002/busybox-1.35.0-enriched.xlsx"
 export SECURITY_POLICY="$EXTERNAL_WORKBENCH_DIR/policies/security-policy.json"
-export OUTPUT_DASHBOARD_FILE="$ADVISED_DIR_002/asset-dashboard.html"
+export OUTPUT_DASHBOARD_FILE="$ADVISED_DIR_002/busybox-1.35.0-dashboard.html"
 export PARAM_TIMELINE_CONF_ENABLED="true"
 export VULNERABILITY_MIRROR_DIR="$EXTERNAL_VULNERABILITY_MIRROR_DIR/.database"
 export PARAM_TIMELINE_MAX_THREADS="4"
