@@ -34,6 +34,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create release branch
+        shell: bash
+        run: |
+          git config --local user.email "github-actions[bot]@metaeffekt.com"
+          git config --local user.name "github-actions[bot]"
+          git checkout -b "${{ inputs.version }}"
+
       - name: Install Maven
         run: |
           MVN_VER=3.9.11
@@ -122,8 +129,6 @@ jobs:
       - name: Commit changes
         if: ${{ !env.ACT }}
         run: |
-          git config --local user.email "github-actions[bot]@metaeffekt.com"
-          git config --local user.name "github-actions[bot]"
           git add processors/_common_/ae-kontinuum-processors.xml
           git commit -m "Release ${{ inputs.version }}" || echo "No changes to commit"
 
