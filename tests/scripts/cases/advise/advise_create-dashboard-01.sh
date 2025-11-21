@@ -3,7 +3,7 @@
 export INPUT_INVENTORY_FILE="$WORKSPACE_001_DIR/sample-product-1.0.0/01_assets/example-001.xlsx"
 export OUTPUT_DASHBOARD_FILE="$ADVISED_DIR_001/example-001-dashboard.html"
 
-export SECURITY_POLICY="$EXTERNAL_WORKBENCH_DIR/policies/security-policy.json"
+export SECURITY_POLICY="$EXTERNAL_WORKBENCH_DIR/policies/security-policy/security-policy.json"
 export PARAM_TIMELINE_CONF_ENABLED="true"
 export PARAM_TIMELINE_MAX_THREADS="4"
 export PARAM_TIMELINE_TIME_SPENT_MAX="10000"
