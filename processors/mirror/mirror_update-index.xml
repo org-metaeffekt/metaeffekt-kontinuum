@@ -170,6 +170,13 @@
                                     <malformedCpe>cpe:2.3:a:adsplugin:adsmonetizer:1.8.0 :*:*:*:*:wordpress:*:*</malformedCpe>
                                     <replacementCpe>cpe:2.3:a:adsplugin:adsmonetizer:1.8.0:*:*:*:*:wordpress:*:*</replacementCpe>
                                 </cpeCorrection>
+
+                                <!-- FIXME: TMA/YWI to verify; is a double ** really an issue? -->
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:a:strapi:strapi:*:*:*:*:*:**:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:strapi:strapi:*:*:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
+
                             </cpeCorrections>
                         </configuration>
                     </execution>
