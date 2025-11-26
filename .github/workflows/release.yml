@@ -25,6 +25,10 @@ on:
         default: false
         required: false
         type: boolean
+
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -33,6 +37,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Create release branch
+        shell: bash
+        run: |
+          git config --local user.email "github-actions[bot]@metaeffekt.com"
+          git config --local user.name "github-actions[bot]"
+          git checkout -b release/${{ inputs.version }}
 
       - name: Install Maven
         run: |
@@ -54,7 +65,7 @@ jobs:
         run: |
           git clone https://github.com/org-metaeffekt/metaeffekt-workbench.git ${{ github.workspace }}/.metaeffekt-workbench
           cd ${{ github.workspace }}/.metaeffekt-workbench
-          git checkout ${{ inputs.metaeffekt-workbench-version }}
+          git checkout ${{ inputs.ae-workbench-version }}
 
       - name: Change metaeffekt-workbench versioning
         run: |
@@ -122,20 +133,19 @@ jobs:
       - name: Commit changes
         if: ${{ !env.ACT }}
         run: |
-          git config --local user.email "github-actions[bot]@metaeffekt.com"
-          git config --local user.name "github-actions[bot]"
           git add processors/_common_/ae-kontinuum-processors.xml
           git commit -m "Release ${{ inputs.version }}" || echo "No changes to commit"
 
       - name: Push changes
         if: ${{ !env.ACT }}
-        run: git push
+        run: git push --set-upstream origin "release/${{ inputs.version }}"
 
       - name: Create Release
         if: ${{ !env.ACT }}
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ inputs.version }}
+          target_commitish: "release/${{ inputs.version }}"
           name: Release ${{ inputs.version }}
           draft: false
           prerelease: false
@@ -147,4 +157,4 @@ jobs:
           workflow: release
           repo: metaeffekt/metaeffekt-workbench
           token: ${{ secrets.GITHUB_TOKEN }}
-          inputs: '{"ae-kontinuum-version": ${{ inputs.version }}, "ae-core-version": ${{ inputs.ae-core-version }}, "ae-artifact-analysis-version": ${{ inputs.ae-artifact-analysis-version }}, "version": ${{ inputs.version }}}'
+          inputs: '{"ae-kontinuum-version": "${{ inputs.version }}", "ae-core-version": "${{ inputs.ae-core-version }}", "ae-artifact-analysis-version": "${{ inputs.ae-artifact-analysis-version }}", "version": "${{ inputs.version }}"}'
