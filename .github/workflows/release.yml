@@ -86,8 +86,7 @@ jobs:
           echo "NVD_API_KEY=${{ secrets.NVD_API_KEY }}" >> ${{ github.workspace }}/external.rc
           echo "AE_CORE_VERSION=${{ inputs.ae-core-version }}" >> ${{ github.workspace }}/external.rc
           echo "AE_ARTIFACT_ANALYSIS_VERSION=${{ inputs.ae-artifact-analysis-version }}" >> ${{ github.workspace }}/external.rc
-
-          cat ${{ github.workspace }}/external.rc
+          echo "DUMP_LOGS=true" >> ${{ github.workspace }}/external.rc
 
       - name: Restore vulnerability mirror and maven index cache
         uses: actions/cache/restore@v4
@@ -103,7 +102,7 @@ jobs:
           AE_CORE_VERSION: ${{ inputs.ae-core-version }}
           AE_ARTIFACT_ANALYSIS_VERSION: ${{ inputs.ae-artifact-analysis-version }}
         run: |          
-          ./tests/scripts/pipelines/run_workspace-remote.sh
+          ./tests/scripts/pipelines/001_remote.sh
 
       - name: Save vulnerability mirror and maven index cache
         uses: actions/cache/save@v4
@@ -119,16 +118,6 @@ jobs:
         with:
           name: logs
           path: .logs
-
-      - name: Dump last 100 lines of log file
-        if: always()
-        shell: bash
-        run: |
-          shopt -s nullglob
-          for f in metaeffekt-kontinuum/.logs/*; do
-            echo "- $f -"
-            tail -n 100 "$f"
-          done
 
       - name: Commit changes
         if: ${{ !env.ACT }}
@@ -146,7 +135,7 @@ jobs:
         with:
           tag_name: ${{ inputs.version }}
           target_commitish: "release/${{ inputs.version }}"
-          name: Release ${{ inputs.version }}
+          name: ${{ inputs.version }}
           draft: false
           prerelease: false
 

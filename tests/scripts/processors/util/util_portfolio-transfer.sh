@@ -54,8 +54,7 @@ run_portfolio_manager() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_portfolio-download-jars.xml" process-resources)
   CMD+=("-Dinput.cli.dir=$PORTFOLIO_MANAGER_JARS")
 
-  echo "${CMD[@]}"
-  "${CMD[@]}"
+  pass_command_info_to_logger "$(basename "$0")"
 
   cd "$INTERNAL_WORKBENCH_DIR/configs/portfolio-manager/service"
   java -jar "$PORTFOLIO_MANAGER_JARS/ae-portfolio-manager-service-0.5.0.jar" &
@@ -71,6 +70,7 @@ run_maven_command_portfolio_upload() {
   cd "$SCRIPT_DIR"
 
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_portfolio-upload.xml" process-resources)
+  [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dinput.file=$INPUT_FILE")
@@ -80,10 +80,10 @@ run_maven_command_portfolio_upload() {
   CMD+=("-Dparam.product.name=$PRODUCT_NAME")
   CMD+=("-Dparam.product.version=$PRODUCT_VERSION")
   CMD+=("-Dparam.product.artifact.id=$PRODUCT_ARTIFACT_ID")
-  CMD+=("-Denv.truststore.config.file=$TRUSTSTORE_CONFIG_FILE")
-  CMD+=("-Denv.truststore.password=$TRUSTSTORE_PASSWORD")
-  CMD+=("-Denv.keystore.config.file=$KEYSTORE_CONFIG_FILE")
-  CMD+=("-Denv.keystore.password=$KEYSTORE_PASSWORD")
+  CMD+=("-Dparam.truststore.config.file=$TRUSTSTORE_CONFIG_FILE")
+  CMD+=("-Dparam.truststore.password=$TRUSTSTORE_PASSWORD")
+  CMD+=("-Dparam.keystore.config.file=$KEYSTORE_CONFIG_FILE")
+  CMD+=("-Dparam.keystore.password=$KEYSTORE_PASSWORD")
 
   pass_command_info_to_logger "$(basename "$0")"
 }
@@ -92,6 +92,7 @@ run_maven_command_portfolio_download() {
   cd "$SCRIPT_DIR"
 
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_portfolio-download.xml" process-resources)
+  [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dparam.portfolio.manager.url=$PORTFOLIO_MANAGER_URL")
@@ -101,10 +102,10 @@ run_maven_command_portfolio_download() {
   CMD+=("-Dparam.product.artifact.id=$PRODUCT_ARTIFACT_ID")
   CMD+=("-Doutput.inventory.dir=$OUTPUT_INVENTORY_DIR")
   CMD+=("-Dinput.cli.dir=$PORTFOLIO_MANAGER_JARS")
-  CMD+=("-Denv.truststore.config.file=$TRUSTSTORE_CONFIG_FILE")
-  CMD+=("-Denv.truststore.password=$TRUSTSTORE_PASSWORD")
-  CMD+=("-Denv.keystore.config.file=$KEYSTORE_CONFIG_FILE")
-  CMD+=("-Denv.keystore.password=$KEYSTORE_PASSWORD")
+  CMD+=("-Dparam.truststore.config.file=$TRUSTSTORE_CONFIG_FILE")
+  CMD+=("-Dparam.truststore.password=$TRUSTSTORE_PASSWORD")
+  CMD+=("-Dparam.keystore.config.file=$KEYSTORE_CONFIG_FILE")
+  CMD+=("-Dparam.keystore.password=$KEYSTORE_PASSWORD")
 
   pass_command_info_to_logger "$(basename "$0")"
 }
@@ -121,25 +122,20 @@ cleanup() {
 }
 
 main() {
-  local case_file="$CASE"
+  local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0 .sh).log"
 
-  local log_file="$SCRIPT_DIR/../../../../.logs/$(basename $0).log"
-
-
-while getopts "c:l:f:ho" flag; do
+  while getopts "c:f:h" flag; do
             case "$flag" in
-                c) case_file="$OPTARG" ;;
+                c) CASE="$OPTARG" ;;
                 h) print_usage; exit 0 ;;
-                l) log_level="$OPTARG" ;;
                 f) log_file="$OPTARG" ;;
-                o) console_output_enabled=false ;;
                 *) print_usage; exit 1 ;;
             esac
       done
 
-  initialize_logger "$log_level" "$console_output_enabled" "$log_file"
-  check_shared_config
-  source_case_file "$case_file"
+  initialize_logger "$log_file"
+  source_preload
+  source_case_file "$CASE"
   create_required_directories
   run_portfolio_manager
   run_maven_command_portfolio_upload

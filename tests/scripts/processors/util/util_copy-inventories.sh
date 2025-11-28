@@ -43,6 +43,7 @@ initialize_logger() {
 # Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_copy-inventories.xml" process-resources)
+  [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dinput.base.dir=$INPUT_BASE_DIR")

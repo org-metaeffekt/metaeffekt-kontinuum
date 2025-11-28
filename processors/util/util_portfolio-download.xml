@@ -34,14 +34,14 @@
                             <modifier>initial</modifier>
 
                             <!-- path to the keystore; replace or configure -->
-                            <keyStoreFile>${env.keystore.config.file}</keyStoreFile>
+                            <keyStoreFile>${param.keystore.config.file}</keyStoreFile>
                             <!-- keystore password; always pass as credential/secret -->
-                            <keyStorePassword>${env.keystore.password}</keyStorePassword>
+                            <keyStorePassword>${param.keystore.password}</keyStorePassword>
 
                             <!-- path to the truststore; replace or configure -->
-                            <trustStoreFile>${env.truststore.config.file}</trustStoreFile>
+                            <trustStoreFile>${param.truststore.config.file}</trustStoreFile>
                             <!-- truststore password; always pass as credential/secret -->
-                            <trustStorePassword>${env.truststore.password}</trustStorePassword>
+                            <trustStorePassword>${param.truststore.password}</trustStorePassword>
 
                             <!-- the project name to upload to -->
                             <projectName>${param.product.name}</projectName>
@@ -88,16 +88,16 @@
                                     <property>param.product.artifact.id</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>env.keystore.password</property>
+                                    <property>param.keystore.password</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>env.truststore.password</property>
+                                    <property>param.truststore.password</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>env.keystore.config.file</property>
+                                    <property>param.keystore.config.file</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>env.truststore.config.file</property>
+                                    <property>param.truststore.config.file</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

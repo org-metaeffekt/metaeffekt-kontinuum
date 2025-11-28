@@ -51,6 +51,12 @@ readonly CONVERTED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/00_co
 readonly PREPARED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/01_prepared"
 readonly EXTRACTED_DIR_002="$TARGET_WORKSPACE_002_DIR/sample-product-1.0.0/02_extracted"
 
+#Workspace 003
+export WORKSPACE_003_DIR="$TESTS_DIR/resources/workspace-003"
+
+readonly TARGET_WORKSPACE_003_DIR="$TARGET_DIR/workspace-003"
+readonly PREPARED_DIR_003="$TARGET_WORKSPACE_003_DIR/sample-product-1.0.0/01_prepared"
+
 
 ########################################
 # Function Definitions
@@ -62,6 +68,7 @@ initialize_target_directories() {
         mkdir -p "$TARGET_DIR"
         cp -r "$WORKSPACE_001_DIR" "$TARGET_DIR"
         cp -r "$WORKSPACE_002_DIR" "$TARGET_DIR"
+        cp -r "$WORKSPACE_003_DIR" "$TARGET_DIR"
     fi
 
     local directories=(
@@ -85,6 +92,7 @@ initialize_target_directories() {
         "$PORTFOLIO_DIR_002"
         "$PREPARED_DIR_002"
         "$EXTRACTED_DIR_002"
+        "$PREPARED_DIR_003"
     )
 
     if ! mkdir -p "${directories[@]}"; then
