@@ -20,12 +20,7 @@ of this repository.
 | param.product.name            | yes      | The product name                                                |
 | param.product.version         | yes      | The product version                                             |
 | param.product.artifact.id     | yes      | The product artifact id                                         |
-
-### Environment
-| Parameter                  | Required | Description                                           |
-|----------------------------|----------|-------------------------------------------------------|
-| env.keystore.config.file   | yes      | Path to the keystore                                  |
-| env.truststore.config.file | yes      | Path to the truststore                                |
-| env.keystore.password      | yes      | Keystore password, always pass as credential/secret   |
-| env.truststore.password    | yes      | Truststore password, always pass as credential/secret |
-None
+| param.keystore.config.file      | yes      | Path to the keystore                                            |
+| param.truststore.config.file    | yes      | Path to the truststore                                          |
+| param.keystore.password         | yes      | Keystore password, always pass as credential/secret             |
+| param.truststore.password       | yes      | Truststore password, always pass as credential/secret           |

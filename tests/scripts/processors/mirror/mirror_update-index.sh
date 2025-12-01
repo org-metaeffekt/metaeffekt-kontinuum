@@ -40,6 +40,7 @@ initialize_logger() {
 
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/$PROCESSOR_POM" compile)
+  [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Denv.mirror.dir=$ENV_MIRROR_DIR")

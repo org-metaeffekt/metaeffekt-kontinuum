@@ -81,30 +81,45 @@ pipeline {
                 sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_DIR=\"$(dirname $(pwd))/.vulnerability-mirror\"" >> external.rc'
 
                 //
-                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_URL=\"http://ae-scanner/mirror/index/ae-mirror-index_gen4.tar.gz\"" >> external.rc'
-                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_NAME=\"ae-mirror-index_gen4.tar.gz\"" >> external.rc'
+                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_URL=\"http://ae-scanner/mirror/index/ae-mirror-index_gen5.tar.gz\"" >> external.rc'
+                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_NAME=\"ae-mirror-index_gen5.tar.gz\"" >> external.rc'
 
                 sh 'echo "AE_CORE_VERSION=\"HEAD-SNAPSHOT\"" >> external.rc'
                 sh 'echo "AE_ARTIFACT_ANALYSIS_VERSION=\"HEAD-SNAPSHOT\"" >> external.rc'
+                sh 'echo "DUMP_LOGS=\"true\"" >> external.rc'
             }
         }
 
-        stage('Run workspace-001 tests') {
+        stage('Run 001_complete pipeline') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh './tests/scripts/pipelines/run_workspace-001.sh'
+                    sh './tests/scripts/pipelines/001_complete.sh'
                 }
             }
         }
 
-        stage('Run workspace-002 tests') {
+        stage('Run 001_remote pipeline') {
             steps {
                 withMaven(maven: 'maven-3.9.6') {
-                    sh './tests/scripts/pipelines/run_workspace-002.sh'
+                    sh './tests/scripts/pipelines/001_remote.sh'
                 }
             }
         }
 
+        stage('Run 002_only-process-inventories pipeline') {
+            steps {
+                withMaven(maven: 'maven-3.9.6') {
+                    sh './tests/scripts/pipelines/002_only-process-inventories.sh'
+                }
+            }
+        }
+
+        stage('Run 003_only-docker pipeline') {
+            steps {
+                withMaven(maven: 'maven-3.9.6') {
+                    sh './tests/scripts/pipelines/003_only-docker.sh'
+                }
+            }
+        }
     }
-
 }

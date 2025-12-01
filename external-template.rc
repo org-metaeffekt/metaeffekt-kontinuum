@@ -18,3 +18,9 @@ EXTERNAL_VULNERABILITY_MIRROR_DIR="/PATH/TO/MIRROR"
 # defined by the kontinuum.
 #AE_CORE_VERSION=
 #AE_ARTIFACT_ANALYSIS_VERSION=
+
+# Debug options
+# If true, enabled the maven debug flag providing additional log information
+#DEBUG=true
+# If true, dumps all entries written to the log file onto the console
+#DUMP_LOGS=true

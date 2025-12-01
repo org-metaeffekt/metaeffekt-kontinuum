@@ -25,8 +25,9 @@ _log_output() {
     local level="$1"
     local message="$2"
     local log_to_console="$3"
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    [ "${DUMP_LOGS:-}" = true ] && log_to_console=true
 
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
     local log_entry="[$timestamp] $level: $message"
 
     if [[ -n "$LOG_FILE" ]]; then
