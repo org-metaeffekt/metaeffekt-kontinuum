@@ -97,6 +97,16 @@
                                     <malformedCpe>/^cpe:2\.3:([aoh]):cpe:2\.3:[aoh]/</malformedCpe>
                                     <replacementCpe>cpe:2.3:$1</replacementCpe>
                                 </cpeCorrection>
+                                <!-- non-escaped ":" -->
+                                <cpeCorrection>
+                                <malformedCpe>/cpe:2.3:a:ibm:sterling_connect:(.*?):(.*?):\*:\*:\*:\*:(.*?):\*:\*/</malformedCpe>
+                                <replacementCpe>cpe:2.3:a:ibm:sterling_connect\\:$1:$2:*:*:*:*:$3:*:*</replacementCpe>
+                                </cpeCorrection>
+                                <!-- one too many parts-->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:o:palo_alto_networks:pan-os:(.*?):-:\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:o:palo_alto_networks:pan-os:$1:-:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
                                 <!-- part and vendor melted together -->
                                 <cpeCorrection>
                                     <malformedCpe>cpe:2.3:aainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
