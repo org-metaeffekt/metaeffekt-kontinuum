@@ -75,28 +75,41 @@
                             <cweIndex/>
                             <capecIndex/>
 
-                            <!-- In some cases NVD introduced invalid CPEs; these mappings attempt to correct these CPEs -->
+                            <!-- The NVD and other vendors often publish data which contain invalid CPEs; this configuration attempts to 'correct' the malformed cpes-->
+                            <!-- A "cpeCorrection" has a target string ("malformedCpe") and a replacement string ("replacementCpe") which function as 1:1 text replacements-->
+                            <!-- If the "malformedCpe" begins and ends with a '/' character it is instead evaluated as a regular expression (and the "replacementCpe" may contain substitutions accordingly) -->
+                            <!-- The order of the "cpeCorrection" is important, as they also dictate in which order the replacements are performed -->
                             <cpeCorrections>
+                                <!-- GENERAL CORRECTIONS -->
+
+                                <!-- trim whitespaces from beginning and end -->
                                 <cpeCorrection>
                                     <malformedCpe>/^\s+|\s+$/</malformedCpe>
                                     <replacementCpe></replacementCpe>
                                 </cpeCorrection>
+                                <!-- whitespaces surrounding the delimiter character ':' are collapsed -->
                                 <cpeCorrection>
                                     <malformedCpe>/: +| +:/</malformedCpe>
                                     <replacementCpe>:</replacementCpe>
                                 </cpeCorrection>
+                                <!-- any other remaining whitespaces are replaced with the '_' character, as defined by the cpe spec -->
                                 <cpeCorrection>
                                     <malformedCpe>/ +/</malformedCpe>
                                     <replacementCpe>_</replacementCpe>
                                 </cpeCorrection>
+                                <!-- cpes may not contain multiple asterisk characters in sequence and are therefore collapsed as well -->
                                 <cpeCorrection>
                                     <malformedCpe>/\*\*/</malformedCpe>
                                     <replacementCpe>*</replacementCpe>
                                 </cpeCorrection>
+                                <!-- another common mistake is doubling the cpe header; if present, it is collapsed and the first configured part is used -->
                                 <cpeCorrection>
                                     <malformedCpe>/^cpe:2\.3:([aoh]):cpe:2\.3:[aoh]/</malformedCpe>
                                     <replacementCpe>cpe:2.3:$1</replacementCpe>
                                 </cpeCorrection>
+
+                                <!-- SPECIFIC CORRECTIONS -->
+
                                 <!-- non-escaped ":" -->
                                 <cpeCorrection>
                                 <malformedCpe>/cpe:2.3:a:ibm:sterling_connect:(.*?):(.*?):\*:\*:\*:\*:(.*?):\*:\*/</malformedCpe>
