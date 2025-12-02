@@ -131,8 +131,8 @@
 
                                 <!-- trim whitespaces from beginning and end -->
                                 <cpeCorrection>
-                                    <malformedCpe>/^\s+|\s+$/</malformedCpe>
-                                    <replacementCpe></replacementCpe>
+                                    <malformedCpe>/^\s+(.*?)\s+$/</malformedCpe>
+                                    <replacementCpe>$1</replacementCpe>
                                 </cpeCorrection>
                                 <!-- whitespaces surrounding the delimiter character ':' are collapsed -->
                                 <cpeCorrection>
