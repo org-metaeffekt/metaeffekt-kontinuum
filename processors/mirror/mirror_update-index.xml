@@ -77,11 +77,19 @@
 
                             <!-- The NVD and other vendors often publish data which contain invalid CPEs; this configuration attempts to 'correct' the malformed CPEs -->
                             <!-- A simple "cpeCorrection" has a target string ("malformedCpe") and a replacement string ("replacementCpe") which function as 1:1 text replacements -->
-                            <!-- If the "malformedCpe" begins and ends with a '/' character it is instead evaluated as a regular expression (and the "replacementCpe" may contain substitutions accordingly) -->
-                            <!-- The order of the regex "cpeCorrection" is important, as they also specify the order the replacements are performed -->
                             <cpeCorrections>
                                 <!-- SPECIFIC SIMPLE CORRECTIONS -->
 
+                                <!-- duplicate cpe header; can be remove if using gen5 -->
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:a:cpe:2.3:a:campcodes:online_feeds_product_inventory_system:1.0:*:*:*:*:*:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:campcodes:online_feeds_product_inventory_system:1.0:*:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
+                                <!-- duplicate '*' character; can be remove if using gen5 -->
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:a:strapi:strapi:*:*:*:*:*:**:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:strapi:strapi:*:*:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
                                 <!-- part and vendor melted together -->
                                 <cpeCorrection>
                                     <malformedCpe>cpe:2.3:aainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
@@ -104,6 +112,13 @@
                                     <replacementCpe>cpe:2.3:a:ibm:sterling_connect\:express_for_windows:3.1.0.0:*:*:*:*:*:*:*</replacementCpe>
                                 </cpeCorrection>
 
+                            </cpeCorrections>
+
+                            <!-- Using "cpePatternCorrections" on the other hand, the "malformedCpe" accepts a regular expression (must be enclosed with '/' character) -->
+                            <!-- the "replacementCpe" may then either hold the full pattern replacement or some substitution values -->
+                            <!-- The order of the regex "cpePatternCorrections" is important, as they also specify the order the replacements are performed -->
+
+                            <cpePatternCorrections>
                                 <!-- GENERAL REGEX CORRECTIONS -->
 
                                 <!-- trim whitespaces from beginning and end -->
@@ -144,8 +159,7 @@
                                     <malformedCpe>/cpe:2.3:o:palo_alto_networks:pan-os:(.*?):-:\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
                                     <replacementCpe>cpe:2.3:o:palo_alto_networks:pan-os:$1:-:*:*:*:*:*:*</replacementCpe>
                                 </cpeCorrection>
-
-                            </cpeCorrections>
+                            </cpePatternCorrections>
                         </configuration>
                     </execution>
                 </executions>
