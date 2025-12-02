@@ -106,8 +106,6 @@
 
                             <!-- The NVD and other vendors often publish data which contain invalid CPEs; this configuration attempts to 'correct' the malformed CPEs -->
                             <!-- A simple "cpeCorrection" has a target string ("malformedCpe") and a replacement string ("replacementCpe") which function as 1:1 text replacements -->
-                            <!-- If the "malformedCpe" begins and ends with a '/' character it is instead evaluated as a regular expression (and the "replacementCpe" may contain substitutions accordingly) -->
-                            <!-- The order of the regex "cpeCorrection" is important, as they also specify the order the replacements are performed -->
                             <cpeCorrections>
                                 <!-- SPECIFIC SIMPLE CORRECTIONS -->
 
@@ -144,6 +142,10 @@
                                 </cpeCorrection>
 
                             </cpeCorrections>
+
+                            <!-- Using "cpePatternCorrections" on the other hand, the "malformedCpe" accepts a regular expression (must be enclosed with '/' character) -->
+                            <!-- the "replacementCpe" may then either hold the full pattern replacement or some substitution values -->
+                            <!-- The order of the regex "cpePatternCorrections" is important, as they also specify the order the replacements are performed -->
 
                             <cpePatternCorrections>
                                 <!-- GENERAL REGEX CORRECTIONS -->
