@@ -108,7 +108,7 @@
                             <!-- A simple "cpeCorrection" has a target string ("malformedCpe") and a replacement string ("replacementCpe") which function as 1:1 text replacements -->
                             <!-- If the "malformedCpe" begins and ends with a '/' character it is instead evaluated as a regular expression (and the "replacementCpe" may contain substitutions accordingly) -->
                             <!-- The order of the regex "cpeCorrection" is important, as they also specify the order the replacements are performed -->
-                            <cpeReplacementCorrections>
+                            <cpeCorrections>
                                 <!-- SPECIFIC SIMPLE CORRECTIONS -->
 
                                 <!-- duplicate cpe header; can be remove if using gen5 -->
@@ -143,7 +143,7 @@
                                     <replacementCpe>cpe:2.3:a:ibm:sterling_connect\:express_for_windows:3.1.0.0:*:*:*:*:*:*:*</replacementCpe>
                                 </cpeCorrection>
 
-                            </cpeReplacementCorrections>
+                            </cpeCorrections>
 
                             <cpePatternCorrections>
                                 <!-- GENERAL REGEX CORRECTIONS -->
