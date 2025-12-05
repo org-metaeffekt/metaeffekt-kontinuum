@@ -21,6 +21,6 @@ of this repository.
 | param.artifact.resolver.proxy.file  | yes      | Yaml file containing proxy information for the resolver.      |
 
 ### Environment
-| Property                            | Required | Explanation                                                   |
-|-------------------------------------|----------|---------------------------------------------------------------|
-| env.maven.index.dir                 | yes      | Download directory of the maven repo index.                   |   
+| Property                            | Required | Explanation                                 |
+|-------------------------------------|----------|---------------------------------------------|
+| env.maven.index.dir                 | yes      | Download directory of the Maven repo index. |   

@@ -115,7 +115,7 @@ Parameters in this category are prefixed with:
 
 ### Enforcers
 
-Each processor needs to enforce it's required parameters using the maven enforcer plugin. Please refer to any processor
+Each processor needs to enforce it's required parameters using the Maven enforcer plugin. Please refer to any processor
 for an example usage of such enforcers. The enforcer plugin is the very last plugin each processor contains. It defines 
 each required parameter listed in the corresponding .md as 'requireProperty' without using the 'message' tag.
 
