@@ -13,7 +13,7 @@ parameterized and executed. Please check the markdown files on the individual PO
 Each processor has user-controlled inputs, outputs and other params and environment settings. The user does not need a 
 full understanding of the implementation of each processor. For detailed examples of how to control the processors and 
 structure a project, please refer to the scripts at test/scripts/scripts-sh. The scripts show a basic execution of each 
-processor with minimal parameterization, for optional parameters to further control each processor, please refer to the 
+processor with minimal parameterization. For optional parameters to further control each processor, please refer to the 
 markdown documentation of each processor.
 
 The POM files are platform independent configurations that can be combined into a workflow. The workflows are either 
@@ -108,14 +108,14 @@ Suffixed with:
 ### Environment
 Environment parameters describe a series of prerequisites which are not necessarily specific to this single processor.
 They usually describe directories or config files containing resources required by multiple processors which can be
-shared project wide. Examples are the vulnerability database, maven mirror etc.
+shared project-wide. Examples are the vulnerability database, Maven mirror etc.
 
 Parameters in this category are prefixed with:
 - env
 
 ### Enforcers
 
-Each processor needs to enforce it's required parameters using the Maven enforcer plugin. Please refer to any processor
+Each processor needs to enforce its required parameters using the Maven Enforcer plugin. Please refer to any processor
 for an example usage of such enforcers. The enforcer plugin is the very last plugin each processor contains. It defines 
 each required parameter listed in the corresponding .md as 'requireProperty' without using the 'message' tag.
 
