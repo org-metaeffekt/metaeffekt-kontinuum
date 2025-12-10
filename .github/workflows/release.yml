@@ -8,17 +8,12 @@ on:
         required: true
         type: string
       ae-core-version:
-        description: 'Metaeffekt Core version to use for this release.'
+        description: 'Valid metaeffekt-core version tag.'
         required: true
         type: string
       ae-artifact-analysis-version:
-        description: 'Metaeffekt Artifact Analysis version to use for this release.'
+        description: 'Valid metaeffekt-artifact-analysis version tag.'
         required: true
-        type: string
-      ae-workbench-version:
-        description: 'Metaeffekt Workbench version tag or branch to utilize for testing.'
-        default: main
-        required: false
         type: string
 
 permissions:
@@ -133,3 +128,11 @@ jobs:
           name: ${{ inputs.version }}
           draft: false
           prerelease: false
+
+      - name: Release workbench
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: release
+          repo: metaeffekt/metaeffekt-workbench
+          token: ${{ secrets.GITHUB_TOKEN }}
+          inputs: '{"ae-kontinuum-version": "${{ inputs.version }}", "ae-core-version": "${{ inputs.ae-core-version }}", "ae-artifact-analysis-version": "${{ inputs.ae-artifact-analysis-version }}", "version": "${{ inputs.version }}"}'
