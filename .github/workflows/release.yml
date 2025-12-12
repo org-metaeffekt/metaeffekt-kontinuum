@@ -44,7 +44,7 @@ jobs:
           echo "/opt/maven/bin" >> "$GITHUB_PATH"
           pwd
 
-      - name: Replace versions in parent processor
+      - name: Adjust core and artifact-analysis versions
         run: |
           sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|g' \
             processors/_common_/ae-kontinuum-processors.xml
@@ -57,7 +57,7 @@ jobs:
           cd ${{ github.workspace }}/.metaeffekt-workbench
           git checkout ${{ inputs.ae-workbench-version }}
 
-      - name: Change metaeffekt-workbench versioning
+      - name: Adjust core and artifact-analysis versions in workbench
         run: |
           cd ${{ github.workspace }}/.metaeffekt-workbench
           sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|' templates/report-template/pom.xml
