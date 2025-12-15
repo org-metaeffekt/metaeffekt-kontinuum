@@ -138,10 +138,10 @@ jobs:
           prerelease: false
 
       - name: Release workbench
-        uses: benc-uk/workflow-dispatch@v1
+        uses: peter-evans/repository-dispatch@v3
         if: ${{ inputs.trigger-workbench-release }}
         with:
-          workflow: release
-          repo: metaeffekt/metaeffekt-workbench
-          token: ${{ secrets.GITHUB_TOKEN }}
-          inputs: '{"ae-kontinuum-version": "${{ inputs.version }}", "ae-core-version": "${{ inputs.ae-core-version }}", "ae-artifact-analysis-version": "${{ inputs.ae-artifact-analysis-version }}", "version": "${{ inputs.version }}"}'
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository: "metaeffekt/metaeffekt-workbench"
+          event-type: "kontinuum-trigger"
+          client-payload: '{"ae-kontinuum-version": "${{ inputs.version }}", "ae-core-version": "${{ inputs.ae-core-version }}", "ae-artifact-analysis-version": "${{ inputs.ae-artifact-analysis-version }}", "version": "${{ inputs.version }}"}'
