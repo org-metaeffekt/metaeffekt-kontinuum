@@ -56,7 +56,7 @@
         <param.dashboard.subtitle>${project.artifactId}</param.dashboard.subtitle>
         <param.dashboard.footer>${project.artifactId}</param.dashboard.footer>
 
-        <input.vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</input.vulnerabilities.custom.dir>
+        <param.vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</param.vulnerabilities.custom.dir>
         <param.activate.vulnerabilities.custom>false</param.activate.vulnerabilities.custom>
 
     </properties>
@@ -141,14 +141,14 @@
                             <customVulnerabilitiesFromCpeEnrichment>
                                 <active>${param.activate.vulnerabilities.custom}</active>
                                 <vulnerabilityFiles>
-                                    <file>${input.vulnerabilities.custom.dir}</file>
+                                    <file>${param.vulnerabilities.custom.dir}</file>
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFromCpeEnrichment>
 
                             <customVulnerabilitiesFillDetailsEnrichment>
                                 <active>${param.activate.vulnerabilities.custom}</active>
                                 <vulnerabilityFiles>
-                                    <file>${input.vulnerabilities.custom.dir}</file>
+                                    <file>${param.vulnerabilities.custom.dir}</file>
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFillDetailsEnrichment>
 

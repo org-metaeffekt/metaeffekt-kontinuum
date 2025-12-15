@@ -47,7 +47,7 @@
                             <target>
                                 <mkdir dir="${output.inventories.dir}"/>
                                 <copy todir="${output.inventories.dir}">
-                                    <filelist dir="${input.base.dir}" files="${input.inventories.list}" />
+                                    <filelist dir="${input.base.dir}" files="${param.inventories.list}" />
                                 </copy>
                             </target>
                         </configuration>
@@ -70,7 +70,7 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventories.list</property>
+                                    <property>param.inventories.list</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventories.dir</property>

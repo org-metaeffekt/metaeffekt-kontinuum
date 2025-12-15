@@ -11,12 +11,14 @@ of this repository.
 ### Input / Output
 | Property               | Required | Explanation                                                          |
 |------------------------|----------|----------------------------------------------------------------------|
-| input.inventories.list | yes      | The list containing the inventories to copy to the output directory. |
 | input.base.dir         | no       | The directory in which the inventories are located.                  |
 | output.inventories.dir | yes      | The output directory to which the files are copied.                  |
 
 ### Parameters
-None
+| Property               | Required | Explanation                                                          |
+|------------------------|----------|----------------------------------------------------------------------|
+| param.inventories.list | yes      | The list containing the inventories to copy to the output directory. |
+
 
 ### Environment
 None

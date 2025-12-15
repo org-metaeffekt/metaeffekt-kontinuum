@@ -49,7 +49,7 @@ run_maven_command() {
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
   CMD+=("-Dinput.output.analysis.base.dir=$ANALYSIS_BASE_DIR")
-  CMD+=("-Dinput.properties.file=$PROPERTIES_FILE")
+  CMD+=("-Dparam.properties.file=$PROPERTIES_FILE")
   CMD+=("-Denv.kosmos.password=$ENV_KOSMOS_PASSWORD")
   CMD+=("-Denv.kosmos.userkeys.file=$ENV_KOSMOS_USERKEYS_FILE")
 

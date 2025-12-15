@@ -16,13 +16,7 @@ of this repository.
 ### Input / Output
 | Parameter                      | Required | Description                                                      | default                                       |
 |--------------------------------|----------|------------------------------------------------------------------|-----------------------------------------------|
-| input.asset.descriptor.dir     | no       | The directory where the asset descriptors are located .          | <env.workbench.dir>/descriptors               |
-| input.asset.descriptor.path    | yes      | The path of the asset descriptor used for the document.          |                                               | 
 | input.inventory.file           | yes      | The path of the input inventory for the document.                |                                               |
-| input.reference.inventory.file | yes      | The path of the reference inventory for the document.            |                                               |
-| input.reference.inventory.dir  | yes      | The directory of the reference inventory for the document.       |                                               |
-| input.reference.license.dir    | no       | The path to the reference license directory.                     | <input.reference.inventory.dir>/../licenses   |
-| input.reference.component.dir  | no       | The path to the reference component directory.                   | <input.reference.inventory.dir>/../components |
 | output.document.file           | yes      | The file where to store the resulting output document.           |                                               | 
 
 
@@ -44,6 +38,12 @@ of this repository.
 | param.property.selector.classification | no               | Templates may introduce a set of custom properties. These properties are loaded via a dedicated set of property files qualified by this selector.                                                                              |                                                                   |
 | param.property.selector.control        | no               | Templates may introduce a set of custom properties. These properties are loaded via a dedicated set of property files qualified by this selector.                                                                              |                                                                   |
 | param.security.policy.file             | no (VR/CR only)  | The file containing the security policy configurations for the workbench.                                                                                                                                                      | <env.workbench.dir>/policies/security-policy/security-policy.json |
+| param.asset.descriptor.dir             | no               | The directory where the asset descriptors are located .                                                                                                                                                                        | <env.workbench.dir>/descriptors                                   |
+| param.asset.descriptor.path            | yes              | The path of the asset descriptor used for the document.                                                                                                                                                                        |                                                                   | 
+| param.reference.inventory.file         | yes              | The path of the reference inventory for the document.                                                                                                                                                                          |                                                                   |
+| param.reference.inventory.dir          | yes              | The directory of the reference inventory for the document.                                                                                                                                                                     |                                                                   |
+| param.reference.license.dir            | no               | The path to the reference license directory.                                                                                                                                                                                   | <param.reference.inventory.dir>/../licenses                       |
+| param.reference.component.dir          | no               | The path to the reference component directory.                                                                                                                                                                                 | <param.reference.inventory.dir>/../components                     |
 
 ### Environment
 | Parameter                    | Required         | Description                                           | default                        |

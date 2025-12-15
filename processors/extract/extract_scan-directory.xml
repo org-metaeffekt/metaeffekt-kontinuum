@@ -45,7 +45,7 @@
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
-                            <sourceInventoryDir>${input.reference.inventory.dir}</sourceInventoryDir>
+                            <sourceInventoryDir>${param.reference.inventory.dir}</sourceInventoryDir>
                             <inputDirectory>${input.extract.dir}</inputDirectory>
                             <scanDirectory>${output.scan.dir}</scanDirectory>
                             <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
@@ -91,7 +91,7 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.reference.inventory.dir</property>
+                                    <property>param.reference.inventory.dir</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.extract.dir</property>

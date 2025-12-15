@@ -36,9 +36,9 @@
 
         <!-- default values for report parameters -->
         <param.document.language>en</param.document.language>
-        <input.asset.descriptor.dir>${env.workbench.dir}/descriptors</input.asset.descriptor.dir>
-        <input.reference.license.dir>${param.reference.inventory.dir}/../licenses</input.reference.license.dir>
-        <input.reference.component.dir>${param.reference.inventory.dir}/../components</input.reference.component.dir>
+        <param.asset.descriptor.dir>${env.workbench.dir}/descriptors</param.asset.descriptor.dir>
+        <param.reference.license.dir>${param.reference.inventory.dir}/../licenses</param.reference.license.dir>
+        <param.reference.component.dir>${param.reference.inventory.dir}/../components</param.reference.component.dir>
         <param.template.dir>${env.workbench.dir}/templates/report-template</param.template.dir>
         <param.computed.inventory.dir>${param.template.dir}/target/tmp</param.computed.inventory.dir>
         <env.workbench.processors.dir>${env.workbench.dir}/processors</env.workbench.processors.dir>
@@ -77,14 +77,14 @@
                                 <argument>-Dproduct.watermark=${param.product.watermark}</argument>
 
                                 <argument>-Dinventory.path=${input.inventory.file}</argument>
-                                <argument>-Dreference.inventory.path=${input.reference.inventory.file}</argument>
+                                <argument>-Dreference.inventory.path=${param.reference.inventory.file}</argument>
 
                                 <argument>-Dreference.license.path=${param.reference.inventory.dir}</argument>
-                                <argument>-Dreference.license.path=${input.reference.license.dir}</argument>
-                                <argument>-Dreference.component.path=${input.reference.component.dir}</argument>
+                                <argument>-Dreference.license.path=${param.reference.license.dir}</argument>
+                                <argument>-Dreference.component.path=${param.reference.component.dir}</argument>
                                 <argument>-Dparam.computed.inventory.dir=${param.computed.inventory.dir}</argument>
-                                <argument>-Dasset.descriptor.basedir=${input.asset.descriptor.dir}</argument>
-                                <argument>-Dasset.descriptor.path=${input.asset.descriptor.path}</argument>
+                                <argument>-Dasset.descriptor.basedir=${param.asset.descriptor.dir}</argument>
+                                <argument>-Dasset.descriptor.path=${param.asset.descriptor.path}</argument>
 
                                 <argument>-Dsecurity.policy.file=${param.security.policy.file}</argument>
                                 <argument>-Denv.vulnerability.mirror.dir=${env.vulnerability.mirror.dir}</argument>
@@ -121,13 +121,13 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.asset.descriptor.path</property>
+                                    <property>param.asset.descriptor.path</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.reference.inventory.file</property>
+                                    <property>param.reference.inventory.file</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.reference.inventory.dir</property>

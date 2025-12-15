@@ -46,7 +46,7 @@ run_maven_command() {
   [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
-  CMD+=("-Dinput.reference.inventory.dir=$INPUT_REFERENCE_INVENTORY_DIR")
+  CMD+=("-Dparam.reference.inventory.dir=$INPUT_REFERENCE_INVENTORY_DIR")
   CMD+=("-Dinput.extract.dir=$INPUT_EXTRACT_DIR")
   CMD+=("-Doutput.scan.dir=$OUTPUT_SCAN_DIR")
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
