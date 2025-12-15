@@ -15,6 +15,10 @@ on:
         description: 'Valid metaeffekt-artifact-analysis version tag.'
         required: true
         type: string
+      trigger-workbench-release:
+        description: 'If true, triggers a workbench release based on this kontinuum release.'
+        default: true
+        type: boolean
 
 env:
   MIRROR_URL: "https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen5-external.tar.gz"
@@ -135,6 +139,7 @@ jobs:
 
       - name: Release workbench
         uses: benc-uk/workflow-dispatch@v1
+        if: ${{ inputs.trigger-workbench-release }}
         with:
           workflow: release
           repo: metaeffekt/metaeffekt-workbench
