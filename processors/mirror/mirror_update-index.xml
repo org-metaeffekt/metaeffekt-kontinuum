@@ -57,23 +57,29 @@
                             <failOnIndexError>true</failOnIndexError>
 
                             <!-- Indexers -->
-                            <nvdVulnerabilityIndex/>
+                            <certFrAdvisorIndex/>
+                            <csafVulnerabilityIndex/>
                             <nvdCpeIndex/>
                             <nvdCpeVendorProductIndex/>
+                            <nvdVulnerabilityIndex/>
+
+                            <osvAdvisorIndex>
+                                <!-- <useDefaultExcludeAdvisoryProviders>true</useDefaultExcludeAdvisoryProviders> -->
+                                <!-- <excludeAdvisoryProviders>[]</excludeAdvisoryProviders> -->
+                            </osvAdvisorIndex>
+
+                            <certSeiAdvisorIndex/>
                             <msrcProductIndex/>
                             <msrcAdvisorIndex/>
                             <msrcKbChainIndex/>
-                            <certSeiAdvisorIndex/>
-                            <certFrAdvisorIndex/>
                             <certEuAdvisorIndex/>
-                            <kevIndex/>
-                            <epssIndex/>
-                            <eolIndex/>
-                            <osvAdvisorIndex/>
                             <csafAdvisoryIndex/>
-                            <csafVulnerabilityIndex/>
-                            <cweIndex/>
                             <capecIndex/>
+                            <kevIndex/>
+                            <eolIndex/>
+                            <cweIndex/>
+                            <epssIndex/>
+
 
                             <!-- The NVD and other vendors often publish data which contain invalid CPEs; this configuration attempts to 'correct' the malformed CPEs -->
                             <!-- A simple "cpeCorrection" has a target string ("malformedCpe") and a replacement string ("replacementCpe") which function as 1:1 text replacements -->
