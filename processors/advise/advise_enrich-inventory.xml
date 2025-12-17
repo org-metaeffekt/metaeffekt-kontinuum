@@ -110,6 +110,11 @@
                                 <activeIds>${param.security.policy.active.ids}</activeIds>
                             </securityPolicy>
 
+                            <!-- NOTE:
+                                    - the configuration can be regularly synchronized with the reference configuration on
+                                      https://github.com/org-metaeffekt/metaeffekt-documentation/blob/main/metaeffekt-vulnerability-management/inventory-enrichment/inventory-enrichment-steps.md#pom-configuration
+                            -->
+
                             <!-- Product Identification -->
                             <cpeDerivationEnrichment>
                                 <active>${param.activate.nvd}</active>
@@ -146,12 +151,14 @@
                             <osvVulnerabilitiesEnrichment>
                                 <active>${param.activate.osv}</active>
 
+                                <!-- TODO-YWI-KKL: Discuss whether this behavior is desired. -->
+                                <!-- whether to require an entry to be marked as reviewed by GitHub in order to be matched.
+                                     since this filter applies to advisories by all providers (not only GitHub), this will exclude all providers that are not GitHub if set to true. -->
                                 <!-- true: removes unreviewed entries -->
                                 <!-- false: keep unreviewed entries (default) -->
                                 <githubReviewed>${param.remove.ghsa.unreviewed}</githubReviewed>
 
                                 <excludeNvdEquivalent>${param.exclude.nvd.equivalent.osv}</excludeNvdEquivalent>
-
                             </osvVulnerabilitiesEnrichment>
 
                             <csafVulnerabilitiesEnrichment>

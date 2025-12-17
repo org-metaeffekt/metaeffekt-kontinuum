@@ -36,8 +36,9 @@
         <param.timeline.max.threads>4</param.timeline.max.threads>
         <param.timeline.time.spent.max>10000</param.timeline.time.spent.max>
 
-        <!-- FIXME-YWI: what is expected here as default -->
-        <!-- <param.timeline.vuln.providers.list></param.timeline.vuln.providers.list> -->
+        <!-- determines what data sources to consider in the vulnerability timelines.
+             supported: NVD, OSV, all -->
+        <!-- <param.timeline.vuln.providers.list>all</param.timeline.vuln.providers.list> -->
     </properties>
 
     <build>
@@ -51,6 +52,7 @@
                     <execution>
                         <id>generate-vulnerability-dashboard</id>
                         <goals>
+                            <!-- https://github.com/org-metaeffekt/metaeffekt-documentation/blob/main/metaeffekt-vulnerability-management/inventory-enrichment/assessment-dashboard.md -->
                             <goal>generate-asset-dashboard</goal>
                         </goals>
                         <configuration>

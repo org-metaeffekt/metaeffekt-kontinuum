@@ -61,19 +61,19 @@
                             <proxyPassword>${param.proxy.pass}</proxyPassword>
                             <proxyPort>${param.proxy.port}</proxyPort>
 
-                            <!-- here we fail on error at the end -->
+                            <!-- fail if an error occurs, but not on incomplete warnings -->
                             <failOnDownloadError>true</failOnDownloadError>
+                            <failOnIntegrityError>false</failOnIntegrityError>
 
                             <!-- Downloads -->
-
 
                             <!-- NOTE: the configuration has parts which are commented out. This is based on the following:
                                     - documentation is provided directly on the downloader configuration
                                     - the defaults are visible while still being explicit
                                     - the defaults may change and have an immediate effect without requiring
                                       an immediate adjustment on the configuration.
-                                    - the configuration can be regularly synchronized with the reference
-                                      configuration on https://github.com/org-metaeffekt/metaeffekt-documentation-template/blob/main/mirror/pom.xml
+                                    - the configuration can be regularly synchronized with the reference configuration on
+                                      https://github.com/org-metaeffekt/metaeffekt-documentation/blob/main/metaeffekt-vulnerability-management/data-mirror/download.md#pom-configuration
 
                                  A regular review of the CSAF-Listers and OSV sources is also recommended.
                             -->
@@ -300,6 +300,8 @@
                             <osvAdvisorDownload>
                                 <!-- <useDefaultIncludeEcosystems>true</useDefaultIncludeEcosystems> -->
                                 <!-- <useDefaultExcludeEcosystems>true</useDefaultExcludeEcosystems> -->
+                                <!-- <includeEcosystems>[]</includeEcosystems> -->
+                                <!-- <excludeEcosystems>[]</excludeEcosystems> -->
 
                                 <resourceLocations>
                                     <!-- URL to fetch the list of ecosystems available for download.

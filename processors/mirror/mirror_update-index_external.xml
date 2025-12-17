@@ -53,10 +53,17 @@
                         <configuration>
                             <mirrorDirectory>${env.mirror.dir}</mirrorDirectory>
 
-                            <!-- here we fail at the end -->
+                            <!-- fail if an error occurs, but not on incomplete warnings -->
                             <failOnIndexError>true</failOnIndexError>
+                            <failOnIntegrityError>false</failOnIntegrityError>
 
                             <!-- Indexers -->
+
+                            <!-- NOTE:
+                                    - the configuration can be regularly synchronized with the reference configuration on
+                                      https://github.com/org-metaeffekt/metaeffekt-documentation/blob/main/metaeffekt-vulnerability-management/data-mirror/index.md#pom-configuration
+                            -->
+
                             <nvdVulnerabilityIndex/>
                             <nvdCpeIndex/>
                             <nvdCpeVendorProductIndex/>
