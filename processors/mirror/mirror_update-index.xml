@@ -53,27 +53,41 @@
                         <configuration>
                             <mirrorDirectory>${env.mirror.dir}</mirrorDirectory>
 
-                            <!-- here we fail at the end -->
+                            <!-- fail if an error occurs, but not on incomplete warnings -->
                             <failOnIndexError>true</failOnIndexError>
+                            <failOnIntegrityError>false</failOnIntegrityError>
 
                             <!-- Indexers -->
+
+                            <!-- NOTE:
+                                    - the configuration can be regularly synchronized with the reference configuration on
+                                      https://github.com/org-metaeffekt/metaeffekt-documentation/blob/main/metaeffekt-vulnerability-management/data-mirror/index.md#pom-configuration
+                            -->
+
                             <nvdVulnerabilityIndex/>
                             <nvdCpeIndex/>
                             <nvdCpeVendorProductIndex/>
                             <msrcProductIndex/>
                             <msrcAdvisorIndex/>
                             <msrcKbChainIndex/>
+
+                            <osvAdvisorIndex>
+                                <!-- <useDefaultExcludeAdvisoryProviders>true</useDefaultExcludeAdvisoryProviders> -->
+                                <!-- <excludeAdvisoryProviders>[]</excludeAdvisoryProviders> -->
+                            </osvAdvisorIndex>
+
+                            <csafVulnerabilityIndex/>
+                            <csafAdvisoryIndex/>
                             <certSeiAdvisorIndex/>
                             <certFrAdvisorIndex/>
                             <certEuAdvisorIndex/>
                             <kevIndex/>
                             <epssIndex/>
                             <eolIndex/>
-                            <osvAdvisorIndex/>
-                            <csafAdvisoryIndex/>
-                            <csafVulnerabilityIndex/>
                             <cweIndex/>
                             <capecIndex/>
+
+
 
                             <!-- The NVD and other vendors often publish data which contain invalid CPEs; this configuration attempts to 'correct' the malformed CPEs -->
                             <!-- A simple "cpeCorrection" has a target string ("malformedCpe") and a replacement string ("replacementCpe") which function as 1:1 text replacements -->
