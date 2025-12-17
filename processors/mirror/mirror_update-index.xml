@@ -64,28 +64,29 @@
                                       https://github.com/org-metaeffekt/metaeffekt-documentation/blob/main/metaeffekt-vulnerability-management/data-mirror/index.md#pom-configuration
                             -->
 
-                            <certFrAdvisorIndex/>
-                            <csafVulnerabilityIndex/>
+                            <nvdVulnerabilityIndex/>
                             <nvdCpeIndex/>
                             <nvdCpeVendorProductIndex/>
-                            <nvdVulnerabilityIndex/>
+                            <msrcProductIndex/>
+                            <msrcAdvisorIndex/>
+                            <msrcKbChainIndex/>
 
                             <osvAdvisorIndex>
                                 <!-- <useDefaultExcludeAdvisoryProviders>true</useDefaultExcludeAdvisoryProviders> -->
                                 <!-- <excludeAdvisoryProviders>[]</excludeAdvisoryProviders> -->
                             </osvAdvisorIndex>
 
-                            <certSeiAdvisorIndex/>
-                            <msrcProductIndex/>
-                            <msrcAdvisorIndex/>
-                            <msrcKbChainIndex/>
-                            <certEuAdvisorIndex/>
+                            <csafVulnerabilityIndex/>
                             <csafAdvisoryIndex/>
-                            <capecIndex/>
+                            <certSeiAdvisorIndex/>
+                            <certFrAdvisorIndex/>
+                            <certEuAdvisorIndex/>
                             <kevIndex/>
+                            <epssIndex/>
                             <eolIndex/>
                             <cweIndex/>
-                            <epssIndex/>
+                            <capecIndex/>
+
 
 
                             <!-- The NVD and other vendors often publish data which contain invalid CPEs; this configuration attempts to 'correct' the malformed CPEs -->

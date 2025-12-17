@@ -71,12 +71,7 @@
                             <!--<msrcProductIndex/>-->
                             <!--<msrcAdvisorIndex/>-->
                             <!--<msrcKbChainIndex/>-->
-                            <certSeiAdvisorIndex/>
-                            <certFrAdvisorIndex/>
-                            <certEuAdvisorIndex/>
-                            <kevIndex/>
-                            <epssIndex/>
-                            <eolIndex/>
+
                             <osvAdvisorIndex>
                                 <excludeAdvisoryProviders>
                                     [
@@ -106,8 +101,15 @@
                                     -->
                                 </excludeAdvisoryProviders>
                             </osvAdvisorIndex>
-                            <csafAdvisoryIndex/>
+
                             <csafVulnerabilityIndex/>
+                            <csafAdvisoryIndex/>
+                            <certSeiAdvisorIndex/>
+                            <certFrAdvisorIndex/>
+                            <certEuAdvisorIndex/>
+                            <kevIndex/>
+                            <epssIndex/>
+                            <eolIndex/>
                             <cweIndex/>
                             <capecIndex/>
 
