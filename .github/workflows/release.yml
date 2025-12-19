@@ -47,7 +47,6 @@ jobs:
         with:
           distribution: zulu
           java-version: '17'
-          cache: 'maven'
 
       - name: Adjust core and artifact-analysis versions
         run: |
