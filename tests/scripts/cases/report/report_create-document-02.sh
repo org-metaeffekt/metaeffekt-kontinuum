@@ -2,7 +2,6 @@
 
 export INPUT_ASSET_DESCRIPTOR_PATH="asset-descriptor_GENERIC-vulnerability-report.yaml"
 export INPUT_INVENTORY_FILE="$ADVISED_DIR_002/busybox-1.35.0-enriched.xlsx"
-export INPUT_REFERENCE_INVENTORY_FILE="$INTERNAL_WORKBENCH_DIR/inventories/example-reference-inventory/inventory/artifact-inventory.xls"
 export OUTPUT_DOCUMENT_FILE="$REPORTED_DIR_002/busybox-1.35.0-vulnerability-report.pdf"
 export OUTPUT_COMPUTED_INVENTORY_DIR="$REPORTED_DIR_002/computed"
 export PARAM_REFERENCE_INVENTORY_DIR="$EXTERNAL_WORKBENCH_DIR/inventories/example-reference-inventory/inventory"

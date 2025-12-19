@@ -37,8 +37,11 @@
         <!-- default values for report parameters -->
         <param.document.language>en</param.document.language>
         <param.asset.descriptor.dir>${env.workbench.dir}/descriptors</param.asset.descriptor.dir>
+
+        <!-- FIXME: Check whether this is required -->
         <param.reference.license.dir>${param.reference.inventory.dir}/../licenses</param.reference.license.dir>
         <param.reference.component.dir>${param.reference.inventory.dir}/../components</param.reference.component.dir>
+
         <param.template.dir>${env.workbench.dir}/templates/report-template</param.template.dir>
         <param.computed.inventory.dir>${param.template.dir}/target/tmp</param.computed.inventory.dir>
         <env.workbench.processors.dir>${env.workbench.dir}/processors</env.workbench.processors.dir>
@@ -77,9 +80,8 @@
                                 <argument>-Dproduct.watermark=${param.product.watermark}</argument>
 
                                 <argument>-Dinventory.path=${input.inventory.file}</argument>
-                                <argument>-Dreference.inventory.path=${param.reference.inventory.file}</argument>
+                                <argument>-Dreference.inventory.path=${param.reference.inventory.dir}</argument>
 
-                                <argument>-Dreference.license.path=${param.reference.inventory.dir}</argument>
                                 <argument>-Dreference.license.path=${param.reference.license.dir}</argument>
                                 <argument>-Dreference.component.path=${param.reference.component.dir}</argument>
                                 <argument>-Dparam.computed.inventory.dir=${param.computed.inventory.dir}</argument>
@@ -125,12 +127,6 @@
                                 </requireProperty>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.reference.inventory.file</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.reference.inventory.dir</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.document.file</property>

@@ -46,7 +46,6 @@ run_maven_command() {
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dparam.asset.descriptor.path=$INPUT_ASSET_DESCRIPTOR_PATH")
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-  CMD+=("-Dparam.reference.inventory.file=$INPUT_REFERENCE_INVENTORY_FILE")
   CMD+=("-Doutput.document.file=$OUTPUT_DOCUMENT_FILE")
   CMD+=("-Dparam.computed.inventory.dir=$OUTPUT_COMPUTED_INVENTORY_DIR")
   CMD+=("-Dparam.reference.inventory.dir=$PARAM_REFERENCE_INVENTORY_DIR")
