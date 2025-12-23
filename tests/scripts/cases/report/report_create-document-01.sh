@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export INPUT_ASSET_DESCRIPTOR_PATH="asset-descriptor_GENERIC-vulnerability-report.yaml"
 export INPUT_INVENTORY_FILE="$AGGREGATED_DIR_001/sample-asset-1.0/sample-asset-1.0-inventory.xls"
 export OUTPUT_DOCUMENT_FILE="$REPORTED_DIR_001/asset-vulnerability-report.pdf"
 export OUTPUT_COMPUTED_INVENTORY_DIR="$REPORTED_DIR_001/computed"
+export PARAM_ASSET_DESCRIPTOR_FILE="$EXTERNAL_WORKBENCH_DIR/descriptors/asset-descriptor_GENERIC-vulnerability-report.yaml"
 export PARAM_REFERENCE_INVENTORY_DIR="$EXTERNAL_WORKBENCH_DIR/inventories/example-reference-inventory/inventory"
 export PARAM_SECURITY_POLICY_FILE="$EXTERNAL_WORKBENCH_DIR/policies/security-policy/security-policy.json"
 export PARAM_DOCUMENT_TYPE="VR"
