@@ -13,13 +13,15 @@ None. This processor does not operate on workspace level.
 
 
 ### Parameters
-| Parameter          | Required | Description                            |
-|--------------------|----------|----------------------------------------|
-| param.proxy.scheme | no       | The proxy scheme.                      |
-| param.proxy.host   | no       | The proxy host.                        |
-| param.proxy.port   | no       | The proxy port.                        |
-| param.proxy.user   | no       | The proxy user.                        |
-| param.proxy.pass   | no       | The proxy pass.                        |
+| Parameter           | Required | Description                                                                                             |
+|---------------------|----------|---------------------------------------------------------------------------------------------------------|
+| param.proxy.scheme  | no       | The proxy scheme.                                                                                       |
+| param.proxy.host    | no       | The proxy host.                                                                                         |
+| param.proxy.port    | no       | The proxy port.                                                                                         |
+| param.proxy.user    | no       | The proxy user.                                                                                         |
+| param.proxy.pass    | no       | The proxy pass.                                                                                         |
+| param.fail.on.error | no       | Fails the process in case a error is detected during indexing. Defaults to `true`.                      |
+| param.fail.on.issue | no       | Fails the process in case of an integrity issue or incomplete state with the index. Defaults to `true`. |
 
 
 ### Environment

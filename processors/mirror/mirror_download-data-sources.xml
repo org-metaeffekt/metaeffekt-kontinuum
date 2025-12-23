@@ -37,6 +37,9 @@
         <param.proxy.port>-1</param.proxy.port>
         <param.proxy.user>none</param.proxy.user>
         <param.proxy.pass>none</param.proxy.pass>
+
+        <param.fail.on.error>true</param.fail.on.error>
+        <param.fail.on.issue>true</param.fail.on.issue>
     </properties>
 
     <build>
@@ -62,8 +65,8 @@
                             <proxyPort>${param.proxy.port}</proxyPort>
 
                             <!-- fail if an error occurs, but not on incomplete warnings -->
-                            <failOnDownloadError>true</failOnDownloadError>
-                            <failOnIntegrityError>false</failOnIntegrityError>
+                            <failOnDownloadError>${param.fail.on.error}</failOnDownloadError>
+                            <failOnIntegrityError>${param.fail.on.issue}</failOnIntegrityError>
 
                             <!-- Downloads -->
 

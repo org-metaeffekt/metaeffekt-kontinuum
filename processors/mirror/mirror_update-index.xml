@@ -34,6 +34,9 @@
         <param.proxy.port>-1</param.proxy.port>
         <param.proxy.user>none</param.proxy.user>
         <param.proxy.pass>none</param.proxy.pass>
+
+        <param.fail.on.error>true</param.fail.on.error>
+        <param.fail.on.issue>true</param.fail.on.issue>
     </properties>
 
     <build>
@@ -54,8 +57,8 @@
                             <mirrorDirectory>${env.mirror.dir}</mirrorDirectory>
 
                             <!-- fail if an error occurs, but not on incomplete warnings -->
-                            <failOnIndexError>true</failOnIndexError>
-                            <failOnIntegrityError>false</failOnIntegrityError>
+                            <failOnIndexError>${param.fail.on.error}</failOnIndexError>
+                            <failOnIntegrityError>${param.fail.on.issue}</failOnIntegrityError>
 
                             <!-- Indexers -->
 
