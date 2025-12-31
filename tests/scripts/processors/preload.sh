@@ -135,10 +135,6 @@ load_externalrc() {
     log_info "No EXTERNAL_VULNERABILITY_MIRROR_URL specified in external.rc, this might result in scripts failing."
   fi
 
-  if [ -z "${EXTERNAL_VULNERABILITY_MIRROR_NAME:-}" ]; then
-    log_info "No EXTERNAL_VULNERABILITY_MIRROR_NAME specified in external.rc, this might result in scripts failing."
-  fi
-
   if [ -z "${AE_CORE_VERSION:-}" ]; then
     log_info "No AE_CORE_VERSION specified in external.rc file, using HEAD-SNAPSHOT."
   fi

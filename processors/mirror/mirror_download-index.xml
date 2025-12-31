@@ -120,7 +120,7 @@
                             <target if="update.required">
                                 <echo message="Downloading to ${mirror.target.tmp}" />
                                 <mkdir dir="${mirror.target.tmp}" />
-                                <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}" />
+                                <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}/" />
                             </target>
                         </configuration>
                     </execution>
@@ -136,23 +136,30 @@
                                 <!-- Define ant-contrib tasks -->
                                 <taskdef resource="net/sf/antcontrib/antlib.xml" />
 
-                                <!-- Determine archive type based on file extension -->
+                                <!-- extract file name -->
+                                <propertyregex property="mirror.file"
+                                               input="${param.mirror.archive.url}"
+                                               regexp=".*\/([^\/])"
+                                               replace="\1"
+                                               casesensitive="false" />
+
+                                <!-- Determine archive type based on file extension in url -->
                                 <condition property="is.zip">
-                                    <matches pattern=".*\.zip$" string="${param.mirror.archive.name}" />
+                                    <matches pattern=".*\.zip$" string="${param.mirror.archive.url}" />
                                 </condition>
                                 <condition property="is.tar.gz">
-                                    <matches pattern=".*\.tar\.gz$" string="${param.mirror.archive.name}" />
+                                    <matches pattern=".*\.tar\.gz$" string="${param.mirror.archive.url}" />
                                 </condition>
 
                                 <if>
                                     <isset property="is.zip" />
                                     <then>
-                                        <unzip src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${env.vulnerability.mirror.dir}/.database_update" />
+                                        <unzip src="${mirror.target.tmp}/${mirror.file}" dest="${env.vulnerability.mirror.dir}/.database_update" />
                                     </then>
                                     <elseif>
                                         <isset property="is.tar.gz" />
                                         <then>
-                                            <untar src="${mirror.target.tmp}/${param.mirror.archive.name}" dest="${env.vulnerability.mirror.dir}/.database_update" compression="gzip" />
+                                            <untar src="${mirror.target.tmp}/${mirror.file}" dest="${env.vulnerability.mirror.dir}/.database_update" compression="gzip" />
                                         </then>
                                     </elseif>
                                 </if>

@@ -8,8 +8,6 @@ EXTERNAL_VULNERABILITY_MIRROR_DIR="/PATH/TO/MIRROR"
 # For testing purposes you can use the provided URL. In case you have access to a full internal mirror replace the URL
 # accordingly.
 #EXTERNAL_VULNERABILITY_MIRROR_URL="https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen4-external.tar.gz"
-# FIXME-JFU: we should try to get rid of this as it is redundant/irrelevant
-#EXTERNAL_VULNERABILITY_MIRROR_NAME="ae-mirror-index_gen4-external.tar.gz"
 
 # The NVD_API_KEY is only required when building the vulnerability mirror locally. Usually, a pre-built index is consumed.
 #NVD_API_KEY="<nvd-api-key>"
