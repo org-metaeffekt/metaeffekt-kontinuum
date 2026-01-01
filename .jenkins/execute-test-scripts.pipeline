@@ -80,7 +80,7 @@ pipeline {
                 // this is effectively workspace/.vulnerability-mirror; so next to the jobs workspace; reconsider as shared
                 sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_DIR=\"$(dirname $(pwd))/.vulnerability-mirror\"" >> external.rc'
 
-                //
+                // configure mirror
                 sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_URL=\"http://ae-scanner/mirror/index/ae-mirror-index_gen5.tar.gz\"" >> external.rc'
 
                 sh 'echo "AE_CORE_VERSION=\"HEAD-SNAPSHOT\"" >> external.rc'
