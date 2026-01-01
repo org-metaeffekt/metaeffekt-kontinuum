@@ -44,7 +44,6 @@ run_maven_command() {
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Denv.vulnerability.mirror.dir=$MIRROR_TARGET_DIR")
   CMD+=("-Dparam.mirror.archive.url=$MIRROR_ARCHIVE_URL")
-  CMD+=("-Dparam.mirror.archive.name=$MIRROR_ARCHIVE_NAME")
 
   pass_command_info_to_logger "$(basename "$0")"
 }

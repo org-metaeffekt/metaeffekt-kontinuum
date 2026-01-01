@@ -235,9 +235,6 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>param.mirror.archive.name</property>
-                                </requireProperty>
-                                <requireProperty>
                                     <property>param.mirror.archive.url</property>
                                 </requireProperty>
                                 <requireProperty>
