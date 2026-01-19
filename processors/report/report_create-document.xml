@@ -78,7 +78,7 @@
                                 <argument>-Dproduct.name=${param.product.name}</argument>
                                 <argument>-Dproduct.watermark=${param.product.watermark}</argument>
 
-                                <argument>-Dinventory.path=${input.inventory.file}</argument>
+                                <argument>-Dinput.inventory.dir=${input.inventory.dir}</argument>
                                 <argument>-Dreference.inventory.path=${param.reference.inventory.dir}</argument>
 
                                 <argument>-Dreference.license.path=${param.reference.license.dir}</argument>
@@ -121,13 +121,13 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>param.asset.descriptor.file</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>input.inventory.file</property>
+                                    <property>input.inventory.dir</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.document.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.asset.descriptor.file</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.document.type</property>
