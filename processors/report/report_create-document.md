@@ -48,8 +48,7 @@ of this repository.
 |------------------------------|----------------------|-------------------------------------------------------|--------------------------------|
 | env.kontinuum.dir            | yes                  | The directory of the kontinuum.                       |                                | 
 | env.kontinuum.processors.dir | no                   | The directory of the kontinuum processors.            | <env.kontinuum.dir>/processors | 
-| env.workbench.processors.dir | yes                  | The directory of the workbench.                       |                                | 
-| env.workbench.processors.dir | no                   | The directory of the workbench processors.            | <env.workbench.dir>/processors | 
+| env.workbench.dir            | yes                  | The directory of the workbench.                       |                                | 
 | env.vulnerability.mirror.dir | yes (VR/VSR/CR only) | The input database containing the vulnerability data. |                                |
 
 ### Notes
