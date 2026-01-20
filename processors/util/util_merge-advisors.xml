@@ -37,11 +37,11 @@
                 <version>${ae.artifact.analysis.version}</version>
                 <executions>
                     <execution>
-                        <id>last-updated-cert-overall</id>
+                        <id>merge-advisors</id>
                         <goals>
                             <goal>merge-advisor-inventories</goal>
                         </goals>
-                        <phase>generate-sources</phase>
+                        <phase>initialize</phase>
                         <configuration>
                             <referenceInventories>${input.inventory.dir}</referenceInventories>
                             <inventoryOutputFile>${output.inventory.file}</inventoryOutputFile>
