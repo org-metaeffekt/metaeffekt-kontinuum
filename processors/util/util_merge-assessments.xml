@@ -42,7 +42,7 @@
                         <goals>
                             <goal>merge-inventories-assessment</goal>
                         </goals>
-                        <phase>process-sources</phase>
+                        <phase>generate-sources</phase>
                         <configuration>
                             <sourceInventoryBaseDir>${input.inventory.dir}</sourceInventoryBaseDir>
                             <sourceInventoryIncludes>**/*.xls,**/*.xlsx</sourceInventoryIncludes>

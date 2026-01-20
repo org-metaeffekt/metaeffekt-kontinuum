@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export INPUT_INVENTORY_FILE="$ADVISED_DIR_002/busybox-1.35.0-enriched.xlsx"
+export INPUT_INVENTORY_DIR="$ADVISED_DIR_002"
 export OUTPUT_DOCUMENT_FILE="$REPORTED_DIR_002/busybox-1.35.0-vulnerability-report.pdf"
 export OUTPUT_COMPUTED_INVENTORY_DIR="$REPORTED_DIR_002/computed"
 export PARAM_ASSET_DESCRIPTOR_FILE="$EXTERNAL_WORKBENCH_DIR/descriptors/asset-descriptor_GENERIC-vulnerability-report.yaml"
