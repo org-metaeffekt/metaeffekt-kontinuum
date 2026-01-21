@@ -26,12 +26,9 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>util_merge-inventories</artifactId>
+    <artifactId>util_merge-assessments</artifactId>
     <packaging>pom</packaging>
 
-    <properties>
-        <param.inventory.includes>**/*.xls,**/*.xlsx</param.inventory.includes>
-    </properties>
     <build>
         <plugins>
             <plugin>
@@ -39,15 +36,16 @@
                 <artifactId>ae-inventory-maven-plugin</artifactId>
                 <version>${ae.core.version}</version>
                 <executions>
+
                     <execution>
-                        <id>merge-inventories-dir</id>
+                        <id>merge-inventories-assessment</id>
                         <goals>
-                            <goal>merge-inventories</goal>
+                            <goal>merge-inventories-assessment</goal>
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
                             <sourceInventoryBaseDir>${input.inventory.dir}</sourceInventoryBaseDir>
-                            <sourceInventoryIncludes>${param.inventory.includes}</sourceInventoryIncludes>
+                            <sourceInventoryIncludes>**/*.xls,**/*.xlsx</sourceInventoryIncludes>
                             <targetInventory>${output.inventory.file}</targetInventory>
                         </configuration>
                     </execution>
@@ -80,4 +78,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

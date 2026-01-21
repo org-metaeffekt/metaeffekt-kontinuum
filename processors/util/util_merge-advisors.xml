@@ -26,34 +26,36 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>util_merge-inventories</artifactId>
+    <artifactId>util_merge-advisors</artifactId>
     <packaging>pom</packaging>
 
-    <properties>
-        <param.inventory.includes>**/*.xls,**/*.xlsx</param.inventory.includes>
-    </properties>
     <build>
         <plugins>
             <plugin>
-                <groupId>org.metaeffekt.core</groupId>
-                <artifactId>ae-inventory-maven-plugin</artifactId>
-                <version>${ae.core.version}</version>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-inventory-enrichment-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
                 <executions>
                     <execution>
-                        <id>merge-inventories-dir</id>
+                        <id>merge-advisors</id>
                         <goals>
-                            <goal>merge-inventories</goal>
+                            <goal>merge-advisor-inventories</goal>
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <sourceInventoryBaseDir>${input.inventory.dir}</sourceInventoryBaseDir>
-                            <sourceInventoryIncludes>${param.inventory.includes}</sourceInventoryIncludes>
-                            <targetInventory>${output.inventory.file}</targetInventory>
+                            <referenceInventories>${input.inventory.dir}</referenceInventories>
+                            <inventoryOutputFile>${output.inventory.file}</inventoryOutputFile>
+
+                            <securityPolicy>
+                                <files>
+                                    <file>${param.security.policy.file}</file>
+                                </files>
+                                <activeIds>${param.security.policy.active.ids}</activeIds>
+                            </securityPolicy>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -72,6 +74,9 @@
                                 <requireProperty>
                                     <property>output.inventory.file</property>
                                 </requireProperty>
+                                <requireProperty>
+                                    <property>param.security.policy.file</property>
+                                </requireProperty>
                             </rules>
                             <fail>true</fail>
                         </configuration>
@@ -80,4 +85,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
