@@ -22,7 +22,7 @@ pipeline {
                     sh 'mkdir -p .metaeffekt-workbench'
                     dir ('.metaeffekt-workbench') {
                         withCredentials([usernamePassword(credentialsId: 'JenkinsGithubAccess', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                            git url: 'https://github.com/org-metaeffekt/metaeffekt-workbench.git', branch: 'main', credentialsId: 'JenkinsGithubAccess'
+                            git url: 'https://github.com/org-metaeffekt/metaeffekt-workbench.git', branch: 'AE-1700-asset-descriptor-folder-input', credentialsId: 'JenkinsGithubAccess'
                         }
                     }
                 }

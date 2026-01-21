@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export INPUT_INVENTORY_FILE="$AGGREGATED_DIR_001/sample-asset-1.0/sample-asset-1.0-inventory.xls"
+export INPUT_INVENTORY_DIR="$AGGREGATED_DIR_001/sample-asset-1.0"
 export OUTPUT_DOCUMENT_FILE="$REPORTED_DIR_001/asset-vulnerability-report.pdf"
 export OUTPUT_COMPUTED_INVENTORY_DIR="$REPORTED_DIR_001/computed"
 export PARAM_ASSET_DESCRIPTOR_FILE="$EXTERNAL_WORKBENCH_DIR/descriptors/asset-descriptor_GENERIC-vulnerability-report.yaml"
