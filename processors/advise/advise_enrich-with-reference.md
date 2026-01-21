@@ -11,12 +11,14 @@ of this repository.
 | Parameter                     | Required | Description                                                                          |
 |-------------------------------|----------|--------------------------------------------------------------------------------------|
 | input.inventory.file          | yes      | The file path of the inventory which will be enriched with the reference inventory.  |
-| input.reference.inventory.dir | yes      | The directory of the reference inventory with which the input inventory is enriched. |
 | output.inventory.dir          | yes      | The target directory for the enriched output inventory.                              |     
 | output.inventory.path         | yes      | The path of the output inventory relative to 'output.inventory.dir' .                |     
 
 ### Parameters
-None
+| Parameter                       | Required | Description                                                                            |
+|---------------------------------|----------|----------------------------------------------------------------------------------------|
+| param.reference.inventory.dir   | yes      | The directory of the reference inventory with which the input inventory is enriched.   |
+
 
 ### Environment
 None

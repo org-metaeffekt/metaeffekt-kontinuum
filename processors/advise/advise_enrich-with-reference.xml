@@ -49,7 +49,7 @@
                         <configuration>
                             <inventory>${input.inventory.file}</inventory>
 
-                            <sourceInventoryDir>${input.reference.inventory.dir}</sourceInventoryDir>
+                            <sourceInventoryDir>${param.reference.inventory.dir}</sourceInventoryDir>
                             <sourceInventoryIncludes>*.xls,*.xlsx,*.ser</sourceInventoryIncludes>
 
                             <failOnError>${advisor.validation}</failOnError>
@@ -98,7 +98,7 @@
                                     <property>output.inventory.path</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.reference.inventory.dir</property>
+                                    <property>param.reference.inventory.dir</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

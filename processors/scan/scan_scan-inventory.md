@@ -13,4 +13,8 @@ of this repository.
 | input.inventory.file               | yes      | The resolved input inventory file path.                                                                                        |
 | output.inventory.file              | yes      | The scanned output inventory file path.                                                                                        |
 | input.output.analysis.base.dir     | yes      | The directory in which the scanner caches information on artifacts. Increases speed drastically between multiple scanner runs. |
-| input.properties.file              | yes      | Yaml file containing properties to configure the scanners behaviour.                                                           |
+
+### Parameters
+| Parameter                         | Required | Description                                                                          | default                                                           |
+|-----------------------------------|----------|--------------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| param.properties.file             | yes      | Yaml file containing properties to configure the scanners behaviour.                 |

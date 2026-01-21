@@ -43,12 +43,13 @@ initialize_logger() {
 #Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/scan/scan_scan-inventory.xml" process-resources)
+  [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
   CMD+=("-Dinput.output.analysis.base.dir=$ANALYSIS_BASE_DIR")
-  CMD+=("-Dinput.properties.file=$PROPERTIES_FILE")
+  CMD+=("-Dparam.properties.file=$PROPERTIES_FILE")
   CMD+=("-Denv.kosmos.password=$ENV_KOSMOS_PASSWORD")
   CMD+=("-Denv.kosmos.userkeys.file=$ENV_KOSMOS_USERKEYS_FILE")
 

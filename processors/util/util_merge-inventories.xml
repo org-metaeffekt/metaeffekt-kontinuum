@@ -30,7 +30,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <param.inventory.includes>*.xls</param.inventory.includes>
+        <param.inventory.includes>**/*.xls,**/*.xlsx</param.inventory.includes>
     </properties>
     <build>
         <plugins>

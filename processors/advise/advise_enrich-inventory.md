@@ -13,7 +13,6 @@ of this repository.
 | Parameter                        | Required | Description                                                               |
 |----------------------------------|----------|---------------------------------------------------------------------------|
 | input.inventory.file             | yes      | The input inventory file which will be enriched.                          |
-| input.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment. |
 | output.inventory.file            | yes      | The file of the resulting output inventory.                               |
 | output.tmp.dir                   | yes      | The directory containing temporary files like intermediate inventories.   |
 
@@ -27,10 +26,11 @@ of this repository.
 | param.security.policy.active.ids | no       | The activeIds of the security policy configurations to use for enrichment.                    |
 | param.activate.*                 | no       | Switches determining which vulnerability databases are utilized during the enrichment process. |
 | param.exclude.nvd.equivalent.*   | no       | Switches determining if vulnerabilities equivalent to those found via nvd should be excluded.  |
+| param.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment.                      |
 | param.dashboard.title            | ignore   | Title for a dashboard which could be generated during this process.                            |
 | param.dashboard.subtitle         | ignore   | Subtitle for a dashboard which could be generated during this process.                         |
 | param.dashboard.footer           | ignore   | Footer for a dashboard which could be generated during this process.                           |
-
+=
 ### Environment
 | Parameter                    | Required | Description                                        |
 |------------------------------|----------|----------------------------------------------------|

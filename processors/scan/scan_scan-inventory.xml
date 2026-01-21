@@ -45,7 +45,7 @@
                             <inputInventory>${input.inventory.file}</inputInventory>
                             <targetFile>${output.inventory.file}</targetFile>
                             <analysisBaseDir>${input.output.analysis.base.dir}</analysisBaseDir>
-                            <propertiesFile>${input.properties.file}</propertiesFile>
+                            <propertiesFile>${param.properties.file}</propertiesFile>
 
                             <!-- We utilize the metaeffekt kosmos as our database for license information -->
                             <tmdGroupId>com.metaeffekt.kosmos</tmdGroupId>
@@ -80,7 +80,7 @@
                                     <property>input.output.analysis.base.dir</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>input.properties.file</property>
+                                    <property>param.properties.file</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

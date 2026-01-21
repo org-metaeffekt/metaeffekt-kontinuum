@@ -8,23 +8,20 @@ on:
         required: true
         type: string
       ae-core-version:
-        description: 'Metaeffekt Core version to use for this release.'
+        description: 'Valid metaeffekt-core version tag.'
         required: true
         type: string
       ae-artifact-analysis-version:
-        description: 'Metaeffekt Artifact Analysis version to use for this release.'
+        description: 'Valid metaeffekt-artifact-analysis version tag.'
         required: true
         type: string
-      ae-workbench-version:
-        description: 'Metaeffekt Workbench version tag or branch to utilize for testing.'
-        default: main
-        required: false
-        type: string
       trigger-workbench-release:
-        description: 'Triggers the release pipeline in the metaeffekt-workbench repository, preparing a release with the same version as defined in the "version" input.'
-        default: false
-        required: false
+        description: 'If true, triggers a workbench release based on this kontinuum release.'
+        default: true
         type: boolean
+
+env:
+  MIRROR_URL: "https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen5-external.tar.gz"
 
 permissions:
   contents: write
@@ -43,18 +40,14 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@metaeffekt.com"
           git config --local user.name "github-actions[bot]"
-          git checkout -b release/${{ inputs.version }}
+          git checkout -B release/${{ inputs.version }}
 
-      - name: Install Maven
-        run: |
-          MVN_VER=3.9.11
-          wget -q https://downloads.apache.org/maven/maven-3/${MVN_VER}/binaries/apache-maven-${MVN_VER}-bin.tar.gz
-          sudo tar -xzf apache-maven-${MVN_VER}-bin.tar.gz -C /opt/
-          sudo mv /opt/apache-maven-${MVN_VER} /opt/maven
-          echo "/opt/maven/bin" >> "$GITHUB_PATH"
-          pwd
+      - uses: actions/setup-java@v4
+        with:
+          distribution: zulu
+          java-version: '17'
 
-      - name: Replace versions in parent processor
+      - name: Adjust core and artifact-analysis versions
         run: |
           sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|g' \
             processors/_common_/ae-kontinuum-processors.xml
@@ -65,9 +58,9 @@ jobs:
         run: |
           git clone https://github.com/org-metaeffekt/metaeffekt-workbench.git ${{ github.workspace }}/.metaeffekt-workbench
           cd ${{ github.workspace }}/.metaeffekt-workbench
-          git checkout ${{ inputs.ae-workbench-version }}
+          git checkout main
 
-      - name: Change metaeffekt-workbench versioning
+      - name: Adjust core and artifact-analysis versions in workbench
         run: |
           cd ${{ github.workspace }}/.metaeffekt-workbench
           sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|' templates/report-template/pom.xml
@@ -81,13 +74,11 @@ jobs:
           touch ${{ github.workspace }}/external.rc
           echo "EXTERNAL_WORKBENCH_DIR=${{ github.workspace }}/.metaeffekt-workbench" >> ${{ github.workspace }}/external.rc
           echo "EXTERNAL_VULNERABILITY_MIRROR_DIR=${{ github.workspace }}/.mirror" >> ${{ github.workspace }}/external.rc
-          echo "EXTERNAL_VULNERABILITY_MIRROR_URL=https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen4-external.tar.gz" >> ${{ github.workspace }}/external.rc
-          echo "EXTERNAL_VULNERABILITY_MIRROR_NAME=ae-mirror-index_gen4-external.tar.gz" >> ${{ github.workspace }}/external.rc
+          echo "EXTERNAL_VULNERABILITY_MIRROR_URL=${{ env.MIRROR_URL }}" >> ${{ github.workspace }}/external.rc
           echo "NVD_API_KEY=${{ secrets.NVD_API_KEY }}" >> ${{ github.workspace }}/external.rc
           echo "AE_CORE_VERSION=${{ inputs.ae-core-version }}" >> ${{ github.workspace }}/external.rc
           echo "AE_ARTIFACT_ANALYSIS_VERSION=${{ inputs.ae-artifact-analysis-version }}" >> ${{ github.workspace }}/external.rc
-
-          cat ${{ github.workspace }}/external.rc
+          echo "DUMP_LOGS=true" >> ${{ github.workspace }}/external.rc
 
       - name: Restore vulnerability mirror and maven index cache
         uses: actions/cache/restore@v4
@@ -103,7 +94,7 @@ jobs:
           AE_CORE_VERSION: ${{ inputs.ae-core-version }}
           AE_ARTIFACT_ANALYSIS_VERSION: ${{ inputs.ae-artifact-analysis-version }}
         run: |          
-          ./tests/scripts/pipelines/run_workspace-remote.sh
+          ./tests/scripts/pipelines/001_remote.sh
 
       - name: Save vulnerability mirror and maven index cache
         uses: actions/cache/save@v4
@@ -120,25 +111,16 @@ jobs:
           name: logs
           path: .logs
 
-      - name: Dump last 100 lines of log file
-        if: always()
-        shell: bash
-        run: |
-          shopt -s nullglob
-          for f in metaeffekt-kontinuum/.logs/*; do
-            echo "- $f -"
-            tail -n 100 "$f"
-          done
-
       - name: Commit changes
         if: ${{ !env.ACT }}
         run: |
           git add processors/_common_/ae-kontinuum-processors.xml
           git commit -m "Release ${{ inputs.version }}" || echo "No changes to commit"
 
+      # We need to use --force here as previous failed pipeline might have pushed to the branch already.
       - name: Push changes
         if: ${{ !env.ACT }}
-        run: git push --set-upstream origin "release/${{ inputs.version }}"
+        run: git push --set-upstream origin "release/${{ inputs.version }}" --force
 
       - name: Create Release
         if: ${{ !env.ACT }}
@@ -146,15 +128,17 @@ jobs:
         with:
           tag_name: ${{ inputs.version }}
           target_commitish: "release/${{ inputs.version }}"
-          name: Release ${{ inputs.version }}
+          name: ${{ inputs.version }}
           draft: false
           prerelease: false
 
-      - name: Trigger workbench release
+      - name: Release workbench
         if: ${{ inputs.trigger-workbench-release }}
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: release
-          repo: metaeffekt/metaeffekt-workbench
-          token: ${{ secrets.GITHUB_TOKEN }}
-          inputs: '{"ae-kontinuum-version": "${{ inputs.version }}", "ae-core-version": "${{ inputs.ae-core-version }}", "ae-artifact-analysis-version": "${{ inputs.ae-artifact-analysis-version }}", "version": "${{ inputs.version }}"}'
+        run: |
+          curl -L \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.ACCESS_TOKEN }}" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/repos/org-metaeffekt/metaeffekt-workbench/actions/workflows/209808056/dispatches \
+          -d '{"ref":"main", "inputs":{"ae-kontinuum-version": "${{ inputs.version }}", "ae-core-version": "${{ inputs.ae-core-version }}", "ae-artifact-analysis-version": "${{ inputs.ae-artifact-analysis-version }}", "version": "${{ inputs.version }}"}}'

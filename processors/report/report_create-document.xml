@@ -36,9 +36,11 @@
 
         <!-- default values for report parameters -->
         <param.document.language>en</param.document.language>
-        <input.asset.descriptor.dir>${env.workbench.dir}/descriptors</input.asset.descriptor.dir>
-        <input.reference.license.dir>${param.reference.inventory.dir}/../licenses</input.reference.license.dir>
-        <input.reference.component.dir>${param.reference.inventory.dir}/../components</input.reference.component.dir>
+
+        <!-- FIXME: Check whether this is required -->
+        <param.reference.license.dir>${param.reference.inventory.dir}/../licenses</param.reference.license.dir>
+        <param.reference.component.dir>${param.reference.inventory.dir}/../components</param.reference.component.dir>
+
         <param.template.dir>${env.workbench.dir}/templates/report-template</param.template.dir>
         <param.computed.inventory.dir>${param.template.dir}/target/tmp</param.computed.inventory.dir>
         <env.workbench.processors.dir>${env.workbench.dir}/processors</env.workbench.processors.dir>
@@ -76,15 +78,13 @@
                                 <argument>-Dproduct.name=${param.product.name}</argument>
                                 <argument>-Dproduct.watermark=${param.product.watermark}</argument>
 
-                                <argument>-Dinventory.path=${input.inventory.file}</argument>
-                                <argument>-Dreference.inventory.path=${input.reference.inventory.file}</argument>
+                                <argument>-Dinput.inventory.dir=${input.inventory.dir}</argument>
+                                <argument>-Dreference.inventory.path=${param.reference.inventory.dir}</argument>
 
-                                <argument>-Dreference.license.path=${param.reference.inventory.dir}</argument>
-                                <argument>-Dreference.license.path=${input.reference.license.dir}</argument>
-                                <argument>-Dreference.component.path=${input.reference.component.dir}</argument>
+                                <argument>-Dreference.license.path=${param.reference.license.dir}</argument>
+                                <argument>-Dreference.component.path=${param.reference.component.dir}</argument>
                                 <argument>-Dparam.computed.inventory.dir=${param.computed.inventory.dir}</argument>
-                                <argument>-Dasset.descriptor.basedir=${input.asset.descriptor.dir}</argument>
-                                <argument>-Dasset.descriptor.path=${input.asset.descriptor.path}</argument>
+                                <argument>-Dasset.descriptor.file=${param.asset.descriptor.file}</argument>
 
                                 <argument>-Dsecurity.policy.file=${param.security.policy.file}</argument>
                                 <argument>-Denv.vulnerability.mirror.dir=${env.vulnerability.mirror.dir}</argument>
@@ -99,7 +99,6 @@
                                 <argument>-Dproperty.selector.language=${param.document.language}</argument>
                                 <argument>-Dtemplate.dir=${param.template.dir}</argument>
 
-                                <argument>-Dworkbench.processors.dir=${env.workbench.processors.dir}</argument>
                                 <argument>-Dworkbench.dir=${env.workbench.dir}</argument>
                                 <argument>-Dkontinuum.dir=${env.kontinuum.dir}</argument>
                                 <argument>-Dkontinuum.processors.dir=${env.kontinuum.processors.dir}</argument>
@@ -121,19 +120,13 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.asset.descriptor.path</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>input.inventory.file</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>input.reference.inventory.file</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.reference.inventory.dir</property>
+                                    <property>input.inventory.dir</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.document.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.asset.descriptor.file</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.document.type</property>
@@ -158,9 +151,6 @@
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.property.selector.organization</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>env.workbench.dir</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>env.kontinuum.dir</property>

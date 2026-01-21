@@ -31,6 +31,22 @@ are also supplied as GitHub actions and GitLab components, while this is current
 
 For further details see [Processors](processors/README.md).
 
+## Stages
+
+Each process is sorted into one of many stages. All stages are numbered as to easily recognize in what order
+all processors should be run. The order inside a single stage usually does not matter.
+
+- xx_additional
+- 00_fetched
+- 01_extracted
+- 02_prepared
+- 03_aggregated
+- 04_resolved
+- 05_scanned
+- 06_advised
+- 07_grouped
+- 08_reported
+- 09_summarized
 
 ## Integration
 

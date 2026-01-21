@@ -41,12 +41,12 @@ initialize_logger() {
 #Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/report/report_create-document.xml" verify)
+  [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
-  CMD+=("-Dinput.asset.descriptor.path=$INPUT_ASSET_DESCRIPTOR_PATH")
-  CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-  CMD+=("-Dinput.reference.inventory.file=$INPUT_REFERENCE_INVENTORY_FILE")
+  CMD+=("-Dinput.inventory.dir=$INPUT_INVENTORY_DIR")
   CMD+=("-Doutput.document.file=$OUTPUT_DOCUMENT_FILE")
+  CMD+=("-Dparam.asset.descriptor.file=$PARAM_ASSET_DESCRIPTOR_FILE")
   CMD+=("-Dparam.computed.inventory.dir=$OUTPUT_COMPUTED_INVENTORY_DIR")
   CMD+=("-Dparam.reference.inventory.dir=$PARAM_REFERENCE_INVENTORY_DIR")
   CMD+=("-Dparam.security.policy.file=$PARAM_SECURITY_POLICY_FILE")

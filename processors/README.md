@@ -26,7 +26,7 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 * Aggregate Sources [util_aggregate-sources](util/util_aggregate-sources.md)
 * Copy Inventories [util_copy-inventories](util/util_copy-inventories.md)
 * Create Diff [util_create-diff](util/util_create-diff.md)
-* Merge and Filter [util_merge-filter](util/util_merge-filter.md)
+* Merge and Filter [util_merge-filter](util/util_merge-filter-inventories.md)
 * Merge Inventories[util_merge-inventories](util/util_merge-inventories.md)
 * Portfolio Download [util_portfolio-download](util/util_portfolio-download.md)
 * Portfolio Upload [util_portfolio-upload](util/util_portfolio-upload.md)

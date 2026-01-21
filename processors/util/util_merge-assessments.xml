@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
 
     <!--
     Copyright 2024-2025 the original author or authors.
@@ -28,7 +26,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>extract_scan-container-extract-directory</artifactId>
+    <artifactId>util_merge-assessments</artifactId>
     <packaging>pom</packaging>
 
     <build>
@@ -38,47 +36,23 @@
                 <artifactId>ae-inventory-maven-plugin</artifactId>
                 <version>${ae.core.version}</version>
                 <executions>
+
                     <execution>
-                        <id>scan-directory</id>
+                        <id>merge-inventories-assessment</id>
                         <goals>
-                            <goal>extract-scan-inventory</goal>
+                            <goal>merge-inventories-assessment</goal>
                         </goals>
-                        <phase>process-resources</phase>
+                        <phase>generate-sources</phase>
                         <configuration>
-                            <sourceInventoryDir>${param.reference.inventory.dir}</sourceInventoryDir>
-                            <inputDirectory>${input.extract.dir}</inputDirectory>
-                            <scanDirectory>${output.scan.dir}</scanDirectory>
-                            <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
-
-                            <sourceInventoryIncludes>*.xlsx,*.xls</sourceInventoryIncludes>
-                            <scanIncludes>**/*</scanIncludes>
-                            <!-- general exclude for containers; review constantly; minimize -->
-                            <scanExcludes>
-                                <exclude>**/var/log/**/*</exclude>
-
-                                <exclude>**/sys/**/*</exclude>
-                                <exclude>**/proc/**/*</exclude>
-
-                                <exclude>**/dev/*</exclude>
-
-                                <exclude>**/run/utmp</exclude>
-                                <exclude>**/var/lib/alternatives/*</exclude>
-
-                                <exclude>**/etc/**/*.bak</exclude>
-                                <exclude>**/etc/**/*.repo</exclude>
-
-                                <exclude>**/usr/share/terminfo/**/*</exclude>
-                                <exclude>**/var/lib/dnf/history.sqlite-shm/**/*</exclude>
-                            </scanExcludes>
-
-                            <enableImplicitUnpack>true</enableImplicitUnpack>
-                            <includeEmbedded>true</includeEmbedded>
-                            <enableDetectComponentPatterns>true</enableDetectComponentPatterns>
+                            <sourceInventoryBaseDir>${input.inventory.dir}</sourceInventoryBaseDir>
+                            <sourceInventoryIncludes>**/*.xls,**/*.xlsx</sourceInventoryIncludes>
+                            <targetInventory>${output.inventory.file}</targetInventory>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <plugin>  <!-- This plugin is only relevant to deliver better error messages to the caller of this pom. -->
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>3.5.0</version>
@@ -91,13 +65,7 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>param.reference.inventory.dir</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>input.extract.dir</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>output.scan.dir</property>
+                                    <property>input.inventory.dir</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
@@ -110,4 +78,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

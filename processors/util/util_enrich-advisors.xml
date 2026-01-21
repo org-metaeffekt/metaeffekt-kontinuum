@@ -26,20 +26,8 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>advise_create-dashboard</artifactId>
+    <artifactId>transform-merge-filter-enrich-advisors</artifactId>
     <packaging>pom</packaging>
-
-    <properties>
-        <env.vulnerability.assessment.api>NONE</env.vulnerability.assessment.api>
-
-        <param.timeline.conf.enabled>true</param.timeline.conf.enabled>
-        <param.timeline.max.threads>4</param.timeline.max.threads>
-        <param.timeline.time.spent.max>10000</param.timeline.time.spent.max>
-
-        <!-- determines what data sources to consider in the vulnerability timelines.
-             supported: NVD, OSV, all -->
-        <!-- <param.timeline.vuln.providers.list>all</param.timeline.vuln.providers.list> -->
-    </properties>
 
     <build>
         <plugins>
@@ -47,43 +35,40 @@
                 <groupId>com.metaeffekt.artifact.analysis</groupId>
                 <artifactId>ae-inventory-enrichment-plugin</artifactId>
                 <version>${ae.artifact.analysis.version}</version>
-
                 <executions>
                     <execution>
-                        <id>generate-vulnerability-dashboard</id>
+                        <!-- Queries the recent advisories on the pre-filtered inventory -->
+                        <id>enrich-latest-advisories</id>
                         <goals>
-                            <!-- https://github.com/org-metaeffekt/metaeffekt-documentation/blob/main/metaeffekt-vulnerability-management/inventory-enrichment/assessment-dashboard.md -->
-                            <goal>generate-asset-dashboard</goal>
+                            <goal>enrich-inventory</goal>
                         </goals>
+                        <phase>generate-sources</phase>
                         <configuration>
                             <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
-                            <outputFile>${output.dashboard.file}</outputFile>
+                            <intermediateInventoriesDirectory>${project.build.directory}/intermediate-inventories</intermediateInventoriesDirectory>
                             <mirrorDirectory>${env.vulnerability.mirror.dir}</mirrorDirectory>
+                            <advisorPeriodicEnrichment>
+                                <active>true</active>
+                                <changedSince>${param.report.period.since}</changedSince>
+                                <changedUntil>${param.report.period.until}</changedUntil>
 
-                            <reportConfiguration>
-                                <apiConfiguration>
-                                    <apiType>${env.vulnerability.assessment.api}</apiType>
-                                    <apiA>
-                                        <baseUrl>api/v2</baseUrl>
-                                        <ping>ping</ping>
-                                        <currentUser>current_user</currentUser>
-                                        <reserveAssessmentEventId>entity_id/assessment_event</reserveAssessmentEventId>
-                                        <eventsSinceTimestampForDashboard>$[asset.current.Asset Id]/assessment_event/$[since_time]/$[asset.current.Version]</eventsSinceTimestampForDashboard>
-                                        <putEventForDashboard>$[asset.current.Asset Id]/assessment_event/$[creation_time]/$[asset.current.Version]</putEventForDashboard>
-                                        <logout>/logout</logout>
-                                        <logoutMode>REDIRECT</logoutMode>
-                                    </apiA>
-                                </apiConfiguration>
+                                <!-- filter advisories; we keep all advisories in to show details also of other advisories -->
+                                <filterUnaffected>false</filterUnaffected>
 
-                            </reportConfiguration>
+                                <!-- filter unclassified advisories -->
+                                <filterUnclassified>true</filterUnclassified>
 
-                            <timelines>
-                                <active>${param.timeline.conf.enabled}</active>
-                                <maxThreads>${param.timeline.max.threads}</maxThreads>
-                                <maximumTimeSpentPerTimeline>${param.timeline.time.spent.max}</maximumTimeSpentPerTimeline>
-                                <vulnerabilityProviders>${param.timeline.vuln.providers.list}</vulnerabilityProviders>
-                            </timelines>
+                                <!-- filter vulnerabilities; limits vulnerabilities to those covered by the recent advisories -->
+                                <filterUnaffectedVulnerabilities>true</filterUnaffectedVulnerabilities>
 
+                                <!-- only focus on CERT-FR -->
+                                <filterVulnerabilitiesWithoutSpecifiedAdvisory>true</filterVulnerabilitiesWithoutSpecifiedAdvisory>
+                            </advisorPeriodicEnrichment>
+
+                            <!-- the output file contains only data related to vulnerabilities with recent advisories from CERT-FR -->
+                            <inventoryOutputFile>${output.inventory.file}</inventoryOutputFile>
+
+                            <!-- THIS IS CORRECT: Transformations do not use the 0.135.x branch so we need the new policy. -->
                             <securityPolicy>
                                 <files>
                                     <file>${param.security.policy.file}</file>
@@ -94,6 +79,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -110,13 +96,13 @@
                                     <property>input.inventory.file</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.dashboard.file</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.security.policy.file</property>
+                                    <property>output.inventory.file</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>env.vulnerability.mirror.dir</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.security.policy.file</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
@@ -126,4 +112,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

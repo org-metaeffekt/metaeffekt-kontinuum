@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export INPUT_INVENTORY_DIR="$ADVISED_DIR_002"
+export INVENTORY_INCLUDES=".xlsx"
+export OUTPUT_INVENTORY_FILE="$UTIL_DIR_002/002-merged.xlsx"
+

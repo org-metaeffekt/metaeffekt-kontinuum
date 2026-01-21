@@ -13,7 +13,6 @@ None.
 ### Parameters
 | Parameter                 | Required | Description                                         |
 |---------------------------|----------|-----------------------------------------------------|
-| param.mirror.archive.name | yes      | The name of the vulnerability mirror archive name.  |
 | param.mirror.archive.url  | yes      | The source url of the vulnerability mirror archive. |
 
 ### Environment

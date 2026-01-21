@@ -12,13 +12,14 @@ of this repository.
 ### Input / Output
 | Parameter                     | Required | Description                                                                                                   |
 |-------------------------------|----------|---------------------------------------------------------------------------------------------------------------|
-| input.reference.inventory.dir | yes      | The reference inventory which to include.                                                                     |
 | input.extract.dir             | yes      | The directory containing extracted information to scan. This can be container extracts, pom dependencies etc. |
 | output.scan.dir               | yes      | The output directory for the scanned files.                                                                   |
 | output.inventory.file         | yes      | The output inventory containing the scanned information.                                                      |
 
 ### Parameters
-None
+| Parameter                       | Required | Description                                                                            |
+|---------------------------------|----------|----------------------------------------------------------------------------------------|
+| param.reference.inventory.dir   | yes      | The directory of the reference inventory with which the input inventory is enriched.   |
 
 ### Environment
 None

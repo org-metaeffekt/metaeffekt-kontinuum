@@ -39,11 +39,11 @@ initialize_logger() {
 
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/mirror/mirror_download-index.xml" compile)
+  [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   CMD+=("-Denv.vulnerability.mirror.dir=$MIRROR_TARGET_DIR")
   CMD+=("-Dparam.mirror.archive.url=$MIRROR_ARCHIVE_URL")
-  CMD+=("-Dparam.mirror.archive.name=$MIRROR_ARCHIVE_NAME")
 
   pass_command_info_to_logger "$(basename "$0")"
 }

@@ -40,6 +40,7 @@
         <param.activate.epss>true</param.activate.epss>
         <param.activate.eol>true</param.activate.eol>
         <param.activate.osv>true</param.activate.osv>
+        <param.activate.csaf>true</param.activate.csaf>
         <param.activate.purl.derivation>true</param.activate.purl.derivation>
 
         <param.activate.status>true</param.activate.status>
@@ -56,7 +57,7 @@
         <param.dashboard.subtitle>${project.artifactId}</param.dashboard.subtitle>
         <param.dashboard.footer>${project.artifactId}</param.dashboard.footer>
 
-        <input.vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</input.vulnerabilities.custom.dir>
+        <param.vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</param.vulnerabilities.custom.dir>
         <param.activate.vulnerabilities.custom>false</param.activate.vulnerabilities.custom>
 
     </properties>
@@ -110,6 +111,17 @@
                                 <activeIds>${param.security.policy.active.ids}</activeIds>
                             </securityPolicy>
 
+                            <!-- NOTE:
+                                    - the configuration can be regularly synchronized with the reference configuration on
+                                      https://github.com/org-metaeffekt/metaeffekt-documentation/blob/main/metaeffekt-vulnerability-management/inventory-enrichment/inventory-enrichment-steps.md#pom-configuration
+                            -->
+
+                            <!-- Product Identification -->
+                            <cpeDerivationEnrichment>
+                                <active>${param.activate.nvd}</active>
+                                <maxCorrelatedCpePerArtifact>${ae.cpe.correlation.limit}</maxCorrelatedCpePerArtifact>
+                            </cpeDerivationEnrichment>
+
                             <correlationYamlEnrichment>
                                 <active>${param.activate.correlation}</active>
                                 <yamlFiles>
@@ -121,101 +133,65 @@
                                 <active>${param.activate.purl.derivation}</active>
                             </purlDerivationEnrichment>
 
-                            <cpeDerivationEnrichment>
+                            <!-- Vulnerability Matching -->
+                            <nvdMatchCveFromCpeEnrichment>
                                 <active>${param.activate.nvd}</active>
-                                <maxCorrelatedCpePerArtifact>${ae.cpe.correlation.limit}</maxCorrelatedCpePerArtifact>
-                            </cpeDerivationEnrichment>
+                            </nvdMatchCveFromCpeEnrichment>
 
                             <msVulnerabilitiesByProductEnrichment>
                                 <active>${param.activate.msrc}</active>
                             </msVulnerabilitiesByProductEnrichment>
 
-                            <nvdMatchCveFromCpeEnrichment>
-                                <active>${param.activate.nvd}</active>
-                            </nvdMatchCveFromCpeEnrichment>
-
-                            <nvdCveFillDetailsEnrichment>
-                                <active>${param.activate.nvd}</active>
-                            </nvdCveFillDetailsEnrichment>
-
                             <customVulnerabilitiesFromCpeEnrichment>
                                 <active>${param.activate.vulnerabilities.custom}</active>
                                 <vulnerabilityFiles>
-                                    <file>${input.vulnerabilities.custom.dir}</file>
+                                    <file>${param.vulnerabilities.custom.dir}</file>
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFromCpeEnrichment>
 
-                            <customVulnerabilitiesFillDetailsEnrichment>
-                                <active>${param.activate.vulnerabilities.custom}</active>
-                                <vulnerabilityFiles>
-                                    <file>${input.vulnerabilities.custom.dir}</file>
-                                </vulnerabilityFiles>
-                            </customVulnerabilitiesFillDetailsEnrichment>
+                            <osvVulnerabilitiesEnrichment>
+                                <active>${param.activate.osv}</active>
+
+                                <!-- TODO-YWI-KKL: Discuss whether this behavior is desired. -->
+                                <!-- whether to require an entry to be marked as reviewed by GitHub in order to be matched.
+                                     since this filter applies to advisories by all providers (not only GitHub), this will exclude all providers that are not GitHub if set to true. -->
+                                <!-- true: removes unreviewed entries -->
+                                <!-- false: keep unreviewed entries (default) -->
+                                <githubReviewed>${param.remove.ghsa.unreviewed}</githubReviewed>
+
+                                <excludeNvdEquivalent>${param.exclude.nvd.equivalent.osv}</excludeNvdEquivalent>
+                            </osvVulnerabilitiesEnrichment>
+
+                            <csafVulnerabilitiesEnrichment>
+                                <active>${param.activate.csaf}</active>
+                            </csafVulnerabilitiesEnrichment>
+
+                            <!-- Vulnerability Details Filling -->
+                            <nvdCveFillDetailsEnrichment>
+                                <active>${param.activate.nvd}</active>
+                            </nvdCveFillDetailsEnrichment>
 
                             <msrcAdvisorFillDetailsEnrichment>
                                 <active>${param.activate.msrc}</active>
                                 <excludeNvdEquivalent>${param.exclude.nvd.equivalent.msrc}</excludeNvdEquivalent>
                             </msrcAdvisorFillDetailsEnrichment>
 
-                            <certFrAdvisorEnrichment>
-                                <active>${param.activate.certfr}</active>
-                            </certFrAdvisorEnrichment>
-
-                            <certEuAdvisorEnrichment>
-                                <active>${param.activate.certeu}</active>
-                            </certEuAdvisorEnrichment>
-
-                            <certSeiAdvisorEnrichment>
-                                <active>${param.activate.certsei}</active>
-                            </certSeiAdvisorEnrichment>
-
-                            <kevEnrichment>
-                                <active>${param.activate.kev}</active>
-                            </kevEnrichment>
-
-                            <epssEnrichment>
-                                <active>${param.activate.epss}</active>
-                            </epssEnrichment>
-
-                            <osvVulnerabilitiesEnrichment>
-                                <active>${param.activate.osv}</active>
-
-                                <!-- FIXME-KKL we need to desparately fix this; this naming very irritating -->
-                                <!-- true: removes unreviewed entries -->
-                                <!-- false: keep unreviewed entries (default) -->
-                                <githubReviewed>${param.remove.ghsa.unreviewed}</githubReviewed>
-
-                                <excludeNvdEquivalent>${param.exclude.nvd.equivalent.osv}</excludeNvdEquivalent>
-
-                            </osvVulnerabilitiesEnrichment>
-
-                            <cweFillDetailsEnrichment>
-                                <active>${param.activate.cwe}</active>
-                            </cweFillDetailsEnrichment>
+                            <customVulnerabilitiesFillDetailsEnrichment>
+                                <active>${param.activate.vulnerabilities.custom}</active>
+                                <vulnerabilityFiles>
+                                    <file>${param.vulnerabilities.custom.dir}</file>
+                                </vulnerabilityFiles>
+                            </customVulnerabilitiesFillDetailsEnrichment>
 
                             <capecFillDetailsEnrichment>
                                 <active>${param.activate.capec}</active>
                             </capecFillDetailsEnrichment>
 
-                            <csafVulnerabilitiesEnrichment>
-                                <active>${param.activate.csaf}</active>
-                            </csafVulnerabilitiesEnrichment>
+                            <cweFillDetailsEnrichment>
+                                <active>${param.activate.cwe}</active>
+                            </cweFillDetailsEnrichment>
 
-                            <csafAdvisorEnrichment>
-                                <active>${param.activate.csaf}</active>
-                            </csafAdvisorEnrichment>
-
-                            <!-- Review if listed properties are necessary -->
-                            <eolEnrichment>
-                                <active>${param.activate.eol}</active>
-                            </eolEnrichment>
-
-                            <osvAdvisorFillDetailsEnrichment>
-                                <active>${param.activate.osv}</active>
-                                <includeAdvisoryProviders></includeAdvisoryProviders>
-                                <excludeNvdEquivalent></excludeNvdEquivalent> <!-- Ensure this is supported by other configurations as well (osv & msrc)-->
-                            </osvAdvisorFillDetailsEnrichment>
-
+                            <!-- Assessments -->
                             <vulnerabilityStatusEnrichment>
                                 <active>${param.activate.status}</active>
                                 <statusFiles>
@@ -231,6 +207,47 @@
                                 </yamlFiles>
                                 <activeLabels>${keywords.labels}</activeLabels>
                             </vulnerabilityKeywordsEnrichment>
+
+                            <!-- Security Advisory Matching -->
+                            <certFrAdvisorEnrichment>
+                                <active>${param.activate.certfr}</active>
+                            </certFrAdvisorEnrichment>
+
+                            <certSeiAdvisorEnrichment>
+                                <active>${param.activate.certsei}</active>
+                            </certSeiAdvisorEnrichment>
+
+                            <certEuAdvisorEnrichment>
+                                <active>${param.activate.certeu}</active>
+                            </certEuAdvisorEnrichment>
+
+                            <csafAdvisorEnrichment>
+                                <active>${param.activate.csaf}</active>
+                            </csafAdvisorEnrichment>
+
+                            <osvAdvisorFillDetailsEnrichment>
+                                <active>${param.activate.osv}</active>
+                                <includeAdvisoryProviders></includeAdvisoryProviders>
+                                <excludeNvdEquivalent></excludeNvdEquivalent> <!-- Ensure this is supported by other configurations as well (osv & msrc)-->
+                            </osvAdvisorFillDetailsEnrichment>
+
+                            <!-- Vulnerability Prioritization -->
+                            <eolEnrichment>
+                                <active>${param.activate.eol}</active>
+                            </eolEnrichment>
+
+                            <epssEnrichment>
+                                <active>${param.activate.epss}</active>
+                            </epssEnrichment>
+
+                            <kevEnrichment>
+                                <active>${param.activate.kev}</active>
+                            </kevEnrichment>
+
+                            <!-- Inventory Post Processing -->
+                            <vulnerabilityStatusPostProcessingEnrichment>
+                                <active>true</active>
+                            </vulnerabilityStatusPostProcessingEnrichment>
 
                             <inventoryValidationEnrichment>
                                 <active>${param.activate.validation}</active>
@@ -255,17 +272,13 @@
                                 <active>false</active>
                             </vulnerabilityFilterEnrichment>
 
-                            <vulnerabilityAssessmentDashboardEnrichment>
-                                <active>false</active>
-                            </vulnerabilityAssessmentDashboardEnrichment>
-
                             <advisorPeriodicEnrichment>
                                 <active>false</active>
                             </advisorPeriodicEnrichment>
 
-                            <vulnerabilityStatusPostProcessingEnrichment>
-                                <active>true</active>
-                            </vulnerabilityStatusPostProcessingEnrichment>
+                            <vulnerabilityAssessmentDashboardEnrichment>
+                                <active>false</active>
+                            </vulnerabilityAssessmentDashboardEnrichment>
                         </configuration>
                     </execution>
                 </executions>
