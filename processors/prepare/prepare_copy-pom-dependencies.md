@@ -15,8 +15,8 @@ of this repository.
 ### Parameters
 | Parameter                         | Required | Description                                                                |
 |-----------------------------------|----------|----------------------------------------------------------------------------|
-| param.group.id                    | yes      | The group id of the pom containing the relevant dependencies.              |
-| param.artifact.id                 | yes      | The artifact id of the pom containing the relevant dependencies.           |
+| param.group.id                    | yes      | The group ID of the pom containing the relevant dependencies.              |
+| param.artifact.id                 | yes      | The artifact ID of the pom containing the relevant dependencies.           |
 | param.version                     | yes      | The version of the pom containing the relevant dependencies.               |
 | param.exclude.transitive.enabled  | yes      | Set to false if transitive dependencies should be included in the extract. |
 
