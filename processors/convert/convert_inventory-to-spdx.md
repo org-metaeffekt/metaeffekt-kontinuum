@@ -25,7 +25,7 @@ of this repository.
 | param.document.description                | no       | A description of the document.                                                                                          |
 | param.document.person                     | no       | The name of the person responsible for the document.                                                                    |
 | param.document.comment                    | no       | A free-text comment to include in the document metadata.                                                                |
-| param.document.id.prefix                  | no       | A prefix for every SPDX element id.                                                                                     |
+| param.document.id.prefix                  | no       | A prefix for every SPDX element ID.                                                                                     |
 | param.custom.license.mappings.enabled     | no       | Path to custom license mappings. These map found licenses to specific or custom licenses during the conversion process. |
 | param.map.relationships.enabled           | no       | Whether to map relationships between components in the BOM.                                                             |
 | param.license.expressions.enabled         | no       | Whether to use SPDX license expressions instead of plain license names.                                                 |

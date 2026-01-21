@@ -1,6 +1,6 @@
 # Util - Transform inventories
 
-This process performs a transformation on a specified inventory using a Kotlin script. These transformations can range from inventory merging to field replacements.
+This process performs a transformation on a specified inventory using a Kotlin Script. These transformations can range from inventory merging to field replacements.
 
 ## Properties
 
@@ -14,9 +14,9 @@ of this repository.
 | output.inventory.dir        | yes      | The directory to which the output inventories will be saved after transformation.  |
 
 ### Parameters
-| Parameter                | Required | Description                                                                        |
-|--------------------------|----------|------------------------------------------------------------------------------------|
-| param.kotlin.script.file | yes      | The file of the kotlin script to be used for transforming inventories.             |
+| Parameter                | Required | Description                                                            |
+|--------------------------|----------|------------------------------------------------------------------------|
+| param.kotlin.script.file | yes      | The file of the Kotlin Script to be used for transforming inventories. |
 
 ### Environment
 None

@@ -1,6 +1,6 @@
 # Mirror - Download Index
 
-This process downloads the vulnerability mirror index to a specified target directory to be used for later enrichment of inventories.
+c.
 
 ## Properties
 

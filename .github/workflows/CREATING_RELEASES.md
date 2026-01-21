@@ -11,7 +11,7 @@ can be executed locally via the act-runner. A couple of prerequisites are necess
 
 ### Prerequisites
 
-If on macos install the act-runner via:
+If on macOS install the act-runner via:
    ```bash
    brew install act
    ```
@@ -30,9 +30,9 @@ looks as follows:
     }
    ```
 
-Since the remote GitHub runner uses a full ubuntu image to run all tests, act needs to be configured to
+Since the remote GitHub runner uses a full Ubuntu image to run all tests, "act" needs to be configured to
 use a similar image as some prerequisites are already installed on the full image. This is done automatically
-by act when executing the workflow via the following command:
+by "act" when executing the workflow via the following command:
 
    ```bash
     act -P ubuntu-latest=catthehacker/ubuntu:full-latest -e YOUR_CONFIG_FILE.json

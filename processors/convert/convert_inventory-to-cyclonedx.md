@@ -1,6 +1,6 @@
 # Convert - Inventory to CycloneDx
 
-Used to convert an inventory into a CycloneDX bom in either xml or json format.
+Used to convert an inventory into a CycloneDX BOM either xml or json format.
 
 ## Properties
 

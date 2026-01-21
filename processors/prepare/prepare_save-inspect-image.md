@@ -16,7 +16,7 @@ of this repository.
 ### Parameters
 | Parameter             | Required | Description                                                                                                                                   |
 |-----------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| param.image.id        | yes      | The id of the container image. Either in Format [id] or [repository/id] depending on whether the image is in the official docker repo or not. |
+| param.image.id        | yes      | The ID of the container image. Either in Format [id] or [repository/id] depending on whether the image is in the official docker repo or not. |
 | param.image.version   | yes      | The image version tag.                                                                                                                        |
 
 ### Environment
