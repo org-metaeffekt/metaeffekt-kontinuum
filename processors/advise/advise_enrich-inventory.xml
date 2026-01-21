@@ -40,6 +40,7 @@
         <param.activate.epss>true</param.activate.epss>
         <param.activate.eol>true</param.activate.eol>
         <param.activate.osv>true</param.activate.osv>
+        <param.activate.csaf>true</param.activate.csaf>
         <param.activate.purl.derivation>true</param.activate.purl.derivation>
 
         <param.activate.status>true</param.activate.status>
