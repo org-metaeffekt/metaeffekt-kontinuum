@@ -26,7 +26,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>util_enrich-advisors</artifactId>
+    <artifactId>util_generate-report-svg</artifactId>
     <packaging>pom</packaging>
 
     <build>
@@ -37,47 +37,45 @@
                 <version>${ae.artifact.analysis.version}</version>
                 <executions>
                     <execution>
-                        <!-- Queries the recent advisories on the pre-filtered inventory -->
-                        <id>enrich-latest-advisories</id>
+                        <id>generate-overview-svg</id>
                         <goals>
-                            <goal>enrich-inventory</goal>
+                            <goal>ae-generate-inventory-report-svg</goal>
                         </goals>
                         <phase>generate-sources</phase>
                         <configuration>
+                            <active>true</active>
+
                             <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
-                            <intermediateInventoriesDirectory>${project.build.directory}/intermediate-inventories</intermediateInventoriesDirectory>
-                            <mirrorDirectory>${env.vulnerability.mirror.dir}</mirrorDirectory>
-                            <advisorPeriodicEnrichment>
-                                <active>true</active>
-                                <changedSince>${param.report.period.since}</changedSince>
-                                <changedUntil>${param.report.period.until}</changedUntil>
+                            <outputDirectory>${output.svg.dir}</outputDirectory>
 
-                                <!-- filter advisories; we keep all advisories in to show details also of other advisories -->
-                                <filterUnaffected>false</filterUnaffected>
+                            <overviewActive>${param.overview.active}</overviewActive>
+                            <cvssActive>${param.cvss.active}</cvssActive>
 
-                                <!-- filter unclassified advisories -->
-                                <filterUnclassified>true</filterUnclassified>
-
-                                <!-- filter vulnerabilities; limits vulnerabilities to those covered by the recent advisories -->
-                                <filterUnaffectedVulnerabilities>true</filterUnaffectedVulnerabilities>
-
-                                <!-- only focus on CERT-FR -->
-                                <filterVulnerabilitiesWithoutSpecifiedAdvisory>true</filterVulnerabilitiesWithoutSpecifiedAdvisory>
-                            </advisorPeriodicEnrichment>
-
-                            <!-- the output file contains only data related to vulnerabilities with recent advisories from CERT-FR -->
-                            <inventoryOutputFile>${output.inventory.file}</inventoryOutputFile>
-
-                            <!-- THIS IS CORRECT: Transformations do not use the 0.135.x branch so we need the new policy. -->
+                            <cvssVulnerabilityCountLimit>${param.cvss.vulnerability.count.limit}</cvssVulnerabilityCountLimit>
                             <securityPolicy>
                                 <files>
                                     <file>${param.security.policy.file}</file>
                                 </files>
                                 <activeIds>${param.security.policy.active.ids}</activeIds>
                             </securityPolicy>
+
                         </configuration>
                     </execution>
                 </executions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>org.metaeffekt.core</groupId>
+                        <artifactId>ae-inventory-processor</artifactId>
+                        <version>${ae.core.version}</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>org.apache.maven</groupId>
+                        <artifactId>maven-core</artifactId>
+                        <version>3.3.9</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
@@ -96,13 +94,7 @@
                                     <property>input.inventory.file</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>output.inventory.file</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>env.vulnerability.mirror.dir</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.security.policy.file</property>
+                                    <property>output.svg.dir</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
