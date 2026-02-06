@@ -47,7 +47,7 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <target>
+                            <target xmlns:if="ant:if" xmlns:unless="ant:unless">
                                 <property name="staging.dir" value="${project.build.directory}/annex-archive"/>
 
                                 <delete dir="${staging.dir}"/>
@@ -56,18 +56,29 @@
                                 <copy file="${input.document.pdf.file}"
                                       todir="${staging.dir}"/>
 
-                                <copy todir="${staging.dir}/components">
-                                    <fileset dir="${input.inventory.components.dir}"/>
-                                </copy>
+                                <condition property="components.present">
+                                    <isset property="input.inventory.components.dir"/>
+                                </condition>
 
-                                <copy todir="${staging.dir}/licenses">
-                                    <fileset dir="${input.inventory.licenses.dir}"/>
+                                <copy todir="${staging.dir}/components" failonerror="false">
+                                    <fileset dir="${input.inventory.components.dir}" erroronmissingdir="false"/>
                                 </copy>
+                                <echo unless:set="components.exists"
+                                      message="[SKIP] Components folder not provided."/>
+
+                                <condition property="licenses.present">
+                                    <isset property="input.inventory.licenses.dir"/>
+                                </condition>
+
+                                <copy todir="${staging.dir}/licenses" failonerror="false">
+                                    <fileset dir="${input.inventory.licenses.dir}" erroronmissingdir="false"/>
+                                </copy>
+                                <echo unless:set="licenses.exists"
+                                      message="[SKIP] Licenses folder not provided."/>
 
                                 <zip destfile="${output.annex.archive.file}"
                                      basedir="${staging.dir}"/>
-
-                                <echo message="Zip archive created at: ${output.annex.archive.file}"/>
+                                <echo message="[SUCCESS] Archive created at: ${output.annex.archive.file}"/>
                             </target>
                         </configuration>
                     </execution>
@@ -91,12 +102,6 @@
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.annex.archive.file</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>input.inventory.components.dir</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>input.inventory.licenses.dir</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
