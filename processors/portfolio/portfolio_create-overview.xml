@@ -60,6 +60,18 @@
                         <activeIds>${param.security.policy.active.ids}</activeIds>
                     </securityPolicy>
 
+                    <!-- notification -->
+                    <notificationConfigFiles>
+                        <file>${param.notification.config.file}</file>
+                    </notificationConfigFiles>
+
+                    <notificationRuleFiles>
+                        <file>${param.notification.rule.file}</file>
+                    </notificationRuleFiles>
+
+                    <notificationOutputFile>${output.notification.file}</notificationOutputFile>
+
+
                 </configuration>
                 <dependencies>
                     <!-- FIXME: provide plugin with complete dependencies -->

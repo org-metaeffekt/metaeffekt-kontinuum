@@ -16,12 +16,15 @@ of this repository.
 | input.dashboards.dir          | yes      | The source directory containing dashboard files (`.html`).         |     
 | input.reports.dir             | yes      | The source directory containing report files (`.pdf`).             |     
 | output.overview.file          | yes      | The name of the output overview file.                              | 
+| output.notification.file      | yes      | The name of the output notification file.                          | 
 
 ### Parameters
-| Parameter                         | Required | Description                                                                       |
-|-----------------------------------|----------|-----------------------------------------------------------------------------------|
-| param.security.policy.file        | yes      | The security policy file used for the overview.                                   |     
-| param.security.policy.active.ids  | no       | The activeIds of the security policy configurations to use for overview creation. |
+| Parameter                        | Required | Description                                                                       |
+|----------------------------------|----------|-----------------------------------------------------------------------------------|
+| param.security.policy.file       | yes      | The security policy file used for the overview.                                   |     
+| param.security.policy.active.ids | no       | The activeIds of the security policy configurations to use for overview creation. |
+| param.notification.config.file   | yes      | The configuration file for notification.                                          |
+| param.notification.rule.file     | yes      | The rule file for notification.                                                   |
 
 ### Environment
 None.

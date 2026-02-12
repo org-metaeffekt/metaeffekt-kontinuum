@@ -54,6 +54,7 @@ run_maven_command() {
   CMD+=("-Dparam.timeline.time.spent.max=$PARAM_TIMELINE_TIME_SPENT_MAX")
   CMD+=("-Dparam.timeline.vuln.providers.list=$PARAM_TIMELINE_VULN_PROVIDERS_LIST")
   CMD+=("-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
+  CMD+=("-Denv.vulnerability.assessment.api=$VULNERABILITY_ASSESSMENT_API")
 
   pass_command_info_to_logger "$(basename "$0")"
 }

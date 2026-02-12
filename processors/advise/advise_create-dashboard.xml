@@ -35,7 +35,8 @@
         <param.timeline.conf.enabled>true</param.timeline.conf.enabled>
         <param.timeline.max.threads>4</param.timeline.max.threads>
         <param.timeline.time.spent.max>10000</param.timeline.time.spent.max>
-
+        <param.events.since.timestamp.for.dashboard>assessment_event/$[since_time]/$[asset.current.Assessment Sub-Path]</param.events.since.timestamp.for.dashboard>
+        <param.put.event.for.dashboard>assessment_event/$[creation_time]/$[asset.current.Assessment Sub-Path]</param.put.event.for.dashboard>
         <!-- determines what data sources to consider in the vulnerability timelines.
              supported: NVD, OSV, all -->
         <!-- <param.timeline.vuln.providers.list>all</param.timeline.vuln.providers.list> -->
@@ -68,8 +69,8 @@
                                         <ping>ping</ping>
                                         <currentUser>current_user</currentUser>
                                         <reserveAssessmentEventId>entity_id/assessment_event</reserveAssessmentEventId>
-                                        <eventsSinceTimestampForDashboard>$[asset.current.Asset Id]/assessment_event/$[since_time]/$[asset.current.Version]</eventsSinceTimestampForDashboard>
-                                        <putEventForDashboard>$[asset.current.Asset Id]/assessment_event/$[creation_time]/$[asset.current.Version]</putEventForDashboard>
+                                        <eventsSinceTimestampForDashboard>${param.events.since.timestamp.for.dashboard}</eventsSinceTimestampForDashboard>
+                                        <putEventForDashboard>${param.put.event.for.dashboard}</putEventForDashboard>
                                         <logout>/logout</logout>
                                         <logoutMode>REDIRECT</logoutMode>
                                     </apiA>

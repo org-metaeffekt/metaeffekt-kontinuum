@@ -31,6 +31,10 @@
                             <parameterMap>
                                 <input.inventory.dir>${input.inventory.dir}</input.inventory.dir>
                                 <output.inventory.dir>${output.inventory.dir}</output.inventory.dir>
+
+                                <!-- These parameters are used by the kotlin scripts in the metaeffekt-workbench -->
+                                <param.filter.preset>${param.filter.preset}</param.filter.preset>
+                                <param.asset.name>${param.asset.name}</param.asset.name>
                             </parameterMap>
                             <scriptExecutionClass>com.metaeffekt.artifact.analysis.scripting.kotlin.exec.InventoryScriptExecution</scriptExecutionClass>
                         </configuration>
