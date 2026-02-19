@@ -17,13 +17,13 @@ of this repository.
 | output.tmp.dir                   | yes      | The directory containing temporary files like intermediate inventories.   |
 
 ### Parameters
-| Parameter                        | Required | Description                                                                                   |
-|----------------------------------|----------|-----------------------------------------------------------------------------------------------|
-| param.correlation.dir            | yes      | The directory containing vulnerability correlation information.                               |
-| param.assessment.dir             | yes      | The directory containing the vulnerability assessment information.                            |
-| param.context.dir                | yes      | The directory containing the vulnerability context information.                               |
-| param.security.policy.file       | yes      | The security policy file to use.                                                              |
-| param.security.policy.active.ids | no       | The activeIds of the security policy configurations to use for enrichment.                    |
+| Parameter                        | Required | Description                                                                                    |
+|----------------------------------|----------|------------------------------------------------------------------------------------------------|
+| param.correlation.dir            | yes      | The directory containing vulnerability correlation information.                                |
+| param.assessment.dir             | yes      | The directory containing the vulnerability assessment information.                             |
+| param.context.dir                | yes      | The directory containing the vulnerability context information.                                |
+| param.security.policy.file       | yes      | The security policy file to use.                                                               |
+| param.security.policy.active.ids | no       | The activeIds of the security policy configurations to use for enrichment.                     |
 | param.activate.*                 | no       | Switches determining which vulnerability databases are utilized during the enrichment process. |
 | param.exclude.nvd.equivalent.*   | no       | Switches determining if vulnerabilities equivalent to those found via nvd should be excluded.  |
 | param.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment.                      |
