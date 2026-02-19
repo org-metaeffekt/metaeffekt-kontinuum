@@ -33,8 +33,8 @@
     <properties>
         <param.reference.inventory.includes>**/*.ser,**/*.xls,**/*.xlsx</param.reference.inventory.includes>
         <param.fail.on.missing.license.file>false</param.fail.on.missing.license.file>
-        <param.reference.component.path>components</param.reference.component.path>
-        <param.reference.license.path>licenses</param.reference.license.path>
+        <param.reference.component.path>../components</param.reference.component.path>
+        <param.reference.license.path>../licenses</param.reference.license.path>
         <param.target.component.dir>${project.build.directory}/annex/components</param.target.component.dir>
         <param.target.license.dir>${project.build.directory}/annex/licenses</param.target.license.dir>
     </properties>
