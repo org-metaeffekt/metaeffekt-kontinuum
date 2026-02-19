@@ -53,6 +53,7 @@
                                 <delete dir="${staging.dir}"/>
                                 <mkdir dir="${staging.dir}"/>
 
+                                <!-- FIXME: provide a baseDir where the different PDFs are aggregated (e.g. multi-lang) -->
                                 <copy file="${input.document.pdf.file}"
                                       todir="${staging.dir}"/>
 
