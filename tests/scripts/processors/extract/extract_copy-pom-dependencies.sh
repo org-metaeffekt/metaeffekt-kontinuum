@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PRELOAD_SCRIPT_PATH="$SCRIPT_DIR/../preload.sh"
 SHARED_SCRIPT_PATH="$SCRIPT_DIR/../shared.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
-CASE="extract/extract_scan-directory-01.sh"
+CASE="extract/extract_copy-pom-dependencies-01.sh"
 
 
 source_shared() {
@@ -42,14 +42,15 @@ initialize_logger() {
 
 #Run maven command
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/extract/extract_scan-directory.xml" process-resources)
+  CMD=(mvn -f "$PROCESSORS_DIR/extract/extract_copy-pom-dependencies.xml" process-resources)
   [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
-  CMD+=("-Dparam.reference.inventory.dir=$INPUT_REFERENCE_INVENTORY_DIR")
-  CMD+=("-Dinput.extract.dir=$INPUT_EXTRACT_DIR")
-  CMD+=("-Doutput.scan.dir=$OUTPUT_SCAN_DIR")
-  CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
+  CMD+=("-Dparam.group.id=$PARAM_GROUP_ID")
+  CMD+=("-Dparam.artifact.id=$PARAM_ARTIFACT_ID")
+  CMD+=("-Dparam.version=$PARAM_VERSION")
+  CMD+=("-Dparam.exclude.transitive.enabled=$PARAM_EXCLUDE_TRANSITIVE_ENABLED")
+  CMD+=("-Doutput.dependencies.dir=$OUTPUT_DEPENDENCIES_DIR")
 
   pass_command_info_to_logger "$(basename "$0")"
 }

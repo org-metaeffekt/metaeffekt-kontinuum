@@ -28,7 +28,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>extract_scan-container-extract-directory</artifactId>
+    <artifactId>prepare_scan-container-extract-directory</artifactId>
     <packaging>pom</packaging>
 
     <build>

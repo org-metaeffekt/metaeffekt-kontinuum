@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PRELOAD_SCRIPT_PATH="$SCRIPT_DIR/../preload.sh"
 SHARED_SCRIPT_PATH="$SCRIPT_DIR/../shared.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
-CASE="analyze/analyze_resolve-inventory-01.sh"
+CASE="resolve/resolve_resolve-inventory-01.sh"
 
 source_shared() {
   if [[ -f "$SHARED_SCRIPT_PATH" ]]; then
@@ -41,7 +41,7 @@ initialize_logger() {
 
 #Run maven command
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/analyze/analyze_resolve-inventory.xml" process-resources)
+  CMD=(mvn -f "$PROCESSORS_DIR/resolve/resolve_resolve-inventory.xml" process-resources)
   [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")

@@ -51,7 +51,7 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 
 ### Extract
 
-* Extract Scan Directory [extract_scan-directory](extract/extract_scan-directory.md)
+* Extract Scan Directory [extract_scan-directory](prepare/extract_scan-directory.md)
 
 ### Mirror
 

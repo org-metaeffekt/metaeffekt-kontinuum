@@ -12,5 +12,5 @@ LOG_FILE="$SELF_DIR/../../../.logs/$(basename $0).log"
 
 bash "$PROCESSOR_SCRIPTS_DIR/mirror/mirror_download-index.sh" -f "$LOG_FILE"
 
-bash "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_save-inspect-image.sh" -c "$CASES_DIR/prepare/prepare_save-inspect-image-02.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/extract/extract_save-inspect-image.sh" -c "$CASES_DIR/extract/extract_save-inspect-image-02.sh" -f "$LOG_FILE"
 
