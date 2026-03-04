@@ -102,16 +102,14 @@ jobs:
             .mirror
             .maven-index
 
-      - uses: actions/upload-artifact@v4
-        if: ${{ always() }}
-        with:
-          name: logs
-          path: .logs
-
       - name: Commit changes
         if: ${{ !env.ACT }}
         run: |
           git add processors/_common_/ae-kontinuum-processors.xml
+          git add processors/report/report_create-annex-archive.md
+          git add processors/report/report_create-annex-archive.xml
+          git add processors/report/report_aggregate-annex-folders.md
+          git add processors/report/report_aggregate-annex-folders.xml
           git commit -m "Release ${{ inputs.version }}" || echo "No changes to commit"
 
       # We need to use --force here as previous failed pipeline might have pushed to the branch already.
@@ -121,7 +119,7 @@ jobs:
 
       - name: Create Release
         if: ${{ !env.ACT }}
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ inputs.version }}
           target_commitish: "release/${{ inputs.version }}"
