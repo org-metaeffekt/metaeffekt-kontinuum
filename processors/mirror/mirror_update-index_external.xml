@@ -159,19 +159,24 @@
                             <cpePatternCorrections>
                                 <!-- GENERAL REGEX CORRECTIONS -->
 
-                                <!-- trim whitespaces from beginning and end -->
+                                <!-- trim whitespaces from beginning -->
                                 <cpeCorrection>
-                                    <malformedCpe>/^\s+(.*?)\s+$/</malformedCpe>
+                                    <malformedCpe>/^\s+(.*?)$/</malformedCpe>
+                                    <replacementCpe>$1</replacementCpe>
+                                </cpeCorrection>
+                                <!-- trim whitespaces from end -->
+                                <cpeCorrection>
+                                    <malformedCpe>/^(.*?)\s+$/</malformedCpe>
                                     <replacementCpe>$1</replacementCpe>
                                 </cpeCorrection>
                                 <!-- whitespaces surrounding the delimiter character ':' are collapsed -->
                                 <cpeCorrection>
-                                    <malformedCpe>/: +| +:/</malformedCpe>
+                                    <malformedCpe>/:\s+|\s+:/</malformedCpe>
                                     <replacementCpe>:</replacementCpe>
                                 </cpeCorrection>
                                 <!-- any other remaining whitespaces are replaced with the '_' character, as defined by the cpe spec -->
                                 <cpeCorrection>
-                                    <malformedCpe>/ +/</malformedCpe>
+                                    <malformedCpe>/\s+/</malformedCpe>
                                     <replacementCpe>_</replacementCpe>
                                 </cpeCorrection>
                                 <!-- cpes may not contain multiple asterisk characters in sequence and are therefore collapsed as well -->
@@ -196,6 +201,10 @@
                                 <cpeCorrection>
                                     <malformedCpe>/cpe:2.3:o:palo_alto_networks:pan-os:(.*?):-:\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
                                     <replacementCpe>cpe:2.3:o:palo_alto_networks:pan-os:$1:-:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):cd:([^:]+):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:$1:$2:*:*:*:continuous_delivery:*:*:*</replacementCpe>
                                 </cpeCorrection>
                             </cpePatternCorrections>
                         </configuration>
