@@ -106,10 +106,6 @@ jobs:
         if: ${{ !env.ACT }}
         run: |
           git add processors/_common_/ae-kontinuum-processors.xml
-          git add processors/report/report_create-annex-archive.md
-          git add processors/report/report_create-annex-archive.xml
-          git add processors/report/report_aggregate-annex-folders.md
-          git add processors/report/report_aggregate-annex-folders.xml
           git commit -m "Release ${{ inputs.version }}" || echo "No changes to commit"
 
       # We need to use --force here as previous failed pipeline might have pushed to the branch already.
@@ -117,6 +113,7 @@ jobs:
         if: ${{ !env.ACT }}
         run: git push --set-upstream origin "release/${{ inputs.version }}" --force
 
+      # This might be broken / might not publish some files in processors/report
       - name: Create Release
         if: ${{ !env.ACT }}
         uses: softprops/action-gh-release@v2

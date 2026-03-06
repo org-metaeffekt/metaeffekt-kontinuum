@@ -47,7 +47,7 @@
                             <output>${output.bom.file}</output>
                             <documentName>${param.document.name}</documentName>
                             <description>${param.document.description}</description>
-                            <customLicenseMappings>${param.custom.license.mappings.enabled}</customLicenseMappings>
+                            <customLicenseMappings>${param.custom.license.mappings}</customLicenseMappings>
                             <organization>${param.document.organization}</organization>
                             <organizationUrl>${param.document.organization.url}</organizationUrl>
                             <person>${param.document.person}</person>
