@@ -1,7 +1,7 @@
 # Report - Create Annex Archive
 
-This process is for generating the archive .zip containing all Annex relevant content. The .zip contains the PDF Document
-As well as the aggregated license and component directories of the inventory.
+This process is for generating the archive .zip containing all Annex relevant content. The .zip contains the PDF document
+as well as the aggregated license and component directories of the inventory.
 
 ## Properties
 

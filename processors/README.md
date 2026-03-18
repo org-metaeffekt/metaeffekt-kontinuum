@@ -26,7 +26,7 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 * Aggregate Sources [util_aggregate-sources](util/util_aggregate-sources.md)
 * Copy Inventories [util_copy-inventories](util/util_copy-inventories.md)
 * Create Diff [util_create-diff](util/util_create-diff.md)
-* Merge and Filter [util_merge-filter](util/util_merge-filter-inventories.md)
+
 * Merge Inventories[util_merge-inventories](util/util_merge-inventories.md)
 * Portfolio Download [util_portfolio-download](util/util_portfolio-download.md)
 * Portfolio Upload [util_portfolio-upload](util/util_portfolio-upload.md)
@@ -34,12 +34,12 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 * Validate Reference Inventory [util_validate-reference-inventory](util/util_validate-reference-inventory.md)
 
 ### Analyze
-* Resolve Artifacts in Inventory [analyze_resolve-inventory](analyze_resolve-inventory.md)
+* Resolve Artifacts in Inventory [resolve_resolve-inventory](resolve/resolve_resolve-inventory.md)
 
 ### Advise
 
 * Attach Asset Metadata [advise_attach-metadata](advise_attach-metadata.md)
-* Create Vulnerability Assessment Dashboard [badvise_create-dashboard](advise_create-dashboard.md)
+* Create Vulnerability Assessment Dashboard [advise_create-dashboard](advise_create-dashboard.md)
 * Enrich Inventory with Vulnerability/Advisory Data [advise_enrich-inventory](advise_enrich-inventory.md)
 * Enrich Inventory with Curated Data [advise_enrich-reference](advise_enrich-reference.md)
 
@@ -51,7 +51,7 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 
 ### Extract
 
-* Extract Scan Directory [extract_scan-directory](prepare/extract_scan-directory.md)
+* Extract Scan Directory [extract_scan-directory](prepare/prepare_scan-directory.md)
 
 ### Mirror
 
@@ -71,10 +71,6 @@ defined by job-executor-specific actions/steps (GitHub, GitLab) or pipelines (i.
 ### Report
 
 * Create Document [report_create-document](report/report_create-document.md)
-
-### Diff 
-
-* Diff Vulnerability-enriched Inventories [diff_create-diff](diff_create-diff.md)
 
 ## Processor Conventions
 

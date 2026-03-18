@@ -1,6 +1,6 @@
-# Util - Portfolio Download
+# Util - Portfolio Upload
 
-This process enables the download of specific assets from a running portfolio manager service.
+This process enables the upload of specific assets to a running portfolio manager service.
 
 ## Properties
 
