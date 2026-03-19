@@ -1,11 +1,16 @@
 #!/bin/bash
 
 export INPUT_INVENTORY_FILE="$ADVISED_DIR_002/busybox-1.35.0-enriched.xlsx"
-export SECURITY_POLICY="$EXTERNAL_WORKBENCH_DIR/policies/security-policy/security-policy.json"
 export OUTPUT_DASHBOARD_FILE="$ADVISED_DIR_002/busybox-1.35.0-dashboard.html"
+
+export SECURITY_POLICY="$EXTERNAL_WORKBENCH_DIR/policies/security-policy/security-policy.json"
 export PARAM_TIMELINE_CONF_ENABLED="true"
-export VULNERABILITY_MIRROR_DIR="$EXTERNAL_VULNERABILITY_MIRROR_DIR/.database"
 export PARAM_TIMELINE_MAX_THREADS="4"
 export PARAM_TIMELINE_TIME_SPENT_MAX="10000"
 export PARAM_TIMELINE_VULN_PROVIDERS_LIST="NVD, OSV"
+export PARAM_TENANT_ID="metaeffekt"
+export PARAM_ASSET_ID="sample-product-1"
+export PARAM_ASSESSMENT_CONTEXT="local"
 export VULNERABILITY_ASSESSMENT_API="NONE"
+
+export VULNERABILITY_MIRROR_DIR="$EXTERNAL_VULNERABILITY_MIRROR_DIR/.database"

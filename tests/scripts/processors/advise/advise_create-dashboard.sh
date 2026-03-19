@@ -55,6 +55,9 @@ run_maven_command() {
   CMD+=("-Dparam.timeline.vuln.providers.list=$PARAM_TIMELINE_VULN_PROVIDERS_LIST")
   CMD+=("-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
   CMD+=("-Denv.vulnerability.assessment.api=$VULNERABILITY_ASSESSMENT_API")
+  CMD+=("-Dparam.tenant.id=$PARAM_TENANT_ID")
+  CMD+=("-Dparam.asset.id=$PARAM_ASSET_ID")
+  CMD+=("-Dparam.assessment.context=$PARAM_ASSESSMENT_CONTEXT")
 
   pass_command_info_to_logger "$(basename "$0")"
 }
