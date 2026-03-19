@@ -27,7 +27,7 @@ task definitions are provided as individual .xml files in the `processors` folde
 a process step in analogy to an isolated workflow engine task.
 
 On the integration level the processors can be combined to define pipelines and workflows. The {metæffekt} Kontinuum
-are also supplied as GitHub actions and GitLab components, while this is currently work in progress.
+is also supplied as GitHub actions and GitLab components, while this is currently work in progress.
 
 For further details see [Processors](processors/README.md).
 

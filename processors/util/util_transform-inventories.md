@@ -1,4 +1,4 @@
-# Util - Transform inventories
+# Util - Transform Inventories
 
 This process performs a transformation on a specified inventory using a Kotlin Script. These transformations can range from inventory merging to field replacements.
 

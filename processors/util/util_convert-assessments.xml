@@ -4,20 +4,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--
-    Copyright 2024-2025 the original author or authors.
+        Copyright 2024-2025 the original author or authors.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+            http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-    -->
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+        -->
 
     <parent>
         <groupId>com.metaeffekt.kontinuum</groupId>
@@ -26,25 +26,28 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>extract_copy-pom-dependencies</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>util_convert-assessments</artifactId>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.6.0</version>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-inventory-enrichment-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
                 <executions>
                     <execution>
-                        <id>copy-dependencies</id>
+                        <id>convert-assessments</id>
                         <phase>process-resources</phase>
                         <goals>
-                            <goal>copy-dependencies</goal>
+                            <goal>upgrade-assessment-files</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${output.dependencies.dir}</outputDirectory>
-                            <excludeTransitive>${param.exclude.transitive.enabled}</excludeTransitive>
+                            <inputFiles>
+                                <file>${input.assessment.dir}</file>
+                            </inputFiles>
+                            <outputMode>${param.output.mode}</outputMode>
+                            <outputFormat>${param.output.format}</outputFormat>
+                            <outputFile>${output.assessment.dir}</outputFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -62,19 +65,16 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>output.dependencies.dir</property>
+                                    <property>input.assessment.dir</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.group.id</property>
+                                    <property>param.output.mode</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.artifact.id </property>
+                                    <property>param.output.format</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.version</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.exclude.transitive.enabled</property>
+                                    <property>output.assessment.dir</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
@@ -84,11 +84,4 @@
             </plugin>
         </plugins>
     </build>
-    <dependencies>
-        <dependency>
-            <groupId>${param.group.id}</groupId>
-            <artifactId>${param.artifact.id}</artifactId>
-            <version>${param.version}</version>
-        </dependency>
-    </dependencies>
 </project>

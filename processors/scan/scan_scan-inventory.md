@@ -17,4 +17,4 @@ of this repository.
 ### Parameters
 | Parameter                         | Required | Description                                                                          | default                                                           |
 |-----------------------------------|----------|--------------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| param.properties.file             | yes      | Yaml file containing properties to configure the scanners behaviour.                 |
+| param.properties.file             | yes      | Yaml file containing properties to configure the scanner's behaviour.                 |

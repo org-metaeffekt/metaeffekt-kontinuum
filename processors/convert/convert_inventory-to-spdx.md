@@ -1,4 +1,4 @@
-# Convert inventory to spdx
+# Convert Inventory to SPDX
 
 This process converts an inventory, independent of which stage it was produced in, into an SPDX document. All available
 parameters are listed in the table below. Parameters marked as "not required" already have default values associated.
@@ -32,7 +32,6 @@ of this repository.
 | param.include.license.texts.enabled       | no       | Whether to include full license texts in the BOM.                                                                       |
 | param.include.assets.enabled              | no       | Whether to include assets in the BOM.                                                                                   |
 | param.technical.properties.enabled        | no       | Whether to include technical properties in the BOM, required to enable near-lossless roundtrip conversion.              |
-| param.derive.attributes.from.purl.enabled | no       | Whether to derive missing attributes from the purl where possible.                                                      |
 | param.derive.attributes.from.purl.enabled | no       | Whether to derive missing attributes from the purl where possible.                                                      |
 
 ### Environment
