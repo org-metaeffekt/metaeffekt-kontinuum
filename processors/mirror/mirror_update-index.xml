@@ -177,6 +177,8 @@
                                     <replacementCpe>cpe:2.3:o:palo_alto_networks:pan-os:$1:-:*:*:*:*:*:*</replacementCpe>
                                 </cpeCorrection>
 
+                                <!-- cpe:2.3:a:ibm:app_connect_enterprisecertified_containers_operands:cd:12.0.11.1:*:*:*:*:*:*:*
+                                     cpe:2.3:a:ibm:app_connect_operator:cd:11.2.0:*:*:*:*:*:*:* -->
                                 <cpeCorrection>
                                     <malformedCpe>/cpe:2.3:a:ibm:([^:]+):cd:([^:]+):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
                                     <replacementCpe>cpe:2.3:a:ibm:$1:$2:*:*:*:continuous_delivery:*:*:*</replacementCpe>
