@@ -59,7 +59,6 @@
 
         <param.vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</param.vulnerabilities.custom.dir>
         <param.activate.vulnerabilities.custom>false</param.activate.vulnerabilities.custom>
-
     </properties>
 
     <build>
@@ -195,7 +194,7 @@
                             <vulnerabilityStatusEnrichment>
                                 <active>${param.activate.status}</active>
                                 <statusFiles>
-                                    <file>${param.assessment.dir}</file>
+                                    ${param.assessment.dirs}
                                 </statusFiles>
                                 <activeLabels>${assessment.labels}</activeLabels>
                             </vulnerabilityStatusEnrichment>
@@ -203,7 +202,7 @@
                             <vulnerabilityKeywordsEnrichment>
                                 <active>${param.activate.keywords}</active>
                                 <yamlFiles>
-                                    <file>${param.context.dir}</file>
+                                    ${param.context.dirs}
                                 </yamlFiles>
                                 <activeLabels>${keywords.labels}</activeLabels>
                             </vulnerabilityKeywordsEnrichment>
@@ -302,10 +301,10 @@
                                     <property>output.inventory.file</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.context.dir</property>
+                                    <property>param.context.dirs</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.assessment.dir</property>
+                                    <property>param.assessment.dirs</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.security.policy.file</property>

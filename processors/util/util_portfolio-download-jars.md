@@ -11,7 +11,7 @@ of this repository.
 ### Input / Output
 | Parameter      | Required | Description                                    |
 |----------------|----------|------------------------------------------------|
-| input.cli.dir  | yes      | Directory where the jars will be downloaded to |
+| input.cli.dir  | yes      | Directory where the jars will be downloaded    |
 
 
 ### Parameters

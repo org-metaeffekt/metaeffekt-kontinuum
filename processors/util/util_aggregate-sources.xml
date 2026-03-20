@@ -27,9 +27,6 @@
   </parent>
 
   <artifactId>util_aggregate-sources</artifactId>
-  <properties>
-    <project.build.directory>${target.dir}</project.build.directory>
-  </properties>
 
   <build>
     <plugins>
