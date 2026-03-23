@@ -44,6 +44,7 @@ run_maven_command() {
   [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
+  [ -n "${LOCAL_MAVEN_REPO:-}" ] && CMD+=("-Dmaven.repo.local=$LOCAL_MAVEN_REPO")
   CMD+=("-Dinput.document.pdf.file=$INPUT_DOCUMENT_PDF_FILE")
   CMD+=("-Dinput.inventory.components.dir=$INPUT_INVENTORY_COMPONENTS_DIR")
   CMD+=("-Dinput.inventory.licenses.dir=$INPUT_INVENTORY_LICENSES_DIR")

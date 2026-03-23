@@ -22,3 +22,5 @@ EXTERNAL_VULNERABILITY_MIRROR_DIR="/PATH/TO/MIRROR"
 #DEBUG=true
 # If true, dumps all entries written to the log file onto the console
 #DUMP_LOGS=true
+# Can be set to a directory which will be utilized as a local maven repo
+#LOCAL_MAVEN_REPO=

@@ -45,6 +45,7 @@ run_maven_command() {
   [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
+  [ -n "${LOCAL_MAVEN_REPO:-}" ] && CMD+=("-Dmaven.repo.local=$LOCAL_MAVEN_REPO")
   CMD+=("-Dinput.inventories.dir=$INPUT_INVENTORIES_DIR")
   CMD+=("-Dinput.dashboards.dir=$INPUT_DASHBOARDS_DIR")
   CMD+=("-Dinput.reports.dir=$INPUT_REPORTS_DIR")
