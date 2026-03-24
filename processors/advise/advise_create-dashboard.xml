@@ -39,7 +39,7 @@
         <param.put.event.for.dashboard>assessment_event/$[creation_time]/${param.tenant.id}/${param.asset.id}/${param.assessment.context}</param.put.event.for.dashboard>
         <!-- determines what data sources to consider in the vulnerability timelines.
              supported: NVD, OSV, all -->
-        <!-- <param.timeline.vuln.providers.list>all</param.timeline.vuln.providers.list> -->
+        <param.timeline.vuln.providers.list>NVD, OSV</param.timeline.vuln.providers.list>
     </properties>
 
     <build>
