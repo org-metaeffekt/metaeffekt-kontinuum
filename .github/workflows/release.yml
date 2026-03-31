@@ -7,6 +7,11 @@ on:
         description: 'Release version. Must be valid semantic versioning.'
         required: true
         type: string
+      ae-workbench-version:
+        description: 'Valid workbench branch or version tag.'
+        required: true
+        default: "main"
+        type: string
       ae-core-version:
         description: 'Valid metaeffekt-core version tag.'
         required: true
@@ -58,7 +63,7 @@ jobs:
         run: |
           git clone https://github.com/org-metaeffekt/metaeffekt-workbench.git ${{ github.workspace }}/.metaeffekt-workbench
           cd ${{ github.workspace }}/.metaeffekt-workbench
-          git checkout main
+          git checkout ${{ inputs.ae-workbench-version }}
 
       - name: Adjust core and artifact-analysis versions in workbench
         run: |
@@ -123,14 +128,3 @@ jobs:
           name: ${{ inputs.version }}
           draft: false
           prerelease: false
-
-      - name: Release workbench
-        if: ${{ inputs.trigger-workbench-release }}
-        env:
-          GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: |
-          gh workflow run release.yml --repo org-metaeffekt/metaeffekt-workbench \
-            -f version="${{ inputs.version }}" \
-            -f ae-core-version="${{ inputs.ae-core-version }}" \
-            -f ae-artifact-analysis-version="${{ inputs.ae-artifact-analysis-version }}" \
-            -f ae-kontinuum-version="${{ inputs.version }}"
