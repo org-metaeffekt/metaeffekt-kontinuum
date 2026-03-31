@@ -30,7 +30,7 @@ of this repository.
 | param.dashboard.title            | ignore   | Title for a dashboard which could be generated during this process.                            |
 | param.dashboard.subtitle         | ignore   | Subtitle for a dashboard which could be generated during this process.                         |
 | param.dashboard.footer           | ignore   | Footer for a dashboard which could be generated during this process.                           |
-=
+
 ### Environment
 | Parameter                    | Required | Description                                        |
 |------------------------------|----------|----------------------------------------------------|

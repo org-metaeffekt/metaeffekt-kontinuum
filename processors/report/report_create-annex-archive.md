@@ -9,13 +9,13 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Property                   | Required | Explanation                                   |
+| Parameter                   | Required | Description                                   |
 |----------------------------|----------|-----------------------------------------------|
 | input.document.pdf.file    | yes      | The input PDF document for the Annex archive. |
 | output.annex.archive.file  | yes      | The output Annex archive file.                |
 
 ### Parameters
-| Property                       | Required | Explanation                                                                              |
+| Parameter                       | Required | Description                                                                              |
 |--------------------------------|----------|------------------------------------------------------------------------------------------|
 | input.inventory.components.dir | yes      | The directory containing the components of the inventory for which the Annex is created. |
 | input.inventory.licenses.dir   | yes      | The directory containing the licenses of the inventory for which the Annex is created.   |

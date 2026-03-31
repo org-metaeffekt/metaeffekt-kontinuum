@@ -7,7 +7,7 @@ use cases.
 
 This repository is organized into two main sections: **processors** and **tests**.
 
-The **processors** section contains Maven POM files that execute predefined parameterized steps. Each processor 
+The **processors** section contains XML files that execute predefined parameterized steps. Each processor 
 represents a specific isolated workflow or task. For detailed information about each processor's capabilities, usage 
 instructions, and expected results, refer to the processor-specific README files.
 
@@ -17,38 +17,36 @@ The **tests** section provides basic test infrastructure for:
 - Demonstrating how to call each processor with available parameters
 - Showing how to connect processors into custom pipelines
 
-## Scripts and Cases
-
-To better understand processor execution and requirements, we recommend reviewing the 
-[Tests-Documentation](tests/README.md) before continuing.
-
 ## Prerequisites
 
 To ensure all reference processes and pipelines in this repository can run, we need to create an external.rc file
 in the root of this repository. A template for this file with additional hints and details has been provided here: 
 [external-template.rc](external-template.rc).
 
+Depending on which processors will be run, an instance of the [metaeffekt-workbech](https://github.com/org-metaeffekt/metaeffekt-workbench)
+might be required and checked out locally. The only additional requirement is a local instance of the vulnerability mirror
+which can be generated via the [mirror_update-index.xml](processors/mirror/mirror_update-index.xml) processor.
+
 ## Running the Reference Pipeline
 
 To get started with executing processors, you can either:
 
-1. Run the [`run_workspace-001.sh`](tests/scripts/pipelines/run_workspace-001.sh) pipeline script (produces all available results but may take several minutes)
+1. Run the [complete.sh](tests/scripts/pipelines/001_complete.sh) pipeline script (produces all available results but may take several minutes)
 2. Run any other pipeline script from the [`tests/scripts/pipelines`](tests/scripts/pipelines) directory
 
-**Note:** Scripts can be executed from any directory. All required resources for processor execution are included in 
-this repository. The only additional requirement is a local instance of our vulnerability mirror (a public version will 
-be available in the future).
+**Note:** Scripts can be executed from any directory.
 
 ### Running Without a Vulnerability Mirror
 
-Since only two processors currently require the vulnerability mirror, you can omit these processors from your pipeline:
+Since only a couple processors currently require the vulnerability mirror, you can omit these processors from your pipeline:
 
-1. Copy the [`run_workspace-001.sh`](tests/scripts/pipelines/run_workspace-001.sh) script
-2. Remove the following entries from the underlying pipelines:
+1. Copy the [complete.sh](tests/scripts/pipelines/001_complete.sh) script
+2. Remove the following entries from the pipeline:
    ```bash
-   sh "$PROCESSOR_SCRIPTS_DIR/mirror/mirror_download-index.sh"
-   sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_create-dashboard.sh"
-   sh "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-inventory.sh"
+   bash "$PROCESSOR_SCRIPTS_DIR/mirror/mirror_download-index.sh" -c "$CASES_DIR/mirror/mirror_download-index-01.sh" -f "$LOG_FILE"
+   bash "$PROCESSOR_SCRIPTS_DIR/resolve/resolve_resolve-inventory.sh" -c "$CASES_DIR/resolve/resolve_resolve-inventory-01.sh" -f "$LOG_FILE"
+   bash "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-inventory.sh" -c "$CASES_DIR/advise/advise_enrich-inventory-01.sh" -f "$LOG_FILE"
+   bash "$PROCESSOR_SCRIPTS_DIR/advise/advise_create-dashboard.sh" -c "$CASES_DIR/advise/advise_create-dashboard-01.sh" -f "$LOG_FILE"
    ```
 3. Run the newly created pipeline script
 
@@ -58,14 +56,7 @@ Since only two processors currently require the vulnerability mirror, you can om
 To execute an individual processor, run the corresponding script in the [`processors`](tests/scripts/processors) directory. Note that some 
 processors may require a vulnerability mirror instance.
 
-
-## Results
-
-All processor results are stored in the [`target`](tests/target) directory. The target structure mirrors the *metaeffekt-space* 
-organization, where:
-- Each workspace contains multiple products
-- Each product contains multiple phases
-- The phases correspond to those in the [`processors`](processors) directory
+All processor results are stored in the [`target`](tests/target) directory.
 
 ## Creating Custom Implementations
 
@@ -77,3 +68,6 @@ parameters, it is technically possible. To create a custom script or processor e
    ```bash
    sh your-processor.sh -c /path/to/your/case.sh
    ```
+
+This repository is mainly meant to be used in conjunction with the [metaeffekt-workbech](https://github.com/org-metaeffekt/metaeffekt-workbench)
+or via CI/CD components like the [metaeffekt-components](https://gitlab.opencode.de/metaeffekt/metaeffekt-components).

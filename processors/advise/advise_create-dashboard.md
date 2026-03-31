@@ -41,7 +41,3 @@ metaeffekt-workbench project in the assessments' folder.
 |----------------------------------|----------|--------------------------------------------------------------------|
 | env.vulnerability.mirror.dir     | yes      | The directory containing the vulnerability database/index.         |
 | env.vulnerability.assessment.api | no       | Backend for dynamic vulnerability assessment. Disabled by default. |
-
-# FIXMEs
-
-* clarify param.timeline.vuln.providers.list; see also FIXME on pom.

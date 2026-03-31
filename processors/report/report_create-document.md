@@ -57,13 +57,3 @@ Even though a security policy file can be set for document creation, the securit
 the asset descriptor because different document parts can refer to different configurations. In order to have control over
 the security policy configurations for each step of document generation, these activeIds can be individually set for
 each document part and each transformation as well.
-
-# FIXMEs
-
-* asset.* should be optional; what about product.*; could be also optional falling back on asset
-* the input inventory path should be redundant; maybe required as placeholder
-* the reference inventory path should be redundant; maybe required as placeholder
-* in case the security.policy.file is only used by descriptors; we do not require to pass it in here. The
-  file path can then be expressed relative to env.workbench.base.dir; this would enable more flexibility --> the 
-  security policy file is required at different steps of creating VR/CR this means that the descriptors as well as the 
-  template poms require it

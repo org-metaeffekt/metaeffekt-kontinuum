@@ -19,7 +19,7 @@ The different properties are sorted into three different groups.
 | param.cvss.active                    | no       | Boolean for enabling cvss charts to be generated default is "true".     |
 | param.cvss.vulnerability.count.limit | no       | The limit of the cvss vulnerability count.                              |
 | param.security.policy.file           | no       | The security policy file used for SVG generation.                       |
-| param.security.policy.active.ids     | mo       | The Ids of the security policy configurations to activate.              |
+| param.security.policy.active.ids     | no       | The Ids of the security policy configurations to activate.              |
 
 ### Environment
 None

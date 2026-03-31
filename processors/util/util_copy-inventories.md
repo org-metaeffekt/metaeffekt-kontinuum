@@ -9,13 +9,13 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Property               | Required | Explanation                                                          |
+| Parameter               | Required | Description                                                          |
 |------------------------|----------|----------------------------------------------------------------------|
 | input.base.dir         | no       | The directory in which the inventories are located.                  |
 | output.inventories.dir | yes      | The output directory to which the files are copied.                  |
 
 ### Parameters
-| Property               | Required | Explanation                                                          |
+| Parameter               | Required | Description                                                          |
 |------------------------|----------|----------------------------------------------------------------------|
 | param.inventories.list | yes      | The list containing the inventories to copy to the output directory. |
 

@@ -8,14 +8,14 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Property                    | Required | Explanation                                                                                   |
+| Parameter                    | Required | Description                                                                                   |
 |-----------------------------|----------|-----------------------------------------------------------------------------------------------|
 | input.bom.file              | yes      | The CycloneDX bom which to convert to an inventory.                                           |
 | output.inventory.file       | yes      | The file path of the output inventory.                                                        |
 
 
 ### Parameters
-| Property                                  | Required | Explanation                                                                                   |
+| Parameter                                  | Required | Description                                                                                   |
 |-------------------------------------------|----------|-----------------------------------------------------------------------------------------------|
 | param.include.metadata.component.enabled  | no       | If set to true, includes components contained in the CycloneDX metadata field.                |
 | param.derive.attributes.from.purl.enabled | no       | If set to true, derives attributes not present as CycloneDX fields from the purl if possible. |

@@ -9,12 +9,12 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Property                      | Required | Explanation                                                                    |
+| Parameter                      | Required | Description                                                                    |
 |-------------------------------|----------|--------------------------------------------------------------------------------|
 | input.inventory.file          | yes      | The input inventory for which the contents are to be aggregated.               |
 
 ### Parameters
-| Property                           | Required | Explanation                                                                                                                                            |
+| Parameter                           | Required | Description                                                                                                                                            |
 |------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
 | param.reference.inventory.dir      | yes      | The input reference inventory with which the input inventory will be enriched. This is the parent directory of the license and components directories. |
 | param.reference.inventory.includes | no       | A comma separated list of included file types for the reference inventory, default is "\*\*/\*.ser,\*\*/\*.xls,\*\*/\*.xlsx.                            |

@@ -1,4 +1,4 @@
-# Scanned - Inventory Scanner
+# Scan - Scan Inventory
 
 Scans a resolved inventory for licenses and copyrights and writes the resulting information to an inventory.
 
@@ -8,7 +8,7 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Property                           | Required | Explanation                                                                                                                    |
+| Parameter                           | Required | Description                                                                                                                    |
 |------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------|
 | input.inventory.file               | yes      | The resolved input inventory file path.                                                                                        |
 | output.inventory.file              | yes      | The scanned output inventory file path.                                                                                        |
