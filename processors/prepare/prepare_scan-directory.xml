@@ -74,6 +74,7 @@
                             <enableImplicitUnpack>true</enableImplicitUnpack>
                             <includeEmbedded>true</includeEmbedded>
                             <enableDetectComponentPatterns>true</enableDetectComponentPatterns>
+                            <unwrapIncludes>**/*</unwrapIncludes>
                         </configuration>
                     </execution>
                 </executions>
