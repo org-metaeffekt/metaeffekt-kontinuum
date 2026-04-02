@@ -94,7 +94,7 @@ pipeline {
             }
         }
 
-        // FIXME: for some reason the explict selection of MAVEN3912 is required here; otherwise these stages will fail
+        // FIXME: for some reason the explicit selection of MAVEN3912 is required here; otherwise these stages will fail
         //   This needs to be examined. Ideally we would set the tools globally for the pipeline and all stages
         //   would reuse those until further specified / overwritten.
 
