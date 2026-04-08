@@ -1,0 +1,39 @@
+1775646280940:help
+1775646289283:processor list
+1775646306564:processor show advise/advise_attach-metadata
+1775646314093:processor show Attach Metadata
+1775646321735:processor show
+1775646486910:processor show "advise/advise_attach-metadata"
+1775646515328:processor show --help
+1775646750129:stacktrace
+1775646762335:clear
+1775646767607:processor list
+1775646788392:processor show scan/scan_scan-inventory
+1775646960137:exit
+1775647039216:processor list
+1775647041097:help
+1775647060933:processor show advise/advise_attach-metadata
+1775647825975:exit
+1775647844040:processor list
+1775647852615:processor show advise_attach-metadata
+1775647863998:clear
+1775647864399:help
+1775647870095:processor run
+1775647873268:processor run --help
+1775647975511:exit
+1775647988630:processor run --help
+1775648049573:processor run --processor-id advise_attach-metadata
+1775648060947:processor run --processor-id advise_attach-metadata --dryRun true
+1775648635981:exit
+1775648647381:clear
+1775648659070:processor run --processor-id advise_attach-metadata
+1775648938117:processor run advise_attach-metadata
+1775649328299:exit
+1775649340592:clear
+1775649350895:processor run advise_attach-metadata
+1775649595394:exit
+1775649727875:clear
+1775649733889:processor run advise_attach-metadata
+1775650222676:exit
+1775650236709:processor run advise_attach-metadata
+1775650362786:exit
