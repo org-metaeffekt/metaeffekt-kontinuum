@@ -1,4 +1,4 @@
-package com.metaeffekt.kontinuum.execution.local;
+package com.metaeffekt.kontinuum.execution.environment;
 
 import com.metaeffekt.kontinuum.execution.contract.BackendType;
 import com.metaeffekt.kontinuum.execution.contract.ExecuteProcessorResult;

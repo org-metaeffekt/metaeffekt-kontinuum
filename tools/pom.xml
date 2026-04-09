@@ -12,8 +12,7 @@
     <modules>
         <module>execution-contract</module>
         <module>execution-core</module>
-        <module>execution-local</module>
-        <module>execution-container</module>
+        <module>execution-environment</module>
         <module>shell-cli</module>
     </modules>
 

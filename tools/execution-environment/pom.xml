@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>execution-container</artifactId>
+    <artifactId>execution-environment</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -24,6 +24,12 @@
             <groupId>com.metaeffekt.kontinuum</groupId>
             <artifactId>execution-core</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
