@@ -14,6 +14,7 @@ LOG_FILE="$SELF_DIR/../../../.logs/$(basename $0).log"
 
 bash "$PROCESSOR_SCRIPTS_DIR/mirror/mirror_download-index.sh" -c "$CASES_DIR/mirror/mirror_download-index-01.sh" -f "$LOG_FILE"
 
+bash "$PROCESSOR_SCRIPTS_DIR/util/util_execute-kotlin-script.sh" -c "$CASES_DIR/util/util_execute-kotlin-script-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-sources.sh" -c "$CASES_DIR/util/util_aggregate-sources-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_copy-inventories.sh" -c "$CASES_DIR/util/util_copy-inventories-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_create-diff.sh" -c "$CASES_DIR/util/util_create-diff-01.sh" -f "$LOG_FILE"
