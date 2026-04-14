@@ -83,8 +83,8 @@ pipeline {
                 // configure mirror
                 sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_URL=\"http://ae-scanner/mirror/index/ae-mirror-index_gen5.tar.gz\"" >> external.rc'
 
-                sh 'echo "AE_CORE_VERSION=\"HEAD-SNAPSHOT\"" >> external.rc'
-                sh 'echo "AE_ARTIFACT_ANALYSIS_VERSION=\"HEAD-SNAPSHOT\"" >> external.rc'
+                sh 'echo "AE_CORE_VERSION=\"0.153-SNAPSHOT\"" >> external.rc'
+                sh 'echo "AE_ARTIFACT_ANALYSIS_VERSION=\"0.156-SNAPSHOT\"" >> external.rc'
                 sh 'echo "DUMP_LOGS=\"true\"" >> external.rc'
             }
         }

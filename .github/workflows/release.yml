@@ -54,9 +54,9 @@ jobs:
 
       - name: Adjust core and artifact-analysis versions
         run: |
-          sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|g' \
+          sed -i 's|<ae.core.version>0.153-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|g' \
             processors/_common_/ae-kontinuum-processors.xml
-          sed -i 's|<ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|g' \
+          sed -i 's|<ae.artifact.analysis.version>0.156-SNAPSHOT</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|g' \
             processors/_common_/ae-kontinuum-processors.xml
 
       - name: Checkout metaeffekt-workbench
@@ -68,8 +68,8 @@ jobs:
       - name: Adjust core and artifact-analysis versions in workbench
         run: |
           cd ${{ github.workspace }}/.metaeffekt-workbench
-          sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|' templates/report-template/pom.xml
-          sed -i 's|<ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|' templates/report-template/pom.xml
+          sed -i 's|<ae.core.version>0.153-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|' templates/report-template/pom.xml
+          sed -i 's|<ae.artifact.analysis.version>0.156-SNAPSHOT</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|' templates/report-template/pom.xml
 
       - name: Create external.rc file
         run: |
