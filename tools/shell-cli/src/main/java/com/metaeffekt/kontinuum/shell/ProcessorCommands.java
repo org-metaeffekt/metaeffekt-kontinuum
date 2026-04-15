@@ -1,10 +1,10 @@
 package com.metaeffekt.kontinuum.shell;
 
 import com.metaeffekt.kontinuum.execution.container.ContainerWrapperBackend;
-import com.metaeffekt.kontinuum.execution.contract.ExecuteProcessorRequest;
-import com.metaeffekt.kontinuum.execution.contract.ExecuteProcessorResult;
-import com.metaeffekt.kontinuum.execution.contract.ProcessorDefinition;
-import com.metaeffekt.kontinuum.execution.contract.ProcessorParameterDefinition;
+import com.metaeffekt.kontinuum.data.models.ExecuteProcessorRequest;
+import com.metaeffekt.kontinuum.data.models.ExecuteProcessorResult;
+import com.metaeffekt.kontinuum.data.models.ProcessorDefinition;
+import com.metaeffekt.kontinuum.data.models.ProcessorParameterDefinition;
 import com.metaeffekt.kontinuum.execution.core.GuidedProcessorExecutor;
 import com.metaeffekt.kontinuum.execution.local.LocalMavenBackend;
 import org.springframework.shell.standard.ShellComponent;

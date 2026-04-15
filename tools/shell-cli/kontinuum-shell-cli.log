@@ -37,3 +37,11 @@
 1775650222676:exit
 1775650236709:processor run advise_attach-metadata
 1775650362786:exit
+1776165708154:clear
+1776165710268:help
+1776165715831:processor list
+1776165724343:processor show advise_attach-metadata
+1776165839001:processor run advise_attach-metadata
+1776165896916:clear
+1776165897468:help
+1776165901731:exit

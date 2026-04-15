@@ -2,7 +2,7 @@ package com.metaeffekt.kontinuum.shell;
 
 import com.metaeffekt.kontinuum.execution.container.ContainerCommandClient;
 import com.metaeffekt.kontinuum.execution.container.ContainerWrapperBackend;
-import com.metaeffekt.kontinuum.execution.contract.ExecuteProcessorResult;
+import com.metaeffekt.kontinuum.data.models.ExecuteProcessorResult;
 import com.metaeffekt.kontinuum.execution.core.GuidedProcessorExecutor;
 import com.metaeffekt.kontinuum.execution.core.MavenCommandPlanner;
 import com.metaeffekt.kontinuum.execution.core.ProcessorCatalog;
@@ -12,7 +12,6 @@ import com.metaeffekt.kontinuum.execution.local.LocalMavenBackend;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;

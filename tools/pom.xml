@@ -10,9 +10,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>execution-contract</module>
-        <module>execution-core</module>
-        <module>execution-environment</module>
+        <module>models</module>
+        <module>execution</module>
         <module>shell-cli</module>
     </modules>
 
@@ -34,6 +33,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+                <dependency>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                    <version>1.18.42</version>
+                </dependency>
         </dependencies>
     </dependencyManagement>
 
