@@ -22,17 +22,7 @@
         </dependency>
         <dependency>
             <groupId>com.metaeffekt.kontinuum</groupId>
-            <artifactId>execution-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.metaeffekt.kontinuum</groupId>
-            <artifactId>execution-local</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.metaeffekt.kontinuum</groupId>
-            <artifactId>execution-container</artifactId>
+            <artifactId>execution</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -16,14 +16,16 @@ public class ProcessorDefinitions {
         String description;
         String pomLocation;
         String goal;
-        List<ProcessorParameters> parameters;
+        List<ProcessorParameter> parameters;
+        int executionOrder;
     }
 
     @Data
-    public static class ProcessorParameters {
+    public static class ProcessorParameter {
         String key;
         String description;
         Boolean required;
+        String value;
     }
 
 }

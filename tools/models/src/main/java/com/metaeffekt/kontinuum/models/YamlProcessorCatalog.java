@@ -6,20 +6,24 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
 
 @Slf4j
-public class YamlProcessorCatalog implements ProcessorCatalog{
+public class YamlProcessorCatalog implements ProcessorCatalog {
 
     public final List<ProcessorDefinitions.Processor> catalog;
 
-    public YamlProcessorCatalog(File processorsYamlFile) {
+    public YamlProcessorCatalog() {
+        File processorsYamlFile = locateProcessorsYaml();
         this.catalog = load(processorsYamlFile);
     }
 
     @Override
     public List<ProcessorDefinitions.Processor> getProcessors() {
-        return List.of();
+        return catalog;
     }
 
     @Override
@@ -39,9 +43,21 @@ public class YamlProcessorCatalog implements ProcessorCatalog{
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
         try {
             ProcessorDefinitions processorDefinitions = objectMapper.readValue(processorsYamlFile, ProcessorDefinitions.class);
-            return processorDefinitions.processors;
+            return processorDefinitions.processors.stream().sorted(Comparator.comparing(p -> p.name)).toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static File locateProcessorsYaml() {
+        Path current = Path.of("").toAbsolutePath().normalize();
+        while (current != null) {
+            Path processorsYaml = current.resolve("processors/processors.yaml");
+            if (Files.exists(processorsYaml)) {
+                return processorsYaml.toFile();
+            }
+            current = current.getParent();
+        }
+        throw new IllegalStateException("Unable to locate repository root containing processors/processors.yaml");
     }
 }
