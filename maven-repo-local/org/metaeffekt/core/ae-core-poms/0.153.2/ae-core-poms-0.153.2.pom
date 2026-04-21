@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="
+    http://maven.apache.org/POM/4.0.0
+    http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ae-core-poms</artifactId>
+    <name>${project.artifactId}</name>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.metaeffekt.core</groupId>
+        <artifactId>ae-core</artifactId>
+        <version>0.153.2</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <modules>
+        <module>ae-core-dependency-management-pom</module>
+        <module>ae-core-plugin-management-pom</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <!-- ensure the proper build order in the reactor -->
+            <groupId>org.metaeffekt.core</groupId>
+            <artifactId>ae-configuration</artifactId>
+            <version>${ae.core.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+</project>

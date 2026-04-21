@@ -171,7 +171,7 @@ processors:
         required: true
 
   - name: Enrich with Reference
-    id: enrich-with-reference
+    id: enrich-with-reference-legacy
     description: |
       This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
     pomLocation: advise/advise_enrich-with-reference.xml
@@ -188,6 +188,29 @@ processors:
         required: true
       - key: param.reference.inventory.dir
         description: The directory of the reference inventory with which the input inventory is enriched.
+        required: true
+
+  - name: Enrich with Reference
+    id: enrich-with-reference
+    description: |
+      This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
+    pomLocation: advise/2.xml
+    goal: process-resources
+    parameters:
+      - key: input.inventory.file
+        description: The file path of the inventory which will be enriched with the reference inventory.
+        required: true
+      - key: param.reference.inventory.file
+        description: The reference inventory file. If this is set, it will be used instead of the designated directory.
+        required: false
+      - key: param.reference.inventory.dir
+        description: The directory of the reference inventory with which the input inventory is enriched.
+        required: false
+      - key: param.reference.inventory.includes
+        description: File extension input pattern for which files to include as reference inventories.
+        required: false
+      - key: output.inventory.file
+        description: The enriched inventory output file, can be the same as the input file..
         required: true
 
   - name: CycloneDX to Inventory

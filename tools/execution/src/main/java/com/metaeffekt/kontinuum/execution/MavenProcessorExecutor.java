@@ -28,6 +28,11 @@ public class MavenProcessorExecutor implements ProcessorExecutionBackend {
         } else {
             command.add(requireText(KontinuumManagementUtils.getAbsolutePomPath(processorExecution.pomLocation()).toString(), "pomLocation"));
         }
+
+        if (processorExecution.debug()) {
+            command.add("-X");
+        }
+
         command.add(requireText(processorExecution.goal(), "goal"));
 
         Map<ProcessorDefinitions.ProcessorParameter, String> parameterToValueMap = processorExecution.parameterToValueMap();

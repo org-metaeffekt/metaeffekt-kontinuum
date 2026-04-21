@@ -8,5 +8,6 @@ public record ProcessorExecution(
     String pomLocation,
     String goal,
     Map<ProcessorDefinitions.ProcessorParameter, String> parameterToValueMap,
-    boolean dryRun
+    boolean dryRun,
+    boolean debug
 ) { }

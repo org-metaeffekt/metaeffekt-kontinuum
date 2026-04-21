@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+    Copyright 2024-2025 the original author or authors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    -->
+
+    <parent>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
+        <version>KONTINUUM-SNAPSHOT</version>
+        <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
+    </parent>
+
+    <artifactId>advise_enrich-with-reference</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <advisor.validation>false</advisor.validation>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.metaeffekt.core</groupId>
+                <artifactId>ae-inventory-maven-plugin</artifactId>
+                <version>${ae.core.version}</version>
+                <executions>
+                    <execution>
+                        <id>enrich-inventory-with-reference</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>enrich-inventory-with-reference</goal>
+                        </goals>
+                        <configuration>
+                            <inputInventoryFile>${input.inventory.file}</inputInventoryFile>
+
+                            <referenceInventory>${param.reference.inventory.file}</referenceInventory>
+                            <referenceInventoryDir>${param.reference.inventory.dir}</referenceInventoryDir>
+                            <referenceInventoryIncludes>${param.reference.inventory.includes}</referenceInventoryIncludes>
+
+                            <outputInventoryFile>${output.inventory.file}</outputInventoryFile>
+
+                            <failOnError>${advisor.validation}</failOnError>
+                            <failOnBanned>${advisor.validation}</failOnBanned>
+                            <failOnDowngrade>${advisor.validation}</failOnDowngrade>
+                            <failOnUnknown>${advisor.validation}</failOnUnknown>
+                            <failOnUnknownVersion>${advisor.validation}</failOnUnknownVersion>
+                            <failOnDevelopment>${advisor.validation}</failOnDevelopment>
+                            <failOnInternal>${advisor.validation}</failOnInternal>
+                            <failOnUpgrade>${advisor.validation}</failOnUpgrade>
+                            <failOnMissingLicense>${advisor.validation}</failOnMissingLicense>
+                            <failOnMissingLicenseFile>${advisor.validation}</failOnMissingLicenseFile>
+                            <failOnMissingNotice>${advisor.validation}</failOnMissingNotice>
+                            <failOnMissingComponentFiles>${advisor.validation}</failOnMissingComponentFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>input.inventory.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.inventory.file</property>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

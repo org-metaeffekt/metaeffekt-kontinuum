@@ -85,7 +85,7 @@
                             </values>
 
                             <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
-                            <inventoryOutputFile>${output.inventory.file}</inventoryOutputFile>
+                            <inventoryOutputFile>${input.inventory.file}</inventoryOutputFile>
                         </configuration>
                     </execution>
 
@@ -95,7 +95,7 @@
                             <goal>enrich-inventory</goal>
                         </goals>
                         <configuration>
-                            <inventoryInputFile>${output.inventory.file}</inventoryInputFile>
+                            <inventoryInputFile>${input.inventory.file}</inventoryInputFile>
                             <inventoryOutputFile>${output.inventory.file}</inventoryOutputFile>
                             <mirrorDirectory>${env.vulnerability.mirror.dir}</mirrorDirectory>
 

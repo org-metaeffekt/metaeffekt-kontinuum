@@ -98,11 +98,12 @@ public class ProcessorCommands {
     @ShellMethod(key = "processor run", value = "Execute a processor in local or container mode.")
     public void run(
         @ShellOption(value = "processor-id") String processorId,
-        @ShellOption(value = "dry-run", defaultValue = "false") boolean dryRun
+        @ShellOption(value = "dry-run", defaultValue = "false") boolean dryRun,
+        @ShellOption(value = "debug", defaultValue = "false") boolean debug
     ) throws Exception {
         ProcessorDefinitions.Processor processor = getProcessorByIdOrIndex(processorId);
         Map<ProcessorDefinitions.ProcessorParameter, String> parameterToValueMap = promptForProcessorParameters(processor);
-        ProcessorExecution processorExecution = new ProcessorExecution(processor.getPomLocation(), processor.getGoal(), parameterToValueMap ,dryRun);
+        ProcessorExecution processorExecution = new ProcessorExecution(processor.getPomLocation(), processor.getGoal(), parameterToValueMap ,dryRun, debug);
         processorExecutionBackend.execute(processorExecutionBackend.buildExecutionCommand(processorExecution));
     }
 

@@ -1,0 +1,338 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ae-7zip-bundle</artifactId>
+    <groupId>org.metaeffekt.bundle.sevenzip</groupId>
+    <version>0.4.0</version>
+
+    <packaging>pom</packaging>
+
+    <name>metaeffekt-7zip-bundle</name>
+    <description>Resource bundle to package and publish 7zip resource in maven central.</description>
+    <url>https://github.com/org-metaeffekt/metaeffekt-7zip-bundle</url>
+
+    <organization>
+        <name>metaeffekt GmbH</name>
+        <url>https://metaeffekt.com</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License 2.1</name>
+            <url>https://www.gnu.org/licenses/lgpl-2.1.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <email>contact@metaeffekt.com</email>
+            <organization>metaeffekt GmbH</organization>
+            <organizationUrl>http://metaeffekt.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/org-metaeffekt/metaeffekt-7zip-bundle.git</connection>
+        <developerConnection>scm:git:ssh://github.com/org-metaeffekt/metaeffekt-7zip-bundle.git</developerConnection>
+        <url>https://github.com/org-metaeffekt/metaeffekt-7zip-bundle</url>
+    </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <sevenzip.version>2409</sevenzip.version>
+
+        <!-- manage version in alignment with metaeffekt-core -->
+        <slf4j.version>1.7.36</slf4j.version>
+        <commons.compress.version>1.26.1</commons.compress.version>
+        <tukaani.xz.version>1.9</tukaani.xz.version>
+
+        <ae.7zip.bundle.version>0.4.0</ae.7zip.bundle.version>
+
+        <organization>metaeffekt.com</organization>
+
+        <license.identifier>GNU Lesser General Public License 2.1</license.identifier>
+        <license.file>/META-INF/LICENSE</license.file>
+
+    </properties>
+
+    <modules>
+        <module>ae-7zip-binary-download</module>
+        <module>ae-7zip-resource-bundle</module>
+        <module>ae-7zip-java-util</module>
+        <module>ae-7zip-installation-maven-plugin</module>
+        <module>ae-7zip-tests</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons.compress.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.tukaani</groupId>
+                <artifactId>xz</artifactId>
+                <version>${tukaani.xz.version}</version>
+                <scope>compile</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <index>false</index>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifestEntries>
+                            <Created-By>${organization}</Created-By>
+                            <Built-By>${organization}</Built-By>
+                        </manifestEntries>
+                        <manifestSections>
+                            <manifestSection>
+                                <name>License Information</name>
+                                <manifestEntries>
+                                    <License>${license.identifier}</License>
+                                    <License-File>${license.file}</License-File>
+                                </manifestEntries>
+                            </manifestSection>
+                        </manifestSections>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>deploy</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <!--
+                    <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+                    -->
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.14</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <!--<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
+                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>gpg</executable>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>update-versions</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.metaeffekt.core</groupId>
+                        <artifactId>ae-version-maven-plugin</artifactId>
+                        <!-- version is fixed; core is not regarded a dependency -->
+                        <version>0.126.0</version>
+                        <configuration>
+                            <projectVersion>${ae.7zip.bundle.version}</projectVersion>
+                            <groupIdVersionMap>
+                                <org.metaeffekt.bundle.sevenzip>${ae.7zip.bundle.version}</org.metaeffekt.bundle.sevenzip>
+                            </groupIdVersionMap>
+                            <propertyVersionMap>
+                                <ae.7zip.bundle.version>${ae.7zip.bundle.version}</ae.7zip.bundle.version>
+                            </propertyVersionMap>
+                            <includes>**/pom.xml</includes>
+                            <excludes>**/.*/**/*</excludes>
+                            <excludes>**/target/**/*</excludes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>pre-clean</phase>
+                                <goals>
+                                    <goal>update</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>generate-javadoc-jar</id>
+            <activation>
+                <file><exists>src/main/java</exists></file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <includePom>false</includePom>
+                            <excludeResources>false</excludeResources>
+
+                            <archive>
+                                <index>false</index>
+                                <addMavenDescriptor>false</addMavenDescriptor>
+                                <manifestEntries>
+                                    <Created-By>${organization}</Created-By>
+                                    <Built-By>${organization}</Built-By>
+                                </manifestEntries>
+                                <manifestSections>
+                                    <manifestSection>
+                                        <name>License Information</name>
+                                        <manifestEntries>
+                                            <License>${license.identifier}</License>
+                                            <License-File>${license.file}</License-File>
+                                        </manifestEntries>
+                                    </manifestSection>
+                                </manifestSections>
+                            </archive>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.10.0</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <source>8</source>
+                            <javadocVersion>1.8</javadocVersion>
+                            <show>public</show>
+                            <failOnError>true</failOnError>
+
+                            <additionalOptions>
+                                <!-- disable specific checks (HTML) but keep others intact -->
+                                <additionalOption>-Xdoclint:all,-html</additionalOption>
+                            </additionalOptions>
+
+                            <bottom>
+                                Licensed under the ${license.identifier} - Copyright &#169; {inceptionYear} &#x2013;
+                                {currentYear} the original author or authors.
+                            </bottom>
+                            <archive>
+                                <index>false</index>
+                                <addMavenDescriptor>false</addMavenDescriptor>
+                                <manifestEntries>
+                                    <Created-By>${organization}</Created-By>
+                                    <Built-By>${organization}</Built-By>
+                                </manifestEntries>
+                                <manifestSections>
+                                    <manifestSection>
+                                        <name>License Information</name>
+                                        <manifestEntries>
+                                            <License>${license.identifier}</License>
+                                        </manifestEntries>
+                                    </manifestSection>
+                                </manifestSections>
+                            </archive>
+                            <excludes>
+                                <exclude>**/*</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+</project>
