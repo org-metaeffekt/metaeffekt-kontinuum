@@ -182,4 +182,20 @@ configuration of single processes. To create your own configuration file simply 
 
 ## Local Configuration
 
-The application expects an `external.rc` file at the repository root. See `external-template.rc` for the required format.
+### project.properties
+
+The `project.properties` file in the `tools/` directory is automatically loaded at startup and its values are set as system properties. This file contains project-specific settings:
+
+```properties
+kontinuum.dir=/path/to/kontinuum
+workbench.dir=/path/to/workbench
+
+ae.core.version=0.153.2
+ae.artifact.analysis.version=0.156.3
+```
+
+The properties are loaded regardless of how the application is run (Maven or standalone JAR). When packaged as a JAR, the `project.properties` file is included in the classpath.
+
+### external.rc
+
+The application also expects an `external.rc` file at the repository root. See `external-template.rc` for the required format.

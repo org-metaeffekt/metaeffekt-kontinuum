@@ -39,7 +39,7 @@ public class YamlProcessorCatalog implements ProcessorCatalog {
         return foundProcessors.get(0);
     }
 
-    private static List<ProcessorDefinitions.Processor> load(File processorsYamlFile) {
+    private List<ProcessorDefinitions.Processor> load(File processorsYamlFile) {
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
         try {
             ProcessorDefinitions processorDefinitions = objectMapper.readValue(processorsYamlFile, ProcessorDefinitions.class);
@@ -49,7 +49,7 @@ public class YamlProcessorCatalog implements ProcessorCatalog {
         }
     }
 
-    private static File locateProcessorsYaml() {
+    private File locateProcessorsYaml() {
         Path current = Path.of("").toAbsolutePath().normalize();
         while (current != null) {
             Path processorsYaml = current.resolve("processors/processors.yaml");
