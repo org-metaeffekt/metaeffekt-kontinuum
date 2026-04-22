@@ -22,6 +22,7 @@ of this repository.
 | param.correlation.dir            | yes      | The directory containing vulnerability correlation information.                                |
 | param.assessment.dirs            | yes      | A comma separated list of all directories or files containing assessments.                     |
 | param.context.dirs               | yes      | A comma separated list of all directories or files containing contexts.                        |
+| param.param.threat.catalog.file  | no       | A file pointing to the threat catalog to use.                                                  |
 | param.security.policy.file       | yes      | The security policy file to use.                                                               |
 | param.security.policy.active.ids | no       | The activeIds of the security policy configurations to use for enrichment.                     |
 | param.activate.*                 | no       | Switches determining which vulnerability databases are utilized during the enrichment process. |

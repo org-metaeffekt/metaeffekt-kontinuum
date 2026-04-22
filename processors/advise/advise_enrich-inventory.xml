@@ -45,6 +45,7 @@
 
         <param.activate.status>true</param.activate.status>
         <param.activate.keywords>true</param.activate.keywords>
+        <param.activate.threat>false</param.activate.threat>
         <param.activate.validation>false</param.activate.validation>
 
         <!-- ghsa unreviewed filter -->
@@ -243,6 +244,11 @@
                                 <active>${param.activate.kev}</active>
                             </kevEnrichment>
 
+                            <threatEnrichment>
+                                <active>${param.activate.threat}</active>
+                                <catalogFile>${param.threat.catalog.file}</catalogFile>
+                            </threatEnrichment>
+
                             <!-- Inventory Post Processing -->
                             <vulnerabilityStatusPostProcessingEnrichment>
                                 <active>true</active>
@@ -305,6 +311,9 @@
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.assessment.dirs</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.threat.catalog.file</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.security.policy.file</property>
