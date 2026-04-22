@@ -53,9 +53,9 @@ public class YamlProcessorCatalog implements ProcessorCatalog {
         String kontinuumDir = System.getProperty(ProjectProperties.KONTINUUM_DIR.getPropertyKey());
         StringBuilder sb = new StringBuilder().append(kontinuumDir);
         if (kontinuumDir.endsWith("/")) {
-            sb.append("procesors/processors.yaml");
+            sb.append("processors/processors.yaml");
         } else {
-            sb.append("/procesors/processors.yaml");
+            sb.append("/processors/processors.yaml");
         }
 
         if (Files.exists(Path.of(sb.toString()))) {

@@ -8,6 +8,7 @@ import com.metaeffekt.kontinuum.models.YamlProcessorCatalog;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 
 @Configuration
@@ -19,6 +20,7 @@ public class ShellConfiguration {
     }
 
     @Bean
+    @DependsOn("projectPropertiesLoader")
     YamlProcessorCatalog processorCatalog() { return new YamlProcessorCatalog(); }
 
     @Bean

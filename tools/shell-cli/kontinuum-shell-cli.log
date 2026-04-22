@@ -110,3 +110,8 @@
 1776774924950:clear
 1776774928195:processor run 18 --debug --configuration /Users/jfuegen/Repositories/metaeffekt-kontinuum/processors/configurations/enrich-with-reference-20260421-125245.yaml
 1776775748715:exit
+1776865722613:clear
+1776865728188:processor list
+1776865753582:processor run 18 --configuration /Users/jfuegen/Repositories/metaeffekt-kontinuum/processors/configurations/enrich-with-reference-20260421-125245.yaml
+1776865769559:clear
+1776865771488:exit
