@@ -1,0 +1,24 @@
+---
+processors:
+- id: "save-inspect-image"
+  name: "Save Inspect Image"
+  description: "This process saves and inspects a docker container image via its id\
+    \ and version. The extracted container information is then saved into a specified\
+    \ directory for further processing.\n"
+  pomLocation: "extract/extract_save-inspect-image.xml"
+  goal: "process-resources"
+  parameters:
+  - key: "output.dir"
+    description: "The output directory for the extracted container image information."
+    required: true
+    value: "/tmp/supertemp"
+  - key: "param.image.id"
+    description: "The ID of the container image. Either in Format [id] or [repository/id]\
+      \ depending on whether the image is in the official docker repo or not."
+    required: true
+    value: "nginx"
+  - key: "param.image.version"
+    description: "The image version tag."
+    required: true
+    value: "latest"
+  executionOrder: 0
