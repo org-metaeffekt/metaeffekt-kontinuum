@@ -50,14 +50,18 @@ public class YamlProcessorCatalog implements ProcessorCatalog {
     }
 
     private File locateProcessorsYaml() {
-        Path current = Path.of("").toAbsolutePath().normalize();
-        while (current != null) {
-            Path processorsYaml = current.resolve("processors/processors.yaml");
-            if (Files.exists(processorsYaml)) {
-                return processorsYaml.toFile();
-            }
-            current = current.getParent();
+        String kontinuumDir = System.getProperty(ProjectProperties.KONTINUUM_DIR.getPropertyKey());
+        StringBuilder sb = new StringBuilder().append(kontinuumDir);
+        if (kontinuumDir.endsWith("/")) {
+            sb.append("procesors/processors.yaml");
+        } else {
+            sb.append("/procesors/processors.yaml");
         }
-        throw new IllegalStateException("Unable to locate repository root containing processors/processors.yaml");
+
+        if (Files.exists(Path.of(sb.toString()))) {
+            return new File(sb.toString());
+        } else {
+            throw new IllegalStateException("Unable to locate repository root containing processors/processors.yaml");
+        }
     }
 }

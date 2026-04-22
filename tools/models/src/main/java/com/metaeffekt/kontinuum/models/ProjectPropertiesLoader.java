@@ -16,12 +16,6 @@ import java.util.Properties;
 public class ProjectPropertiesLoader {
 
     private static final String PROPERTIES_FILE = "project.properties";
-    private static final String[] PROPERTY_KEYS = {
-        "kontinuum.dir",
-        "workbench.dir",
-        "ae.core.version",
-        "ae.artifact.analysis.version"
-    };
 
     private final Properties properties;
 
@@ -81,7 +75,7 @@ public class ProjectPropertiesLoader {
     }
 
     private void applyAsSystemProperties() {
-        for (String key : PROPERTY_KEYS) {
+        for (String key : ProjectProperties.getPropertyKeys()) {
             String value = properties.getProperty(key);
             if (value != null && !value.isEmpty()) {
                 // Only set if not already set
@@ -89,35 +83,9 @@ public class ProjectPropertiesLoader {
                     System.setProperty(key, value);
                     log.debug("Set system property: {}={}", key, value);
                 }
+            } else {
+                throw new IllegalStateException("Properties file does not contain all required values.");
             }
         }
-    }
-
-    /**
-     * Get a property value.
-     */
-    public String getProperty(String key) {
-        return properties.getProperty(key);
-    }
-
-    /**
-     * Get a property value with a default.
-     */
-    public String getProperty(String key, String defaultValue) {
-        return properties.getProperty(key, defaultValue);
-    }
-
-    /**
-     * Get all loaded properties.
-     */
-    public Properties getProperties() {
-        return new Properties(properties);
-    }
-
-    /**
-     * Check if a property exists.
-     */
-    public boolean hasProperty(String key) {
-        return properties.containsKey(key);
     }
 }

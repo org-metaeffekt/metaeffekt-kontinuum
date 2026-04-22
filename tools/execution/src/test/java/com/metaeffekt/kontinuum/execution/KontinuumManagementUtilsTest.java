@@ -13,8 +13,7 @@ public class KontinuumManagementUtilsTest {
     @Test
     void testLocateRepoRoot() {
         Path repoRoot = KontinuumManagementUtils.locateRepoRoot();
-
-        assertTrue(Files.exists(repoRoot.resolve("processors/processors.yaml")));
+        assertTrue(Files.exists(repoRoot));
     }
 
     @Test

@@ -1,22 +1,24 @@
 package com.metaeffekt.kontinuum.execution;
 
+import com.metaeffekt.kontinuum.models.ProjectProperties;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class KontinuumManagementUtils {
-    static Path locateRepoRoot() {
-        Path current = Path.of("").toAbsolutePath().normalize();
-        while (current != null) {
-            if (Files.exists(current.resolve("processors/processors.yaml"))) {
-                return current;
-            }
-            current = current.getParent();
+    public static Path locateRepoRoot() {
+        String kontinuumDir = System.getProperty(ProjectProperties.KONTINUUM_DIR.getPropertyKey());
+
+        Path kontinuumPath = Path.of(kontinuumDir);
+        if (Files.exists(kontinuumPath)) {
+            return kontinuumPath;
+        } else {
+            throw new IllegalStateException("The path to the metaeffekt-kontinuum specified in the properties file does not exist.");
         }
-        throw new IllegalStateException("Unable to locate repository root containing processors/processors.yaml");
     }
 
-    static Path getAbsolutePomPath(String pomPath) {
+    public static Path getAbsolutePomPath(String pomPath) {
         Path repoRoot = locateRepoRoot();
         StringBuilder sb = new StringBuilder();
 
@@ -25,9 +27,5 @@ public class KontinuumManagementUtils {
         if (!pomPath.startsWith("/")) { sb.append("/"); }
 
         return new File(repoRoot + sb.toString() + pomPath).toPath();
-    }
-
-    static File getProcessorsYaml() {
-        return new File(locateRepoRoot() + "/processors/processors.yaml");
     }
 }

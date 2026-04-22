@@ -1,6 +1,8 @@
 package com.metaeffekt.kontinuum.execution;
 
 import com.metaeffekt.kontinuum.models.ProcessorDefinitions;
+import com.metaeffekt.kontinuum.models.ProjectProperties;
+import com.metaeffekt.kontinuum.models.ProjectPropertiesLoader;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
@@ -31,6 +33,17 @@ public class MavenProcessorExecutor implements ProcessorExecutionBackend {
 
         if (processorExecution.debug()) {
             command.add("-X");
+        }
+
+        String coreVersion = System.getProperty(ProjectProperties.AE_CORE_VERSION.getPropertyKey());
+        String artifactAnalysisVersion = System.getProperty(ProjectProperties.AE_ARTIFACT_ANALYSIS_VERSION.getPropertyKey());
+
+        if (!coreVersion.isEmpty()) {
+            command.add("-Dae.core.version=" + coreVersion);
+        }
+
+        if (!artifactAnalysisVersion.isEmpty()) {
+            command.add("-Dae.artifact.analysis.version=" + artifactAnalysisVersion);
         }
 
         command.add(requireText(processorExecution.goal(), "goal"));
