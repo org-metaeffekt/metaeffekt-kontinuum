@@ -115,3 +115,14 @@
 1776865753582:processor run 18 --configuration /Users/jfuegen/Repositories/metaeffekt-kontinuum/processors/configurations/enrich-with-reference-20260421-125245.yaml
 1776865769559:clear
 1776865771488:exit
+1776939428008:clear
+1776939431776:help
+1776939435848:processor list
+1776939441736:processor show 2
+1776939456921:processor run 2
+1776939510435:processor run 2 --config /Users/jfuegen/Repositories/metaeffekt-kontinuum/processors/configurations/attach-metadata-20260423-121811.yaml
+1776939516305:processor run 2 --configuration /Users/jfuegen/Repositories/metaeffekt-kontinuum/processors/configurations/attach-metadata-20260423-121811.yaml
+1776939533323:exit
+1776939703464:clear
+1776939705364:processor run 2 --configuration /Users/jfuegen/Repositories/metaeffekt-kontinuum/processors/configurations/attach-metadata-20260423-121811.yaml
+1776939802483:exit

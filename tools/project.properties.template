@@ -1,0 +1,10 @@
+kontinuum.dir=/Users/user/Repositories/metaeffekt-kontinuum
+workbench.dir=/Users/user/Repositories/metaeffekt-workbench
+
+ae.core.version=HEAD-SNAPSHOT
+ae.artifact.analysis.version=HEAD-SNAPSHOT
+
+vulnerability.mirror.url=https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen4-external.tar.gz
+vulnerability.mirror.dir=/Users/user/mirror/gen5
+
+nvd.api.key=api-key
