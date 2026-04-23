@@ -313,9 +313,6 @@
                                     <property>param.assessment.dirs</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.threat.catalog.file</property>
-                                </requireProperty>
-                                <requireProperty>
                                     <property>param.security.policy.file</property>
                                 </requireProperty>
                                 <requireProperty>
