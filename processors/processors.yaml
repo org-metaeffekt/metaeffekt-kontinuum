@@ -768,6 +768,12 @@ processors:
       - key: param.properties.file
         description: Yaml file containing properties to configure the scanner's behaviour.
         required: true
+      - key: env.kosmos.password
+        description: The password to decrypt the metaeffekt license database (Kosmos).
+        required: true
+      - key: env.kosmos.userkeys.file
+        description: The userkeys file to access the metaeffekt license database (Kosmos).
+        required: true
 
   - name: Aggregate Sources
     id: aggregate-sources
@@ -917,7 +923,7 @@ processors:
         required: false
       - key: param.security.policy.file
         description: The security policy file used for SVG generation.
-        required: false
+        required: true
       - key: param.security.policy.active.ids
         description: The Ids of the security policy configurations to activate.
         required: false

@@ -2,341 +2,362 @@ package com.metaeffekt.kontinuum.execution;
 
 import com.metaeffekt.kontinuum.models.ProcessorDefinitions;
 import com.metaeffekt.kontinuum.models.ProjectProperties;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import com.metaeffekt.kontinuum.models.ProjectPropertiesLoader;
+import org.junit.jupiter.api.*;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProcessorScenariosTest {
+class ProcessorScenariosTest {
 
     private static final String TEST_VALUE = "test-value";
-    private static final String INPUT_INVENTORY = "src/test/resources/inventories/inventory.xlsx";
-    private static final String REFERENCE_INVENTORY_DIR = "src/test/resources/inventories";
-    private static final String SECURITY_POLICY_FILE = "src/test/resources/security-policies/security-policy.json";
+    private static String BASE_DIR;
+    private static String TEST_RESOURCES_DIR;
+    private static String INPUT_INVENTORY;
+    private static String INVENTORY_DIR;
+    private static String SECURITY_POLICY_FILE;
 
+    private final MavenProcessorExecutor mavenProcessorExecutor = new MavenProcessorExecutor();
 
-    @ParameterizedTest
-    @MethodSource("getProcessorExecutions")
-    public void testProcessorBuildsCommand(ProcessorExecution processorExecution) {
-        MavenProcessorExecutor mavenProcessorExecutor = new MavenProcessorExecutor();
-        List<String> command = mavenProcessorExecutor.buildExecutionCommand(processorExecution);
-
-        // Verify command starts with mvn
-        assert command.get(0).equals("mvn") : "Command should start with mvn";
-
-        // Verify command includes -f flag and pom location
-        assert command.contains("-f") : "Command should contain -f flag";
-
-        // Verify command includes the goal
-        assert command.contains(processorExecution.goal()) : "Command should contain the goal";
+    @BeforeAll
+    public static void setup() {
+        new ProjectPropertiesLoader();
+        BASE_DIR = KontinuumManagementUtils.locateRepoRoot().toString();
+        TEST_RESOURCES_DIR = BASE_DIR + "/tools/execution/src/test/resources";
+        INPUT_INVENTORY = TEST_RESOURCES_DIR + "/inventories/inventory.xlsx";
+        INVENTORY_DIR = TEST_RESOURCES_DIR + "/inventories";
+        SECURITY_POLICY_FILE = TEST_RESOURCES_DIR + "/security-policies/security-policy.json";
     }
 
-    static List<ProcessorExecution> getProcessorExecutions() {
-        List<ProcessorExecution> executions = new ArrayList<>();
+    private void executeProcessor(ProcessorExecution execution) {
+        List<String> command = mavenProcessorExecutor.buildExecutionCommand(execution);
 
-        executions.add(attachMetadata());
-        executions.add(createDashboard());
-        executions.add(enrichInventory());
-        executions.add(enrichWithReference());
-        executions.add(cyclonedxToInventory());
-        executions.add(inventoryToCyclonedx());
-        executions.add(inventoryToSpdx());
-        executions.add(copyPomDependencies());
-        executions.add(saveInspectImage());
-        executions.add(downloadDataSources());
-        executions.add(downloadIndex());
-        executions.add(updateIndex());
-        executions.add(updateIndexExternal());
-        executions.add(copyResources());
-        executions.add(createOverview());
-        executions.add(scanDirectory());
-        executions.add(aggregateAnnexFolders());
-        executions.add(createAnnexArchive());
-        executions.add(createDocument());
-        executions.add(resolveInventory());
-        executions.add(scanInventory());
-        executions.add(convertAssessments());
-        executions.add(copyInventories());
-        executions.add(createDiff());
-        executions.add(enrichAdvisors());
-        executions.add(generateReportSvg());
-        executions.add(mergeAdvisors());
-        executions.add(mergeAssessments());
-        executions.add(mergeInventories());
-        executions.add(portfolioDownload());
-        executions.add(portfolioDownloadJars());
-        executions.add(portfolioUpload());
-        executions.add(transformInventories());
-        executions.add(validateReferenceInventory());
-
-        return executions;
+        Assertions.assertEquals("mvn", command.get(0));
+        Assertions.assertTrue(command.contains("-f"));
+        Assertions.assertTrue(command.contains(execution.goal()));
+        Assertions.assertTrue(mavenProcessorExecutor.execute(command));
     }
 
-    private static ProcessorExecution attachMetadata() {
-        return createExecution("advise/advise_attach-metadata.xml", "process-resources", Map.of(
+    // ADVISE PROCESSORS
+
+    @Test
+    void testAttachMetadata() {
+        executeProcessor(createExecution("advise/advise_attach-metadata.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "output.inventory.file", "target/attach-metadata/inventory.xlsx",
+                "output.inventory.file", BASE_DIR + "/target/attach-metadata/inventory.xlsx",
                 "param.metadata.asset.id", "example-asset-id"
-        ));
+        )));
     }
 
-    private static ProcessorExecution createDashboard() {
-        return createExecution("advise/advise_create-dashboard.xml", "process-resources", Map.of(
+    @Test
+    void testCreateDashboard() {
+        executeProcessor(createExecution("advise/advise_create-dashboard.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "output.dashboard.file", "target/create-dashboard/dashboard.html",
+                "output.dashboard.file", BASE_DIR + "/target/create-dashboard/dashboard.html",
                 "param.security.policy.file", SECURITY_POLICY_FILE,
                 "param.tenant.id", "metaeffekt",
                 "param.asset.id", "example-asset-id",
                 "param.assessment.context", "local",
-                "env.vulnerability.mirror.dir", System.getProperty(ProjectProperties.VULNERABILITY_MIRROR_URL.getPropertyKey())
-        ));
+                "env.vulnerability.mirror.dir", System.getProperty(ProjectProperties.VULNERABILITY_MIRROR_DIR.getPropertyKey(), TEST_VALUE) + "/.database"
+        )));
     }
 
-    private static ProcessorExecution enrichInventory() {
-        return createExecution("advise/advise_enrich-inventory.xml", "process-resources", params(
+    @Test
+    void testEnrichInventory() {
+        executeProcessor(createExecution("advise/advise_enrich-inventory.xml", "process-resources", params(
                 "input.inventory.file", INPUT_INVENTORY,
-                "output.inventory.file", "target/enrich-inventory/inventory.xlsx",
-                "output.tmp.dir", "target/enrich-inventory/tmp",
+                "output.inventory.file", BASE_DIR + "/target/enrich-inventory/inventory.xlsx",
+                "output.tmp.dir", BASE_DIR + "/target/enrich-inventory/tmp",
                 "param.correlation.dir", TEST_VALUE,
                 "param.assessment.dirs", TEST_VALUE,
                 "param.context.dirs", TEST_VALUE,
                 "param.security.policy.file", SECURITY_POLICY_FILE,
-                "env.vulnerability.mirror.dir", System.getProperty(ProjectProperties.VULNERABILITY_MIRROR_DIR.getPropertyKey())
-        ));
+                "env.vulnerability.mirror.dir", System.getProperty(ProjectProperties.VULNERABILITY_MIRROR_DIR.getPropertyKey(), TEST_VALUE) + "/.database"
+        )));
     }
 
-    private static ProcessorExecution enrichWithReference() {
-        return createExecution("advise/advise_enrich-with-reference.xml", "process-resources", Map.of(
+    @Test
+    void testEnrichWithReference() {
+        executeProcessor(createExecution("advise/advise_enrich-with-reference.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "output.inventory.dir", "target/enrich-with-reference",
+                "output.inventory.dir", BASE_DIR + "/target/enrich-with-reference",
                 "output.inventory.path", "inventory.xlsx",
-                "param.reference.inventory.dir", REFERENCE_INVENTORY_DIR
-        ));
+                "param.reference.inventory.dir", INVENTORY_DIR
+        )));
     }
 
-    private static ProcessorExecution cyclonedxToInventory() {
-        return createExecution("convert/convert_cyclonedx-to-inventory.xml", "process-resources", Map.of(
-                "input.bom.file", "src/test/resources/boms/keycloak-cyclonedx.json",
-                "output.inventory.file", "target/cyclonedx-to-inventory/inventory.xlsx"
-        ));
+    // CONVERT PROCESSORS
+
+    @Test
+    void testCyclonedxToInventory() {
+        executeProcessor(createExecution("convert/convert_cyclonedx-to-inventory.xml", "process-resources", Map.of(
+                "input.bom.file", TEST_RESOURCES_DIR + "/boms/keycloak-cyclonedx.json",
+                "output.inventory.file", BASE_DIR + "/target/cyclonedx-to-inventory/inventory.xlsx"
+        )));
     }
 
-    private static ProcessorExecution inventoryToCyclonedx() {
-        return createExecution("convert/convert_inventory-to-cyclonedx.xml", "process-resources", Map.of(
+    @Test
+    void testInventoryToCyclonedx() {
+        executeProcessor(createExecution("convert/convert_inventory-to-cyclonedx.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "output.bom.file", "target/inventory-to-cyclonedx/inventory.xlsx",
+                "output.bom.file", BASE_DIR + "/target/inventory-to-cyclonedx/bom.json",
                 "param.document.name", TEST_VALUE,
                 "param.document.organization", TEST_VALUE,
                 "param.document.organization.url", TEST_VALUE
-        ));
+        )));
     }
 
-    private static ProcessorExecution inventoryToSpdx() {
-        return createExecution("convert/convert_inventory-to-spdx.xml", "process-resources", Map.of(
+    @Test
+    void testInventoryToSpdx() {
+        executeProcessor(createExecution("convert/convert_inventory-to-spdx.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "output.bom.file", "target/inventory-to-spdx/inventory.xlsx",
+                "output.bom.file", BASE_DIR + "/target/inventory-to-spdx/bom.spdx",
                 "param.document.name", TEST_VALUE,
                 "param.document.organization", TEST_VALUE,
                 "param.document.organization.url", TEST_VALUE
-        ));
+        )));
     }
 
-    private static ProcessorExecution copyPomDependencies() {
-        return createExecution("extract/extract_copy-pom-dependencies.xml", "process-resources", Map.of(
-                "output.dependencies.dir", "target/copy-pom-dependencies",
-                "param.group.id", TEST_VALUE,
-                "param.artifact.id", TEST_VALUE,
-                "param.version", TEST_VALUE,
+    // EXTRACT PROCESSORS
+
+    @Test
+    void testCopyPomDependencies() {
+        executeProcessor(createExecution("extract/extract_copy-pom-dependencies.xml", "process-resources", Map.of(
+                "output.dependencies.dir", BASE_DIR + "/target/copy-pom-dependencies",
+                "param.group.id", "org.metaeffekt.core",
+                "param.artifact.id", "ae-core-inventory",
+                "param.version", "HEAD-SNAPSHOT",
                 "param.exclude.transitive.enabled", "false"
-        ));
+        )));
     }
 
-    private static ProcessorExecution saveInspectImage() {
-        return createExecution("extract/extract_save-inspect-image.xml", "process-resources", Map.of(
-                "output.dir", "target/save-inspect-image",
+    @Test
+    @Tag("ExternalDependencies")
+    void testSaveInspectImage() {
+        executeProcessor(createExecution("extract/extract_save-inspect-image.xml", "process-resources", Map.of(
+                "output.dir", BASE_DIR + "/target/save-inspect-image",
                 "param.image.id", "nginx",
                 "param.image.version", "1.29"
-        ));
+        )));
     }
 
-    private static ProcessorExecution downloadDataSources() {
-        return createExecution("mirror/mirror_download-data-sources.xml", "process-resources", Map.of(
-                "env.mirror.dir", "target/download-data-sources",
-                "env.nvd.apikey", System.getProperty(ProjectProperties.NVD_API_KEY.getPropertyKey())
-        ));
+    // MIRROR PROCESSORS
+
+    @Test
+    @Tag("Slow")
+    @Disabled
+    void testDownloadDataSources() {
+        executeProcessor(createExecution("mirror/mirror_download-data-sources.xml", "process-resources", Map.of(
+                "env.mirror.dir", BASE_DIR + "/target/download-data-sources",
+                "env.nvd.apikey", TEST_VALUE
+        )));
     }
 
-    private static ProcessorExecution downloadIndex() {
-        return createExecution("mirror/mirror_download-index.xml", "process-resources", Map.of(
-                "param.mirror.archive.url", TEST_VALUE,
-                "env.vulnerability.mirror.dir", TEST_VALUE
-        ));
+    @Test
+    void testDownloadIndex() {
+        executeProcessor(createExecution("mirror/mirror_download-index.xml", "process-resources", Map.of(
+                "param.mirror.archive.url", System.getProperty(ProjectProperties.VULNERABILITY_MIRROR_URL.getPropertyKey()),
+                "env.vulnerability.mirror.dir", System.getProperty(ProjectProperties.VULNERABILITY_MIRROR_DIR.getPropertyKey(), BASE_DIR + "/target/download-index")
+        )));
     }
 
-    private static ProcessorExecution updateIndex() {
-        return createExecution("mirror/mirror_update-index.xml", "process-resources", Map.of(
-                "env.mirror.dir", TEST_VALUE
-        ));
+    @Test
+    void testUpdateIndex() {
+        executeProcessor(createExecution("mirror/mirror_update-index.xml", "process-resources", Map.of(
+                "env.mirror.dir", System.getProperty(ProjectProperties.VULNERABILITY_MIRROR_DIR.getPropertyKey(), BASE_DIR + "/target/update-index") + "/.database"
+        )));
     }
 
-    private static ProcessorExecution updateIndexExternal() {
-        return createExecution("mirror/mirror_update-index_external.xml", "process-resources", Map.of(
-                "env.mirror.dir", TEST_VALUE
-        ));
+    @Test
+    void testUpdateIndexExternal() {
+        executeProcessor(createExecution("mirror/mirror_update-index_external.xml", "process-resources", Map.of(
+                "env.mirror.dir", System.getProperty(ProjectProperties.VULNERABILITY_MIRROR_DIR.getPropertyKey(), BASE_DIR + "/target/update-index-external") + "/.database"
+        )));
     }
 
-    private static ProcessorExecution copyResources() {
-        return createExecution("portfolio/portfolio_copy-resources.xml", "process-resources", Map.of(
-                "input.inventories.dir", TEST_VALUE,
-                "input.dashboards.dir", TEST_VALUE,
-                "input.reports.dir", TEST_VALUE,
-                "input.advisor.inventories.dir", TEST_VALUE,
-                "output.resources.dir", TEST_VALUE
-        ));
+    // PORTFOLIO PROCESSORS
+
+    @Test
+    void testCopyResources() {
+        executeProcessor(createExecution("portfolio/portfolio_copy-resources.xml", "process-resources", Map.of(
+                "input.inventories.dir", INVENTORY_DIR,
+                "input.dashboards.dir", TEST_RESOURCES_DIR + "/dashboards",
+                "input.reports.dir", TEST_RESOURCES_DIR + "/reports",
+                "input.advisor.inventories.dir", INVENTORY_DIR,
+                "output.resources.dir", BASE_DIR + "/target/copy-resources"
+        )));
     }
 
-    private static ProcessorExecution createOverview() {
-        return createExecution("portfolio/portfolio_create-overview.xml", "process-resources", Map.of(
-                "input.inventory.dir", TEST_VALUE,
-                "input.inventory.path", TEST_VALUE,
-                "input.advisor.inventories.dir", TEST_VALUE,
-                "input.dashboards.dir", TEST_VALUE,
-                "input.reports.dir", TEST_VALUE,
-                "output.overview.file", TEST_VALUE,
+    @Test
+    void testCreateOverview() {
+        executeProcessor(createExecution("portfolio/portfolio_create-overview.xml", "process-resources", Map.of(
+                "input.inventory.dir", BASE_DIR + "/target/copy-resources",
+                "input.inventory.path", "source-inventories",
+                "input.advisor.inventories.dir", "advisor-inventories",
+                "input.dashboards.dir", "assessment-dashboards",
+                "input.reports.dir", "vulnerability-reports",
+                "output.overview.file", BASE_DIR + "/target/create-overview/overview.html",
                 "param.security.policy.file", SECURITY_POLICY_FILE
-        ));
+        )));
     }
 
-    private static ProcessorExecution scanDirectory() {
-        return createExecution("prepare/prepare_scan-directory.xml", "process-resources", Map.of(
-                "input.extract.dir", TEST_VALUE,
-                "output.scan.dir", "target/scan-directory/scan",
-                "output.inventory.file", "target/scan-directory/inventory.xlsx",
-                "param.reference.inventory.dir", REFERENCE_INVENTORY_DIR
-        ));
+    // PREPARE PROCESSORS
+
+    @Test
+    void testScanDirectory() {
+        executeProcessor(createExecution("prepare/prepare_scan-directory.xml", "process-resources", Map.of(
+                "input.extract.dir", INVENTORY_DIR,
+                "output.scan.dir", BASE_DIR + "/target/scan-directory/scan",
+                "output.inventory.file", BASE_DIR + "/target/scan-directory/inventory.xlsx",
+                "param.reference.inventory.dir", INVENTORY_DIR
+        )));
     }
 
-    private static ProcessorExecution aggregateAnnexFolders() {
-        return createExecution("report/report_aggregate-annex-folders.xml", "process-resources", Map.of(
+    // REPORT PROCESSORS
+
+    @Test
+    void testAggregateAnnexFolders() {
+        executeProcessor(createExecution("report/report_aggregate-annex-folders.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "param.reference.inventory.dir", REFERENCE_INVENTORY_DIR
-        ));
+                "param.reference.inventory.dir", INVENTORY_DIR
+        )));
     }
 
-    private static ProcessorExecution createAnnexArchive() {
-        return createExecution("report/report_create-annex-archive.xml", "process-resources", Map.of(
-                "input.document.pdf.file", TEST_VALUE,
-                "output.annex.archive.file", TEST_VALUE
-        ));
+    @Test
+    void testCreateAnnexArchive() {
+        executeProcessor(createExecution("report/report_create-annex-archive.xml", "process-resources", Map.of(
+                "input.document.pdf.file", TEST_RESOURCES_DIR + "/reports/example-report.pdf",
+                "output.annex.archive.file", BASE_DIR + "/target/create-annex-archive/annex-archive.zip"
+        )));
     }
 
-    private static ProcessorExecution createDocument() {
-        return createExecution("report/report_create-document.xml", "process-resources", params(
-                "input.inventory.dir", TEST_VALUE,
-                "output.document.file", TEST_VALUE,
-                "param.document.type", TEST_VALUE,
+    @Test
+    void testCreateDocument() {
+        executeProcessor(createExecution("report/report_create-document.xml", "process-resources", params(
+                "input.inventory.dir", INVENTORY_DIR,
+                "output.document.file", BASE_DIR + "/target/create-document/report.pdf",
+                "param.document.type", "VR",
                 "param.asset.id", TEST_VALUE,
                 "param.asset.name", TEST_VALUE,
                 "param.asset.version", TEST_VALUE,
                 "param.product.name", TEST_VALUE,
                 "param.product.version", TEST_VALUE,
                 "param.product.watermark", TEST_VALUE,
-                "param.property.selector.organization", TEST_VALUE,
-                "param.asset.descriptor.file", TEST_VALUE,
-                "env.kontinuum.dir", TEST_VALUE
-        ));
+                "param.property.selector.organization", "metaeffekt",
+                "param.asset.descriptor.file", TEST_RESOURCES_DIR + "/descriptors/asset-descriptor_GENERIC-vulnerability-report.yaml",
+                "env.kontinuum.dir", System.getProperty(ProjectProperties.KONTINUUM_DIR.getPropertyKey(), BASE_DIR)
+        )));
     }
 
-    private static ProcessorExecution resolveInventory() {
-        return createExecution("resolve/resolve_resolve-inventory.xml", "process-resources", Map.of(
+    // RESOLVE PROCESSORS
+
+    @Test
+    void testResolveInventory() {
+        executeProcessor(createExecution("resolve/resolve_resolve-inventory.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "output.inventory.file", "target/resolve-inventory/inventory.xlsx",
-                "param.artifact.resolver.config.file", TEST_VALUE,
-                "param.artifact.resolver.proxy.file", TEST_VALUE,
-                "env.maven.index.dir", TEST_VALUE
-        ));
+                "output.inventory.file", BASE_DIR + "/target/resolve-inventory/inventory.xlsx",
+                "param.artifact.resolver.config.file", TEST_RESOURCES_DIR + "/resolver/artifact-resolver-config.yaml",
+                "param.artifact.resolver.proxy.file", TEST_RESOURCES_DIR + "/resolver/artifact-resolver-proxy.yaml",
+                "env.maven.index.dir", BASE_DIR + "/target/maven-index"
+        )));
     }
 
-    private static ProcessorExecution scanInventory() {
-        return createExecution("scan/scan_scan-inventory.xml", "process-resources", Map.of(
+    // SCAN PROCESSORS
+
+    @Test
+    void testScanInventory() {
+        executeProcessor(createExecution("scan/scan_scan-inventory.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "output.inventory.file", "target/scan-inventory/inventory.xlsx",
-                "input.output.analysis.base.dir", TEST_VALUE,
-                "param.properties.file", TEST_VALUE
-        ));
+                "output.inventory.file", BASE_DIR + "/target/scan-inventory/inventory.xlsx",
+                "input.output.analysis.base.dir", BASE_DIR + "/target/scan-inventory/analysis",
+                "param.properties.file", TEST_RESOURCES_DIR + "/scanner/scan-control.properties",
+                "env.kosmos.password", "EuBsVvcjIElWdXVVtHmPJdsE",
+                "env.kosmos.userkeys.file", TEST_RESOURCES_DIR + "/kosmos/kosmos.consumer.keys"
+        )));
     }
 
-    private static ProcessorExecution convertAssessments() {
-        return createExecution("util/util_convert-assessments.xml", "process-resources", Map.of(
-                "input.assessment.dir", TEST_VALUE,
-                "output.assessment.dir", TEST_VALUE,
-                "param.output.mode", TEST_VALUE,
-                "param.output.format", TEST_VALUE
-        ));
+    // UTIL PROCESSORS
+
+    @Test
+    void testConvertAssessments() {
+        executeProcessor(createExecution("util/util_convert-assessments.xml", "process-resources", Map.of(
+                "input.assessment.dir", TEST_RESOURCES_DIR + "/assessments",
+                "output.assessment.dir", BASE_DIR + "/target/convert-assessments",
+                "param.output.mode", "IN_PLACE",
+                "param.output.format", "PRESERVE"
+        )));
     }
 
-    private static ProcessorExecution copyInventories() {
-        return createExecution("util/util_copy-inventories.xml", "process-resources", Map.of(
-                "output.inventories.dir", "target/copy-inventories",
-                "param.inventories.list", TEST_VALUE
-        ));
+    @Test
+    void testCopyInventories() {
+        executeProcessor(createExecution("util/util_copy-inventories.xml", "process-resources", Map.of(
+                "output.inventories.dir", BASE_DIR + "/target/copy-inventories",
+                "param.inventories.list", INPUT_INVENTORY
+        )));
     }
 
-    private static ProcessorExecution createDiff() {
-        return createExecution("util/util_create-diff.xml", "process-resources", Map.of(
+    @Test
+    void testCreateDiff() {
+        executeProcessor(createExecution("util/util_create-diff.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "input.inventory.compare.file", TEST_VALUE,
-                "output.inventory.dir", "target/create-diff",
+                "input.inventory.compare.file", INPUT_INVENTORY,
+                "output.inventory.dir", BASE_DIR + "/target/create-diff",
                 "param.inventory.version", TEST_VALUE,
                 "param.inventory.compare.version", TEST_VALUE,
                 "param.security.policy.file", SECURITY_POLICY_FILE
-        ));
+        )));
     }
 
-    private static ProcessorExecution enrichAdvisors() {
-        return createExecution("util/util_enrich-advisors.xml", "process-resources", Map.of(
+    @Test
+    void testEnrichAdvisors() {
+        executeProcessor(createExecution("util/util_enrich-advisors.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "output.inventory.file", "target/enrich-advisors/inventory.xlsx",
+                "output.inventory.file", BASE_DIR + "/target/enrich-advisors/inventory.xlsx",
                 "param.security.policy.file", SECURITY_POLICY_FILE,
-                "env.vulnerability.mirror.dir", TEST_VALUE
-        ));
+                "env.vulnerability.mirror.dir", System.getProperty(ProjectProperties.VULNERABILITY_MIRROR_DIR.getPropertyKey()) + "/.database"
+        )));
     }
 
-    private static ProcessorExecution generateReportSvg() {
-        return createExecution("util/util_generate-report-svg.xml", "process-resources", Map.of(
+    @Test
+    void testGenerateReportSvg() {
+        executeProcessor(createExecution("util/util_generate-report-svg.xml", "process-resources", Map.of(
                 "input.inventory.file", INPUT_INVENTORY,
-                "output.svg.dir", TEST_VALUE
-        ));
-    }
-
-    private static ProcessorExecution mergeAdvisors() {
-        return createExecution("util/util_merge-advisors.xml", "process-resources", Map.of(
-                "input.inventory.dir", TEST_VALUE,
-                "output.inventory.file", "target/merge-advisors/inventory.xlsx",
+                "output.svg.dir", BASE_DIR + "/target/generate-report-svg",
                 "param.security.policy.file", SECURITY_POLICY_FILE
-        ));
+        )));
     }
 
-    private static ProcessorExecution mergeAssessments() {
-        return createExecution("util/util_merge-assessments.xml", "process-resources", Map.of(
-                "input.inventory.dir", TEST_VALUE,
-                "output.inventory.file", "target/merge-assessments/inventory.xlsx"
-        ));
+    @Test
+    void testMergeAdvisors() {
+        executeProcessor(createExecution("util/util_merge-advisors.xml", "process-resources", Map.of(
+                "input.inventory.dir", INVENTORY_DIR,
+                "output.inventory.file", BASE_DIR + "/target/merge-advisors/inventory.xlsx",
+                "param.security.policy.file", SECURITY_POLICY_FILE
+        )));
     }
 
-    private static ProcessorExecution mergeInventories() {
-        return createExecution("util/util_merge-inventories.xml", "process-resources", Map.of(
-                "input.inventory.dir", TEST_VALUE,
-                "output.inventory.file", "target/merge-inventories/inventory.xlsx"
-        ));
+    @Test
+    void testMergeAssessments() {
+        executeProcessor(createExecution("util/util_merge-assessments.xml", "process-resources", Map.of(
+                "input.inventory.dir", INVENTORY_DIR,
+                "output.inventory.file", BASE_DIR + "/target/merge-assessments/inventory.xlsx"
+        )));
     }
 
-    private static ProcessorExecution portfolioDownload() {
-        return createExecution("util/util_portfolio-download.xml", "process-resources", params(
-                "output.inventory.dir", "target/portfolio-download",
+    @Test
+    void testMergeInventories() {
+        executeProcessor(createExecution("util/util_merge-inventories.xml", "process-resources", Map.of(
+                "input.inventory.dir", INVENTORY_DIR,
+                "output.inventory.file", BASE_DIR + "/target/merge-inventories/inventory.xlsx"
+        )));
+    }
+
+    @Test
+    @Tag("ExternalDependencies")
+    void testPortfolioDownload() {
+        executeProcessor(createExecution("util/util_portfolio-download.xml", "process-resources", params(
+                "output.inventory.dir", BASE_DIR + "/target/portfolio-download",
                 "param.portfolio.manager.url", TEST_VALUE,
                 "param.portfolio.manager.token", TEST_VALUE,
                 "param.product.name", TEST_VALUE,
@@ -346,17 +367,20 @@ public class ProcessorScenariosTest {
                 "param.truststore.password", TEST_VALUE,
                 "param.keystore.config.file", TEST_VALUE,
                 "param.truststore.config.file", TEST_VALUE
-        ));
+        )));
     }
 
-    private static ProcessorExecution portfolioDownloadJars() {
-        return createExecution("util/util_portfolio-download-jars.xml", "process-resources", Map.of(
-                "input.cli.dir", TEST_VALUE
-        ));
+    @Test
+    void testPortfolioDownloadJars() {
+        executeProcessor(createExecution("util/util_portfolio-download-jars.xml", "process-resources", Map.of(
+                "input.cli.dir", BASE_DIR + "/target/portfolio-download-jars"
+        )));
     }
 
-    private static ProcessorExecution portfolioUpload() {
-        return createExecution("util/util_portfolio-upload.xml", "process-resources", params(
+    @Test
+    @Tag("ExternalDependencies")
+    void testPortfolioUpload() {
+        executeProcessor(createExecution("util/util_portfolio-upload.xml", "process-resources", params(
                 "input.file", TEST_VALUE,
                 "param.portfolio.manager.url", TEST_VALUE,
                 "param.portfolio.manager.token", TEST_VALUE,
@@ -367,22 +391,26 @@ public class ProcessorScenariosTest {
                 "param.truststore.config.file", TEST_VALUE,
                 "param.keystore.password", TEST_VALUE,
                 "param.truststore.password", TEST_VALUE
-        ));
+        )));
     }
 
-    private static ProcessorExecution transformInventories() {
-        return createExecution("util/util_transform-inventories.xml", "process-resources", Map.of(
-                "input.inventory.dir", TEST_VALUE,
-                "output.inventory.dir", "target/transform-inventories",
-                "param.kotlin.script.file", TEST_VALUE
-        ));
+    @Test
+    void testTransformInventories() {
+        executeProcessor(createExecution("util/util_transform-inventories.xml", "process-resources", Map.of(
+                "input.inventory.dir", INVENTORY_DIR,
+                "output.inventory.dir", BASE_DIR + "/target/transform-inventories",
+                "param.kotlin.script.file", TEST_RESOURCES_DIR + "/kotlin-scripts/aggregate.kts"
+        )));
     }
 
-    private static ProcessorExecution validateReferenceInventory() {
-        return createExecution("util/util_validate-reference-inventory.xml", "process-resources", Map.of(
-                "input.inventory.dir", TEST_VALUE
-        ));
+    @Test
+    void testValidateReferenceInventory() {
+        executeProcessor(createExecution("util/util_validate-reference-inventory.xml", "process-resources", Map.of(
+                "input.inventory.dir", INVENTORY_DIR
+        )));
     }
+
+    // HELPER METHODS
 
     private static ProcessorExecution createExecution(String pomLocation, String goal, Map<String, String> parameters) {
         Map<ProcessorDefinitions.ProcessorParameter, String> paramMap = new LinkedHashMap<>();

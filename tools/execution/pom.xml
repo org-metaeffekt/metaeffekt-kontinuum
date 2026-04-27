@@ -44,6 +44,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <workingDirectory>${project.basedir}/../..</workingDirectory>
+                    <excludedGroups>Slow, ExternalDependencies</excludedGroups>
                 </configuration>
             </plugin>
         </plugins>

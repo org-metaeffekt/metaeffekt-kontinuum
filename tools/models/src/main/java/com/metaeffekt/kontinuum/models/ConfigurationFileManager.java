@@ -111,7 +111,7 @@ public class ConfigurationFileManager {
         while (current != null) {
             Path repoRoot = current.resolve("processors");
             if (Files.exists(repoRoot) && Files.isDirectory(repoRoot)) {
-                Path configDir = repoRoot.resolve("configurations");
+                Path configDir = current.resolve(".configurations");
                 if (!Files.exists(configDir)) {
                     try {
                         Files.createDirectories(configDir);

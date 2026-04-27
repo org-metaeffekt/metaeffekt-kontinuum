@@ -82,6 +82,12 @@
                                 <requireProperty>
                                     <property>param.properties.file</property>
                                 </requireProperty>
+                                <requireProperty>
+                                    <property>env.kosmos.password</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.kosmos.userkeys.file</property>
+                                </requireProperty>
                             </rules>
                             <fail>true</fail>
                         </configuration>

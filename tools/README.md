@@ -118,10 +118,10 @@ shell:>processor run --configuration enrich-inventory-20260421-124452.yaml
 
 ## Configuration Files
 
-After each successful interactive run, the configuration is automatically saved to `processors/configurations/` with a timestamp:
+After each successful interactive run, the configuration is automatically saved to `.configurations/` at the repository root with a timestamp:
 
 ```
-processors/configurations/
+.configurations/
 ├── enrich-inventory-20260421-124452.yaml
 ├── attach-metadata-20260421-130100.yaml
 └── ...

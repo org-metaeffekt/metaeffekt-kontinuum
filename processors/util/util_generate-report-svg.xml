@@ -96,6 +96,9 @@
                                 <requireProperty>
                                     <property>output.svg.dir</property>
                                 </requireProperty>
+                                <requireProperty>
+                                    <property>param.security.policy.file</property>
+                                </requireProperty>
                             </rules>
                             <fail>true</fail>
                         </configuration>
