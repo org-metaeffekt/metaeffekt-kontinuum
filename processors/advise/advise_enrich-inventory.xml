@@ -280,10 +280,6 @@
                             <advisorPeriodicEnrichment>
                                 <active>false</active>
                             </advisorPeriodicEnrichment>
-
-                            <vulnerabilityAssessmentDashboardEnrichment>
-                                <active>false</active>
-                            </vulnerabilityAssessmentDashboardEnrichment>
                         </configuration>
                     </execution>
                 </executions>
