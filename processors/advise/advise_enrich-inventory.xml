@@ -202,9 +202,7 @@
 
                             <vulnerabilityKeywordsEnrichment>
                                 <active>${param.activate.keywords}</active>
-                                <yamlFiles>
-                                    ${param.context.dirs}
-                                </yamlFiles>
+                                <yamlFiles>${param.context.dirs}</yamlFiles>
                                 <activeLabels>${keywords.labels}</activeLabels>
                             </vulnerabilityKeywordsEnrichment>
 
