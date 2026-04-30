@@ -1,9 +1,9 @@
 #!/usr/bin/env groovy
 pipeline {
     agent {
-        // bound to astronaut as various pre-conditions are required:
+        // bound to astronaut or asteroid as various pre-conditions are required:
         // - docker required
-        label 'metaeffekt-astronaut'
+        label 'metaeffekt-asteroid'
     }
 
     tools {
