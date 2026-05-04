@@ -3,7 +3,7 @@ pipeline {
     agent {
         // bound to astronaut or asteroid as various pre-conditions are required:
         // - docker required
-        label 'metaeffekt-asteroid'
+        label 'metaeffekt-astronaut'
     }
 
     tools {
