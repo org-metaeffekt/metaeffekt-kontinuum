@@ -1,67 +1,65 @@
 package org.metaeffekt.kontinuum.models.shared;
 
-import lombok.Getter;
-import org.metaeffekt.kontinuum.models.gitlab.PipelineConfiguration;
-
 public class Workspace {
 
-    @Getter
-    String workspaceDir;
+    public final String WORKSPACE_DIR;
+    public final String MAVEN_INDEX_DIR;
 
-    public Workspace(String mountedVolume, String productId) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(mountedVolume);
+    public Workspace(PipelineConfiguration pipelineConfiguration) {
+        WORKSPACE_DIR = "workspace/" + pipelineConfiguration.getProjectProperties().getProject();
+        MAVEN_INDEX_DIR = "workspace/maven-index/";
+    }
 
-        if (mountedVolume.endsWith("/")) {
-            sb.append("workspace/");
-        } else {
-            sb.append("/workspace/");
+    public AssetPath getFetchedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
+        return new AssetPath(WORKSPACE_DIR + asset + "/00_fetched/" + asset + "/", asset);
+    }
+    public AssetPath getExtractedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
+        return new AssetPath(WORKSPACE_DIR + asset + "/01_extracted/" + asset + "/", asset);
+    }
+
+    public AssetPath getPreparedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
+        return new AssetPath(WORKSPACE_DIR + asset + "/02_prepared/" + asset + "/", asset);
+    }
+
+    public AssetPath getAggregatedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
+        return new AssetPath(WORKSPACE_DIR + asset + "/03_aggregated/" + asset + "/", asset);
+    }
+
+    public AssetPath getResolvedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
+        return new AssetPath(WORKSPACE_DIR + asset + "/04_resolved/" + asset + "/", asset);
+    }
+
+    public AssetPath getScannedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
+        return new AssetPath(WORKSPACE_DIR + asset + "/05_scanned/" + asset + "/", asset);
+    }
+
+    public AssetPath getAdvisedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
+        return new AssetPath(WORKSPACE_DIR + asset + "/06_advised/" + asset + "/", asset);
+    }
+
+    public AssetPath getGroupedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset, ReportType reportType) {
+        return new AssetPath(WORKSPACE_DIR + asset + "/07_grouped/" + asset + "/" + reportType.getWorkspaceFolder() + "/", asset);
+    }
+
+    public AssetPath getReportedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
+        return new AssetPath(WORKSPACE_DIR + asset + "/08_reported/" + asset + "/", asset);
+    }
+
+    public AssetPath getSummarizedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
+        return new AssetPath(WORKSPACE_DIR + asset + "/09_summarized/" + asset + "/", asset);
+    }
+
+    public record AssetPath(String dir, PipelineConfiguration.ProjectProperties.Asset assetName) {
+
+        public String appendAssetInventory() {
+            return dir + assetName + ".xlsx";
         }
 
-        workspaceDir = sb.append(productId).append("/").toString();
+
+        @Override
+        public String toString() {
+            return dir;
+        }
     }
 
-    public String getAdditionalDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/xx_additional/" + asset + "/";
-    }
-
-    public String getFetchedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/00_fetched/" + asset + "/";
-    }
-
-    public String getExtractedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/01_extracted/" + asset + "/";
-    }
-
-    public String getPreparedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/02_prepared/" + asset + "/";
-    }
-
-    public String getAggregatedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/03_aggregated/" + asset + "/";
-    }
-
-    public String getResolvedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/04_resolved/" + asset + "/";
-    }
-
-    public String getScannedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/05_scanned/" + asset + "/";
-    }
-
-    public String getAdvisedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/06_advised/" + asset + "/";
-    }
-
-    public String getGroupedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/07_grouped/" + asset + "/";
-    }
-
-    public String getReportedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/08_reported/" + asset + "/";
-    }
-
-    public String getSummarizedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {
-        return workspaceDir + asset + "/09_summarized/" + asset + "/";
-    }
 }

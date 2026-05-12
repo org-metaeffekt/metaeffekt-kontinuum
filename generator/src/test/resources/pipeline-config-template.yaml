@@ -49,7 +49,6 @@ options:
     enableSpdxBom: false
     enableCycloneDxBom: false
     enableResolve: false
-    enableLicenseScan: false
   enrichment:
     securityPolicyFile: "policies/security-policy.json"
     securityPolicyActiveIds: ["base_configuration"]

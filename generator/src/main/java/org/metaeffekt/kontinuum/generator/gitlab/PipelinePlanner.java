@@ -2,7 +2,7 @@ package org.metaeffekt.kontinuum.generator.gitlab;
 
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
-import org.metaeffekt.kontinuum.models.gitlab.PipelineConfiguration;
+import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
 import org.metaeffekt.kontinuum.models.shared.AssetPlan;
 import org.metaeffekt.kontinuum.models.shared.ReportType;
 import org.metaeffekt.kontinuum.models.shared.Stage;

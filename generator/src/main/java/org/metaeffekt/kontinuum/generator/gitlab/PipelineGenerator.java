@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.metaeffekt.kontinuum.models.gitlab.IncludedComponent;
 import org.metaeffekt.kontinuum.models.gitlab.Job;
-import org.metaeffekt.kontinuum.models.gitlab.PipelineConfiguration;
-import org.metaeffekt.kontinuum.models.gitlab.PipelineConfigurationLoader;
+import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
+import org.metaeffekt.kontinuum.models.shared.PipelineConfigurationLoader;
 import org.metaeffekt.kontinuum.models.shared.AssetPlan;
 import org.metaeffekt.kontinuum.models.shared.Stage;
 import org.metaeffekt.kontinuum.models.shared.Workspace;
@@ -297,6 +297,7 @@ public class PipelineGenerator implements Generator {
                     groupJob.addScriptBlockLine("cp " + workspace.getAdvisedDirForAsset(asset) + asset + ".xlsx " + workspace.getGroupedDirForAsset(asset) + "vulnerability-report/");
             }
         }
+
 
         return groupJob.toYaml();
     }

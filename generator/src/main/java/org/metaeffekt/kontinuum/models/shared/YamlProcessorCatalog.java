@@ -1,13 +1,11 @@
-package com.metaeffekt.kontinuum.models;
+package org.metaeffekt.kontinuum.models.shared;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStream;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,8 +15,11 @@ public class YamlProcessorCatalog implements ProcessorCatalog {
     public final List<ProcessorDefinitions.Processor> catalog;
 
     public YamlProcessorCatalog() {
-        File processorsYamlFile = locateProcessorsYaml();
-        this.catalog = load(processorsYamlFile);
+        InputStream is = getClass().getClassLoader().getResourceAsStream("processors.yaml");
+        if (is == null) {
+            throw new IllegalStateException("processors.yaml not found on classpath");
+        }
+        this.catalog = load(is);
     }
 
     @Override
@@ -39,29 +40,13 @@ public class YamlProcessorCatalog implements ProcessorCatalog {
         return foundProcessors.get(0);
     }
 
-    private List<ProcessorDefinitions.Processor> load(File processorsYamlFile) {
+    private List<ProcessorDefinitions.Processor> load(InputStream inputStream) {
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
         try {
-            ProcessorDefinitions processorDefinitions = objectMapper.readValue(processorsYamlFile, ProcessorDefinitions.class);
+            ProcessorDefinitions processorDefinitions = objectMapper.readValue(inputStream, ProcessorDefinitions.class);
             return processorDefinitions.processors.stream().sorted(Comparator.comparing(p -> p.name)).toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private File locateProcessorsYaml() {
-        String kontinuumDir = System.getProperty(ProjectProperties.KONTINUUM_DIR.getPropertyKey());
-        StringBuilder sb = new StringBuilder().append(kontinuumDir);
-        if (kontinuumDir.endsWith("/")) {
-            sb.append("processors/processors.yaml");
-        } else {
-            sb.append("/processors/processors.yaml");
-        }
-
-        if (Files.exists(Path.of(sb.toString()))) {
-            return new File(sb.toString());
-        } else {
-            throw new IllegalStateException("Unable to locate repository root containing processors/processors.yaml");
         }
     }
 }

@@ -1,8 +1,11 @@
-package org.metaeffekt.kontinuum.models.gitlab;
+package org.metaeffekt.kontinuum.models.shared;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +54,7 @@ public class PipelineConfiguration {
             String reference;
             UrlResolver urlResolver;
             MavenResolver mavenResolver;
+            ContainerResolver containerResolver;
 
             @Data
             public static class UrlResolver {
@@ -63,6 +67,25 @@ public class PipelineConfiguration {
                 String groupId;
                 String artifactId;
                 String artifactVersion;
+            }
+
+            @Data
+            public static class ContainerResolver {
+                String image;
+                String tag;
+            }
+
+            public String getReferenceDir() throws IllegalStateException{
+                if (StringUtils.isBlank(reference)) {
+                    throw new IllegalStateException("Tried to access reference inventory for asset " + this + " but is not set.");
+                }
+
+                if (Files.isDirectory(Path.of(reference))) {
+                    return reference;
+                } else {
+                    File referenceFile = new File(reference);
+                    return referenceFile.getParentFile().getPath();
+                }
             }
 
             @Override
@@ -120,7 +143,6 @@ public class PipelineConfiguration {
         public static class GlobalOptions{
             String documentLanguage = "en";
             Boolean enableResolve = false;
-            Boolean enableLicenseScan = false;
             Boolean enableSpdxBom = false;
             Boolean enableCycloneDxBom = false;
         }

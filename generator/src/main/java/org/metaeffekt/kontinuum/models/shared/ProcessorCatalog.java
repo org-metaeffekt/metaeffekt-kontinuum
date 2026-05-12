@@ -1,4 +1,4 @@
-package com.metaeffekt.kontinuum.models;
+package org.metaeffekt.kontinuum.models.shared;
 
 import java.util.List;
 

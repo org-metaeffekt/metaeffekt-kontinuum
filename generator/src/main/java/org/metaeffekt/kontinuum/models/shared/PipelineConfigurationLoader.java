@@ -1,10 +1,9 @@
-package org.metaeffekt.kontinuum.models.gitlab;
+package org.metaeffekt.kontinuum.models.shared;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.metaeffekt.kontinuum.models.shared.ReportType;
 
 import java.io.File;
 import java.io.IOException;
