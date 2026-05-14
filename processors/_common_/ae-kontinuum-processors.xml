@@ -32,6 +32,10 @@
         <ae.core.version>HEAD-SNAPSHOT</ae.core.version>
         <ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>
 
+        <!-- these are usually the latest released versions -->
+        <ae.universe.version>2.0.0</ae.universe.version>
+        <ae.kosmos.version>0.1.0</ae.kosmos.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
