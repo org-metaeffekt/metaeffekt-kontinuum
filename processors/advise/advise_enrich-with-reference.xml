@@ -27,7 +27,6 @@
     </parent>
 
     <artifactId>advise_enrich-with-reference</artifactId>
-    <packaging>rar</packaging>
 
     <properties>
         <advisor.validation>false</advisor.validation>
