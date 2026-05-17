@@ -5,6 +5,7 @@ processors:
       This process attaches specified metadata to a given input inventory. This process can be triggered before dashboard / report creation to ensure that necessary metadata is available.
     pomLocation: advise/advise_attach-metadata.xml
     goal: process-resources
+    stage: ADVISE
     parameters:
       - key: input.inventory.file
         description: The inventory file to which the metadata will be attached.
@@ -34,6 +35,7 @@ processors:
       This process takes an enriched input inventory and creates a Vulnerability Assessment Dashboard from it. Additional parameters can influence the information contained in the resulting dashboard.
     pomLocation: advise/advise_create-dashboard.xml
     goal: process-resources
+    stage: ADVISE
     parameters:
       - key: input.inventory.file
         description: The input inventory from which the dashboard will be generated.
@@ -81,6 +83,7 @@ processors:
       This process takes an input inventory and enriches it with vulnerability information. Additional configurations can influence the information contained in the resulting inventory such as which vulnerability databases should be used, custom vulnerabilities and many more.
     pomLocation: advise/advise_enrich-inventory.xml
     goal: process-resources
+    stage: ADVISE
     parameters:
       - key: input.inventory.file
         description: The input inventory file which will be enriched.
@@ -176,6 +179,7 @@ processors:
       This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
     pomLocation: advise/advise_enrich-with-reference.xml
     goal: process-resources
+    stage: ADVISE
     parameters:
       - key: input.inventory.file
         description: The file path of the inventory which will be enriched with the reference inventory.
@@ -196,6 +200,7 @@ processors:
       This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
     pomLocation: advise/2.xml
     goal: process-resources
+    stage: ADVISE
     parameters:
       - key: input.inventory.file
         description: The file path of the inventory which will be enriched with the reference inventory.
@@ -219,6 +224,7 @@ processors:
       Used to convert a CycloneDX document into an inventory.
     pomLocation: convert/convert_cyclonedx-to-inventory.xml
     goal: process-resources
+    stage: PREPARE
     parameters:
       - key: input.bom.file
         description: The CycloneDX bom which to convert to an inventory.
@@ -245,6 +251,7 @@ processors:
       Used to convert an inventory into a CycloneDX BOM either xml or json format.
     pomLocation: convert/convert_inventory-to-cyclonedx.xml
     goal: process-resources
+    stage: PREPARE
     parameters:
       - key: input.inventory.file
         description: The input inventory file used to generate the CycloneDX BOM.
@@ -304,6 +311,7 @@ processors:
       This process converts an inventory, independent of which stage it was produced in, into an SPDX document. Parameters marked as "not required" already have default values associated.
     pomLocation: convert/convert_inventory-to-spdx.xml
     goal: process-resources
+    stage: PREPARE
     parameters:
       - key: input.inventory.file
         description: The input inventory file used to generate the SPDX BOM.
@@ -366,6 +374,7 @@ processors:
       This process copies dependencies found in a pom.xml file into a directory for further processing.
     pomLocation: extract/extract_copy-pom-dependencies.xml
     goal: process-resources
+    stage: EXTRACT
     parameters:
       - key: output.dependencies.dir
         description: The output directory in which to copy the extracted dependencies.
@@ -389,6 +398,7 @@ processors:
       This process saves and inspects a docker container image via its id and version. The extracted container information is then saved into a specified directory for further processing.
     pomLocation: extract/extract_save-inspect-image.xml
     goal: process-resources
+    stage: EXTRACT
     parameters:
       - key: output.dir
         description: The output directory for the extracted container image information.
@@ -406,6 +416,7 @@ processors:
       This process downloads the vulnerability mirror from different data sources.
     pomLocation: mirror/mirror_download-data-sources.xml
     goal: process-resources
+    stage: FETCH
     parameters:
       - key: param.proxy.scheme
         description: The proxy scheme.
@@ -441,6 +452,7 @@ processors:
       This process downloads the vulnerability mirror index from an archive URL.
     pomLocation: mirror/mirror_download-index.xml
     goal: process-resources
+    stage: FETCH
     parameters:
       - key: param.mirror.archive.url
         description: The source url of the vulnerability mirror archive.
@@ -455,6 +467,7 @@ processors:
       This processor creates or updates the indices of the mirror. It uses the previously downloaded data files of the external data sources. As a result the specified mirror directory is extended with the index files.
     pomLocation: mirror/mirror_update-index.xml
     goal: process-resources
+    stage: FETCH
     parameters:
       - key: param.proxy.scheme
         description: The proxy scheme.
@@ -487,6 +500,7 @@ processors:
       This processor creates or updates the indices of the mirror. It uses the previously downloaded data files of the external data sources. As a result the specified mirror directory is extended with the index files.
     pomLocation: mirror/mirror_update-index_external.xml
     goal: process-resources
+    stage: FETCH
     parameters:
       - key: param.proxy.scheme
         description: The proxy scheme.
@@ -513,6 +527,7 @@ processors:
       This process copies files needed for creating the overview report. The different sources need to be specified and are copied into the intended directory structure for the overview creation.
     pomLocation: portfolio/portfolio_copy-resources.xml
     goal: process-resources
+    stage: REPORT
     parameters:
       - key: input.inventories.dir
         description: The source directory containing inventory files (.xlsx) to be copied.
@@ -536,6 +551,7 @@ processors:
       This process creates an overview with the resources copied with the portfolio_copy-resources.xml processor.
     pomLocation: portfolio/portfolio_create-overview.xml
     goal: process-resources
+    stage: REPORT
     parameters:
       - key: input.inventory.dir
         description: The directory of the input inventory.
@@ -577,6 +593,7 @@ processors:
       This process scans a directory containing extracted / prepared artifacts into an inventory. The artifacts contained in the input directory are usually a result of the prepare process which extracts information from container images, dependencies listed in poms and so on.
     pomLocation: prepare/prepare_scan-directory.xml
     goal: process-resources
+    stage: PREPARE
     parameters:
       - key: input.extract.dir
         description: The directory containing extracted information to scan. This can be container extracts, pom dependencies etc.
@@ -597,6 +614,7 @@ processors:
       This process enables the aggregation of license and component information for a specified inventory. The content will be generated to the specified target directories. This process is a part of the creation of a Software Distribution Annex.
     pomLocation: report/report_aggregate-annex-folders.xml
     goal: process-resources
+    stage: REPORT
     parameters:
       - key: input.inventory.file
         description: The input inventory for which the contents are to be aggregated.
@@ -629,6 +647,7 @@ processors:
       This process is for generating the archive .zip containing all Annex relevant content. The .zip contains the PDF document as well as the aggregated license and component directories of the inventory.
     pomLocation: report/report_create-annex-archive.xml
     goal: process-resources
+    stage: REPORT
     parameters:
       - key: input.document.pdf.file
         description: The input PDF document for the Annex archive.
@@ -649,6 +668,7 @@ processors:
       This process creates a document for a selected document type. Types to choose from are vulnerability report (VR), cert report (CR), software distribution annex (SDA), license documentation (LD) and initial license documentation (ILD). The document is generated for a specified set of inventories using an asset descriptor.
     pomLocation: report/report_create-document.xml
     goal: process-resources
+    stage: REPORT
     parameters:
       - key: input.inventory.dir
         description: The directory of the input inventories for the document.
@@ -732,6 +752,7 @@ processors:
       Used to resolve all artifacts contained in an inventory and gather additional information on those artifacts.
     pomLocation: resolve/resolve_resolve-inventory.xml
     goal: process-resources
+    stage: RESOLVE
     parameters:
       - key: input.inventory.file
         description: The input file path of the inventory which is to be resolved.
@@ -755,6 +776,7 @@ processors:
       Scans a resolved inventory for licenses and copyrights and writes the resulting information to an inventory.
     pomLocation: scan/scan_scan-inventory.xml
     goal: process-resources
+    stage: SCAN
     parameters:
       - key: input.inventory.file
         description: The resolved input inventory file path.
@@ -781,6 +803,7 @@ processors:
       Currently under review.
     pomLocation: util/util_aggregate-sources.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.inventory.file
         description: The input inventory file.
@@ -810,6 +833,7 @@ processors:
       This process creates two output files containing the differences between two provided inventory versions. Which inventory version is declared as "base" and which as "compare" is negligible since the comparison is done in both ways and saved separately.
     pomLocation: util/util_convert-assessments.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.assessment.dir
         description: The directory containing assessment files which will be converted.
@@ -830,6 +854,7 @@ processors:
       Copies a list of inventories to a directory. This is a utility processor used to copy different inventories from individual locations to a common directory.
     pomLocation: util/util_copy-inventories.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.base.dir
         description: The directory in which the inventories are located.
@@ -847,6 +872,7 @@ processors:
       This process creates two output files containing the differences between two provided inventory versions. Which inventory version is declared as "base" and which as "compare" is negligible since the comparison is done in both ways and saved separately.
     pomLocation: util/util_create-diff.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.inventory.file
         description: The file of the base inventory for comparison.
@@ -876,6 +902,7 @@ processors:
       This process enriches an inventory based on the specified advisors. It is only used for cert-report document generation.
     pomLocation: util/util_enrich-advisors.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.inventory.file
         description: The file of the input inventory for enrichment.
@@ -905,6 +932,7 @@ processors:
       This process generates the SVG resources for different types of vulnerability reports for a specified inventory.
     pomLocation: util/util_generate-report-svg.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.inventory.file
         description: The file of the input inventory for SVG generation.
@@ -934,6 +962,7 @@ processors:
       This process merges inventories based on an individual security advisor and filters them using the security policy.
     pomLocation: util/util_merge-advisors.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.inventory.dir
         description: The directory containing the inventories to be merged.
@@ -954,6 +983,7 @@ processors:
       This process merges inventories and their assessments.
     pomLocation: util/util_merge-assessments.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.inventory.dir
         description: The directory containing the inventories to be merged.
@@ -968,6 +998,7 @@ processors:
       This process merges multiple input inventories into one output inventory. The input inventories are specified using a directory. Additionally, a regex can be provided to further specify the inventories used for merging within the given directory. This process can be triggered at any point in the pipeline and is not bound to a phase.
     pomLocation: util/util_merge-inventories.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.inventory.dir
         description: The directory containing the inventories to be merged.
@@ -985,6 +1016,7 @@ processors:
       This process enables the download of specific assets from a running portfolio manager service.
     pomLocation: util/util_portfolio-download.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: output.inventory.dir
         description: The directory in which to download all fitting inventories.
@@ -1023,6 +1055,7 @@ processors:
       This process downloads the service and cli jars needed to run the portfolio manager. This is only necessary if the jars do not exist locally already.
     pomLocation: util/util_portfolio-download-jars.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.cli.dir
         description: Directory where the jars will be downloaded.
@@ -1034,6 +1067,7 @@ processors:
       This process enables the upload of specific assets to a running portfolio manager service.
     pomLocation: util/util_portfolio-upload.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.file
         description: The SBOM or inventory file to upload.
@@ -1072,6 +1106,7 @@ processors:
       This process performs a transformation on a specified inventory using a Kotlin Script. These transformations can range from inventory merging to field replacements.
     pomLocation: util/util_transform-inventories.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.inventory.dir
         description: The directory containing the input inventories to perform the transformation with.
@@ -1095,6 +1130,7 @@ processors:
       This process takes an input inventory directory and validates the contained inventories.
     pomLocation: util/util_validate-reference-inventory.xml
     goal: process-resources
+    stage: AGGREGATE
     parameters:
       - key: input.inventory.dir
         description: The directory containing the inventories to be validated.

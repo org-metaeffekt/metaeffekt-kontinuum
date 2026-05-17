@@ -147,5 +147,4 @@ public class PipelineConfiguration {
             Boolean enableCycloneDxBom = false;
         }
     }
-
 }

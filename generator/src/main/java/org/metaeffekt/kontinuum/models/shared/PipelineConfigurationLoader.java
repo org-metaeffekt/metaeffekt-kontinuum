@@ -15,15 +15,9 @@ import java.util.List;
 @Slf4j
 public class PipelineConfigurationLoader {
 
-    private final File pipelineConfigFile;
+    private static boolean isValid = true;
 
-    private boolean isValid = true;
-
-    public PipelineConfigurationLoader(File pipelineConfigFile) {
-        this.pipelineConfigFile = pipelineConfigFile;
-    }
-
-    public PipelineConfiguration readConfig() {
+    public static PipelineConfiguration readConfig(File pipelineConfigFile) {
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
         try {
             PipelineConfiguration pipelineConfiguration = objectMapper.readValue(pipelineConfigFile, PipelineConfiguration.class);
@@ -38,7 +32,7 @@ public class PipelineConfigurationLoader {
         }
     }
 
-    private void validatePipelineConfigFile(PipelineConfiguration pipelineConfiguration) {
+    private static void validatePipelineConfigFile(PipelineConfiguration pipelineConfiguration) {
         validateProjectProperties(pipelineConfiguration.projectProperties);
 
         List<String> assetIds = pipelineConfiguration.projectProperties.assets
@@ -50,12 +44,12 @@ public class PipelineConfigurationLoader {
         validateDashboards(pipelineConfiguration.dashboards, assetIds);
     }
 
-    private void validateProjectProperties(PipelineConfiguration.ProjectProperties projectProperties) {
+    private static void validateProjectProperties(PipelineConfiguration.ProjectProperties projectProperties) {
         validateProject(projectProperties.project);
         validateAssets(projectProperties.assets);
     }
 
-    private void validateProject(PipelineConfiguration.ProjectProperties.Project project) {
+    private static void validateProject(PipelineConfiguration.ProjectProperties.Project project) {
         if (StringUtils.isBlank(project.name)) {
             log.error("Project name is empty.");
             isValid = false;
@@ -67,7 +61,7 @@ public class PipelineConfigurationLoader {
         }
     }
 
-    private void validateAssets(List<PipelineConfiguration.ProjectProperties.Asset> assets) {
+    private static void validateAssets(List<PipelineConfiguration.ProjectProperties.Asset> assets) {
         for (PipelineConfiguration.ProjectProperties.Asset asset : assets) {
             if (StringUtils.isBlank(asset.id)) {
                 log.error("Asset {} requires an id to be set.", asset);
@@ -81,7 +75,7 @@ public class PipelineConfigurationLoader {
         }
     }
 
-    private void validateUrlResolver(PipelineConfiguration.ProjectProperties.Asset asset) {
+    private static void validateUrlResolver(PipelineConfiguration.ProjectProperties.Asset asset) {
         if (asset.urlResolver == null) {
             isValid = false;
             log.error("The URL resolver for asset {} is not defined.", asset);
@@ -115,7 +109,7 @@ public class PipelineConfigurationLoader {
         }
     }
 
-    private void validateReports(List<PipelineConfiguration.Report> reports, List<String> assetIds) {
+    private static void validateReports(List<PipelineConfiguration.Report> reports, List<String> assetIds) {
         for (PipelineConfiguration.Report report : reports) {
             if (report.assets.isEmpty() || !new HashSet<>(assetIds).containsAll(report.assets)) {
                 isValid = false;
@@ -129,7 +123,7 @@ public class PipelineConfigurationLoader {
         }
     }
 
-    private void validateDashboards(List<PipelineConfiguration.Dashboard> dashboards, List<String> assetIds) {
+    private static void validateDashboards(List<PipelineConfiguration.Dashboard> dashboards, List<String> assetIds) {
         for (PipelineConfiguration.Dashboard dashboard : dashboards) {
             if (dashboard.assets.isEmpty() || !new HashSet<>(assetIds).containsAll(dashboard.assets)) {
                 isValid = false;

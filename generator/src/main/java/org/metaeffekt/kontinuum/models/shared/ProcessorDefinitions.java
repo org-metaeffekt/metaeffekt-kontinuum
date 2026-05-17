@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 @Data
 public class ProcessorDefinitions {
     List<Processor> processors;
@@ -16,6 +18,7 @@ public class ProcessorDefinitions {
         String description;
         String pomLocation;
         String goal;
+        Stage stage;
         List<ProcessorParameter> parameters;
         int executionOrder;
 
@@ -33,6 +36,22 @@ public class ProcessorDefinitions {
                 }
             }
         }
+
+        public String buildMavenCall() {
+            StringBuilder mavenCall = new StringBuilder();
+            mavenCall.append("mvn ")
+            .append("-f ").append(pomLocation).append(" ")
+            .append(goal).append(" ").append(System.lineSeparator());
+            
+            for (ProcessorParameter parameter : parameters) {
+                if (StringUtils.isNotBlank(parameter.value)) {
+                    mavenCall.append("-D").append(parameter.getKey()).append("=")
+                    .append("'").append(parameter.getValue()).append("'").append(System.lineSeparator());
+                }
+            }
+
+            return mavenCall.toString();
+        }
     }
 
     @Data
@@ -42,5 +61,4 @@ public class ProcessorDefinitions {
         Boolean required;
         String value;
     }
-
 }
