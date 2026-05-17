@@ -52,6 +52,7 @@ public class PipelineConfiguration {
             String version;
             String assessmentId;
             String reference;
+            String context;
             UrlResolver urlResolver;
             MavenResolver mavenResolver;
             ContainerResolver containerResolver;
@@ -86,6 +87,35 @@ public class PipelineConfiguration {
                     File referenceFile = new File(reference);
                     return referenceFile.getParentFile().getPath();
                 }
+            }
+
+            public String getContextDir(ProjectProperties.Project project) {
+                if (StringUtils.isBlank(project.getTenant())) {
+                    throw new IllegalStateException("Tried to access tenant for project " + project + " but is not set.");
+                }
+
+                if (StringUtils.isBlank(assessmentId)) {
+                    throw new IllegalStateException("Tried to access assessment id for asset " + this + " but is not set.");
+                }
+                
+                if (StringUtils.isBlank(context)) {
+                    throw new IllegalStateException("Tried to access context for asset " + this + " but is not set.");
+                }
+
+                return "assessments/" + project.getTenant() + "/" + this.assessmentId + "/" + context + "/";
+            }
+
+            public String getAssessmentDir(ProjectProperties.Project project) {
+                if (StringUtils.isBlank(project.getTenant())) {
+                    throw new IllegalStateException("Tried to access tenant for project " + project + " but is not set.");
+                }
+
+                if (StringUtils.isBlank(assessmentId)) {
+                    throw new IllegalStateException("Tried to access assessment id for asset " + this + " but is not set.");
+                }
+
+                return "assessments/" + project.getTenant() + "/" + this.assessmentId + "/";
+                
             }
 
             @Override

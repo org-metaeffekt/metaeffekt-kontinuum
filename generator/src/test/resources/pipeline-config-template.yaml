@@ -11,6 +11,7 @@ projectProperties:
       version: "1.0.0"
       assessmentId: "asset1"
       reference: "inventories/reference-inventory.xlsx"
+      context: "local"
       urlResolver:
         url: "https://example-project/first-asset-1.0.0.zip"
     - id: "asset2"
@@ -18,6 +19,7 @@ projectProperties:
       version: "2.0.0"
       assessmentId: "asset2"
       reference: "inventories/reference-inventory.xlsx"
+      context: "local"
       urlResolver:
         url: "https://example-project/second-asset-2.0.0.zip"
 

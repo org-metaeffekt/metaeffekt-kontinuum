@@ -1,5 +1,7 @@
 package org.metaeffekt.kontinuum.models.gitlab;
 
+import java.io.File;
+
 import org.metaeffekt.kontinuum.models.shared.EnvironmentConfiguration;
 
 import lombok.Builder;

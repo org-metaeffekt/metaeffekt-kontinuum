@@ -82,7 +82,7 @@ public class Pipeline {
         processor.setProcessorParameter("output.scan.dir", workspace.getPreparedDirForAsset(asset).toString() + "scan/");
         processor.setProcessorParameter("output.inventory.file", workspace.getPreparedDirForAsset(asset).appendAssetInventory());
 
-        String referenceDir = collector.require("asset[" + asset + "].referenceDir", () -> asset.getReferenceDir());
+        String referenceDir = collector.require("asset[" + asset + "].reference", () -> asset.getReferenceDir());
         if (referenceDir != null) {
             processor.setProcessorParameter("param.reference.inventory.dir", referenceDir);
         }
@@ -120,9 +120,9 @@ public class Pipeline {
         processor.setProcessorParameter("input.inventory.file", workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
         processor.setProcessorParameter("output.inventory.file", workspace.getResolvedDirForAsset(asset).appendAssetInventory());
         processor.setProcessorParameter("param.artifact.resolver.config.file",
-            collector.require("environment.ARTIFACT_RESOLVER_CONFIG_FILE", () -> environmentConfiguration.ARTIFACT_RESOLVER_CONFIG_FILE));
+            collector.require("ARTIFACT_RESOLVER_CONFIG_FILE", () -> environmentConfiguration.ARTIFACT_RESOLVER_CONFIG_FILE));
         processor.setProcessorParameter("param.artifact.resolver.proxy.file",
-            collector.require("environment.ARTIFACT_RESOLVER_PROXY_FILE", () -> environmentConfiguration.ARTIFACT_RESOLVER_PROXY_FILE));
+            collector.require("ARTIFACT_RESOLVER_PROXY_FILE", () -> environmentConfiguration.ARTIFACT_RESOLVER_PROXY_FILE));
         processor.setProcessorParameter("env.maven.index.dir", workspace.MAVEN_INDEX_DIR);
 
         processors.add(processor);
@@ -143,9 +143,9 @@ public class Pipeline {
         processor.setProcessorParameter("output.inventory.file", workspace.getScannedDirForAsset(asset).appendAssetInventory());
         processor.setProcessorParameter("input.output.analysis.base.dir", workspace.getScannedDirForAsset(asset) + "analysis/");
         processor.setProcessorParameter("param.properties.file",
-            collector.require("environment.SCAN_PROPERTIES_FILE", () -> environmentConfiguration.SCAN_PROPERTIES_FILE));
+            collector.require("SCAN_PROPERTIES_FILE", () -> environmentConfiguration.SCAN_PROPERTIES_FILE));
         processor.setProcessorParameter("env.kosmos.password",
-            collector.require("environment.KOSMOS_PASSWORD", () -> environmentConfiguration.KOSMOS_PASSWORD));
+            collector.require("KOSMOS_PASSWORD", () -> environmentConfiguration.KOSMOS_PASSWORD));
         processor.setProcessorParameter("env.kosmos.userkeys.file",
             environmentConfiguration.KOSMOS_USERKEYS_FILE);
 
@@ -167,14 +167,14 @@ public class Pipeline {
         processor.setProcessorParameter("output.inventory.file", workspace.getAdvisedDirForAsset(asset).appendAssetInventory());
         processor.setProcessorParameter("output.tmp.dir", workspace.getAdvisedDirForAsset(asset) + "tmp/");
         processor.setProcessorParameter("param.correlation.dir",
-            collector.require("environment.correlationDir", environmentConfiguration::getCorrelationDir));
+            collector.require("WORKBENCH_DIR", environmentConfiguration::getCorrelationDir));
 
         PipelineConfiguration.Options.EnrichmentOptions enrichment = pipelineConfiguration.getOptions().getEnrichment();
 
         processor.setProcessorParameter("param.security.policy.file",
-            collector.require("enrichment.securityPolicyFile", enrichment::getSecurityPolicyFile));
+            collector.require("options.enrichment.securityPolicyFile", enrichment::getSecurityPolicyFile));
         processor.setProcessorParameter("param.security.policy.active.ids",
-            collector.require("enrichment.securityPolicyActiveIds",
+            collector.require("options.enrichment.securityPolicyActiveIds",
                 () -> enrichment.getSecurityPolicyActiveIds() != null ? String.join(",", enrichment.getSecurityPolicyActiveIds()) : null));
 
         processor.setProcessorParameter("param.activate.msrc", String.valueOf(enrichment.getActivateMsrc()));
@@ -187,14 +187,13 @@ public class Pipeline {
         processor.setProcessorParameter("param.activate.eol", String.valueOf(enrichment.getActivateEol()));
         processor.setProcessorParameter("param.activate.osv", String.valueOf(enrichment.getActivateOsv()));
         processor.setProcessorParameter("param.activate.csaf", String.valueOf(enrichment.getActivateCsaf()));
-
+        PipelineConfiguration.ProjectProperties.Project project = pipelineConfiguration.getProjectProperties().getProject();
+        processor.setProcessorParameter("param.assessment.dirs", asset.getAssessmentDir(project));
+        processor.setProcessorParameter("param.context.dirs", asset.getContextDir(project));
+        
         processor.setProcessorParameter("env.vulnerability.mirror.dir",
-            collector.require("environment.vulnerabilityMirrorDir", () -> null));
-        processor.setProcessorParameter("param.assessment.dirs",
-            collector.require("pipeline.reports.assessmentDirs", () -> null));
-        processor.setProcessorParameter("param.context.dirs",
-            collector.require("pipeline.reports.contextDirs", () -> null));
-
+            collector.require("VULNERABILITY_MIRROR_DIR", environmentConfiguration.VULNERABILITY_MIRROR_DIR));
+        
         processors.add(processor);
     }
 }

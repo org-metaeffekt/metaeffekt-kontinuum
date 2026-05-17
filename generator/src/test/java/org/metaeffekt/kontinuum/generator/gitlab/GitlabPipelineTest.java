@@ -12,11 +12,13 @@ import java.nio.file.Path;
 
 public class GitlabPipelineTest {
 
-    private static final File PIPELINE_CONFIG_FILE = new File("metaeffekt-kontinuum/generator/src/test/resources/valid-pipeline-config.yaml");
+    private static final File PIPELINE_CONFIG_FILE = new File("src/test/resources/valid-pipeline-config.yaml");
 
     @Test
     public void testValidPipelineGeneration() throws IOException {
         GitlabConfiguration gitlabConfiguration = GitlabConfiguration.builder()
+        .SCAN_PROPERTIES_FILE("config/scan/scan-control.properties")
+        .KOSMOS_PASSWORD("EuBsVvcjIElWdXVVtHmPJdsE")
         .RUNNER_TAG("gpu")
         .CONTAINER_IMAGE("metaeffekt/metaeffekt-kontinuum-runtime:2.3.2_0.156.x")
         .build();
@@ -28,6 +30,4 @@ public class GitlabPipelineTest {
         Files.createDirectories(outputPath.getParent());
         Files.writeString(outputPath, gitlabPipeline.generatePipeline());
     }
-
-    
 }

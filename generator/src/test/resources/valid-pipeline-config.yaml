@@ -4,19 +4,22 @@ projectProperties:
   project:
     name: "metaeffekt-gitlab-components"
     version: "1.0.0"
+    tenant: "metaeffekt"
   assets:
     - id: "alacritty-0.17.0"
       name: "alacritty"
       version: "0.17.0"
       reference: "inventories/example-reference-inventory/inventory"
-      assessmentId: "alacritty-0.17.0"
+      assessmentId: "alacritty"
+      context: "local"
       urlResolver:
         url: "https://github.com/alacritty/alacritty/archive/refs/tags/v0.17.0.zip"
     - id: "spdx"
       name: "spdx-java-library"
       version: "2.0.1"
       reference: "inventories/example-reference-inventory/inventory"
-      assessmentId: "alacritty-0.17.0"
+      assessmentId: "spdx-java-library"
+      context: "local"
       urlResolver:
         urlPattern: "https://github.com/spdx/Spdx-Java-Library/archive/refs/tags/v${version}.zip"
 

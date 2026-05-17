@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class MissingValueCollector {
 
     private final List<String> missing = new ArrayList<>();
@@ -20,6 +22,13 @@ public class MissingValueCollector {
             missing.add(label);
             return null;
         }
+    }
+
+    public String require(String label, String value) {
+        if (StringUtils.isBlank(value)) {
+            missing.add(label);
+        }
+        return value;
     }
 
     public void check() {
