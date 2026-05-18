@@ -41,12 +41,12 @@ public class ProcessorDefinitions {
             StringBuilder mavenCall = new StringBuilder();
             mavenCall.append("mvn ")
             .append("-f ").append(pomLocation).append(" ")
-            .append(goal).append(" ").append(System.lineSeparator());
+            .append(goal).append(" ");
             
             for (ProcessorParameter parameter : parameters) {
                 if (StringUtils.isNotBlank(parameter.value)) {
                     mavenCall.append("-D").append(parameter.getKey()).append("=")
-                    .append("'").append(parameter.getValue()).append("'").append(System.lineSeparator());
+                    .append("'").append(parameter.getValue()).append("' ");
                 }
             }
 

@@ -1,17 +1,22 @@
 package org.metaeffekt.kontinuum.generator.shared;
 
 import org.metaeffekt.kontinuum.models.shared.*;
+import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.ProjectProperties.Asset;
+import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
 import org.metaeffekt.kontinuum.util.MissingValueCollector;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Pipeline {
 
     List<AssetPlan> assetPlans = new ArrayList<>();
-    List<ProcessorDefinitions.Processor> processors = new ArrayList<>();
+    Map<Asset, List<Processor>> assetProcessorsMap = new HashMap<>();
+    
     private final PipelineConfiguration pipelineConfiguration;
 
     private final Workspace workspace;
@@ -28,12 +33,12 @@ public class Pipeline {
                 .forEach(a -> assetPlans.add(new AssetPlan(a, pipelineConfiguration)));
     }
 
-    public List<ProcessorDefinitions.Processor> generatePipeline() {
+    public Map<Asset, List<Processor>> generatePipeline() {
         MissingValueCollector collector = new MissingValueCollector();
         addAssetIndependentProcessors(collector);
         addReportProcessors(collector);
         collector.check();
-        return processors;
+        return assetProcessorsMap;
     }
 
     private void addAssetIndependentProcessors(MissingValueCollector collector) {
@@ -64,7 +69,7 @@ public class Pipeline {
         processor.setProcessorParameter("param.image.version",
             collector.require("asset[" + asset + "].containerResolver.tag", () -> asset.getContainerResolver().getTag()));
 
-        processors.add(processor);
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
     private void addScanDirectoryProcessor(AssetPlan assetPlan, MissingValueCollector collector) {
@@ -87,7 +92,7 @@ public class Pipeline {
             processor.setProcessorParameter("param.reference.inventory.dir", referenceDir);
         }
 
-        processors.add(processor);
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
     private void addEnrichWithReferenceProcessor(AssetPlan assetPlan, MissingValueCollector collector) {
@@ -108,7 +113,7 @@ public class Pipeline {
         }
 
         processor.setProcessorParameter("output.inventory.file", workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
-        processors.add(processor);
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
     private void addResolveProcessor(AssetPlan assetPlan, MissingValueCollector collector) {
@@ -125,7 +130,7 @@ public class Pipeline {
             collector.require("ARTIFACT_RESOLVER_PROXY_FILE", () -> environmentConfiguration.ARTIFACT_RESOLVER_PROXY_FILE));
         processor.setProcessorParameter("env.maven.index.dir", workspace.MAVEN_INDEX_DIR);
 
-        processors.add(processor);
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
     private void addScanProcessor(AssetPlan assetPlan, MissingValueCollector collector) {
@@ -149,7 +154,7 @@ public class Pipeline {
         processor.setProcessorParameter("env.kosmos.userkeys.file",
             environmentConfiguration.KOSMOS_USERKEYS_FILE);
 
-        processors.add(processor);
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
     private void addVulnerabilityEnrichmentProcessor(AssetPlan assetPlan, MissingValueCollector collector) {
@@ -194,6 +199,6 @@ public class Pipeline {
         processor.setProcessorParameter("env.vulnerability.mirror.dir",
             collector.require("VULNERABILITY_MIRROR_DIR", environmentConfiguration.VULNERABILITY_MIRROR_DIR));
         
-        processors.add(processor);
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 }

@@ -26,7 +26,7 @@ public class GitlabPipelineTest {
         PipelineConfiguration pipelineConfiguration = PipelineConfigurationLoader.readConfig(PIPELINE_CONFIG_FILE);
         GitlabPipeline gitlabPipeline = new GitlabPipeline(pipelineConfiguration, gitlabConfiguration);
 
-        Path outputPath = Path.of("target/generator/testValidPipelineGeneration.yml");
+        Path outputPath = Path.of("target/generator/valid-gitlab-pipeline.yml");
         Files.createDirectories(outputPath.getParent());
         Files.writeString(outputPath, gitlabPipeline.generatePipeline());
     }

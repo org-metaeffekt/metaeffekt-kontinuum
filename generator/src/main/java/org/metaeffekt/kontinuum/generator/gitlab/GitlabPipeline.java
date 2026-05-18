@@ -5,7 +5,9 @@ import org.metaeffekt.kontinuum.generator.shared.Pipeline;
 import org.metaeffekt.kontinuum.models.gitlab.GitlabConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
 import org.metaeffekt.kontinuum.models.shared.Stage;
+import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.ProjectProperties.Asset;
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
+import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.ProcessorParameter;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,12 +15,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Slf4j
 public class GitlabPipeline {
 
-    List<Processor> processors;
+    Map<Asset, List<Processor>> assetProcessorsMap;
 
     StringBuilder gitlabPipelineDocument = new StringBuilder();
 
@@ -27,7 +30,7 @@ public class GitlabPipeline {
     public GitlabPipeline(PipelineConfiguration pipelineConfiguration, GitlabConfiguration gitlabConfiguration) {
         this.gitlabConfiguration = gitlabConfiguration;
         Pipeline pipeline = new Pipeline(pipelineConfiguration, gitlabConfiguration);
-        processors = pipeline.generatePipeline();
+        assetProcessorsMap = pipeline.generatePipeline();
     }
 
     public String generatePipeline() {
@@ -43,7 +46,9 @@ public class GitlabPipeline {
         stagesSection.append("stages:").append(System.lineSeparator());
         Set<Stage> requiredStages = new HashSet<>();
         
-        processors.forEach(p -> requiredStages.add(p.getStage()));
+        assetProcessorsMap.values().stream()
+            .flatMap(List::stream)
+            .forEach(p -> requiredStages.add(p.getStage()));
         
         for (Stage stage : requiredStages) {
             stagesSection.append("  ").append(stage).append(System.lineSeparator());
@@ -76,31 +81,54 @@ public class GitlabPipeline {
     }
 
     public void generateJobsSection() {
-        for (Processor processor : processors) {
-            StringBuilder job = new StringBuilder();
-            job.append(processor.getId()).append(System.lineSeparator());
-            job.append("  ").append("stage: ").append(processor.getStage()).append(System.lineSeparator());
-            job.append("  ").append("image: ").append(gitlabConfiguration.CONTAINER_IMAGE).append(System.lineSeparator());
-            
-            if (generateBeforeScriptSection() != null) {
-                job.append(generateBeforeScriptSection());
+        for (Map.Entry<Asset, List<Processor>> entry : assetProcessorsMap.entrySet()) {
+            for (Processor processor : entry.getValue()) {
+                StringBuilder job = new StringBuilder();
+                job.append(processor.getId()).append("-").append(entry.getKey().toString()).append(":").append(System.lineSeparator());
+                job.append("  ").append("stage: ").append(processor.getStage()).append(System.lineSeparator());
+                job.append("  ").append("image: ").append(gitlabConfiguration.CONTAINER_IMAGE).append(System.lineSeparator());
+                
+                if (generateBeforeScriptBlock() != null) {
+                    job.append(generateBeforeScriptBlock());
+                }
+                
+                job.append("  ").append("script: ").append(System.lineSeparator());
+                job.append("    - |").append(System.lineSeparator());
+                job.append(generateMavenScriptBlock(processor));
+                gitlabPipelineDocument.append(job).append(System.lineSeparator());
             }
-            
-            job.append("  ").append("script: ").append(System.lineSeparator());
-            job.append("    - |").append(System.lineSeparator());
-            job.append("      ").append(processor.buildMavenCall()).append(System.lineSeparator());
-            gitlabPipelineDocument.append(job).append(System.lineSeparator());
         }
     }
 
-    private String generateBeforeScriptSection() {
+    private String generateMavenScriptBlock(Processor processor) {
+        StringBuilder script = new StringBuilder();
+        script.append("      mvn -f ").append(processor.getPomLocation()).append(" ")
+            .append(processor.getGoal()).append(" \\").append(System.lineSeparator());
+        
+        List<ProcessorParameter> nonBlankParams = processor.getParameters().stream()
+            .filter(p -> StringUtils.isNotBlank(p.getValue()))
+            .toList();
+        
+        for (int i = 0; i < nonBlankParams.size(); i++) {
+            ProcessorParameter param = nonBlankParams.get(i);
+            script.append("      -D").append(param.getKey()).append("='").append(param.getValue()).append("'");
+            if (i < nonBlankParams.size() - 1) {
+                script.append(" \\");
+            }
+            script.append(System.lineSeparator());
+        }
+        return script.toString();
+    }
+
+    private String generateBeforeScriptBlock() {
  
         if (gitlabConfiguration.SETUP_COMMAND == null) {
             return null;
         }
 
         if (!gitlabConfiguration.SETUP_COMMAND.exists()) {
-            throw new IllegalStateException("The designated 'before script' file " + gitlabConfiguration.SETUP_COMMAND.getAbsolutePath() + " does not exist.");
+            throw new IllegalStateException("The designated 'before script' file " 
+                + gitlabConfiguration.SETUP_COMMAND.getAbsolutePath() + " does not exist.");
         }
 
         StringBuilder beforeScriptBuilder = new StringBuilder();
