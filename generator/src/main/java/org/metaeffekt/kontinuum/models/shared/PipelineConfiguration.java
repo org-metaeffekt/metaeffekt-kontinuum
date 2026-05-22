@@ -12,34 +12,34 @@ import java.util.List;
 @Data
 public class PipelineConfiguration {
 
-    ProjectProperties projectProperties;
-    List<Report> reports;
-    List<Dashboard> dashboards;
-    Options options;
+    private ProjectProperties projectProperties;
+    private List<Report> reports;
+    private List<Dashboard> dashboards;
+    private Options options;
 
     @Data
     public static class ProjectProperties {
 
-        Project project;
-        List<Asset> assets;
+        private Project project;
+        private List<Asset> assets;
 
         @Data
         public static class Project {
-            String name;
-            String version;
-            String tenant;
+            private String name;
+            private String version;
+            private String tenant;
 
             @Override
             public String toString() {
                 StringBuilder sb = new StringBuilder();
-                if (StringUtils.isNotBlank(name)) {
-                    sb.append(name);
+                if (StringUtils.isNotBlank(getName())) {
+                    sb.append(getName());
                 } else {
                     sb.append("unnamed-project");
                 }
 
-                if (StringUtils.isNotBlank(version)) {
-                    sb.append("-").append(version);
+                if (StringUtils.isNotBlank(getVersion())) {
+                    sb.append("-").append(getVersion());
                 }
                 return sb.toString();
             }
@@ -47,44 +47,44 @@ public class PipelineConfiguration {
 
         @Data
         public static class Asset {
-            String id;
-            String name;
-            String version;
-            String assessmentId;
-            String reference;
-            String context;
-            UrlResolver urlResolver;
-            MavenResolver mavenResolver;
-            ContainerResolver containerResolver;
+            private String id;
+            private String name;
+            private String version;
+            private String assessmentId;
+            private String reference;
+            private String context;
+            private UrlResolver urlResolver;
+            private MavenResolver mavenResolver;
+            private ContainerResolver containerResolver;
 
             @Data
             public static class UrlResolver {
-                String url;
-                String urlPattern;
+                private String url;
+                private String urlPattern;
             }
 
             @Data
             public static class MavenResolver {
-                String groupId;
-                String artifactId;
-                String artifactVersion;
+                private String groupId;
+                private String artifactId;
+                private String artifactVersion;
             }
 
             @Data
             public static class ContainerResolver {
-                String image;
-                String tag;
+                private String image;
+                private String tag;
             }
 
             public String getReferenceDir() throws IllegalStateException{
-                if (StringUtils.isBlank(reference)) {
+                if (StringUtils.isBlank(getReference())) {
                     throw new IllegalStateException("Tried to access reference inventory for asset " + this + " but is not set.");
                 }
 
-                if (Files.isDirectory(Path.of(reference))) {
-                    return reference;
+                if (Files.isDirectory(Path.of(getReference()))) {
+                    return getReference();
                 } else {
-                    File referenceFile = new File(reference);
+                    File referenceFile = new File(getReference());
                     return referenceFile.getParentFile().getPath();
                 }
             }
@@ -94,15 +94,15 @@ public class PipelineConfiguration {
                     throw new IllegalStateException("Tried to access tenant for project " + project + " but is not set.");
                 }
 
-                if (StringUtils.isBlank(assessmentId)) {
+                if (StringUtils.isBlank(getAssessmentId())) {
                     throw new IllegalStateException("Tried to access assessment id for asset " + this + " but is not set.");
                 }
                 
-                if (StringUtils.isBlank(context)) {
+                if (StringUtils.isBlank(getContext())) {
                     throw new IllegalStateException("Tried to access context for asset " + this + " but is not set.");
                 }
 
-                return "assessments/" + project.getTenant() + "/" + this.assessmentId + "/" + context + "/";
+                return "assessments/" + project.getTenant() + "/" + getAssessmentId() + "/" + getContext() + "/";
             }
 
             public String getAssessmentDir(ProjectProperties.Project project) {
@@ -110,25 +110,25 @@ public class PipelineConfiguration {
                     throw new IllegalStateException("Tried to access tenant for project " + project + " but is not set.");
                 }
 
-                if (StringUtils.isBlank(assessmentId)) {
+                if (StringUtils.isBlank(getAssessmentId())) {
                     throw new IllegalStateException("Tried to access assessment id for asset " + this + " but is not set.");
                 }
 
-                return "assessments/" + project.getTenant() + "/" + this.assessmentId + "/";
+                return "assessments/" + project.getTenant() + "/" + getAssessmentId() + "/";
                 
             }
 
             @Override
             public String toString() {
                 StringBuilder sb = new StringBuilder();
-                if (StringUtils.isNotBlank(name)) {
-                    sb.append(name);
+                if (StringUtils.isNotBlank(getName())) {
+                    sb.append(getName());
                 } else {
                     sb.append("unnamed-asset");
                 }
 
-                if (StringUtils.isNotBlank(version)) {
-                    sb.append("-").append(version);
+                if (StringUtils.isNotBlank(getVersion())) {
+                    sb.append("-").append(getVersion());
                 }
                 return sb.toString();
             }
@@ -137,44 +137,53 @@ public class PipelineConfiguration {
 
     @Data
     public static class Report {
-        List<String> assets;
-        String type;
+        private String assetId;
+        private String type;
+        private List<String> overviewAdvisors;
     }
 
     @Data
     public static class Dashboard {
-        String id;
-        List<String> assets;
+        private String assetId;
     }
 
     @Data
     public static class Options {
 
-        EnrichmentOptions enrichment = new EnrichmentOptions();
-        GlobalOptions global = new GlobalOptions();
+        private EnrichmentOptions enrichment = new EnrichmentOptions();
+        private GlobalOptions global = new GlobalOptions();
+        private DocumentOptions document = new DocumentOptions();
+
+        @Data
+        public static class DocumentOptions{
+            private String watermark;
+            private String organization;
+            private String classificationRating;
+            private String controlRating;
+        }
 
         @Data
         public static class EnrichmentOptions{
-            String securityPolicyFile;
-            List<String> securityPolicyActiveIds = new ArrayList<>();
-            Boolean activateMsrc = true;
-            Boolean activateNvd = true;
-            Boolean activateCertFr = true;
-            Boolean activateCertEu = true;
-            Boolean activateCertSei = true;
-            Boolean activateOsv = true;
-            Boolean activateKev = true;
-            Boolean activateEpss = true;
-            Boolean activateEol = true;
-            Boolean activateCsaf = true;
+            private String securityPolicyFile;
+            private List<String> securityPolicyActiveIds = new ArrayList<>();
+            private Boolean activateMsrc = true;
+            private Boolean activateNvd = true;
+            private Boolean activateCertFr = true;
+            private Boolean activateCertEu = true;
+            private Boolean activateCertSei = true;
+            private Boolean activateOsv = true;
+            private Boolean activateKev = true;
+            private Boolean activateEpss = true;
+            private Boolean activateEol = true;
+            private Boolean activateCsaf = true;
         }
 
         @Data
         public static class GlobalOptions{
-            String documentLanguage = "en";
-            Boolean enableResolve = false;
-            Boolean enableSpdxBom = false;
-            Boolean enableCycloneDxBom = false;
+            private String documentLanguage = "en";
+            private Boolean enableResolve = false;
+            private Boolean enableSpdxBom = false;
+            private Boolean enableCycloneDxBom = false;
         }
     }
 }

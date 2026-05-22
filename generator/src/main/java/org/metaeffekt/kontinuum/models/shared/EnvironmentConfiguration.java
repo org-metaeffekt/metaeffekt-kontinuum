@@ -3,7 +3,6 @@ package org.metaeffekt.kontinuum.models.shared;
 import java.io.File;
 
 import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
@@ -22,17 +21,30 @@ public class EnvironmentConfiguration {
     public final String KOSMOS_PASSWORD;
     public final String KOSMOS_USERKEYS_FILE;
     public final File SETUP_COMMAND;
+    private final String KONTINUUM_DIR;
 
 
     public String getCorrelationDir() {
         return getWorkbenchDirNormalized() + "correlations/";
     }
 
-    private String getAssessmentsDir() {
+    public String getAssessmentsDir() {
         return getWorkbenchDirNormalized() + "assessments/";
     }
 
-    private String getWorkbenchDirNormalized() {
+    public String getKontinuumDirNormalized() {
+        if (KONTINUUM_DIR.endsWith("/")) {
+            return KONTINUUM_DIR;
+        } else {
+            return KONTINUUM_DIR + "/";
+        }
+    }
+    
+    public String getKontinuumProcessorsDir() {
+        return getKontinuumDirNormalized() + "processors/";
+    }
+
+    public String getWorkbenchDirNormalized() {
         if (WORKBENCH_DIR.endsWith("/")) {
             return WORKBENCH_DIR;
         } else {

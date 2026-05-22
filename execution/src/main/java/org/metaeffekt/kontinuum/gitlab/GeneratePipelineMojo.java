@@ -7,9 +7,9 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.metaeffekt.kontinuum.generator.gitlab.GitlabPipeline;
+import org.metaeffekt.kontinuum.generator.shared.PipelineConfigurationLoader;
 import org.metaeffekt.kontinuum.models.gitlab.GitlabConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
-import org.metaeffekt.kontinuum.models.shared.PipelineConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;

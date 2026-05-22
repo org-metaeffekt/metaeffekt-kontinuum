@@ -23,8 +23,6 @@ public class ProcessorDefinitions {
         int executionOrder;
 
         public void setProcessorParameter(String key, String value) {
-            if (value == null) return;
-
             if (parameters.stream().noneMatch(p -> p.key.equals(key))) {
                 throw new IllegalStateException("The key " + key + " for processor " + id + " required during pipeline " +
                         "creation does not exist. Consider checking with the processors.yaml.");
@@ -32,6 +30,9 @@ public class ProcessorDefinitions {
 
             for (ProcessorParameter processorParameter : parameters) {
                 if (processorParameter.key.equals(key)) {
+                    if (value == null && !processorParameter.required) {
+                        return;
+                    }
                     processorParameter.setValue(value);
                 }
             }

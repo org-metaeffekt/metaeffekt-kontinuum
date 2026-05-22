@@ -43,7 +43,7 @@ public class AssetPlan {
         requireResolve = pipelineConfiguration.getOptions().getGlobal().getEnableResolve();
         requireReferenceEnrichment = StringUtils.isNotBlank(asset.getReference());
 
-        if (pipelineConfiguration.getDashboards().stream().anyMatch(d -> d.getAssets().contains(asset.getId()))) {
+        if (pipelineConfiguration.getDashboards().stream().anyMatch(d -> d.getAssetId().equals(asset.getId()))) {
             requireVulnerabilityEnrichment = true;
             requireDashboardGeneration = true;
         }
@@ -67,7 +67,7 @@ public class AssetPlan {
     private void evaluateReports(String assetId, PipelineConfiguration pipelineConfiguration) {
         List<PipelineConfiguration.Report> reportsForAsset = pipelineConfiguration.getReports()
                 .stream()
-                .filter(r -> r.getAssets().contains(assetId))
+                .filter(r -> r.getAssetId().equals(assetId))
                 .toList();
 
         if (!reportsForAsset.isEmpty()) {

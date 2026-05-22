@@ -1,9 +1,9 @@
 package org.metaeffekt.kontinuum.generator.gitlab;
 
 import org.junit.jupiter.api.Test;
+import org.metaeffekt.kontinuum.generator.shared.PipelineConfigurationLoader;
 import org.metaeffekt.kontinuum.models.gitlab.GitlabConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
-import org.metaeffekt.kontinuum.models.shared.PipelineConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +17,7 @@ public class GitlabPipelineTest {
     @Test
     public void testValidPipelineGeneration() throws IOException {
         GitlabConfiguration gitlabConfiguration = GitlabConfiguration.builder()
+        .KONTINUUM_DIR("~/Projects/metaeffekt/metaeffekt-kontinuum")
         .SCAN_PROPERTIES_FILE("config/scan/scan-control.properties")
         .KOSMOS_PASSWORD("EuBsVvcjIElWdXVVtHmPJdsE")
         .RUNNER_TAG("gpu")

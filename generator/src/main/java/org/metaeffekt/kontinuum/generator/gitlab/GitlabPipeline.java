@@ -1,23 +1,25 @@
 package org.metaeffekt.kontinuum.generator.gitlab;
 
-import org.apache.commons.lang3.StringUtils;
-import org.metaeffekt.kontinuum.generator.shared.Pipeline;
-import org.metaeffekt.kontinuum.models.gitlab.GitlabConfiguration;
-import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
-import org.metaeffekt.kontinuum.models.shared.Stage;
-import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.ProjectProperties.Asset;
-import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
-import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.ProcessorParameter;
-
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.metaeffekt.kontinuum.generator.shared.Pipeline;
+import org.metaeffekt.kontinuum.models.gitlab.GitlabConfiguration;
+import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
+import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.ProjectProperties.Asset;
+import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
+import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.ProcessorParameter;
+import org.metaeffekt.kontinuum.models.shared.Stage;
 
+/**
+ * This class generates a gitlab pipeline from the given configuration files to include as a
+ * downstream pipeline in a gitlab project.
+ */
 @Slf4j
 public class GitlabPipeline {
 
