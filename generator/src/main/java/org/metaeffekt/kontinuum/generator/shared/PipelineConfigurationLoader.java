@@ -24,27 +24,25 @@ import java.util.Set;
 @Slf4j
 public class PipelineConfigurationLoader {
 
-    private static boolean isValid = true;
-    private static PipelineConfiguration pipelineConfiguration;
+    private boolean isValid = true;
+    private PipelineConfiguration pipelineConfiguration;
 
     
-    public static PipelineConfiguration readConfig(File pipelineConfigFile) {
+    public PipelineConfiguration readConfig(File pipelineConfigFile) {
         isValid = true;
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
         try {
-            pipelineConfiguration = objectMapper.readValue(pipelineConfigFile, PipelineConfiguration.class);
-            validatePipelineConfigFile();
-            if (!isValid) {
-                throw new IllegalStateException("Pipeline configuration file: " + pipelineConfigFile.getAbsolutePath() +
-                        " contains errors.");
-            }
+            validatePipelineConfigFile(objectMapper.readValue(pipelineConfigFile, PipelineConfiguration.class));
             return pipelineConfiguration;
         } catch (IOException e) {
             throw new RuntimeException("Failed to read pipeline configuration file.", e);
         }
     }
+    
 
-    private static void validatePipelineConfigFile() {
+    public void validatePipelineConfigFile(PipelineConfiguration pipelineConfiguration) {
+        this.pipelineConfiguration = pipelineConfiguration;
+        
         if (pipelineConfiguration == null) {
             log.error("Pipeline configuration is missing.");
             isValid = false;
@@ -61,9 +59,13 @@ public class PipelineConfigurationLoader {
         validateAssets();
         validateReports();
         validateDashboards();
+
+        if (!isValid) {
+            throw new IllegalStateException("Pipeline configuration contains errors.");
+        }
     }
 
-    private static void validateProject() {
+    private void validateProject() {
         Project project = pipelineConfiguration.getProjectProperties().getProject();
         if (project == null) {
             log.error("Project is missing.");
@@ -87,7 +89,7 @@ public class PipelineConfigurationLoader {
         }
     }
 
-    private static void validateAssets() {
+    private void validateAssets() {
         List<PipelineConfiguration.ProjectProperties.Asset> assets = pipelineConfiguration.getProjectProperties().getAssets();
         if (assets == null || assets.isEmpty()) {
             log.error("Assets are missing.");
@@ -129,7 +131,7 @@ public class PipelineConfigurationLoader {
         }
     }
 
-    private static void validateUrlResolver(PipelineConfiguration.ProjectProperties.Asset asset) {
+    private void validateUrlResolver(PipelineConfiguration.ProjectProperties.Asset asset) {
         if (asset.getUrlResolver() == null) {
             log.error("Asset {} requires urlResolver to be set.", asset);
             isValid = false;
@@ -164,7 +166,7 @@ public class PipelineConfigurationLoader {
         }
     }
 
-    private static void validateReports() {
+    private void validateReports() {
         List<String> assetIds = getAssets()
             .stream()
             .map(Asset::getId)
@@ -195,7 +197,7 @@ public class PipelineConfigurationLoader {
         }
     }
 
-    private static void validateDashboards() {
+    private void validateDashboards() {
         List<String> assetIds = getAssets()
             .stream()
             .map(Asset::getId)
@@ -214,7 +216,7 @@ public class PipelineConfigurationLoader {
         }
     }
 
-    private static boolean assessmentFieldsRequired(Asset asset) {
+    private boolean assessmentFieldsRequired(Asset asset) {
         Set<ReportType> reportTypesRequiringAssessmentFields = Set.of(ReportType.CERT_REPORT, ReportType.VULNERABILITY_REPORT, ReportType.VULNERABILITY_SUMMARY_REPORT);
         List<Report> reportsRequiringAssessmentFields = new ArrayList<>();
         List<Dashboard> dashboardsRequiringAssessmentFields = new ArrayList<>();
@@ -242,7 +244,7 @@ public class PipelineConfigurationLoader {
         return !reportsRequiringAssessmentFields.isEmpty() || !dashboardsRequiringAssessmentFields.isEmpty();
     }
 
-    private static List<Asset> getAssets() {
+    private List<Asset> getAssets() {
         PipelineConfiguration.ProjectProperties projectProperties = pipelineConfiguration.getProjectProperties();
         if (projectProperties == null || projectProperties.getAssets() == null) {
             return Collections.emptyList();
@@ -250,14 +252,14 @@ public class PipelineConfigurationLoader {
         return projectProperties.getAssets();
     }
 
-    private static List<Report> getReports() {
+    private List<Report> getReports() {
         if (pipelineConfiguration.getReports() == null) {
             return Collections.emptyList();
         }
         return pipelineConfiguration.getReports();
     }
 
-    private static List<Dashboard> getDashboards() {
+    private List<Dashboard> getDashboards() {
         if (pipelineConfiguration.getDashboards() == null) {
             return Collections.emptyList();
         }

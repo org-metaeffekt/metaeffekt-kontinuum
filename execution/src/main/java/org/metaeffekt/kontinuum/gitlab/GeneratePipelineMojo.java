@@ -102,7 +102,7 @@ public class GeneratePipelineMojo extends AbstractMojo {
             .VULNERABILITY_MIRROR_URL(vulnerabilityMirrorUrl)
             .WORKBENCH_DIR(workbenchDir);
        
-        PipelineConfiguration pipelineConfiguration = PipelineConfigurationLoader.readConfig(pipelineConfigFile);
+        PipelineConfiguration pipelineConfiguration = new PipelineConfigurationLoader().readConfig(pipelineConfigFile);
         
         GitlabPipeline gitlabPipeline = new GitlabPipeline(pipelineConfiguration, gitlabConfiguration.build());
 

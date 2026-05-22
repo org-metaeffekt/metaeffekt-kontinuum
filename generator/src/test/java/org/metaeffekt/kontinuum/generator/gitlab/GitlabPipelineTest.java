@@ -24,7 +24,7 @@ public class GitlabPipelineTest {
         .CONTAINER_IMAGE("metaeffekt/metaeffekt-kontinuum-runtime:2.3.2_0.156.x")
         .build();
         
-        PipelineConfiguration pipelineConfiguration = PipelineConfigurationLoader.readConfig(PIPELINE_CONFIG_FILE);
+        PipelineConfiguration pipelineConfiguration = new PipelineConfigurationLoader().readConfig(PIPELINE_CONFIG_FILE);
         GitlabPipeline gitlabPipeline = new GitlabPipeline(pipelineConfiguration, gitlabConfiguration);
 
         Path outputPath = Path.of("target/generator/valid-gitlab-pipeline.yml");
