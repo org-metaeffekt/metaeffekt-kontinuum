@@ -219,10 +219,6 @@
                                 <active>${param.activate.certeu}</active>
                             </certEuAdvisorEnrichment>
 
-                            <csafAdvisorEnrichment>
-                                <active>${param.activate.csaf}</active>
-                            </csafAdvisorEnrichment>
-
                             <osvAdvisorFillDetailsEnrichment>
                                 <active>${param.activate.osv}</active>
                                 <includeAdvisoryProviders></includeAdvisoryProviders>
