@@ -209,6 +209,21 @@
                                     <malformedCpe>/cpe:2.3:a:ibm:([^:]+):cd:([^:]+):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
                                     <replacementCpe>cpe:2.3:a:ibm:$1:$2:*:*:*:continuous_delivery:*:*:*</replacementCpe>
                                 </cpeCorrection>
+
+                                <!-- too many parts for IBM products with "ifix" updates (trims the extra trailing asterisk) -->
+                                <!-- cpe:2.3:a:ibm:engineering_lifecycle_management:7.0.3:ifix021:*:*:*:*:*:*:* to cpe:2.3:a:ibm:engineering_lifecycle_management:7.0.3:ifix021:*:*:*:*:*:* -->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):([^:]+):(ifix[^:]*):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:$1:$2:$3:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
+
+                                <!-- too many parts for IBM products with "cd" (update) to "continuous_delivery" (sw_edition) -->
+                                <!-- https://nvd.nist.gov/products/cpe/detail/3F59F71B-2449-4067-85D0-5F3E11233F05?namingFormat=2.2&orderBy=CPEURI&keyword=cpe%3A2.3%3Aa%3Aibm&status=FINAL -->
+                                <!-- cpe:2.3:a:ibm:mq_operator:3.2.23:cd:*:*:*:*:*:*:* to cpe:2.3:a:ibm:mq_operator:3.2.23:*:*:*:continuous_delivery:*:*:* -->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):([^:]+):cd:\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:$1:$2:*:*:*:continuous_delivery:*:*:*</replacementCpe>
+                                </cpeCorrection>
                             </cpePatternCorrections>
                         </configuration>
                     </execution>
