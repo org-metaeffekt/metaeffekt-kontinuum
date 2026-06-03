@@ -38,7 +38,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven.antrun.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>copy-inventories</id>
@@ -60,7 +60,7 @@
             <plugin>  <!-- This plugin is only relevant to deliver better error messages to the caller of this pom. -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>${maven.enforcer.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>enforce-property</id>
