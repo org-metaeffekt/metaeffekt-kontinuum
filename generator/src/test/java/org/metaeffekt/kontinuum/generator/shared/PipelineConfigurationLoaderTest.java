@@ -1,5 +1,8 @@
 package org.metaeffekt.kontinuum.generator.shared;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.junit.jupiter.api.Test;
@@ -175,6 +178,10 @@ public class PipelineConfigurationLoaderTest {
     private PipelineConfiguration readConfig(PipelineConfiguration configuration) throws IOException {
         File file = tempDir.resolve("pipeline-config-" + System.nanoTime() + ".yaml").toFile();
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+        objectMapper.disable(MapperFeature.AUTO_DETECT_GETTERS);
+        objectMapper.disable(MapperFeature.AUTO_DETECT_IS_GETTERS);
         objectMapper.writeValue(file, configuration);
         return new PipelineConfigurationLoader().readConfig(file);
     }
