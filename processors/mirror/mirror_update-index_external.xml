@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--
-        Copyright 2024-2025 the original author or authors.
+        Copyright 2024-2026 the original author or authors.
 
         Licensed under the Apache License, Version 2.0 (the "License");
         you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
         See the License for the specific language governing permissions and
         limitations under the License.
-        -->
+    -->
 
     <parent>
         <groupId>com.metaeffekt.kontinuum</groupId>
@@ -26,7 +26,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>mirror_update-index_internal</artifactId>
+    <artifactId>mirror_update-index_external</artifactId>
 
     <properties>
         <param.proxy.scheme>none</param.proxy.scheme>
@@ -34,6 +34,9 @@
         <param.proxy.port>-1</param.proxy.port>
         <param.proxy.user>none</param.proxy.user>
         <param.proxy.pass>none</param.proxy.pass>
+
+        <param.fail.on.error>true</param.fail.on.error>
+        <param.fail.on.issue>true</param.fail.on.issue>
     </properties>
 
     <build>
@@ -54,8 +57,8 @@
                             <mirrorDirectory>${env.mirror.dir}</mirrorDirectory>
 
                             <!-- fail if an error occurs, but not on incomplete warnings -->
-                            <failOnIndexError>true</failOnIndexError>
-                            <failOnIntegrityError>false</failOnIntegrityError>
+                            <failOnIndexError>${param.fail.on.error}</failOnIndexError>
+                            <failOnIntegrityError>${param.fail.on.issue}</failOnIntegrityError>
 
                             <!-- Indexers -->
 
