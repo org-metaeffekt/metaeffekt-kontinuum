@@ -225,8 +225,8 @@
 
                             <osvAdvisorFillDetailsEnrichment>
                                 <active>${param.activate.osv}</active>
-                                <includeAdvisoryProviders></includeAdvisoryProviders>
-                                <excludeNvdEquivalent></excludeNvdEquivalent> <!-- Ensure this is supported by other configurations as well (osv & msrc)-->
+                                <includeAdvisoryProviders>[{"src":"*","impl":"OSV","st":"sa"}]</includeAdvisoryProviders>
+                                <excludeNvdEquivalent></excludeNvdEquivalent> <!-- Ensure this is supported by other configurations as well (osv & msrc) -->
                             </osvAdvisorFillDetailsEnrichment>
 
                             <!-- Vulnerability Prioritization -->
