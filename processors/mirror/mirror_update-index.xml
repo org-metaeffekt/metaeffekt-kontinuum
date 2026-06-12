@@ -130,31 +130,37 @@
                                 <cpeCorrection>
                                     <malformedCpe>/^\s+(.*?)$/</malformedCpe>
                                     <replacementCpe>$1</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
                                 <!-- trim whitespaces from end -->
                                 <cpeCorrection>
                                     <malformedCpe>/^(.*?)\s+$/</malformedCpe>
                                     <replacementCpe>$1</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
                                 <!-- whitespaces surrounding the delimiter character ':' are collapsed -->
                                 <cpeCorrection>
                                     <malformedCpe>/:\s+|\s+:/</malformedCpe>
                                     <replacementCpe>:</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
                                 <!-- any other remaining whitespaces are replaced with the '_' character, as defined by the cpe spec -->
                                 <cpeCorrection>
                                     <malformedCpe>/\s+/</malformedCpe>
                                     <replacementCpe>_</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
                                 <!-- cpes may not contain multiple asterisk characters in sequence and are therefore collapsed as well -->
                                 <cpeCorrection>
                                     <malformedCpe>/\*\*/</malformedCpe>
                                     <replacementCpe>*</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
                                 <!-- another common mistake is doubling the cpe header; if present, it is collapsed and the first configured part is used -->
                                 <cpeCorrection>
                                     <malformedCpe>/^cpe:2\.3:([aoh]):cpe:2\.3:[aoh]/</malformedCpe>
                                     <replacementCpe>cpe:2.3:$1</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
 
                                 <!-- SPECIFIC REGEX CORRECTIONS -->
