@@ -131,28 +131,24 @@
                                     <malformedCpe>/^\s+(.*?)$/</malformedCpe>
                                     <replacementCpe>$1</replacementCpe>
                                     <genericRule>true</genericRule>
-
                                 </cpeCorrection>
                                 <!-- trim whitespaces from end -->
                                 <cpeCorrection>
                                     <malformedCpe>/^(.*?)\s+$/</malformedCpe>
                                     <replacementCpe>$1</replacementCpe>
                                     <genericRule>true</genericRule>
-
                                 </cpeCorrection>
                                 <!-- whitespaces surrounding the delimiter character ':' are collapsed -->
                                 <cpeCorrection>
                                     <malformedCpe>/:\s+|\s+:/</malformedCpe>
                                     <replacementCpe>:</replacementCpe>
                                     <genericRule>true</genericRule>
-
                                 </cpeCorrection>
                                 <!-- any other remaining whitespaces are replaced with the '_' character, as defined by the cpe spec -->
                                 <cpeCorrection>
                                     <malformedCpe>/\s+/</malformedCpe>
                                     <replacementCpe>_</replacementCpe>
                                     <genericRule>true</genericRule>
-
                                 </cpeCorrection>
                                 <!-- cpes may not contain multiple asterisk characters in sequence and are therefore collapsed as well -->
                                 <cpeCorrection>
