@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--
-        Copyright 2024-2025 the original author or authors.
+        Copyright 2024-2026 the original author or authors.
 
         Licensed under the Apache License, Version 2.0 (the "License");
         you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
         See the License for the specific language governing permissions and
         limitations under the License.
-        -->
+    -->
 
     <parent>
         <groupId>com.metaeffekt.kontinuum</groupId>
@@ -90,23 +90,11 @@
                             <cweIndex/>
                             <capecIndex/>
 
-
-
                             <!-- The NVD and other vendors often publish data which contain invalid CPEs; this configuration attempts to 'correct' the malformed CPEs -->
                             <!-- A simple "cpeCorrection" has a target string ("malformedCpe") and a replacement string ("replacementCpe") which function as 1:1 text replacements -->
                             <cpeCorrections>
                                 <!-- SPECIFIC SIMPLE CORRECTIONS -->
 
-                                <!-- duplicate cpe header; can be remove if using gen5 -->
-                                <cpeCorrection>
-                                    <malformedCpe>cpe:2.3:a:cpe:2.3:a:campcodes:online_feeds_product_inventory_system:1.0:*:*:*:*:*:*:*</malformedCpe>
-                                    <replacementCpe>cpe:2.3:a:campcodes:online_feeds_product_inventory_system:1.0:*:*:*:*:*:*:*</replacementCpe>
-                                </cpeCorrection>
-                                <!-- duplicate '*' character; can be remove if using gen5 -->
-                                <cpeCorrection>
-                                    <malformedCpe>cpe:2.3:a:strapi:strapi:*:*:*:*:*:**:*:*</malformedCpe>
-                                    <replacementCpe>cpe:2.3:a:strapi:strapi:*:*:*:*:*:*:*:*</replacementCpe>
-                                </cpeCorrection>
                                 <!-- part and vendor melted together -->
                                 <cpeCorrection>
                                     <malformedCpe>cpe:2.3:aainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
@@ -142,51 +130,79 @@
                                 <cpeCorrection>
                                     <malformedCpe>/^\s+(.*?)$/</malformedCpe>
                                     <replacementCpe>$1</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
                                 <!-- trim whitespaces from end -->
                                 <cpeCorrection>
                                     <malformedCpe>/^(.*?)\s+$/</malformedCpe>
                                     <replacementCpe>$1</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
                                 <!-- whitespaces surrounding the delimiter character ':' are collapsed -->
                                 <cpeCorrection>
                                     <malformedCpe>/:\s+|\s+:/</malformedCpe>
                                     <replacementCpe>:</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
                                 <!-- any other remaining whitespaces are replaced with the '_' character, as defined by the cpe spec -->
                                 <cpeCorrection>
                                     <malformedCpe>/\s+/</malformedCpe>
                                     <replacementCpe>_</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
                                 <!-- cpes may not contain multiple asterisk characters in sequence and are therefore collapsed as well -->
                                 <cpeCorrection>
                                     <malformedCpe>/\*\*/</malformedCpe>
                                     <replacementCpe>*</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
                                 <!-- another common mistake is doubling the cpe header; if present, it is collapsed and the first configured part is used -->
                                 <cpeCorrection>
                                     <malformedCpe>/^cpe:2\.3:([aoh]):cpe:2\.3:[aoh]/</malformedCpe>
                                     <replacementCpe>cpe:2.3:$1</replacementCpe>
+                                    <genericRule>true</genericRule>
                                 </cpeCorrection>
 
                                 <!-- SPECIFIC REGEX CORRECTIONS -->
 
-                                <!-- non-escaped ":" -->
+                                <!-- IBM: unescaped ':' in product name -->
+                                <!-- cpe:2.3:a:ibm:sterling_connect:express_for_windows:3.1.0.0:... to cpe:2.3:a:ibm:sterling_connect\:express_for_windows:3.1.0.0:... -->
                                 <cpeCorrection>
                                     <malformedCpe>/cpe:2.3:a:ibm:sterling_connect:(.*?):(.*?):\*:\*:\*:\*:(.*?):\*:\*/</malformedCpe>
                                     <replacementCpe>cpe:2.3:a:ibm:sterling_connect\\:$1:$2:*:*:*:*:$3:*:*</replacementCpe>
                                 </cpeCorrection>
-                                <!-- too many parts -->
+                                <!-- IBM: 'cd' continuous_delivery marker placed in version field instead of sw_edition -->
+                                <!-- cpe:2.3:a:ibm:app_connect_operator:cd:11.3.0:*:*:*:*:*:*:* to cpe:2.3:a:ibm:app_connect_operator:11.3.0:*:*:*:continuous_delivery:*:*:* -->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):cd:([^:]+):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:$1:$2:*:*:*:continuous_delivery:*:*:*</replacementCpe>
+                                </cpeCorrection>
+                                <!-- IBM: 'cd' continuous_delivery marker placed in update field instead of sw_edition -->
+                                <!-- https://nvd.nist.gov/products/cpe/detail/3F59F71B-2449-4067-85D0-5F3E11233F05?namingFormat=2.2&orderBy=CPEURI&keyword=cpe%3A2.3%3Aa%3Aibm&status=FINAL -->
+                                <!-- cpe:2.3:a:ibm:mq_operator:3.2.23:cd:*:*:*:*:*:*:* to cpe:2.3:a:ibm:mq_operator:3.2.23:*:*:*:continuous_delivery:*:*:* -->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):([^:]+):cd:\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:$1:$2:*:*:*:continuous_delivery:*:*:*</replacementCpe>
+                                </cpeCorrection>
+                                <!-- IBM: ifix update identifier with extra trailing wildcard -->
+                                <!-- cpe:2.3:a:ibm:engineering_lifecycle_management:7.2.0:ifix001:*:*:*:*:*:*:* to cpe:2.3:a:ibm:engineering_lifecycle_management:7.2.0:ifix001:*:*:*:*:*:* -->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):([^:]+):(ifix[^:]*):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:$1:$2:$3:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
+
+                                <!-- Palo Alto Networks: extra trailing wildcard -->
+                                <!-- cpe:2.3:o:palo_alto_networks:pan-os:11.1.6:-:*:*:*:*:*:*:* to cpe:2.3:o:palo_alto_networks:pan-os:11.1.6:-:*:*:*:*:*:* -->
                                 <cpeCorrection>
                                     <malformedCpe>/cpe:2.3:o:palo_alto_networks:pan-os:(.*?):-:\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
                                     <replacementCpe>cpe:2.3:o:palo_alto_networks:pan-os:$1:-:*:*:*:*:*:*</replacementCpe>
                                 </cpeCorrection>
 
-                                <!-- cpe:2.3:a:ibm:app_connect_enterprisecertified_containers_operands:cd:12.0.11.1:*:*:*:*:*:*:*
-                                     cpe:2.3:a:ibm:app_connect_operator:cd:11.2.0:*:*:*:*:*:*:* -->
+                                <!-- Oracle MySQL: extra trailing wildcard with non-wildcard sw_edition -->
+                                <!-- cpe:2.3:a:oracle:mysql:8.0:*:*:*:community_server:*:*:*:* to cpe:2.3:a:oracle:mysql:8.0:*:*:*:community_server:*:*:* -->
                                 <cpeCorrection>
-                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):cd:([^:]+):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
-                                    <replacementCpe>cpe:2.3:a:ibm:$1:$2:*:*:*:continuous_delivery:*:*:*</replacementCpe>
+                                    <malformedCpe>/cpe:2.3:a:oracle:mysql:([^:*]+):\*:\*:\*:([^:*]+):\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:oracle:mysql:$1:*:*:*:$2:*:*:*</replacementCpe>
                                 </cpeCorrection>
                             </cpePatternCorrections>
                         </configuration>
@@ -196,7 +212,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>${maven.enforcer.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>enforce-property</id>

@@ -4,26 +4,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--
-    Copyright 2024-2025 the original author or authors.
+        Copyright 2024-2026 the original author or authors.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+            http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
     -->
 
     <groupId>com.metaeffekt.kontinuum</groupId>
     <artifactId>ae-kontinuum-processors</artifactId>
     <version>KONTINUUM-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
     <properties>
         <!-- NOTE: for continuous integration these must stick to the HEAD-SNAPSHOT on the main-line.
             We should make these configurable via external.rc and replace the HEAD-SNAPSHOTS at release, such
@@ -36,6 +34,14 @@
         <ae.universe.version>2.0.0</ae.universe.version>
         <ae.kosmos.version>0.1.0</ae.kosmos.version>
 
+        <maven.enforcer.plugin.version>3.6.3</maven.enforcer.plugin.version>
+        <maven.exec.maven.plugin.version>3.1.0</maven.exec.maven.plugin.version>
+        <maven.antrun.plugin.version>3.2.0</maven.antrun.plugin.version>
+        <maven.compiler.plugin.version>3.15.0</maven.compiler.plugin.version>
+        <maven.dependency.plugin.version>3.11.0</maven.dependency.plugin.version>
+        <maven.resources.plugin.version>3.5.0</maven.resources.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <packaging>pom</packaging>
 </project>
