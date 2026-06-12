@@ -45,6 +45,9 @@ run_maven_command() {
   [ -n "${LOCAL_MAVEN_REPO:-}" ] && CMD+=("-Dmaven.repo.local=$LOCAL_MAVEN_REPO")
   CMD+=("-Denv.vulnerability.mirror.dir=$MIRROR_TARGET_DIR")
   CMD+=("-Dparam.mirror.archive.url=$MIRROR_ARCHIVE_URL")
+  CMD+=("-Dparam.mirror.archive.username=$MIRROR_ARCHIVE_USERNAME")
+  CMD+=("-Dparam.mirror.archive.password=$MIRROR_ARCHIVE_PASSWORD")
+
 
   pass_command_info_to_logger "$(basename "$0")"
 }

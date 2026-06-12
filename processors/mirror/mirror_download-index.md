@@ -11,9 +11,11 @@ of this repository.
 None.
 
 ### Parameters
-| Parameter                 | Required | Description                                         |
-|---------------------------|----------|-----------------------------------------------------|
-| param.mirror.archive.url  | yes      | The source url of the vulnerability mirror archive. |
+| Parameter                         | Required | Description                                                       |
+|-----------------------------------|----------|-------------------------------------------------------------------|
+| param.mirror.archive.url          | yes      | The source url of the vulnerability mirror archive.               |
+| param.mirror.archive.username     | no       | The username for authenticated downloads.                         |
+| param.mirror.archive.password     | no       | The password for authenticated downloads.                         |
 
 ### Environment
 | Parameter                     | Required | Description                                               |

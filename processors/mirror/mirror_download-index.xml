@@ -120,7 +120,20 @@
                             <target if="update.required">
                                 <echo message="Downloading to ${mirror.target.tmp}" />
                                 <mkdir dir="${mirror.target.tmp}" />
-                                <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}/" />
+
+                                <!-- Define ant-contrib tasks -->
+                                <taskdef resource="net/sf/antcontrib/antlib.xml" />
+
+                                <if>
+                                    <isset property="param.mirror.archive.username" />
+                                    <then>
+                                        <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}/"
+                                             username="${param.mirror.archive.username}" password="${param.mirror.archive.password}" />
+                                    </then>
+                                    <else>
+                                        <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}/" />
+                                    </else>
+                                </if>
                             </target>
                         </configuration>
                     </execution>
