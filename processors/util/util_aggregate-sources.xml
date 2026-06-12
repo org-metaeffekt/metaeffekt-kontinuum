@@ -33,7 +33,7 @@
       <plugin>
         <groupId>org.metaeffekt.core</groupId>
         <artifactId>ae-inventory-maven-plugin</artifactId>
-        <version>${project.version}</version>
+        <version>${ae.core.version}</version>
 
         <executions>
           <execution>
