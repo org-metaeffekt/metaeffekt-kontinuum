@@ -147,6 +147,7 @@
                                     <malformedCpe>cpe:2.3:a:oracle:mysql:8.0:*:*:*:community_server:*:*:*:*</malformedCpe>
                                     <replacementCpe>cpe:2.3:a:oracle:mysql:8.0:*:*:*:community_server:*:*:*</replacementCpe>
                                 </cpeCorrection>
+
                             </cpeCorrections>
 
                             <!-- Using "cpePatternCorrections" on the other hand, the "malformedCpe" accepts a regular expression (must be enclosed with '/' character) -->
