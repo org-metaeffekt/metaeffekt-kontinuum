@@ -122,16 +122,16 @@
                                 <maxCorrelatedCpePerArtifact>${ae.cpe.correlation.limit}</maxCorrelatedCpePerArtifact>
                             </cpeDerivationEnrichment>
 
+                            <purlDerivationEnrichment>
+                                <active>${param.activate.purl.derivation}</active>
+                            </purlDerivationEnrichment>
+
                             <correlationYamlEnrichment>
                                 <active>${param.activate.correlation}</active>
                                 <yamlFiles>
                                     <file>${param.correlation.dir}</file>
                                 </yamlFiles>
                             </correlationYamlEnrichment>
-
-                            <purlDerivationEnrichment>
-                                <active>${param.activate.purl.derivation}</active>
-                            </purlDerivationEnrichment>
 
                             <!-- Vulnerability Matching -->
                             <nvdMatchCveFromCpeEnrichment>
@@ -141,13 +141,6 @@
                             <msVulnerabilitiesByProductEnrichment>
                                 <active>${param.activate.msrc}</active>
                             </msVulnerabilitiesByProductEnrichment>
-
-                            <customVulnerabilitiesFromCpeEnrichment>
-                                <active>${param.activate.vulnerabilities.custom}</active>
-                                <vulnerabilityFiles>
-                                    <file>${param.vulnerabilities.custom.dir}</file>
-                                </vulnerabilityFiles>
-                            </customVulnerabilitiesFromCpeEnrichment>
 
                             <osvVulnerabilitiesEnrichment>
                                 <active>${param.activate.osv}</active>
@@ -166,6 +159,13 @@
                                 <active>${param.activate.csaf}</active>
                             </csafVulnerabilitiesEnrichment>
 
+                            <customVulnerabilitiesFromCpeEnrichment>
+                                <active>${param.activate.vulnerabilities.custom}</active>
+                                <vulnerabilityFiles>
+                                    <file>${param.vulnerabilities.custom.dir}</file>
+                                </vulnerabilityFiles>
+                            </customVulnerabilitiesFromCpeEnrichment>
+
                             <!-- Vulnerability Details Filling -->
                             <nvdCveFillDetailsEnrichment>
                                 <active>${param.activate.nvd}</active>
@@ -183,13 +183,18 @@
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFillDetailsEnrichment>
 
+                            <!-- Threat Details Filling -->
+                            <cweFillDetailsEnrichment>
+                                <active>${param.activate.cwe}</active>
+                            </cweFillDetailsEnrichment>
+
                             <capecFillDetailsEnrichment>
                                 <active>${param.activate.capec}</active>
                             </capecFillDetailsEnrichment>
 
-                            <cweFillDetailsEnrichment>
-                                <active>${param.activate.cwe}</active>
-                            </cweFillDetailsEnrichment>
+                            <atlasFillDetailsEnrichment/>
+
+                            <attackFillDetailsEnrichment/>
 
                             <!-- Assessments -->
                             <vulnerabilityStatusEnrichment>
@@ -207,6 +212,12 @@
                             </vulnerabilityKeywordsEnrichment>
 
                             <!-- Security Advisory Matching -->
+                            <osvAdvisorFillDetailsEnrichment>
+                                <active>${param.activate.osv}</active>
+                                <includeAdvisoryProviders>[{"src":"*","impl":"OSV","st":"sa"}]</includeAdvisoryProviders>
+                                <excludeNvdEquivalent></excludeNvdEquivalent> <!-- Ensure this is supported by other configurations as well (osv & msrc) -->
+                            </osvAdvisorFillDetailsEnrichment>
+
                             <certFrAdvisorEnrichment>
                                 <active>${param.activate.certfr}</active>
                             </certFrAdvisorEnrichment>
@@ -218,12 +229,6 @@
                             <certEuAdvisorEnrichment>
                                 <active>${param.activate.certeu}</active>
                             </certEuAdvisorEnrichment>
-
-                            <osvAdvisorFillDetailsEnrichment>
-                                <active>${param.activate.osv}</active>
-                                <includeAdvisoryProviders>[{"src":"*","impl":"OSV","st":"sa"}]</includeAdvisoryProviders>
-                                <excludeNvdEquivalent></excludeNvdEquivalent> <!-- Ensure this is supported by other configurations as well (osv & msrc) -->
-                            </osvAdvisorFillDetailsEnrichment>
 
                             <!-- Vulnerability Prioritization -->
                             <eolEnrichment>
