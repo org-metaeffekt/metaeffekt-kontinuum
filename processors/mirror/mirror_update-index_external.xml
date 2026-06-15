@@ -78,15 +78,15 @@
                             <osvAdvisorIndex>
                                 <excludeAdvisoryProviders>
                                     [
-                                        {"name":"OSV-UNKNOWN","implementation":"OSV"},
-                                        {"name":"CGA","implementation":"OSV"},
-                                        {"name":"MGASA","implementation":"OSV"},
-                                        {"name":"SUSE-SU","implementation":"OSV"},
-                                        {"name":"SUSE-RU","implementation":"OSV"},
-                                        {"name":"SUSE-FU","implementation":"OSV"},
-                                        {"name":"SUSE-OU","implementation":"OSV"},
-                                        {"name":"openSUSE-SU","implementation":"OSV"},
-                                        {"name":"USN","implementation":"OSV"},
+                                        {"src":"OSV-UNKNOWN","impl":"OSV","st":"sa"},
+                                        {"src":"CGA","impl":"OSV","st":"sa"},
+                                        {"src":"MGASA","impl":"OSV","st":"sa"},
+                                        {"src":"SUSE-SU","impl":"OSV","st":"sa"},
+                                        {"src":"SUSE-RU","impl":"OSV","st":"sa"},
+                                        {"src":"SUSE-FU","impl":"OSV","st":"sa"},
+                                        {"src":"SUSE-OU","impl":"OSV","st":"sa"},
+                                        {"src":"openSUSE-SU","impl":"OSV","st":"sa"},
+                                        {"src":"USN","impl":"OSV","st":"sa"},
                                     ]
                                     <!-- The advisories are currently excluded due to not clarified license conditions
                                          regarding distribution of the data itself:
