@@ -16,4 +16,4 @@ tests/resources/portfolio-manager/service/ae-portfolio-manager-service.jar
 
 local-maven-repo
 
-**/project.properties
+**/.project.properties

@@ -28,11 +28,12 @@ projectProperties:
 # The compiler derives per-asset processing requirements from these types.
 reports:
   - assetId: "alacritty-0.17.0"
-    type: "VR"
-  - assetId: "alacritty-0.17.0"
-    type: "LD"
+    types:
+      - "VR"
+      - "LD"
   - assetId: "spdx"
-    type: "CR"
+    types:
+      - "CR"
 
 # Dashboards define which assets should have vulnerability dashboards generated.
 dashboards:

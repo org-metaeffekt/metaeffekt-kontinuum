@@ -103,22 +103,22 @@ public class PipelineConfigurationLoaderTest {
     @Test
     void reportTypeMustBeValid() throws IOException {
         PipelineConfiguration valid = minimalConfig();
-        valid.setReports(List.of(report("asset-1", ReportType.VULNERABILITY_REPORT.getKey())));
+        valid.setReports(List.of(report("asset-1", List.of(ReportType.VULNERABILITY_REPORT.getKey()))));
         assertDoesNotThrow(() -> readConfig(valid));
 
         PipelineConfiguration invalid = minimalConfig();
-        invalid.setReports(List.of(report("asset-1", "INVALID")));
+        invalid.setReports(List.of(report("asset-1", List.of("INVALID"))));
         assertThrows(IllegalStateException.class, () -> readConfig(invalid));
     }
 
     @Test
     void reportAssetIdMustExist() throws IOException {
         PipelineConfiguration valid = minimalConfig();
-        valid.setReports(List.of(report("asset-1", ReportType.VULNERABILITY_REPORT.getKey())));
+        valid.setReports(List.of(report("asset-1", List.of(ReportType.VULNERABILITY_REPORT.getKey()))));
         assertDoesNotThrow(() -> readConfig(valid));
 
         PipelineConfiguration invalid = minimalConfig();
-        invalid.setReports(List.of(report("missing", ReportType.VULNERABILITY_REPORT.getKey())));
+        invalid.setReports(List.of(report("missing", List.of(ReportType.VULNERABILITY_REPORT.getKey()))));
         assertThrows(IllegalStateException.class, () -> readConfig(invalid));
     }
 
@@ -136,11 +136,11 @@ public class PipelineConfigurationLoaderTest {
     @Test
     void assessmentFieldsRequiredWhenReportsOrDashboardsPresent() throws IOException {
         PipelineConfiguration valid = minimalConfig();
-        valid.setReports(List.of(report("asset-1", ReportType.VULNERABILITY_REPORT.getKey())));
+        valid.setReports(List.of(report("asset-1", List.of(ReportType.VULNERABILITY_REPORT.getKey()))));
         assertDoesNotThrow(() -> readConfig(valid));
 
         PipelineConfiguration invalid = minimalConfig();
-        invalid.setReports(List.of(report("asset-1", ReportType.VULNERABILITY_REPORT.getKey())));
+        invalid.setReports(List.of(report("asset-1", List.of(ReportType.VULNERABILITY_REPORT.getKey()))));
         invalid.getProjectProperties().getAssets().get(0).setAssessmentId(null);
         assertThrows(IllegalStateException.class, () -> readConfig(invalid));
     }
@@ -186,10 +186,10 @@ public class PipelineConfigurationLoaderTest {
         return new PipelineConfigurationLoader().readConfig(file);
     }
 
-    private PipelineConfiguration.Report report(String assetId, String type) {
+    private PipelineConfiguration.Report report(String assetId, List<String> types) {
         PipelineConfiguration.Report report = new PipelineConfiguration.Report();
         report.setAssetId(assetId);
-        report.setType(type);
+        report.setTypes(types);
         return report;
     }
 

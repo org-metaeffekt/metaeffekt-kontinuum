@@ -24,6 +24,9 @@ import java.util.Set;
 @Slf4j
 public class PipelineConfigurationLoader {
 
+    private static final Set<ReportType> ASSESSMENT_REPORT_TYPES = Set.of(
+            ReportType.CERT_REPORT, ReportType.VULNERABILITY_REPORT, ReportType.VULNERABILITY_SUMMARY_REPORT);
+
     private boolean isValid = true;
     private PipelineConfiguration pipelineConfiguration;
 
@@ -178,22 +181,28 @@ public class PipelineConfigurationLoader {
                 isValid = false;
                 continue;
             }
-            if (StringUtils.isBlank(report.getType())) {
-                log.error("A report with 'assetId': {} contains an empty 'type'.", report.getAssetId());
-                isValid = false;
-                continue;
-            }
-
-            if (!ReportType.allKeys().contains(report.getType())) {
-                log.error("A report with 'assetId': {} contains an invalid 'type'.", report.getAssetId());
-                isValid = false;
-                continue;
-            }
             if (StringUtils.isBlank(report.getAssetId()) || !assetIds.contains(report.getAssetId())) {
                 log.error("A report contains an 'assetId' which does not exist: {}", report.getAssetId());
                 isValid = false;
             }
 
+            if (report.getTypes() == null || report.getTypes().isEmpty()) {
+                log.error("A report with 'assetId': {} contains an empty 'types' list.", report.getAssetId());
+                isValid = false;
+                continue;
+            }
+
+            for (String type : report.getTypes()) {
+                if (StringUtils.isBlank(type)) {
+                    log.error("A report with 'assetId': {} contains an empty 'type'.", report.getAssetId());
+                    isValid = false;
+                    continue;
+                }
+                if (!ReportType.allKeys().contains(type)) {
+                    log.error("A report with 'assetId': {} contains an invalid 'type': {}.", report.getAssetId(), type);
+                    isValid = false;
+                }
+            }
         }
     }
 
@@ -217,23 +226,20 @@ public class PipelineConfigurationLoader {
     }
 
     private boolean assessmentFieldsRequired(Asset asset) {
-        Set<ReportType> reportTypesRequiringAssessmentFields = Set.of(ReportType.CERT_REPORT, ReportType.VULNERABILITY_REPORT, ReportType.VULNERABILITY_SUMMARY_REPORT);
         List<Report> reportsRequiringAssessmentFields = new ArrayList<>();
         List<Dashboard> dashboardsRequiringAssessmentFields = new ArrayList<>();
 
         if (asset == null) {
             reportsRequiringAssessmentFields = getReports()
                 .stream()
-                .filter(r -> ReportType.allKeys().contains(r.getType()))
-                .filter(r -> reportTypesRequiringAssessmentFields.contains(ReportType.fromKey(r.getType())))
+                .filter(r -> hasAssessmentType(r, null))
                 .toList();
             dashboardsRequiringAssessmentFields.addAll(getDashboards());
         } else {
             reportsRequiringAssessmentFields = getReports()
                 .stream()
-                .filter(r -> ReportType.allKeys().contains(r.getType()))
-                .filter(r -> reportTypesRequiringAssessmentFields.contains(ReportType.fromKey(r.getType())))
                 .filter(r -> StringUtils.equals(r.getAssetId(), asset.getId()))
+                .filter(r -> hasAssessmentType(r, asset.getId()))
                 .toList();
             dashboardsRequiringAssessmentFields.addAll(getDashboards()
                 .stream()
@@ -242,6 +248,23 @@ public class PipelineConfigurationLoader {
         }
         
         return !reportsRequiringAssessmentFields.isEmpty() || !dashboardsRequiringAssessmentFields.isEmpty();
+    }
+
+    private boolean hasAssessmentType(PipelineConfiguration.Report report, String assetId) {
+        if (report.getTypes() == null) {
+            return false;
+        }
+        for (String type : report.getTypes()) {
+            if (type == null || !ReportType.allKeys().contains(type)) {
+                continue;
+            }
+            if (ASSESSMENT_REPORT_TYPES.contains(ReportType.fromKey(type))) {
+                if (assetId == null || StringUtils.equals(report.getAssetId(), assetId)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private List<Asset> getAssets() {

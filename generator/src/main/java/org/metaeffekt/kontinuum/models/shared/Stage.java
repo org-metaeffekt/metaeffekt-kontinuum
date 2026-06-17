@@ -2,6 +2,10 @@ package org.metaeffekt.kontinuum.models.shared;
 
 import lombok.Getter;
 
+/**
+ * The available stages a pipelines can run.
+ * The stages listed below must be in the correct order.
+ */
 public enum Stage {
     PRE(".pre"),
     FETCH("00_fetched"),

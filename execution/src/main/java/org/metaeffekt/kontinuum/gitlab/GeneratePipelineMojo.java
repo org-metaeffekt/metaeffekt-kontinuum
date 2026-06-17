@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-@Mojo(name = "generate-pipeline", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
+@Mojo(name = "generate-gitlab-pipeline", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class GeneratePipelineMojo extends AbstractMojo {
 
     @Parameter(property = "pipeline.config.path", required = true)
@@ -41,7 +41,7 @@ public class GeneratePipelineMojo extends AbstractMojo {
 
     @Parameter(property = "job.maven.cli.opts")
     private String mavenCliOpts;
-    
+
     @Parameter(property = "job.kosmos.password", required = false)
     private String kosmosPassword;
 
@@ -69,6 +69,8 @@ public class GeneratePipelineMojo extends AbstractMojo {
     @Parameter(property = "job.workbench.dir", required = false)
     private String workbenchDir;
 
+    @Parameter(property = "job.kontinuum.dir", defaultValue = "/usr/src/metaeffekt-kontinuum/")
+    private String kontinuumDir;
 
     @Override
     public void execute() throws MojoExecutionException {
@@ -81,8 +83,8 @@ public class GeneratePipelineMojo extends AbstractMojo {
         }
 
         GitlabConfiguration.GitlabConfigurationBuilder gitlabConfiguration = GitlabConfiguration.builder()
-            .ARTIFACT_RESOLVER_CONFIG_FILE(artifactResolverConfigFile)
-            .ARTIFACT_RESOLVER_PROXY_FILE(artifactResolverProxyFile);
+                .ARTIFACT_RESOLVER_CONFIG_FILE(artifactResolverConfigFile)
+                .ARTIFACT_RESOLVER_PROXY_FILE(artifactResolverProxyFile);
 
         if (StringUtils.isNotBlank(setupCommandFile)) {
             File setupCommand = new File(setupCommandFile);
@@ -93,17 +95,18 @@ public class GeneratePipelineMojo extends AbstractMojo {
         }
 
         gitlabConfiguration.CONTAINER_IMAGE(containerImage)
-            .GIT_DEPTH(gitDepth)
-            .GIT_STRATEGY(gitStrategy)
-            .KOSMOS_PASSWORD(kosmosPassword)
-            .KOSMOS_USERKEYS_FILE(userkeysFile)
-            .SCAN_PROPERTIES_FILE(scanPropertiesFile)
-            .VULNERABILITY_MIRROR_DIR(vulnerabilityMirrorDir)
-            .VULNERABILITY_MIRROR_URL(vulnerabilityMirrorUrl)
-            .WORKBENCH_DIR(workbenchDir);
-       
+                .GIT_DEPTH(gitDepth)
+                .GIT_STRATEGY(gitStrategy)
+                .KOSMOS_PASSWORD(kosmosPassword)
+                .KOSMOS_USERKEYS_FILE(userkeysFile)
+                .SCAN_PROPERTIES_FILE(scanPropertiesFile)
+                .VULNERABILITY_MIRROR_DIR(vulnerabilityMirrorDir)
+                .VULNERABILITY_MIRROR_URL(vulnerabilityMirrorUrl)
+                .WORKBENCH_DIR(workbenchDir)
+                .KONTINUUM_DIR(kontinuumDir);
+
         PipelineConfiguration pipelineConfiguration = new PipelineConfigurationLoader().readConfig(pipelineConfigFile);
-        
+
         GitlabPipeline gitlabPipeline = new GitlabPipeline(pipelineConfiguration, gitlabConfiguration.build());
 
         try {

@@ -2,10 +2,8 @@ package org.metaeffekt.kontinuum.generator.gitlab;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.metaeffekt.kontinuum.generator.shared.Pipeline;
@@ -52,8 +50,8 @@ public class GitlabPipeline {
             .flatMap(List::stream)
             .forEach(p -> requiredStages.add(p.getStage()));
         
-        for (Stage stage : requiredStages) {
-            stagesSection.append("  ").append(stage).append(System.lineSeparator());
+        for (Stage stage : requiredStages.stream().sorted().toList()) {
+            stagesSection.append("  - ").append(stage).append(System.lineSeparator());
         }
 
         gitlabPipelineDocument.append(stagesSection.append(System.lineSeparator()));
@@ -86,7 +84,7 @@ public class GitlabPipeline {
         for (Map.Entry<Asset, List<Processor>> entry : assetProcessorsMap.entrySet()) {
             for (Processor processor : entry.getValue()) {
                 StringBuilder job = new StringBuilder();
-                job.append(processor.getId()).append("-").append(entry.getKey().toString()).append(":").append(System.lineSeparator());
+                job.append(generateJobName(processor , entry.getKey().toString())).append(System.lineSeparator());
                 job.append("  ").append("stage: ").append(processor.getStage()).append(System.lineSeparator());
                 job.append("  ").append("image: ").append(gitlabConfiguration.CONTAINER_IMAGE).append(System.lineSeparator());
                 
@@ -104,8 +102,10 @@ public class GitlabPipeline {
 
     private String generateMavenScriptBlock(Processor processor) {
         StringBuilder script = new StringBuilder();
-        script.append("      mvn -f ").append(processor.getPomLocation()).append(" ")
-            .append(processor.getGoal()).append(" \\").append(System.lineSeparator());
+        script.append("      mvn -f ")
+                .append(gitlabConfiguration.getKontinuumDirNormalized())
+                .append(processor.getPomLocation()).append(" ")
+                .append(processor.getGoal()).append(" \\").append(System.lineSeparator());
         
         List<ProcessorParameter> nonBlankParams = processor.getParameters().stream()
             .filter(p -> StringUtils.isNotBlank(p.getValue()))
@@ -151,5 +151,23 @@ public class GitlabPipeline {
             return "echo 'Before script was left empty as the contents of the provided before-script file could not be read.'";
         }
 
+    }
+
+    private String generateJobName(Processor processor, String assetName) {
+        StringBuilder processorName =  new StringBuilder()
+                .append(processor.getId())
+                .append("-");
+
+        if (processor.getId().equals("create-document")) {
+            Optional<ProcessorParameter> processorParameter = processor.getParameters()
+                    .stream()
+                    .filter(p -> p.getKey().equals("param.document.type"))
+                    .findFirst();
+
+            processorParameter.ifPresent(parameter -> processorName.append(parameter.getValue()).append("-"));
+        }
+
+        processorName.append(assetName).append(":");
+        return processorName.toString();
     }
  }

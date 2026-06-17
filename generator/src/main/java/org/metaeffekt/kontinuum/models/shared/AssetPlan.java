@@ -73,15 +73,24 @@ public class AssetPlan {
         if (!reportsForAsset.isEmpty()) {
             requireReportGeneration = true;
             for (PipelineConfiguration.Report report : reportsForAsset) {
-                if (report.getType().equals(ReportType.CERT_REPORT.getKey())
-                        || report.getType().equals(ReportType.VULNERABILITY_REPORT.getKey())
-                        || report.getType().equals(ReportType.VULNERABILITY_SUMMARY_REPORT.getKey())) {
+                List<String> types = report.getTypes();
+                if (types == null) {
+                    continue;
+                }
+                for (String type : types) {
+                    if (type == null) {
+                        continue;
+                    }
+                    if (type.equals(ReportType.CERT_REPORT.getKey())
+                            || type.equals(ReportType.VULNERABILITY_REPORT.getKey())
+                            || type.equals(ReportType.VULNERABILITY_SUMMARY_REPORT.getKey())) {
 
-                    requireVulnerabilityEnrichment = true;
+                        requireVulnerabilityEnrichment = true;
 
-                } else if (report.getType().equals(ReportType.INITIAL_LICENSE_DOCUMENTATION.getKey())
-                        || report.getType().equals(ReportType.LICENSE_DOCUMENTATION.getKey())) {
-                    requireLicenseScan = true;
+                    } else if (type.equals(ReportType.INITIAL_LICENSE_DOCUMENTATION.getKey())
+                            || type.equals(ReportType.LICENSE_DOCUMENTATION.getKey())) {
+                        requireLicenseScan = true;
+                    }
                 }
             }
         }

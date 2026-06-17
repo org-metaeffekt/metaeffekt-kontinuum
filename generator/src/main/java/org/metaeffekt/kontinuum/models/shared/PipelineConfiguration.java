@@ -138,7 +138,7 @@ public class PipelineConfiguration {
     @Data
     public static class Report {
         private String assetId;
-        private String type;
+        private List<String> types;
         private List<String> overviewAdvisors;
     }
 

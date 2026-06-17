@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.metaeffekt.kontinuum.generator.shared.PipelineConfigurationLoader;
 import org.metaeffekt.kontinuum.models.gitlab.GitlabConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
+import org.metaeffekt.kontinuum.util.PropertiesLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class GitlabPipelineTest {
         GitlabConfiguration gitlabConfiguration = GitlabConfiguration.builder()
         .KONTINUUM_DIR("~/Projects/metaeffekt/metaeffekt-kontinuum")
         .SCAN_PROPERTIES_FILE("config/scan/scan-control.properties")
-        .KOSMOS_PASSWORD("EuBsVvcjIElWdXVVtHmPJdsE")
+        .KOSMOS_PASSWORD(PropertiesLoader.getLocalProperties().getProperty("KOSMOS_PASSWORD"))
         .RUNNER_TAG("gpu")
         .CONTAINER_IMAGE("metaeffekt/metaeffekt-kontinuum-runtime:2.3.2_0.156.x")
         .build();

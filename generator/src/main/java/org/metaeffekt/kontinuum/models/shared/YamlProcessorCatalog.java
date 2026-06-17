@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -37,7 +38,26 @@ public class YamlProcessorCatalog implements ProcessorCatalog {
             log.error("More than one processor found with id {}, continuing with processor {}", processorId, foundProcessors.get(0).id);
         }
 
-        return foundProcessors.get(0);
+        ProcessorDefinitions.Processor original = foundProcessors.get(0);
+        ProcessorDefinitions.Processor copy = new ProcessorDefinitions.Processor();
+        copy.setId(original.getId());
+        copy.setName(original.getName());
+        copy.setDescription(original.getDescription());
+        copy.setPomLocation(original.getPomLocation());
+        copy.setGoal(original.getGoal());
+        copy.setStage(original.getStage());
+        copy.setExecutionOrder(original.getExecutionOrder());
+        List<ProcessorDefinitions.ProcessorParameter> copiedParameters = new ArrayList<>();
+        for (ProcessorDefinitions.ProcessorParameter parameter : original.getParameters()) {
+            ProcessorDefinitions.ProcessorParameter parameterCopy = new ProcessorDefinitions.ProcessorParameter();
+            parameterCopy.setKey(parameter.getKey());
+            parameterCopy.setDescription(parameter.getDescription());
+            parameterCopy.setRequired(parameter.getRequired());
+            parameterCopy.setValue(parameter.getValue());
+            copiedParameters.add(parameterCopy);
+        }
+        copy.setParameters(copiedParameters);
+        return copy;
     }
 
     private List<ProcessorDefinitions.Processor> load(InputStream inputStream) {

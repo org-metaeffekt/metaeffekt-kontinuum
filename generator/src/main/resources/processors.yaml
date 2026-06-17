@@ -35,7 +35,7 @@ processors:
       This process takes an enriched input inventory and creates a Vulnerability Assessment Dashboard from it. Additional parameters can influence the information contained in the resulting dashboard.
     pomLocation: advise/advise_create-dashboard.xml
     goal: process-resources
-    stage: ADVISE
+    stage: REPORT
     parameters:
       - key: input.inventory.file
         description: The input inventory from which the dashboard will be generated.
@@ -459,6 +459,21 @@ processors:
         required: true
       - key: env.vulnerability.mirror.dir
         description: The target directory of the vulnerability mirror archive.
+        required: true
+
+  - name: Download Asset
+    id: download-asset
+    description: |
+      This processor downloads a remote asset from a specified URL into a target directory.
+    pomLocation: fetch/fetch_download-asset.xml
+    goal: process-resources
+    stage: FETCH
+    parameters:
+      - key: param.asset.url
+        description: The URL of the remote asset to download.
+        required: true
+      - key: output.asset.dir
+        description: The target directory to download the asset into.
         required: true
 
   - name: Update Index
