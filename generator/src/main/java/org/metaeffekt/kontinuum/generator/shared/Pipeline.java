@@ -30,7 +30,7 @@ public class Pipeline {
                     EnvironmentConfiguration environmentConfiguration) {
         this.environmentConfiguration = environmentConfiguration;
         this.pipelineConfiguration = pipelineConfiguration;
-        this.workspace = new Workspace(pipelineConfiguration);
+        this.workspace = new Workspace(pipelineConfiguration, environmentConfiguration);
 
         if (pipelineConfiguration.getOptions() == null) {
             pipelineConfiguration.setOptions(new PipelineConfiguration.Options());

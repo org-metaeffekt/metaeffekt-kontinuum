@@ -10,8 +10,8 @@ public class Workspace {
     public final String WORKSPACE_DIR;
     public final String MAVEN_INDEX_DIR;
 
-    public Workspace(PipelineConfiguration pipelineConfiguration) {
-        WORKSPACE_DIR = "workspace/" + pipelineConfiguration.getProjectProperties().getProject() + "/";
+    public Workspace(PipelineConfiguration pipelineConfiguration, EnvironmentConfiguration environmentConfiguration) {
+        WORKSPACE_DIR = environmentConfiguration.getWorkspaceDirNormalized() + pipelineConfiguration.getProjectProperties().getProject() + "/";
         MAVEN_INDEX_DIR = "workspace/maven-index/";
     }
 

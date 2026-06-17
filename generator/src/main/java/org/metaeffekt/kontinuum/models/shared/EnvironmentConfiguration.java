@@ -12,6 +12,9 @@ public class EnvironmentConfiguration {
     public final String WORKBENCH_DIR = "./workbench/";
 
     @Builder.Default
+    public final String WORKSPACE_DIR = "./workspace/";
+
+    @Builder.Default
     public final String VULNERABILITY_MIRROR_DIR = "./mirror/";
 
     public final String VULNERABILITY_MIRROR_URL;
@@ -30,6 +33,15 @@ public class EnvironmentConfiguration {
 
     public String getAssessmentsDir() {
         return getWorkbenchDirNormalized() + "assessments/";
+    }
+
+
+    public String getWorkspaceDirNormalized() {
+        if (WORKSPACE_DIR.endsWith("/")) {
+            return WORKSPACE_DIR;
+        } else {
+            return WORKSPACE_DIR + "/";
+        }
     }
 
     public String getKontinuumProcessorsDirNormalized() {

@@ -66,8 +66,11 @@ public class GeneratePipelineMojo extends AbstractMojo {
     @Parameter(property = "vulnerabilityMirrorUrl")
     private String vulnerabilityMirrorUrl;
 
-    @Parameter(property = "workbenchDir")
+    @Parameter(property = "workbenchDir", required = true)
     private String workbenchDir;
+
+    @Parameter(property = "workspaceDir", required = true)
+    private String workspaceDir;
 
     @Parameter(property = "kontinuumDir", defaultValue = "/usr/src/metaeffekt-kontinuum/")
     private String kontinuumDir;
@@ -103,7 +106,8 @@ public class GeneratePipelineMojo extends AbstractMojo {
                 .VULNERABILITY_MIRROR_DIR(vulnerabilityMirrorDir)
                 .VULNERABILITY_MIRROR_URL(vulnerabilityMirrorUrl)
                 .WORKBENCH_DIR(workbenchDir)
-                .KONTINUUM_DIR(kontinuumDir);
+                .KONTINUUM_DIR(kontinuumDir)
+                .WORKSPACE_DIR(workspaceDir);
 
         PipelineConfiguration pipelineConfiguration = new PipelineConfigurationLoader().readConfig(pipelineConfigFile);
 
