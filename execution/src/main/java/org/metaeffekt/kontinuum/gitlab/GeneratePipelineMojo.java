@@ -18,58 +18,58 @@ import java.nio.file.Files;
 @Mojo(name = "generate-gitlab-pipeline", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class GeneratePipelineMojo extends AbstractMojo {
 
-    @Parameter(required = true)
+    @Parameter(property = "pipelineConfigPath", required = true)
     private String pipelineConfigPath;
 
-    @Parameter(defaultValue = "${project.build.directory}/generated-pipeline/.gitlab-ci.yml")
+    @Parameter(property = "outputFile", defaultValue = "${project.build.directory}/generated-pipeline/.gitlab-ci.yml")
     private File outputFile;
 
-    @Parameter(required = true)
+    @Parameter(property = "containerImage", required = true)
     private String containerImage;
 
-    @Parameter(defaultValue = "1")
+    @Parameter(property = "gitDepth", defaultValue = "1")
     private int gitDepth;
 
-    @Parameter(defaultValue = "clone")
+    @Parameter(property = "gitStrategy", defaultValue = "clone")
     private String gitStrategy;
 
-    @Parameter
+    @Parameter(property = "runnerTag")
     private String runnerTag;
 
-    @Parameter(defaultValue = "/shared")
+    @Parameter(property = "mountedVolume", defaultValue = "/shared")
     private String mountedVolume;
 
-    @Parameter
+    @Parameter(property = "mavenCliOpts")
     private String mavenCliOpts;
 
-    @Parameter
+    @Parameter(property = "kosmosPassword")
     private String kosmosPassword;
 
-    @Parameter
+    @Parameter(property = "userkeysFile")
     private String userkeysFile;
 
-    @Parameter
+    @Parameter(property = "artifactResolverConfigFile")
     private String artifactResolverConfigFile;
 
-    @Parameter
+    @Parameter(property = "artifactResolverProxyFile")
     private String artifactResolverProxyFile;
 
-    @Parameter
+    @Parameter(property = "setupCommandFile")
     private String setupCommandFile;
 
-    @Parameter
+    @Parameter(property = "scanPropertiesFile")
     private String scanPropertiesFile;
 
-    @Parameter
+    @Parameter(property = "vulnerabilityMirrorDir")
     private String vulnerabilityMirrorDir;
 
-    @Parameter
+    @Parameter(property = "vulnerabilityMirrorUrl")
     private String vulnerabilityMirrorUrl;
 
-    @Parameter
+    @Parameter(property = "workbenchDir")
     private String workbenchDir;
 
-    @Parameter(defaultValue = "/usr/src/metaeffekt-kontinuum/")
+    @Parameter(property = "kontinuumDir", defaultValue = "/usr/src/metaeffekt-kontinuum/")
     private String kontinuumDir;
 
     @Override
