@@ -103,7 +103,7 @@ public class GitlabPipeline {
     private String generateMavenScriptBlock(Processor processor) {
         StringBuilder script = new StringBuilder();
         script.append("      mvn -f ")
-                .append(gitlabConfiguration.getKontinuumDirNormalized())
+                .append(gitlabConfiguration.getKontinuumProcessorsDirNormalized())
                 .append(processor.getPomLocation()).append(" ")
                 .append(processor.getGoal()).append(" \\").append(System.lineSeparator());
         

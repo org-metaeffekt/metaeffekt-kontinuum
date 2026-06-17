@@ -32,6 +32,10 @@ public class EnvironmentConfiguration {
         return getWorkbenchDirNormalized() + "assessments/";
     }
 
+    public String getKontinuumProcessorsDirNormalized() {
+        return getKontinuumDirNormalized() + "processors/";
+    }
+
     public String getKontinuumDirNormalized() {
         if (KONTINUUM_DIR.endsWith("/")) {
             return KONTINUUM_DIR;
