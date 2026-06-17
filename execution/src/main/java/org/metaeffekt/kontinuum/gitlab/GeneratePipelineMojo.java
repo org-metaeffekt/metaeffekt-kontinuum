@@ -18,58 +18,58 @@ import java.nio.file.Files;
 @Mojo(name = "generate-gitlab-pipeline", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class GeneratePipelineMojo extends AbstractMojo {
 
-    @Parameter(property = "pipeline.config.path", required = true)
+    @Parameter(required = true)
     private String pipelineConfigPath;
 
-    @Parameter(property = "pipeline.output.file", defaultValue = "${project.build.directory}/generated-pipeline/.gitlab-ci.yml")
+    @Parameter(defaultValue = "${project.build.directory}/generated-pipeline/.gitlab-ci.yml")
     private File outputFile;
 
-    @Parameter(property = "pipeline.container.image", defaultValue = "metaeffekt/metaeffekt-kontinuum-runtime:2.3.2_0.156.x")
+    @Parameter(required = true)
     private String containerImage;
 
-    @Parameter(property = "pipeline.git.depth", defaultValue = "1")
+    @Parameter(defaultValue = "1")
     private int gitDepth;
 
-    @Parameter(property = "pipeline.git.strategy", defaultValue = "clone")
+    @Parameter(defaultValue = "clone")
     private String gitStrategy;
 
-    @Parameter(property = "runner.default.tag")
+    @Parameter
     private String runnerTag;
 
-    @Parameter(property = "runner.mounted.volume", defaultValue = "/shared")
+    @Parameter(defaultValue = "/shared")
     private String mountedVolume;
 
-    @Parameter(property = "job.maven.cli.opts")
+    @Parameter
     private String mavenCliOpts;
 
-    @Parameter(property = "job.kosmos.password", required = false)
+    @Parameter
     private String kosmosPassword;
 
-    @Parameter(property = "job.kosmos.userkeys.file", required = false)
+    @Parameter
     private String userkeysFile;
 
-    @Parameter(property = "job.artifact.resolver.config.file", required = false)
+    @Parameter
     private String artifactResolverConfigFile;
 
-    @Parameter(property = "job.artifact.resolver.proxy.file", required = false)
+    @Parameter
     private String artifactResolverProxyFile;
 
-    @Parameter(property = "job.setup.command.file", required = false)
+    @Parameter
     private String setupCommandFile;
 
-    @Parameter(property = "job.scan.properties.file", required = false)
+    @Parameter
     private String scanPropertiesFile;
 
-    @Parameter(property = "job.vulnerability.mirror.dir", required = false)
+    @Parameter
     private String vulnerabilityMirrorDir;
 
-    @Parameter(property = "job.vulnerability.mirror.url", required = false)
+    @Parameter
     private String vulnerabilityMirrorUrl;
 
-    @Parameter(property = "job.workbench.dir", required = false)
+    @Parameter
     private String workbenchDir;
 
-    @Parameter(property = "job.kontinuum.dir", defaultValue = "/usr/src/metaeffekt-kontinuum/")
+    @Parameter(defaultValue = "/usr/src/metaeffekt-kontinuum/")
     private String kontinuumDir;
 
     @Override
