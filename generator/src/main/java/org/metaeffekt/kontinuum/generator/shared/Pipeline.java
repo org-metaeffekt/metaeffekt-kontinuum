@@ -244,7 +244,7 @@ public class Pipeline {
         Asset asset = assetPlan.getAsset();
         Processor processor = yamlProcessorCatalog.getProcessorById("portfolio-upload");
 
-        processor.setProcessorParameter("input.file", workspace.getAdvisedDirForAsset(asset).appendAssetInventory());
+        processor.setProcessorParameter("input.file", workspace.getPreparedDirForAsset(asset).appendAssetInventory());
         processor.setProcessorParameter("param.portfolio.manager.url", environmentConfiguration.PORTFOLIO_MANAGER_URL);
         processor.setProcessorParameter("param.portfolio.manager.token", environmentConfiguration.PORTFOLIO_MANAGER_TOKEN);
         processor.setProcessorParameter("param.project.name", pipelineConfiguration.getPortfolioManager().getProject());
