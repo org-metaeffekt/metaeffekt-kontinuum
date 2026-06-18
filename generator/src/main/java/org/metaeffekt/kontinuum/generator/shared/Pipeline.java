@@ -266,10 +266,16 @@ public class Pipeline {
         }
 
         Asset asset = assetPlan.getAsset();
-
         Processor processor = yamlProcessorCatalog.getProcessorById("resolve-inventory");
-        processor.setProcessorParameter("input.inventory.file",
-                workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
+
+        if (assetPlan.isRequireAggregation()) {
+            processor.setProcessorParameter("input.inventory.file",
+                    workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
+        } else {
+            processor.setProcessorParameter("input.inventory.file",
+                    workspace.getPreparedDirForAsset(asset).appendAssetInventory());
+        }
+
         processor.setProcessorParameter("output.inventory.file",
                 workspace.getResolvedDirForAsset(asset).appendAssetInventory());
         processor.setProcessorParameter("param.artifact.resolver.config.file",
@@ -292,9 +298,12 @@ public class Pipeline {
         if (assetPlan.isRequireResolve()) {
             processor.setProcessorParameter("input.inventory.file",
                     workspace.getResolvedDirForAsset(asset).appendAssetInventory());
-        } else {
+        } else if (assetPlan.isRequireAggregation()) {
             processor.setProcessorParameter("input.inventory.file",
                     workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
+        } else {
+            processor.setProcessorParameter("input.inventory.file",
+                    workspace.getPreparedDirForAsset(asset).appendAssetInventory());
         }
 
         processor.setProcessorParameter("output.inventory.file",
@@ -322,9 +331,12 @@ public class Pipeline {
         if (assetPlan.isRequireResolve()) {
             processor.setProcessorParameter("input.inventory.file",
                     workspace.getResolvedDirForAsset(asset).appendAssetInventory());
-        } else {
+        } else if (assetPlan.isRequireAggregation()) {
             processor.setProcessorParameter("input.inventory.file",
                     workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
+        } else {
+            processor.setProcessorParameter("input.inventory.file",
+                    workspace.getPreparedDirForAsset(asset).appendAssetInventory());
         }
 
         processor.setProcessorParameter("output.inventory.file",
