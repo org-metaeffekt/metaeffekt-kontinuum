@@ -6,6 +6,7 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.metaeffekt.kontinuum.AbstractGeneratePipelineMojo;
 import org.metaeffekt.kontinuum.generator.gitlab.GitlabPipeline;
 import org.metaeffekt.kontinuum.generator.shared.PipelineConfigurationLoader;
 import org.metaeffekt.kontinuum.models.gitlab.GitlabConfiguration;
@@ -16,13 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 @Mojo(name = "generate-gitlab-pipeline", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
-public class GeneratePipelineMojo extends AbstractMojo {
-
-    @Parameter(property = "pipelineConfigPath", required = true)
-    private String pipelineConfigPath;
-
-    @Parameter(property = "outputFile", defaultValue = "${project.build.directory}/generated-pipeline/.gitlab-ci.yml")
-    private File outputFile;
+public class GeneratePipelineMojo extends AbstractGeneratePipelineMojo {
 
     @Parameter(property = "containerImage", required = true)
     private String containerImage;
@@ -35,42 +30,6 @@ public class GeneratePipelineMojo extends AbstractMojo {
 
     @Parameter(property = "runnerTag")
     private String runnerTag;
-
-    @Parameter(property = "mavenCliOpts")
-    private String mavenCliOpts;
-
-    @Parameter(property = "kosmosPassword")
-    private String kosmosPassword;
-
-    @Parameter(property = "userkeysFile")
-    private String userkeysFile;
-
-    @Parameter(property = "artifactResolverConfigFile")
-    private String artifactResolverConfigFile;
-
-    @Parameter(property = "artifactResolverProxyFile")
-    private String artifactResolverProxyFile;
-
-    @Parameter(property = "setupCommandFile")
-    private String setupCommandFile;
-
-    @Parameter(property = "scanPropertiesFile")
-    private String scanPropertiesFile;
-
-    @Parameter(property = "vulnerabilityMirrorDir")
-    private String vulnerabilityMirrorDir;
-
-    @Parameter(property = "vulnerabilityMirrorUrl")
-    private String vulnerabilityMirrorUrl;
-
-    @Parameter(property = "workbenchDir", required = true)
-    private String workbenchDir;
-
-    @Parameter(property = "workspaceDir", required = true)
-    private String workspaceDir;
-
-    @Parameter(property = "kontinuumDir", defaultValue = "/usr/src/metaeffekt-kontinuum/")
-    private String kontinuumDir;
 
     @Override
     public void execute() throws MojoExecutionException {
@@ -104,7 +63,13 @@ public class GeneratePipelineMojo extends AbstractMojo {
                 .VULNERABILITY_MIRROR_URL(vulnerabilityMirrorUrl)
                 .WORKBENCH_DIR(workbenchDir)
                 .KONTINUUM_DIR(kontinuumDir)
-                .WORKSPACE_DIR(workspaceDir);
+                .WORKSPACE_DIR(workspaceDir)
+                .PORTFOLIO_MANAGER_URL(portfolioManagerUrl)
+                .PORTFOLIO_MANAGER_TOKEN(portfolioManagerToken)
+                .PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE(portfolioManagerClientKeystoreFile)
+                .PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD(portfolioManagerClientKeystorePassword)
+                .PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE(portfolioManagerClientTruststoreFile)
+                .PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD(portfolioManagerClientTruststorePassword);
 
         PipelineConfiguration pipelineConfiguration = new PipelineConfigurationLoader().readConfig(pipelineConfigFile);
 

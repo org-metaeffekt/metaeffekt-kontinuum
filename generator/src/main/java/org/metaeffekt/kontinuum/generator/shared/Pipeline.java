@@ -6,9 +6,8 @@ import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.Report;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.Options.EnrichmentOptions;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.ProjectProperties.Asset;
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
+import org.metaeffekt.kontinuum.util.KontinuumUtils;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +44,8 @@ public class Pipeline {
             addFetchProcessor(assetPlan);
             addInspectImageProcessor(assetPlan);
             addScanDirectoryProcessor(assetPlan);
+            addPortfolioUploadProcessor(assetPlan);
+            addPortfolioDownloadProcessor(assetPlan);
             addEnrichWithReferenceProcessor(assetPlan);
             addResolveProcessor(assetPlan);
             addScanProcessor(assetPlan);
@@ -234,6 +235,69 @@ public class Pipeline {
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
+
+    private void addPortfolioUploadProcessor(AssetPlan assetPlan) {
+        if (!assetPlan.isRequirePortfolioIntegration()) {
+            return;
+        }
+
+        Asset asset = assetPlan.getAsset();
+        Processor processor = yamlProcessorCatalog.getProcessorById("portfolio-upload");
+
+        processor.setProcessorParameter("input.file", workspace.getAdvisedDirForAsset(asset).appendAssetInventory());
+        processor.setProcessorParameter("param.portfolio.manager.url", environmentConfiguration.PORTFOLIO_MANAGER_URL);
+        processor.setProcessorParameter("param.portfolio.manager.token", environmentConfiguration.PORTFOLIO_MANAGER_TOKEN);
+        processor.setProcessorParameter("param.project.name", pipelineConfiguration.getPortfolioManager().getProject());
+        processor.setProcessorParameter("param.asset.group.id", pipelineConfiguration.getPortfolioManager().getAssetGroup());
+        processor.setProcessorParameter("param.asset.name", asset.getName());
+        processor.setProcessorParameter("param.asset.version", asset.getVersion());
+        processor.setProcessorParameter("param.keystore.config.file", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE);
+        processor.setProcessorParameter("param.truststore.config.file", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE);
+        processor.setProcessorParameter("param.keystore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
+        processor.setProcessorParameter("param.truststore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
+
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
+    }
+
+    private void addPortfolioDownloadProcessor(AssetPlan assetPlan) {
+        if (!assetPlan.isRequirePortfolioIntegration()) {
+            return;
+        }
+
+        Asset asset = assetPlan.getAsset();
+        Processor processor = yamlProcessorCatalog.getProcessorById("portfolio-download");
+
+        if (pipelineConfiguration.getPortfolioManager().getResolve()) {
+            processor.setProcessorParameter("output.inventory.dir", workspace.getResolvedDirForAsset(asset).toString());
+            processor.setStage(Stage.RESOLVE);
+        }
+
+        if (pipelineConfiguration.getPortfolioManager().getScan()) {
+            processor.setProcessorParameter("output.inventory.dir", workspace.getScannedDirForAsset(asset).toString());
+            processor.setStage(Stage.SCAN);
+
+        }
+
+        if (pipelineConfiguration.getPortfolioManager().getEnrich()) {
+            processor.setProcessorParameter("output.inventory.dir", workspace.getAdvisedDirForAsset(asset).toString());
+            processor.setStage(Stage.ADVISE);
+        }
+
+        processor.setProcessorParameter("param.portfolio.manager.url", environmentConfiguration.PORTFOLIO_MANAGER_URL);
+        processor.setProcessorParameter("param.portfolio.manager.token", environmentConfiguration.PORTFOLIO_MANAGER_TOKEN);
+        processor.setProcessorParameter("param.project.name", pipelineConfiguration.getPortfolioManager().getProject());
+        processor.setProcessorParameter("param.asset.group.id", pipelineConfiguration.getPortfolioManager().getAssetGroup());
+        processor.setProcessorParameter("param.asset.name", asset.getName());
+        processor.setProcessorParameter("param.asset.version", asset.getVersion());
+        processor.setProcessorParameter("param.keystore.config.file", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE);
+        processor.setProcessorParameter("param.truststore.config.file", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE);
+        processor.setProcessorParameter("param.keystore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
+        processor.setProcessorParameter("param.truststore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
+
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
+    }
+
+
     private void addEnrichWithReferenceProcessor(AssetPlan assetPlan) {
         if (!assetPlan.isRequireReferenceEnrichment()) {
             return;
@@ -246,17 +310,14 @@ public class Pipeline {
         processor.setProcessorParameter("input.inventory.file",
                 workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
 
-        String reference = asset.getReference();
-        if (reference != null) {
-            if (Files.isDirectory(Path.of(reference))) {
-                processor.setProcessorParameter("param.reference.inventory.dir", reference);
-            } else {
-                processor.setProcessorParameter("param.reference.inventory.file", reference);
-            }
+        String referenceDir = asset.getReferenceDirNormalized(environmentConfiguration.getWorkbenchDirNormalized());
+        if (referenceDir != null) {
+            processor.setProcessorParameter("param.reference.inventory.dir", referenceDir);
         }
 
-        processor.setProcessorParameter("output.inventory.file",
-                workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
+        processor.setProcessorParameter("output.inventory.dir",
+                workspace.getAggregatedDirForAsset(asset).toString());
+        processor.setProcessorParameter("output.inventory.path", asset + ".xlsx");
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 

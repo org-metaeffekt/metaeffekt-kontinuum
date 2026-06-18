@@ -44,14 +44,13 @@
                             <trustStorePassword>${param.truststore.password}</trustStorePassword>
 
                             <!-- the project name to upload to -->
-                            <projectName>${param.product.name}</projectName>
+                            <projectName>${param.project.name}</projectName>
                             <!-- the asset group (in the project) to upload to -->
-                            <assetGroupQuery>${param.product.name}:${param.product.version}</assetGroupQuery>
+                            <assetGroupQuery>${param.asset.group.id}</assetGroupQuery>
                             <!-- the asset (in the project) the sbom represents -->
-                            <assetQuery>${param.product.artifact.id}:${param.product.version}</assetQuery>
+                            <assetQuery>${param.asset.name}:${param.asset.version}</assetQuery>
                             <!-- the path to the sbom/inventory to download -->
                             <targetDir>${output.inventory.dir}</targetDir>
-
                         </configuration>
                     </execution>
                 </executions>
@@ -79,13 +78,16 @@
                                     <property>param.portfolio.manager.token</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.name</property>
+                                    <property>param.project.name</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.version</property>
+                                    <property>param.asset.group.id</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.artifact.id</property>
+                                    <property>param.asset.name</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.asset.version</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.keystore.password</property>

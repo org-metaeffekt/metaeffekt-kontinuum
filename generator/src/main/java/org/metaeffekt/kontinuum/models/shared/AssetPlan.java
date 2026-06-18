@@ -6,6 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Getter
 public class AssetPlan {
@@ -19,6 +21,8 @@ public class AssetPlan {
     private boolean requireAggregation = false;
 
     private boolean requireReferenceEnrichment = false;
+
+    private boolean requirePortfolioIntegration = false;
 
     private boolean requireResolve = false;
 
@@ -40,12 +44,21 @@ public class AssetPlan {
         this.asset = asset;
         requireSpdx = pipelineConfiguration.getOptions().getGlobal().getEnableSpdxBom();
         requireCycloneDx = pipelineConfiguration.getOptions().getGlobal().getEnableCycloneDxBom();
-        requireResolve = pipelineConfiguration.getOptions().getGlobal().getEnableResolve();
+
+        if (pipelineConfiguration.getOptions().getGlobal().getEnableResolve()
+                && Objects.equals(pipelineConfiguration.getPortfolioManager().getResolve(), Boolean.FALSE)) {
+            requireResolve = true;
+        }
+
         requireReferenceEnrichment = StringUtils.isNotBlank(asset.getReference());
 
         if (pipelineConfiguration.getDashboards().stream().anyMatch(d -> d.getAssetId().equals(asset.getId()))) {
             requireVulnerabilityEnrichment = true;
             requireDashboardGeneration = true;
+        }
+
+        if (pipelineConfiguration.getPortfolioManager() != null) {
+            requirePortfolioIntegration = true;
         }
 
         try {
@@ -70,6 +83,15 @@ public class AssetPlan {
                 .filter(r -> r.getAssetId().equals(assetId))
                 .toList();
 
+        boolean enrichmentDoneByPortfolioManager = Optional.ofNullable(pipelineConfiguration.getPortfolioManager())
+                .map(PipelineConfiguration.PortfolioManager::getEnrich)
+                .orElse(Boolean.FALSE);
+
+        boolean scanDoneByPortfolioManager = Optional.ofNullable(pipelineConfiguration.getPortfolioManager())
+                .map(PipelineConfiguration.PortfolioManager::getScan)
+                .orElse(Boolean.FALSE);
+
+
         if (!reportsForAsset.isEmpty()) {
             requireReportGeneration = true;
             for (PipelineConfiguration.Report report : reportsForAsset) {
@@ -81,14 +103,17 @@ public class AssetPlan {
                     if (type == null) {
                         continue;
                     }
-                    if (type.equals(ReportType.CERT_REPORT.getKey())
+                    if ((type.equals(ReportType.CERT_REPORT.getKey())
                             || type.equals(ReportType.VULNERABILITY_REPORT.getKey())
-                            || type.equals(ReportType.VULNERABILITY_SUMMARY_REPORT.getKey())) {
+                            || type.equals(ReportType.VULNERABILITY_SUMMARY_REPORT.getKey()))
+                    && !enrichmentDoneByPortfolioManager) {
 
                         requireVulnerabilityEnrichment = true;
 
-                    } else if (type.equals(ReportType.INITIAL_LICENSE_DOCUMENTATION.getKey())
-                            || type.equals(ReportType.LICENSE_DOCUMENTATION.getKey())) {
+                    } else if ((type.equals(ReportType.INITIAL_LICENSE_DOCUMENTATION.getKey())
+                            || type.equals(ReportType.LICENSE_DOCUMENTATION.getKey()))
+                    && !scanDoneByPortfolioManager) {
+
                         requireLicenseScan = true;
                     }
                 }

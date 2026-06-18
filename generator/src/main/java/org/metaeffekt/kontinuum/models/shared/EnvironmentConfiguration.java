@@ -27,12 +27,20 @@ public abstract class EnvironmentConfiguration {
     public final File SETUP_COMMAND;
     private final String KONTINUUM_DIR;
 
+    public final String PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE;
+    public final String PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD;
+    public final String PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE;
+    public final String PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD;
+    public final String PORTFOLIO_MANAGER_TOKEN;
+    public final String PORTFOLIO_MANAGER_URL;
+
+
     public String getCorrelationDir() {
-        return getWorkbenchDirNormalized() + "correlations/";
+        return KontinuumUtils.normalizeDir(WORKBENCH_DIR + "correlations/");
     }
 
     public String getAssessmentsDir() {
-        return getWorkbenchDirNormalized() + "assessments/";
+        return KontinuumUtils.normalizeDir(WORKBENCH_DIR + "assessments/");
     }
 
     public String getWorkbenchDirNormalized() {
@@ -44,7 +52,7 @@ public abstract class EnvironmentConfiguration {
     }
 
     public String getKontinuumProcessorsDirNormalized() {
-        return getKontinuumDirNormalized() + "processors/";
+        return KontinuumUtils.normalizeDir(KONTINUUM_DIR, "processors");
     }
 
     public abstract String getWorkspaceDirNormalized();

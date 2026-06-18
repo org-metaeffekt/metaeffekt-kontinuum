@@ -15,11 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 public class PipelineConfigurationLoader {
@@ -62,6 +58,7 @@ public class PipelineConfigurationLoader {
         validateAssets();
         validateReports();
         validateDashboards();
+        validatePortfolioManager();
 
         if (!isValid) {
             throw new IllegalStateException("Pipeline configuration contains errors.");
@@ -181,6 +178,7 @@ public class PipelineConfigurationLoader {
                 isValid = false;
                 continue;
             }
+
             if (StringUtils.isBlank(report.getAssetId()) || !assetIds.contains(report.getAssetId())) {
                 log.error("A report contains an 'assetId' which does not exist: {}", report.getAssetId());
                 isValid = false;
@@ -202,6 +200,7 @@ public class PipelineConfigurationLoader {
                     log.error("A report with 'assetId': {} contains an invalid 'type': {}.", report.getAssetId(), type);
                     isValid = false;
                 }
+
             }
         }
     }
@@ -222,6 +221,24 @@ public class PipelineConfigurationLoader {
                 log.error("A dashboard contains an 'assetId' which does not exist: {}", dashboard.getAssetId());
                 isValid = false;
             }
+        }
+    }
+
+    private void validatePortfolioManager() {
+        PipelineConfiguration.PortfolioManager portfolioManager = pipelineConfiguration.getPortfolioManager();
+
+        if (portfolioManager == null) {
+            return;
+        }
+
+        if (StringUtils.isBlank(portfolioManager.getProject())) {
+            log.error("Portfolio Manager entry exists, but 'project' is not defined.");
+            isValid = false;
+        }
+
+        if (StringUtils.isBlank(portfolioManager.getAssetGroup())) {
+            log.error("Portfolio Manager entry exists, but 'assetGroup' is not defined.");
+            isValid = false;
         }
     }
 

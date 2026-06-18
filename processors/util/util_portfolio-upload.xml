@@ -44,11 +44,11 @@
                             <trustStorePassword>${param.truststore.password}</trustStorePassword>
 
                             <!-- the project name to upload to -->
-                            <projectName>${param.product.name}</projectName>
+                            <projectName>${param.project.name}</projectName>
                             <!-- the asset group (in the project) to upload to -->
-                            <assetGroup>${param.product.name}:${param.product.version}</assetGroup>
+                            <assetGroup>${param.asset.group.id}</assetGroup>
                             <!-- the asset (in the project) the sbom represents -->
-                            <asset>${param.product.artifact.id}:${param.product.version}</asset>
+                            <asset>${param.asset.name}:${param.asset.version}</asset>
                             <!-- the path to the sbom/inventory to upload -->
                             <fileToPush>${input.file}</fileToPush>
 
@@ -79,13 +79,16 @@
                                     <property>param.portfolio.manager.token</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.name</property>
+                                    <property>param.project.name</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.version</property>
+                                    <property>param.asset.group.id</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.artifact.id</property>
+                                    <property>param.asset.name</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.asset.version</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.keystore.config.file</property>

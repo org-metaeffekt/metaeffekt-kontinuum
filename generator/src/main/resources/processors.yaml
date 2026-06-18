@@ -174,7 +174,7 @@ processors:
         required: true
 
   - name: Enrich with Reference
-    id: enrich-with-reference-legacy
+    id: enrich-with-reference
     description: |
       This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
     pomLocation: advise/advise_enrich-with-reference.xml
@@ -192,30 +192,6 @@ processors:
         required: true
       - key: param.reference.inventory.dir
         description: The directory of the reference inventory with which the input inventory is enriched.
-        required: true
-
-  - name: Enrich with Reference
-    id: enrich-with-reference
-    description: |
-      This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
-    pomLocation: advise/2.xml
-    goal: process-resources
-    stage: ADVISE
-    parameters:
-      - key: input.inventory.file
-        description: The file path of the inventory which will be enriched with the reference inventory.
-        required: true
-      - key: param.reference.inventory.file
-        description: The reference inventory file. If this is set, it will be used instead of the designated directory.
-        required: false
-      - key: param.reference.inventory.dir
-        description: The directory of the reference inventory with which the input inventory is enriched.
-        required: false
-      - key: param.reference.inventory.includes
-        description: File extension input pattern for which files to include as reference inventories.
-        required: false
-      - key: output.inventory.file
-        description: The enriched inventory output file, can be the same as the input file..
         required: true
 
   - name: CycloneDX to Inventory
@@ -1031,7 +1007,7 @@ processors:
       This process enables the download of specific assets from a running portfolio manager service.
     pomLocation: util/util_portfolio-download.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: SCAN
     parameters:
       - key: output.inventory.dir
         description: The directory in which to download all fitting inventories.
@@ -1042,26 +1018,29 @@ processors:
       - key: param.portfolio.manager.token
         description: Upload user token for project; always pass as credential/secret.
         required: true
-      - key: param.product.name
-        description: The product name.
+      - key: param.project.name
+        description: The project name to download to.
         required: true
-      - key: param.product.version
-        description: The product version.
+      - key: param.asset.group.id
+        description: The asset group within the project to download to.
         required: true
-      - key: param.product.artifact.id
-        description: The product artifact id.
+      - key: param.asset.name
+        description: The asset name to download.
         required: true
-      - key: param.keystore.password
-        description: Keystore password, always pass as credential/secret.
-        required: true
-      - key: param.truststore.password
-        description: Truststore password, always pass as credential/secret.
+      - key: param.asset.version
+        description: The asset version to download.
         required: true
       - key: param.keystore.config.file
         description: Path to the keystore.
         required: true
       - key: param.truststore.config.file
         description: Path to the truststore.
+        required: true
+      - key: param.keystore.password
+        description: Keystore password, always pass as credential/secret.
+        required: true
+      - key: param.truststore.password
+        description: Truststore password, always pass as credential/secret.
         required: true
 
   - name: Portfolio Download Jars
@@ -1093,14 +1072,17 @@ processors:
       - key: param.portfolio.manager.token
         description: Upload user token for project; always pass as credential/secret.
         required: true
-      - key: param.product.name
-        description: The product name.
+      - key: param.project.name
+        description: The project name to upload to.
         required: true
-      - key: param.product.version
-        description: The product version.
+      - key: param.asset.group.id
+        description: The asset group within the project to upload to.
         required: true
-      - key: param.product.artifact.id
-        description: The product artifact id.
+      - key: param.asset.name
+        description: The asset name (in the project) the SBOM represents.
+        required: true
+      - key: param.asset.version
+        description: The asset version (in the project) the SBOM represents.
         required: true
       - key: param.keystore.config.file
         description: Path to the keystore.

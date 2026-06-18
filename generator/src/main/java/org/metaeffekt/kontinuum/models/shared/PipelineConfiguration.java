@@ -16,6 +16,7 @@ public class PipelineConfiguration {
     private ProjectProperties projectProperties;
     private List<Report> reports;
     private List<Dashboard> dashboards;
+    private PortfolioManager portfolioManager;
     private Options options;
 
     @Data
@@ -145,6 +146,15 @@ public class PipelineConfiguration {
     @Data
     public static class Dashboard {
         private String assetId;
+    }
+
+    @Data
+    public static class PortfolioManager {
+        private String project;
+        private String assetGroup;
+        private Boolean resolve = true;
+        private Boolean scan = true;
+        private Boolean enrich = false;
     }
 
     @Data
