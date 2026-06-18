@@ -147,11 +147,11 @@ load_externalrc() {
   fi
 
   if [ -z "${AE_CORE_VERSION:-}" ]; then
-    log_info "No AE_CORE_VERSION specified in external.rc file, using HEAD-SNAPSHOT."
+    log_info "No AE_CORE_VERSION specified in external.rc file, using 0.153-SNAPSHOT."
   fi
 
   if [ -z "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ]; then
-    log_info "No AE_ARTIFACT_ANALYSIS_VERSION specified in external.rc file, using HEAD-SNAPSHOT"
+    log_info "No AE_ARTIFACT_ANALYSIS_VERSION specified in external.rc file, using 0.156-SNAPSHOT"
   fi
 }
 

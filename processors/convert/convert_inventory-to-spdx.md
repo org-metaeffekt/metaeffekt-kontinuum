@@ -1,4 +1,4 @@
-# Convert Inventory to SPDX
+# Convert - Inventory to SPDX
 
 This process converts an inventory, independent of which stage it was produced in, into an SPDX document. All available
 parameters are listed in the table below. Parameters marked as "not required" already have default values associated.
@@ -12,7 +12,7 @@ of this repository.
 | Parameter                                 | Required | Description                                                                                                             |
 |-------------------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------|
 | input.inventory.file                      | yes      | The input inventory file used to generate the SPDX BOM.                                                                 |
-| output.bom.file                           | yes      | The output file where the generated SPDX BOM will be written.                                                           | |
+| output.bom.file                           | yes      | The output file where the generated SPDX BOM will be written.                                                           |
 
 ### Parameters
 | Parameter                                 | Required | Description                                                                                                             |

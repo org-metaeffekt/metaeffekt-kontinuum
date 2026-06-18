@@ -1,10 +1,6 @@
 # Util - Convert Assessments
 
-This process creates two output files containing the differences between two provided inventory versions. Which 
-inventory version is declared as "base" and which as "compare" is negligible since the comparison is done in both 
-ways and saved separately. The parameters "product.version" and "product.version.compare" are only used for naming the 
-two output files.
-
+This process converts assessments, based on an older version of the assessment format to the newest assessment format.
 ## Properties
 
 The different properties are sorted into three different groups which are explained in the top level [README](../../README.md)

@@ -1,6 +1,6 @@
 # Advise - Enrich with Reference
 
-This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
+This process enriches a specified input inventory with a reference inventory to curate it with further information for later enrichment.
 
 ## Properties
 

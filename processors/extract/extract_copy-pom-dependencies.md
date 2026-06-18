@@ -1,4 +1,4 @@
-# Prepare - Copy Pom Dependencies
+# Extract - Copy POM Dependencies
 
 This process copies dependencies found in a pom.xml file into a directory for further processing. 
 
