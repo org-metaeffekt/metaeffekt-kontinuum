@@ -156,13 +156,13 @@ public class Pipeline {
                 processor.setProcessorParameter("param.asset.descriptor.file",
                         ReportType.fromKey(type).getAssetDescriptorFile());
                 processor.setProcessorParameter("param.reference.inventory.dir",
-                        assetPlan.getAsset().getReferenceDir());
+                        assetPlan.getAsset().getReferenceDirNormalized(environmentConfiguration.getWorkbenchDirNormalized()));
                 processor.setProcessorParameter("param.reference.license.dir", null);
                 processor.setProcessorParameter("param.reference.component.dir", null);
                 processor.setProcessorParameter("env.kontinuum.dir",
                         environmentConfiguration.getKontinuumDirNormalized());
                 processor.setProcessorParameter("env.kontinuum.processors.dir",
-                        environmentConfiguration.getKontinuumProcessorsDir());
+                        environmentConfiguration.getKontinuumProcessorsDirNormalized());
                 processor.setProcessorParameter("env.workbench.dir",
                         environmentConfiguration.getWorkbenchDirNormalized());
                 processor.setProcessorParameter("env.vulnerability.mirror.dir",
@@ -225,7 +225,8 @@ public class Pipeline {
         processor.setProcessorParameter("output.inventory.file",
                 workspace.getPreparedDirForAsset(asset).appendAssetInventory());
 
-        String referenceDir = asset.getReferenceDir();
+        String referenceDir = asset.getReferenceDirNormalized(environmentConfiguration.getWorkbenchDirNormalized());
+
         if (referenceDir != null) {
             processor.setProcessorParameter("param.reference.inventory.dir", referenceDir);
         }
@@ -356,8 +357,8 @@ public class Pipeline {
         processor.setProcessorParameter("param.activate.csaf", String.valueOf(enrichment.getActivateCsaf()));
         PipelineConfiguration.ProjectProperties.Project project = pipelineConfiguration.getProjectProperties()
                 .getProject();
-        processor.setProcessorParameter("param.assessment.dirs", environmentConfiguration.getWorkbenchDirNormalized() + asset.getAssessmentDir(project));
-        processor.setProcessorParameter("param.context.dirs", environmentConfiguration.getWorkbenchDirNormalized() + asset.getContextDir(project));
+        processor.setProcessorParameter("param.assessment.dirs", asset.getAssessmentDir(project, environmentConfiguration.getWorkbenchDirNormalized()));
+        processor.setProcessorParameter("param.context.dirs", asset.getContextDir(project, environmentConfiguration.getWorkbenchDirNormalized()));
 
         processor.setProcessorParameter("env.vulnerability.mirror.dir",
                 environmentConfiguration.VULNERABILITY_MIRROR_DIR);

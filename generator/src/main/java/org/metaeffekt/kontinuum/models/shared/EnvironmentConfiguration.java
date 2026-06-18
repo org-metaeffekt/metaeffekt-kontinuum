@@ -4,9 +4,10 @@ import java.io.File;
 
 import lombok.Builder;
 import lombok.experimental.SuperBuilder;
+import org.metaeffekt.kontinuum.util.KontinuumUtils;
 
 @SuperBuilder
-public class EnvironmentConfiguration {
+public abstract class EnvironmentConfiguration {
     
     @Builder.Default
     public final String WORKBENCH_DIR = "./workbench/";
@@ -26,7 +27,6 @@ public class EnvironmentConfiguration {
     public final File SETUP_COMMAND;
     private final String KONTINUUM_DIR;
 
-
     public String getCorrelationDir() {
         return getWorkbenchDirNormalized() + "correlations/";
     }
@@ -35,38 +35,19 @@ public class EnvironmentConfiguration {
         return getWorkbenchDirNormalized() + "assessments/";
     }
 
+    public String getWorkbenchDirNormalized() {
+        return KontinuumUtils.normalizeDir(WORKBENCH_DIR);
+    }
 
-    public String getWorkspaceDirNormalized() {
-        if (WORKSPACE_DIR.endsWith("/")) {
-            return WORKSPACE_DIR;
-        } else {
-            return WORKSPACE_DIR + "/";
-        }
+    public String getKontinuumDirNormalized() {
+        return KontinuumUtils.normalizeDir(KONTINUUM_DIR);
     }
 
     public String getKontinuumProcessorsDirNormalized() {
         return getKontinuumDirNormalized() + "processors/";
     }
 
-    public String getKontinuumDirNormalized() {
-        if (KONTINUUM_DIR.endsWith("/")) {
-            return KONTINUUM_DIR;
-        } else {
-            return KONTINUUM_DIR + "/";
-        }
-    }
-    
-    public String getKontinuumProcessorsDir() {
-        return getKontinuumDirNormalized() + "processors/";
-    }
-
-    public String getWorkbenchDirNormalized() {
-        if (WORKBENCH_DIR.endsWith("/")) {
-            return WORKBENCH_DIR;
-        } else {
-            return WORKBENCH_DIR + "/";
-        }
-    }
+    public abstract String getWorkspaceDirNormalized();
 }
 
 

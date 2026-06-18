@@ -4,6 +4,7 @@ import org.metaeffekt.kontinuum.models.shared.EnvironmentConfiguration;
 
 import lombok.Builder;
 import lombok.experimental.SuperBuilder;
+import org.metaeffekt.kontinuum.util.KontinuumUtils;
 
 @SuperBuilder
 public class GitlabConfiguration extends EnvironmentConfiguration {
@@ -16,5 +17,10 @@ public class GitlabConfiguration extends EnvironmentConfiguration {
     
     public final String CONTAINER_IMAGE;
     public final String RUNNER_TAG;
+
+    @Override
+    public String getWorkspaceDirNormalized() {
+        return KontinuumUtils.normalizeDir(WORKSPACE_DIR);
+    }
 }
 

@@ -2,6 +2,7 @@ package org.metaeffekt.kontinuum.models.shared;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+import org.metaeffekt.kontinuum.util.KontinuumUtils;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -76,20 +77,20 @@ public class PipelineConfiguration {
                 private String tag;
             }
 
-            public String getReferenceDir() throws IllegalStateException{
+            public String getReferenceDirNormalized(String workbenchPath) throws IllegalStateException{
                 if (StringUtils.isBlank(getReference())) {
                     throw new IllegalStateException("Tried to access reference inventory for asset " + this + " but is not set.");
                 }
 
                 if (Files.isDirectory(Path.of(getReference()))) {
-                    return getReference();
+                    return KontinuumUtils.normalizeDir(workbenchPath, getReference());
                 } else {
                     File referenceFile = new File(getReference());
-                    return referenceFile.getParentFile().getPath();
+                    return KontinuumUtils.normalizeDir(workbenchPath, referenceFile.getParentFile().getPath());
                 }
             }
 
-            public String getContextDir(ProjectProperties.Project project) {
+            public String getContextDir(ProjectProperties.Project project, String workbenchPath) {
                 if (StringUtils.isBlank(project.getTenant())) {
                     throw new IllegalStateException("Tried to access tenant for project " + project + " but is not set.");
                 }
@@ -102,10 +103,10 @@ public class PipelineConfiguration {
                     throw new IllegalStateException("Tried to access context for asset " + this + " but is not set.");
                 }
 
-                return "assessments/" + project.getTenant() + "/" + getAssessmentId() + "/" + getContext() + "/";
+                return KontinuumUtils.normalizeDir(workbenchPath, "assessments", project.getTenant(), getAssessmentId(), getContext());
             }
 
-            public String getAssessmentDir(ProjectProperties.Project project) {
+            public String getAssessmentDir(ProjectProperties.Project project, String workbenchPath) {
                 if (StringUtils.isBlank(project.getTenant())) {
                     throw new IllegalStateException("Tried to access tenant for project " + project + " but is not set.");
                 }
@@ -114,8 +115,7 @@ public class PipelineConfiguration {
                     throw new IllegalStateException("Tried to access assessment id for asset " + this + " but is not set.");
                 }
 
-                return "assessments/" + project.getTenant() + "/" + getAssessmentId() + "/";
-                
+                return KontinuumUtils.normalizeDir(workbenchPath, "assessments", project.getTenant(), getAssessmentId());
             }
 
             @Override

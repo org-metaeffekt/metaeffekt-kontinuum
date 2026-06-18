@@ -36,9 +36,6 @@ public class GeneratePipelineMojo extends AbstractMojo {
     @Parameter(property = "runnerTag")
     private String runnerTag;
 
-    @Parameter(property = "mountedVolume", defaultValue = "/shared")
-    private String mountedVolume;
-
     @Parameter(property = "mavenCliOpts")
     private String mavenCliOpts;
 
@@ -85,7 +82,7 @@ public class GeneratePipelineMojo extends AbstractMojo {
             throw new MojoExecutionException("The pipeline configuration file " + pipelineConfigFile.getAbsolutePath() + " does not exist.");
         }
 
-        GitlabConfiguration.GitlabConfigurationBuilder gitlabConfiguration = GitlabConfiguration.builder()
+       GitlabConfiguration.GitlabConfigurationBuilder gitlabConfiguration = GitlabConfiguration.builder()
                 .ARTIFACT_RESOLVER_CONFIG_FILE(artifactResolverConfigFile)
                 .ARTIFACT_RESOLVER_PROXY_FILE(artifactResolverProxyFile);
 

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Slf4j
-public class PropertiesLoader {
+public class KontinuumUtils {
 
     public static Properties getLocalProperties() {
         File localPropertiesFile = new File(".project.properties");
@@ -34,5 +34,26 @@ public class PropertiesLoader {
             }
         }
         return properties;
+    }
+
+    public static String normalizeDir(String... path) {
+        StringBuilder sb = new StringBuilder();
+        for (String part : path) {
+            if (part == null || part.isEmpty()) {
+                continue;
+            }
+            if (!sb.isEmpty() && sb.charAt(sb.length() - 1) != '/') {
+                sb.append('/');
+            }
+            if (!sb.isEmpty() && part.startsWith("/")) {
+                part = part.substring(1);
+            }
+            sb.append(part);
+        }
+        String result = sb.toString().replaceAll("/{2,}", "/");
+        if (!result.endsWith("/")) {
+            result += "/";
+        }
+        return result;
     }
 }
