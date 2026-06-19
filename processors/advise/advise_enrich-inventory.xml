@@ -30,36 +30,53 @@
     <packaging>pom</packaging>
 
     <properties>
-        <!-- enricher -->
-        <param.activate.msrc>true</param.activate.msrc>
-        <param.activate.nvd>true</param.activate.nvd>
-        <param.activate.certfr>true</param.activate.certfr>
-        <param.activate.certeu>true</param.activate.certeu>
-        <param.activate.certsei>true</param.activate.certsei>
-        <param.activate.kev>true</param.activate.kev>
-        <param.activate.epss>true</param.activate.epss>
-        <param.activate.eol>true</param.activate.eol>
-        <param.activate.osv>true</param.activate.osv>
-        <param.activate.csaf>true</param.activate.csaf>
+        <!-- enrichment -->
+
+        <!-- Product Identification -->
+        <param.activate.correlation>true</param.activate.correlation>
         <param.activate.purl.derivation>true</param.activate.purl.derivation>
 
+        <!-- Vulnerability & Security Advisory -->
+        <param.activate.nvd>true</param.activate.nvd>
+        <param.activate.osv>true</param.activate.osv>
+        <param.activate.csaf>true</param.activate.csaf>
+        <param.activate.vulnerabilities.custom>false</param.activate.vulnerabilities.custom>
+
+        <param.activate.msrc>true</param.activate.msrc>
+        <param.activate.certfr>true</param.activate.certfr>
+        <param.activate.certsei>true</param.activate.certsei>
+        <param.activate.certeu>true</param.activate.certeu>
+
+        <!-- Threat -->
+        <param.activate.cwe>true</param.activate.cwe>
+        <param.activate.capec>true</param.activate.capec>
+        <param.activate.mitre.atlas>false</param.activate.mitre.atlas>
+        <param.activate.mitre.attack>false</param.activate.mitre.attack>
+        <param.activate.threat>false</param.activate.threat>
+
+        <!-- Assessments -->
         <param.activate.status>true</param.activate.status>
         <param.activate.keywords>true</param.activate.keywords>
-        <param.activate.threat>false</param.activate.threat>
+
+        <!-- Vulnerability Prioritization -->
+        <param.activate.eol>true</param.activate.eol>
+        <param.activate.epss>true</param.activate.epss>
+        <param.activate.kev>true</param.activate.kev>
+
+        <!-- Other Steps -->
         <param.activate.validation>false</param.activate.validation>
 
-        <!-- ghsa unreviewed filter -->
-        <param.remove.ghsa.unreviewed>false</param.remove.ghsa.unreviewed>
 
+        <!-- enrichment configuration -->
+        <param.remove.ghsa.unreviewed>false</param.remove.ghsa.unreviewed>
         <param.exclude.nvd.equivalent.msrc>true</param.exclude.nvd.equivalent.msrc>
         <param.exclude.nvd.equivalent.osv>true</param.exclude.nvd.equivalent.osv>
+        <param.vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</param.vulnerabilities.custom.dir>
 
+        <!-- other configuration -->
         <param.dashboard.title>Vulnerability Assessment Dashboard</param.dashboard.title>
         <param.dashboard.subtitle>${project.artifactId}</param.dashboard.subtitle>
         <param.dashboard.footer>${project.artifactId}</param.dashboard.footer>
-
-        <param.vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</param.vulnerabilities.custom.dir>
-        <param.activate.vulnerabilities.custom>false</param.activate.vulnerabilities.custom>
     </properties>
 
     <build>
@@ -122,16 +139,16 @@
                                 <maxCorrelatedCpePerArtifact>${ae.cpe.correlation.limit}</maxCorrelatedCpePerArtifact>
                             </cpeDerivationEnrichment>
 
+                            <purlDerivationEnrichment>
+                                <active>${param.activate.purl.derivation}</active>
+                            </purlDerivationEnrichment>
+
                             <correlationYamlEnrichment>
                                 <active>${param.activate.correlation}</active>
                                 <yamlFiles>
                                     <file>${param.correlation.dir}</file>
                                 </yamlFiles>
                             </correlationYamlEnrichment>
-
-                            <purlDerivationEnrichment>
-                                <active>${param.activate.purl.derivation}</active>
-                            </purlDerivationEnrichment>
 
                             <!-- Vulnerability Matching -->
                             <nvdMatchCveFromCpeEnrichment>
@@ -141,13 +158,6 @@
                             <msVulnerabilitiesByProductEnrichment>
                                 <active>${param.activate.msrc}</active>
                             </msVulnerabilitiesByProductEnrichment>
-
-                            <customVulnerabilitiesFromCpeEnrichment>
-                                <active>${param.activate.vulnerabilities.custom}</active>
-                                <vulnerabilityFiles>
-                                    <file>${param.vulnerabilities.custom.dir}</file>
-                                </vulnerabilityFiles>
-                            </customVulnerabilitiesFromCpeEnrichment>
 
                             <osvVulnerabilitiesEnrichment>
                                 <active>${param.activate.osv}</active>
@@ -166,6 +176,13 @@
                                 <active>${param.activate.csaf}</active>
                             </csafVulnerabilitiesEnrichment>
 
+                            <customVulnerabilitiesFromCpeEnrichment>
+                                <active>${param.activate.vulnerabilities.custom}</active>
+                                <vulnerabilityFiles>
+                                    <file>${param.vulnerabilities.custom.dir}</file>
+                                </vulnerabilityFiles>
+                            </customVulnerabilitiesFromCpeEnrichment>
+
                             <!-- Vulnerability Details Filling -->
                             <nvdCveFillDetailsEnrichment>
                                 <active>${param.activate.nvd}</active>
@@ -183,20 +200,27 @@
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFillDetailsEnrichment>
 
-                            <capecFillDetailsEnrichment>
-                                <active>${param.activate.capec}</active>
-                            </capecFillDetailsEnrichment>
-
+                            <!-- Threat Details Filling -->
                             <cweFillDetailsEnrichment>
                                 <active>${param.activate.cwe}</active>
                             </cweFillDetailsEnrichment>
 
+                            <capecFillDetailsEnrichment>
+                                <active>${param.activate.capec}</active>
+                            </capecFillDetailsEnrichment>
+
+                            <atlasFillDetailsEnrichment>
+                                <active>${param.activate.mitre.atlas}</active>
+                            </atlasFillDetailsEnrichment>
+
+                            <attackFillDetailsEnrichment>
+                                <active>${param.activate.mitre.attack}</active>
+                            </attackFillDetailsEnrichment>
+
                             <!-- Assessments -->
                             <vulnerabilityStatusEnrichment>
                                 <active>${param.activate.status}</active>
-                                <statusFiles>
-                                    ${param.assessment.dirs}
-                                </statusFiles>
+                                <statusFiles>${param.assessment.dirs}</statusFiles>
                                 <activeLabels>${assessment.labels}</activeLabels>
                             </vulnerabilityStatusEnrichment>
 
@@ -207,6 +231,12 @@
                             </vulnerabilityKeywordsEnrichment>
 
                             <!-- Security Advisory Matching -->
+                            <osvAdvisorFillDetailsEnrichment>
+                                <active>${param.activate.osv}</active>
+                                <includeAdvisoryProviders>[{"src":"*","impl":"OSV","st":"sa"}]</includeAdvisoryProviders>
+                                <excludeNvdEquivalent>${param.exclude.nvd.equivalent.osv}</excludeNvdEquivalent>  <!-- Ensure this is supported by other configurations as well (osv & msrc) -->
+                            </osvAdvisorFillDetailsEnrichment>
+
                             <certFrAdvisorEnrichment>
                                 <active>${param.activate.certfr}</active>
                             </certFrAdvisorEnrichment>
@@ -218,12 +248,6 @@
                             <certEuAdvisorEnrichment>
                                 <active>${param.activate.certeu}</active>
                             </certEuAdvisorEnrichment>
-
-                            <osvAdvisorFillDetailsEnrichment>
-                                <active>${param.activate.osv}</active>
-                                <includeAdvisoryProviders>[{"src":"*","impl":"OSV","st":"sa"}]</includeAdvisoryProviders>
-                                <excludeNvdEquivalent></excludeNvdEquivalent> <!-- Ensure this is supported by other configurations as well (osv & msrc) -->
-                            </osvAdvisorFillDetailsEnrichment>
 
                             <!-- Vulnerability Prioritization -->
                             <eolEnrichment>

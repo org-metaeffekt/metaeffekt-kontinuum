@@ -115,6 +115,8 @@
                             <eolIndex/>
                             <cweIndex/>
                             <capecIndex/>
+                            <attackIndex/>
+                            <atlasIndex/>
 
                             <!-- The NVD and other vendors often publish data which contain invalid CPEs; this configuration attempts to 'correct' the malformed CPEs -->
                             <!-- A simple "cpeCorrection" has a target string ("malformedCpe") and a replacement string ("replacementCpe") which function as 1:1 text replacements -->
