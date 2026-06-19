@@ -66,4 +66,5 @@ public abstract class AbstractGeneratePipelineMojo extends AbstractMojo {
 
     @Parameter(property = "portfolioManagerUrl")
     protected String portfolioManagerUrl;
+
 }

@@ -22,12 +22,6 @@ public class GeneratePipelineMojo extends AbstractGeneratePipelineMojo {
     @Parameter(property = "containerImage", required = true)
     private String containerImage;
 
-    @Parameter(property = "gitDepth", defaultValue = "1")
-    private int gitDepth;
-
-    @Parameter(property = "gitStrategy", defaultValue = "clone")
-    private String gitStrategy;
-
     @Parameter(property = "runnerTag")
     private String runnerTag;
 
@@ -54,8 +48,6 @@ public class GeneratePipelineMojo extends AbstractGeneratePipelineMojo {
         }
 
         gitlabConfiguration.CONTAINER_IMAGE(containerImage)
-                .GIT_DEPTH(gitDepth)
-                .GIT_STRATEGY(gitStrategy)
                 .KOSMOS_PASSWORD(kosmosPassword)
                 .KOSMOS_USERKEYS_FILE(userkeysFile)
                 .SCAN_PROPERTIES_FILE(scanPropertiesFile)
