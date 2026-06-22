@@ -39,11 +39,11 @@ public abstract class EnvironmentConfiguration {
     }
 
     public String getPortfolioManagerClientTruststoreFile() {
-        return KontinuumUtils.normalizeDir(WORKBENCH_DIR, PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE);
+        return KontinuumUtils.normalizeFilePath(WORKBENCH_DIR, PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE);
     }
 
     public String getPortfolioManagerClientKeystoreFile() {
-        return KontinuumUtils.normalizeDir(WORKBENCH_DIR, PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE);
+        return KontinuumUtils.normalizeFilePath(WORKBENCH_DIR, PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE);
     }
 
     public String getMirrorDatabaseDir() {

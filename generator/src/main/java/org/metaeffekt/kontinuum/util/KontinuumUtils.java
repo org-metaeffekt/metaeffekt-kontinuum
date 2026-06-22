@@ -37,6 +37,18 @@ public class KontinuumUtils {
     }
 
     public static String normalizeDir(String... path) {
+        String result = joinPath(path);
+        if (!result.endsWith("/")) {
+            result += "/";
+        }
+        return result;
+    }
+
+    public static String normalizeFilePath(String... path) {
+        return joinPath(path);
+    }
+
+    private static String joinPath(String... path) {
         StringBuilder sb = new StringBuilder();
         for (String part : path) {
             if (part == null || part.isEmpty()) {
@@ -50,10 +62,6 @@ public class KontinuumUtils {
             }
             sb.append(part);
         }
-        String result = sb.toString().replaceAll("/{2,}", "/");
-        if (!result.endsWith("/")) {
-            result += "/";
-        }
-        return result;
+        return sb.toString().replaceAll("/{2,}", "/");
     }
 }
