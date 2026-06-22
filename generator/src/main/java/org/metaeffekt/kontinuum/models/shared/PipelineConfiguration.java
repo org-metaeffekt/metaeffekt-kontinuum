@@ -1,6 +1,8 @@
 package org.metaeffekt.kontinuum.models.shared;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.metaeffekt.kontinuum.util.KontinuumUtils;
 
@@ -52,9 +54,11 @@ public class PipelineConfiguration {
             private String id;
             private String name;
             private String version;
+
             private String assessmentId;
             private String reference;
             private String context;
+
             private UrlResolver urlResolver;
             private MavenResolver mavenResolver;
             private ContainerResolver containerResolver;
@@ -78,15 +82,15 @@ public class PipelineConfiguration {
                 private String tag;
             }
 
-            public String getReferenceDirNormalized(String workbenchPath) throws IllegalStateException{
-                if (StringUtils.isBlank(getReference())) {
+            public String getReferenceDir(String workbenchPath) throws IllegalStateException{
+                if (StringUtils.isBlank(reference)) {
                     throw new IllegalStateException("Tried to access reference inventory for asset " + this + " but is not set.");
                 }
 
-                if (Files.isDirectory(Path.of(getReference()))) {
-                    return KontinuumUtils.normalizeDir(workbenchPath, getReference());
+                if (Files.isDirectory(Path.of(reference))) {
+                    return KontinuumUtils.normalizeDir(workbenchPath, reference);
                 } else {
-                    File referenceFile = new File(getReference());
+                    File referenceFile = new File(reference);
                     return KontinuumUtils.normalizeDir(workbenchPath, referenceFile.getParentFile().getPath());
                 }
             }
@@ -96,15 +100,15 @@ public class PipelineConfiguration {
                     throw new IllegalStateException("Tried to access tenant for project " + project + " but is not set.");
                 }
 
-                if (StringUtils.isBlank(getAssessmentId())) {
+                if (StringUtils.isBlank(assessmentId)) {
                     throw new IllegalStateException("Tried to access assessment id for asset " + this + " but is not set.");
                 }
                 
-                if (StringUtils.isBlank(getContext())) {
+                if (StringUtils.isBlank(context)) {
                     throw new IllegalStateException("Tried to access context for asset " + this + " but is not set.");
                 }
 
-                return KontinuumUtils.normalizeDir(workbenchPath, "assessments", project.getTenant(), getAssessmentId(), getContext());
+                return KontinuumUtils.normalizeDir(workbenchPath, "assessments", project.getTenant(), assessmentId, context, "context");
             }
 
             public String getAssessmentDir(ProjectProperties.Project project, String workbenchPath) {
@@ -112,11 +116,11 @@ public class PipelineConfiguration {
                     throw new IllegalStateException("Tried to access tenant for project " + project + " but is not set.");
                 }
 
-                if (StringUtils.isBlank(getAssessmentId())) {
+                if (StringUtils.isBlank(assessmentId)) {
                     throw new IllegalStateException("Tried to access assessment id for asset " + this + " but is not set.");
                 }
 
-                return KontinuumUtils.normalizeDir(workbenchPath, "assessments", project.getTenant(), getAssessmentId());
+                return KontinuumUtils.normalizeDir(workbenchPath, "assessments", project.getTenant(), assessmentId);
             }
 
             @Override
@@ -160,20 +164,21 @@ public class PipelineConfiguration {
     @Data
     public static class Options {
 
-        private EnrichmentOptions enrichment = new EnrichmentOptions();
         private GlobalOptions global = new GlobalOptions();
+        private EnrichmentOptions enrichment = new EnrichmentOptions();
         private DocumentOptions document = new DocumentOptions();
 
         @Data
-        public static class DocumentOptions{
-            private String watermark;
-            private String organization;
-            private String classificationRating;
-            private String controlRating;
+        public static class GlobalOptions{
+            private String documentLanguage = "en";
+            private Boolean enableResolve = false;
+            private Boolean enableSpdxBom = false;
+            private Boolean enableCycloneDxBom = false;
         }
 
         @Data
         public static class EnrichmentOptions{
+
             private String securityPolicyFile;
             private List<String> securityPolicyActiveIds = new ArrayList<>();
             private Boolean activateMsrc = true;
@@ -186,14 +191,24 @@ public class PipelineConfiguration {
             private Boolean activateEpss = true;
             private Boolean activateEol = true;
             private Boolean activateCsaf = true;
+
+
+            public String getSecurityPolicyFile(String workbenchPath) throws IllegalStateException{
+                if (StringUtils.isBlank(securityPolicyFile)) {
+                    throw new IllegalStateException("Tried to access reference inventory for asset " + this + " but is not set.");
+                }
+
+                File file = new File(securityPolicyFile);
+                return KontinuumUtils.normalizeDir(workbenchPath, file.getPath());
+            }
         }
 
         @Data
-        public static class GlobalOptions{
-            private String documentLanguage = "en";
-            private Boolean enableResolve = false;
-            private Boolean enableSpdxBom = false;
-            private Boolean enableCycloneDxBom = false;
+        public static class DocumentOptions{
+            private String watermark;
+            private String organization;
+            private String classificationRating;
+            private String controlRating;
         }
     }
 }

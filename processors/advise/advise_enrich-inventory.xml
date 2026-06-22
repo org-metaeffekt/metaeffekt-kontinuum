@@ -220,10 +220,6 @@
                                 <active>${param.activate.certeu}</active>
                             </certEuAdvisorEnrichment>
 
-                            <csafAdvisorEnrichment>
-                                <active>${param.activate.csaf}</active>
-                            </csafAdvisorEnrichment>
-
                             <osvAdvisorFillDetailsEnrichment>
                                 <active>${param.activate.osv}</active>
                                 <includeAdvisoryProviders></includeAdvisoryProviders>
@@ -275,9 +271,6 @@
                                 <active>false</active>
                             </advisorPeriodicEnrichment>
 
-                            <vulnerabilityAssessmentDashboardEnrichment>
-                                <active>false</active>
-                            </vulnerabilityAssessmentDashboardEnrichment>
                         </configuration>
                     </execution>
                 </executions>

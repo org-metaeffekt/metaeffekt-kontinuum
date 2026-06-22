@@ -1,5 +1,6 @@
 package org.metaeffekt.kontinuum.generator.shared;
 
+import org.apache.commons.lang3.StringUtils;
 import org.metaeffekt.kontinuum.models.shared.*;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.Dashboard;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.Report;
@@ -36,11 +37,12 @@ public class Pipeline {
         }
 
         pipelineConfiguration.getProjectProperties().getAssets()
-                .forEach(a -> assetPlans.add(new AssetPlan(a, pipelineConfiguration)));
+                .forEach(a -> assetPlans.add(new AssetPlan(a, pipelineConfiguration, environmentConfiguration)));
     }
 
     public Map<Asset, List<Processor>> generatePipeline() {
         for (AssetPlan assetPlan : assetPlans) {
+            addMirrorDownloadProcessor(assetPlan);
             addFetchProcessor(assetPlan);
             addInspectImageProcessor(assetPlan);
             addScanDirectoryProcessor(assetPlan);
@@ -55,6 +57,18 @@ public class Pipeline {
         }
 
         return assetProcessorsMap;
+    }
+
+    private void addMirrorDownloadProcessor(AssetPlan assetPlan) {
+        if (!assetPlan.isRequireVulnerabilityMirror()) {
+            return;
+        }
+
+        Processor processor = yamlProcessorCatalog.getProcessorById("download-index");
+        processor.setProcessorParameter("param.mirror.archive.url", environmentConfiguration.VULNERABILITY_MIRROR_URL);
+        processor.setProcessorParameter("env.vulnerability.mirror.dir", environmentConfiguration.getMirrorDir());
+
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
     private void addDashboardProcessors(AssetPlan assetPlan) {
@@ -77,9 +91,9 @@ public class Pipeline {
             processor.setProcessorParameter("input.inventory.file",
                     workspace.getAdvisedDirForAsset(assetPlan.getAsset()).appendAssetInventory());
             processor.setProcessorParameter("output.dashboard.file",
-                    workspace.getAdvisedDirForAsset(assetPlan.getAsset()).toString() + "dashboard.html");
+                    workspace.getReportedDirForAsset(assetPlan.getAsset()).toString() + "dashboard.html");
             processor.setProcessorParameter("param.security.policy.file",
-                    enrichmentOptions.getSecurityPolicyFile());
+                    enrichmentOptions.getSecurityPolicyFile(environmentConfiguration.getWorkbenchDirNormalized()));
             processor.setProcessorParameter("param.security.policy.active.ids",
                     enrichmentOptions.getSecurityPolicyActiveIds() != null
                             ? String.join(",",
@@ -93,11 +107,12 @@ public class Pipeline {
             processor.setProcessorParameter("param.assessment.context",
                     assetPlan.getAsset().getContext());
             processor.setProcessorParameter("env.vulnerability.mirror.dir",
-                    environmentConfiguration.VULNERABILITY_MIRROR_DIR);
+                    environmentConfiguration.getMirrorDatabaseDir());
 
             assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
         }
     }
+
 
     private void addReportProcessors(AssetPlan assetPlan) {
         List<Report> reports = pipelineConfiguration.getReports();
@@ -119,15 +134,26 @@ public class Pipeline {
                 if (type == null) {
                     continue;
                 }
+
                 Processor processor = yamlProcessorCatalog.getProcessorById("create-document");
-                processor.setProcessorParameter("input.inventory.dir",
-                        workspace.getGroupedDir(ReportType.fromKey(type)));
+                ReportType reportType = ReportType.fromKey(type);
+                Asset asset = assetPlan.getAsset();
+
+                if (ReportType.requiresScan(reportType)) {
+                    processor.setProcessorParameter("input.inventory.dir", workspace.getScannedDirForAsset(asset).toString());
+                } else if (ReportType.requiresVulnerabilityEnrichment(reportType)) {
+                    processor.setProcessorParameter("input.inventory.dir", workspace.getAdvisedDirForAsset(asset).toString());
+                } else if (assetPlan.isRequireResolve()){
+                    processor.setProcessorParameter("input.inventory.dir", workspace.getResolvedDirForAsset(asset).toString());
+                } else {
+                    processor.setProcessorParameter("input.inventory.dir", workspace.getAggregatedDirForAsset(asset).toString());
+                }
 
                 processor.setProcessorParameter("output.document.file",
-                        workspace.getReportedDirForAsset(assetPlan.getAsset()).appendAssetInventory());
+                        workspace.getReportedDirForAsset(asset).toString());
 
                 processor.setProcessorParameter("param.computed.inventory.dir",
-                        workspace.getReportedDirForAsset(assetPlan.getAsset()).appendAssetInventory());
+                        workspace.getReportedDirForAsset(asset).toString());
                 processor.setProcessorParameter("param.document.type", type);
                 processor.setProcessorParameter("param.document.language",
                         pipelineConfiguration.getOptions().getGlobal().getDocumentLanguage());
@@ -153,11 +179,10 @@ public class Pipeline {
                 processor.setProcessorParameter("param.property.selector.control",
                         pipelineConfiguration.getOptions().getDocument().getControlRating());
                 processor.setProcessorParameter("param.security.policy.file",
-                        pipelineConfiguration.getOptions().getEnrichment().getSecurityPolicyFile());
-                processor.setProcessorParameter("param.asset.descriptor.file",
-                        ReportType.fromKey(type).getAssetDescriptorFile());
+                        pipelineConfiguration.getOptions().getEnrichment().getSecurityPolicyFile(environmentConfiguration.getWorkbenchDirNormalized()));
+                processor.setProcessorParameter("param.asset.descriptor.file", KontinuumUtils.normalizeDir(environmentConfiguration.getDescriptorsDirNormalized(), reportType.getAssetDescriptorFile()));
                 processor.setProcessorParameter("param.reference.inventory.dir",
-                        assetPlan.getAsset().getReferenceDirNormalized(environmentConfiguration.getWorkbenchDirNormalized()));
+                        assetPlan.getAsset().getReferenceDir(environmentConfiguration.getWorkbenchDirNormalized()));
                 processor.setProcessorParameter("param.reference.license.dir", null);
                 processor.setProcessorParameter("param.reference.component.dir", null);
                 processor.setProcessorParameter("env.kontinuum.dir",
@@ -167,7 +192,7 @@ public class Pipeline {
                 processor.setProcessorParameter("env.workbench.dir",
                         environmentConfiguration.getWorkbenchDirNormalized());
                 processor.setProcessorParameter("env.vulnerability.mirror.dir",
-                        environmentConfiguration.VULNERABILITY_MIRROR_DIR);
+                        environmentConfiguration.getMirrorDatabaseDir());
 
                 assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
             }
@@ -206,11 +231,11 @@ public class Pipeline {
     }
 
     private void addScanDirectoryProcessor(AssetPlan assetPlan) {
+        Asset asset = assetPlan.getAsset();
         if (!assetPlan.isRequireExtract()) {
             return;
         }
 
-        Asset asset = assetPlan.getAsset();
         Processor processor = yamlProcessorCatalog.getProcessorById("scan-directory");
 
         if (assetPlan.isRequireFetch()) {
@@ -226,11 +251,8 @@ public class Pipeline {
         processor.setProcessorParameter("output.inventory.file",
                 workspace.getPreparedDirForAsset(asset).appendAssetInventory());
 
-        String referenceDir = asset.getReferenceDirNormalized(environmentConfiguration.getWorkbenchDirNormalized());
-
-        if (referenceDir != null) {
-            processor.setProcessorParameter("param.reference.inventory.dir", referenceDir);
-        }
+        String referenceDir = asset.getReferenceDir(environmentConfiguration.getWorkbenchDirNormalized());
+        processor.setProcessorParameter("param.reference.inventory.dir", referenceDir);
 
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
@@ -251,8 +273,8 @@ public class Pipeline {
         processor.setProcessorParameter("param.asset.group.id", pipelineConfiguration.getPortfolioManager().getAssetGroup());
         processor.setProcessorParameter("param.asset.name", asset.getName());
         processor.setProcessorParameter("param.asset.version", asset.getVersion());
-        processor.setProcessorParameter("param.keystore.config.file", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE);
-        processor.setProcessorParameter("param.truststore.config.file", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE);
+        processor.setProcessorParameter("param.keystore.config.file", environmentConfiguration.getPortfolioManagerClientKeystoreFile());
+        processor.setProcessorParameter("param.truststore.config.file", environmentConfiguration.getPortfolioManagerClientTruststoreFile());
         processor.setProcessorParameter("param.keystore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
         processor.setProcessorParameter("param.truststore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
 
@@ -289,8 +311,8 @@ public class Pipeline {
         processor.setProcessorParameter("param.asset.group.id", pipelineConfiguration.getPortfolioManager().getAssetGroup());
         processor.setProcessorParameter("param.asset.name", asset.getName());
         processor.setProcessorParameter("param.asset.version", asset.getVersion());
-        processor.setProcessorParameter("param.keystore.config.file", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE);
-        processor.setProcessorParameter("param.truststore.config.file", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE);
+        processor.setProcessorParameter("param.keystore.config.file", environmentConfiguration.getPortfolioManagerClientKeystoreFile());
+        processor.setProcessorParameter("param.truststore.config.file", environmentConfiguration.getPortfolioManagerClientTruststoreFile());
         processor.setProcessorParameter("param.keystore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
         processor.setProcessorParameter("param.truststore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
 
@@ -308,9 +330,9 @@ public class Pipeline {
                 .getProcessorById("enrich-with-reference");
 
         processor.setProcessorParameter("input.inventory.file",
-                workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
+                workspace.getPreparedDirForAsset(asset).appendAssetInventory());
 
-        String referenceDir = asset.getReferenceDirNormalized(environmentConfiguration.getWorkbenchDirNormalized());
+        String referenceDir = asset.getReferenceDir(environmentConfiguration.getWorkbenchDirNormalized());
         if (referenceDir != null) {
             processor.setProcessorParameter("param.reference.inventory.dir", referenceDir);
         }
@@ -409,7 +431,7 @@ public class Pipeline {
         PipelineConfiguration.Options.EnrichmentOptions enrichment = pipelineConfiguration.getOptions()
                 .getEnrichment();
 
-        processor.setProcessorParameter("param.security.policy.file", enrichment.getSecurityPolicyFile());
+        processor.setProcessorParameter("param.security.policy.file", enrichment.getSecurityPolicyFile(environmentConfiguration.getWorkbenchDirNormalized()));
         processor.setProcessorParameter("param.security.policy.active.ids",
                 enrichment.getSecurityPolicyActiveIds() != null
                         ? String.join(",", enrichment.getSecurityPolicyActiveIds())
@@ -434,7 +456,7 @@ public class Pipeline {
         processor.setProcessorParameter("param.context.dirs", asset.getContextDir(project, environmentConfiguration.getWorkbenchDirNormalized()));
 
         processor.setProcessorParameter("env.vulnerability.mirror.dir",
-                environmentConfiguration.VULNERABILITY_MIRROR_DIR);
+                environmentConfiguration.getMirrorDatabaseDir());
 
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }

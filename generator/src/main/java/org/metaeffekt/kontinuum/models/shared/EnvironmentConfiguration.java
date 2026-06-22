@@ -16,7 +16,7 @@ public abstract class EnvironmentConfiguration {
     public final String WORKSPACE_DIR = "./workspace/";
 
     @Builder.Default
-    public final String VULNERABILITY_MIRROR_DIR = "./mirror/";
+    private final String VULNERABILITY_MIRROR_DIR = "./mirror/";
 
     public final String VULNERABILITY_MIRROR_URL;
     public final String ARTIFACT_RESOLVER_CONFIG_FILE;
@@ -27,20 +27,37 @@ public abstract class EnvironmentConfiguration {
     public final File SETUP_COMMAND;
     private final String KONTINUUM_DIR;
 
-    public final String PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE;
+    private final String PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE;
     public final String PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD;
-    public final String PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE;
+    private final String PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE;
     public final String PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD;
     public final String PORTFOLIO_MANAGER_TOKEN;
     public final String PORTFOLIO_MANAGER_URL;
 
-
-    public String getCorrelationDir() {
-        return KontinuumUtils.normalizeDir(WORKBENCH_DIR + "correlations/");
+    public String getMirrorDir() {
+        return VULNERABILITY_MIRROR_DIR;
     }
 
+    public String getPortfolioManagerClientTruststoreFile() {
+        return KontinuumUtils.normalizeDir(WORKBENCH_DIR, PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE);
+    }
+
+    public String getPortfolioManagerClientKeystoreFile() {
+        return KontinuumUtils.normalizeDir(WORKBENCH_DIR, PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE);
+    }
+
+    public String getMirrorDatabaseDir() {
+        return KontinuumUtils.normalizeDir(VULNERABILITY_MIRROR_DIR, ".database");
+    }
+
+    public String getCorrelationDir() {
+        return KontinuumUtils.normalizeDir(WORKBENCH_DIR, "correlations/");
+    }
+
+    public String getDescriptorsDirNormalized() { return KontinuumUtils.normalizeDir(WORKBENCH_DIR, "descriptors/"); }
+
     public String getAssessmentsDir() {
-        return KontinuumUtils.normalizeDir(WORKBENCH_DIR + "assessments/");
+        return KontinuumUtils.normalizeDir(WORKBENCH_DIR, "assessments/");
     }
 
     public String getWorkbenchDirNormalized() {

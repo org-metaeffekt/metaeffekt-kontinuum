@@ -5,14 +5,19 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.metaeffekt.kontinuum.AbstractGeneratePipelineMojo;
+import org.metaeffekt.kontinuum.generator.local.LocalPipeline;
+import org.metaeffekt.kontinuum.generator.shared.PipelineConfigurationLoader;
 import org.metaeffekt.kontinuum.models.local.LocalConfiguration;
+import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 @Mojo(name = "generate-local-pipeline", defaultPhase = LifecyclePhase.GENERATE_RESOURCES)
 public class GenerateLocalPipelineMojo extends AbstractGeneratePipelineMojo {
 
-    @Parameter(property = "executionEnvironment", defaultValue = LocalConfiguration.ExecutionEnvironment.UNIX)
+    @Parameter(property = "executionEnvironment", defaultValue = "UNIX")
     private LocalConfiguration.ExecutionEnvironment executionEnvironment;
 
     @Override
@@ -26,7 +31,35 @@ public class GenerateLocalPipelineMojo extends AbstractGeneratePipelineMojo {
         }
 
         LocalConfiguration localConfiguration = LocalConfiguration.builder()
-                .executionEnvironment(executionEnvironment).build();
+                .executionEnvironment(executionEnvironment)
+                .KOSMOS_PASSWORD(kosmosPassword)
+                .KOSMOS_USERKEYS_FILE(userkeysFile)
+                .ARTIFACT_RESOLVER_CONFIG_FILE(artifactResolverConfigFile)
+                .ARTIFACT_RESOLVER_PROXY_FILE(artifactResolverProxyFile)
+                .SCAN_PROPERTIES_FILE(scanPropertiesFile)
+                .VULNERABILITY_MIRROR_DIR(vulnerabilityMirrorDir)
+                .VULNERABILITY_MIRROR_URL(vulnerabilityMirrorUrl)
+                .WORKBENCH_DIR(workbenchDir)
+                .KONTINUUM_DIR(kontinuumDir)
+                .WORKSPACE_DIR(workspaceDir)
+                .PORTFOLIO_MANAGER_URL(portfolioManagerUrl)
+                .PORTFOLIO_MANAGER_TOKEN(portfolioManagerToken)
+                .PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE(portfolioManagerClientKeystoreFile)
+                .PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD(portfolioManagerClientKeystorePassword)
+                .PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE(portfolioManagerClientTruststoreFile)
+                .PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD(portfolioManagerClientTruststorePassword)
+                .build();
 
+        PipelineConfiguration pipelineConfiguration = new PipelineConfigurationLoader().readConfig(pipelineConfigFile);
+
+        LocalPipeline localPipeline = new LocalPipeline(pipelineConfiguration, localConfiguration);
+
+        try {
+            outputFile.getParentFile().mkdirs();
+            Files.writeString(outputFile.toPath(), localPipeline.generatePipeline());
+            getLog().info("Local pipeline written to: " + outputFile.getAbsolutePath());
+        } catch (IOException e) {
+            throw new MojoExecutionException("Failed to write local pipeline file: " + outputFile, e);
+        }
     }
 }

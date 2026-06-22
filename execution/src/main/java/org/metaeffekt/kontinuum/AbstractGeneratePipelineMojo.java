@@ -10,7 +10,7 @@ public abstract class AbstractGeneratePipelineMojo extends AbstractMojo {
     @Parameter(property = "pipelineConfigPath", required = true)
     protected String pipelineConfigPath;
 
-    @Parameter(property = "outputFile", defaultValue = "${project.build.directory}/generated-pipeline/.gitlab-ci.yml")
+    @Parameter(property = "outputFile", required = true)
     protected File outputFile;
 
     @Parameter(property = "mavenCliOpts")

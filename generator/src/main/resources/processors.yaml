@@ -179,7 +179,7 @@ processors:
       This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
     pomLocation: advise/advise_enrich-with-reference.xml
     goal: process-resources
-    stage: ADVISE
+    stage: AGGREGATE
     parameters:
       - key: input.inventory.file
         description: The file path of the inventory which will be enriched with the reference inventory.
@@ -428,7 +428,7 @@ processors:
       This process downloads the vulnerability mirror index from an archive URL.
     pomLocation: mirror/mirror_download-index.xml
     goal: process-resources
-    stage: FETCH
+    stage: PRE
     parameters:
       - key: param.mirror.archive.url
         description: The source url of the vulnerability mirror archive.

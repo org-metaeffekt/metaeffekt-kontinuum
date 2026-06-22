@@ -3,6 +3,7 @@ package org.metaeffekt.kontinuum.models.shared;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ public enum ReportType {
 
     @Getter
     private final String assetDescriptorFile;
+
     ReportType(String key, String workspaceFolder, String assetDescriptorFile) {
         this.key = key;
         this.workspaceFolder = workspaceFolder;
@@ -38,5 +40,23 @@ public enum ReportType {
 
     public static Set<String> allKeys() {
         return Arrays.stream(values()).map(ReportType::getKey).collect(Collectors.toSet());
+    }
+
+    public static boolean requiresScan(ReportType... reportTypes) {
+        for (ReportType reportType : reportTypes) {
+            if (reportType.equals(INITIAL_LICENSE_DOCUMENTATION) || reportType.equals(LICENSE_DOCUMENTATION)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean requiresVulnerabilityEnrichment(ReportType... reportTypes) {
+        for (ReportType reportType : reportTypes) {
+            if (reportType.equals(CERT_REPORT) || reportType.equals(VULNERABILITY_REPORT) || reportType.equals(VULNERABILITY_SUMMARY_REPORT)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -42,8 +42,8 @@ public class Workspace {
         return new AssetPath(WORKSPACE_DIR + "06_advised/" + asset + "/", asset);
     }
 
-    public String getGroupedDir(ReportType reportType) {
-        return WORKSPACE_DIR + "07_grouped/" + reportType.getWorkspaceFolder() + "/";
+    public AssetPath getGroupedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset, ReportType reportType) {
+        return new AssetPath(WORKSPACE_DIR + "07_grouped/" + asset + "/" + reportType.getWorkspaceFolder() + "/", asset);
     }
 
     public AssetPath getReportedDirForAsset(PipelineConfiguration.ProjectProperties.Asset asset) {

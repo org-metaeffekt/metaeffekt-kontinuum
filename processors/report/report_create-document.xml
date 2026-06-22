@@ -57,7 +57,7 @@
                 <executions>
                     <execution>
                         <id>invoke-target-pom</id>
-                        <phase>verify</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
