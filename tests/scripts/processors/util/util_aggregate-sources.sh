@@ -39,7 +39,8 @@ initialize_logger() {
 }
 
 
-#Run maven command
+
+# Run maven command
 run_maven_command() {
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_aggregate-sources.xml" process-resources)
   [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
@@ -47,12 +48,10 @@ run_maven_command() {
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   [ -n "${LOCAL_MAVEN_REPO:-}" ] && CMD+=("-Dmaven.repo.local=$LOCAL_MAVEN_REPO")
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-  CMD+=("-Dtarget.dir=$CURRENT_TARGET_DIR")
-  CMD+=("-Dannex.source.dir=$ANNEX_SOURCE_DIR")
-  CMD+=("-Dretained.sources.dir=$RETAINED_SOURCES_DIR")
-  CMD+=("-Dalternative.artifact.source.mapping=$ALTERNATIVE_ARTIFACT_SOURCE_MAPPING")
-  CMD+=("-Dinclude.all.sources=$INCLUDE_ALL_SOURCES")
-  CMD+=("-Dfail.on.missing.sources=$FAIL_ON_MISSING_SOURCES")
+  CMD+=("-Doutput.artifacts.dir=$OUTPUT_ARTIFACTS_DIR")
+  CMD+=("-Dparam.property.file=$PARAM_PROPERTY_FILE")
+  CMD+=("-Dparam.include.all.sources=${PARAM_INCLUDE_ALL_SOURCES:-false}")
+  CMD+=("-Dparam.fail.on.missing.sources=${PARAM_FAIL_ON_MISSING_SOURCES:-false}")
 
   pass_command_info_to_logger "$(basename "$0")"
 }
