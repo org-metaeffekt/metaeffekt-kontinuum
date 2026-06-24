@@ -45,11 +45,10 @@
                 </executions>
                 <configuration>
                     <baseDirectory>${input.inventory.dir}</baseDirectory>
-                    <inputInventoryPath>${input.inventory.path}</inputInventoryPath>
-                    <advisorInventoryPath>${input.advisor.inventories.dir}</advisorInventoryPath>
-
                     <outputFile>${output.overview.file}</outputFile>
 
+                    <inputInventoryPath>${input.inventory.path}</inputInventoryPath>
+                    <advisorInventoryPath>${input.advisor.inventories.dir}</advisorInventoryPath>
                     <dashboardsPath>${input.dashboards.dir}</dashboardsPath>
                     <reportsPath>${input.reports.dir}</reportsPath>
 
@@ -73,14 +72,6 @@
 
 
                 </configuration>
-                <dependencies>
-                    <!-- FIXME: provide plugin with complete dependencies -->
-                    <dependency>
-                        <groupId>org.apache.logging.log4j</groupId>
-                        <artifactId>log4j-api</artifactId>
-                        <version>2.23.1</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

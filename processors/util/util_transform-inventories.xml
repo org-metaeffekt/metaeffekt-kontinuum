@@ -40,6 +40,13 @@
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.metaeffekt.artifact.analysis</groupId>
+                        <artifactId>ae-artifact-flow</artifactId>
+                        <version>${ae.artifact.analysis.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
