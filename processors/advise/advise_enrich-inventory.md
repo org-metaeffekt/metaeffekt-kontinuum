@@ -27,10 +27,11 @@ of this repository.
 | param.activate.*                 | no       | Switches determining which vulnerability databases are utilized during the enrichment process. |
 | param.exclude.nvd.equivalent.*   | no       | Switches determining if vulnerabilities equivalent to those found via nvd should be excluded.  |
 | param.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment.                      |
+| param.threat.catalog.file        | no       | A file pointing to the threat catalog to use when ${param.activate.threat}=true               |
 | param.dashboard.title            | ignore   | Title for a dashboard which could be generated during this process.                            |
 | param.dashboard.subtitle         | ignore   | Subtitle for a dashboard which could be generated during this process.                         |
 | param.dashboard.footer           | ignore   | Footer for a dashboard which could be generated during this process.                           |
-=
+
 ### Environment
 | Parameter                    | Required | Description                                        |
 |------------------------------|----------|----------------------------------------------------|

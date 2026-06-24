@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 pipeline {
     agent {
-        // bound to astronaut as various pre-conditions are required:
+        // bound to astronaut or asteroid as various pre-conditions are required:
         // - docker required
         label 'metaeffekt-astronaut'
     }
@@ -83,13 +83,13 @@ pipeline {
                 sh 'echo "EXTERNAL_WORKBENCH_DIR=\"$(pwd)/.metaeffekt-workbench\"" > external.rc'
 
                 // this is effectively workspace/.vulnerability-mirror; so next to the jobs workspace; reconsider as shared
-                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_DIR=\"$(dirname $(pwd))/.vulnerability-mirror\"" >> external.rc'
+                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_DIR=\"$(dirname $(pwd))/.vulnerability-mirror/gen6\"" >> external.rc'
 
                 // configure mirror
-                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_URL=\"http://ae-scanner/mirror/index/ae-mirror-index_gen5.tar.gz\"" >> external.rc'
+                sh 'echo "EXTERNAL_VULNERABILITY_MIRROR_URL=\"http://ae-scanner/mirror/index/ae-mirror-index_gen6.tar.gz\"" >> external.rc'
 
-                sh 'echo "AE_CORE_VERSION=\"HEAD-SNAPSHOT\"" >> external.rc'
-                sh 'echo "AE_ARTIFACT_ANALYSIS_VERSION=\"HEAD-SNAPSHOT\"" >> external.rc'
+                sh 'echo "AE_CORE_VERSION=\"0.153-SNAPSHOT\"" >> external.rc'
+                sh 'echo "AE_ARTIFACT_ANALYSIS_VERSION=\"0.156-SNAPSHOT\"" >> external.rc'
                 sh 'echo "DUMP_LOGS=\"true\"" >> external.rc'
             }
         }

@@ -11,49 +11,33 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>util_validate-reference-inventory</artifactId>
-    <packaging>pom</packaging>
-
-    <properties>
-        <artifact.inventory.enabled>true</artifact.inventory.enabled>
-    </properties>
+    <artifactId>util_execute-kotlin-script</artifactId>
+    <packaging>jar</packaging>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.metaeffekt.core</groupId>
-                <artifactId>ae-inventory-maven-plugin</artifactId>
-                <version>${ae.core.version}</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.1</version>
                 <executions>
                     <execution>
+                        <id>execute-kotlin-script</id>
+                        <phase>process-resources</phase>
                         <goals>
-                            <goal>update-inventory</goal>
+                            <goal>exec</goal>
                         </goals>
-                        <phase>compile</phase>
-                        <configuration>
-                            <sourceInventoryPath>${input.inventory.dir}/inventory/artifact-inventory.xls</sourceInventoryPath>
-                            <targetInventoryPath>${input.inventory.dir}/inventory-update/artifact-inventory.xls</targetInventoryPath>
-                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
-                    <processors>
-                        <processor>
-                            <className>org.metaeffekt.core.inventory.processor.ValidateInventoryProcessor</className>
-                            <properties>
-                                <licenses.path>${input.inventory.dir}/licenses</licenses.path>
-                                <components.path>${input.inventory.dir}/components</components.path>
-                                <failOnError>${artifact.inventory.enabled}</failOnError>
-                            </properties>
-                        </processor>
-                    </processors>
+                    <executable>kotlin</executable>
+                    <commandlineArgs>${input.kotlin.script.file} ${param.script.args}</commandlineArgs>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>${maven.enforcer.plugin.version}</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <id>enforce-property</id>
@@ -63,7 +47,7 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.inventory.dir</property>
+                                    <property>input.kotlin.script.file</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
@@ -73,5 +57,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

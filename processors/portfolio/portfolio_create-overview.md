@@ -28,6 +28,3 @@ of this repository.
 
 ### Environment
 None.
-
-# FIXMEs
-* discuss: use subpath instead of path when expecting a relative path

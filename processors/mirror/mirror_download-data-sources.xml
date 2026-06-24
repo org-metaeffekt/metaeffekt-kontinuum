@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!--
-        Copyright 2024-2025 the original author or authors.
+        Copyright 2024-2026 the original author or authors.
 
         Licensed under the Apache License, Version 2.0 (the "License");
         you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
         See the License for the specific language governing permissions and
         limitations under the License.
-        -->
+    -->
 
     <parent>
         <groupId>com.metaeffekt.kontinuum</groupId>
@@ -93,11 +93,11 @@
 
                                     <!-- The maximum allowable range when using any date range parameters is 120 consecutive days.
                                          Values must be entered in the extended ISO-8061 date/time format:
-                                         '[YYYY][“-”][MM][“-”][DD][“T”][HH][“:”][MM][“:”][SS][Z]'
+                                         '[YYYY]["-"][MM]["-"][DD]["T"][HH][":"][MM][":"][SS][Z]'
                                          - 'startIndex' 0-based index of the first CVE to be returned in the response data
                                          - 'lastModStartDate' the start date
                                          - 'lastModEndDate' the end date -->
-                                    <!-- <CVE_API_START_END_DATE>https://services.nvd.nist.gov/rest/json/cves/2.0/?startIndex=%d&amp;lastModStartDate=%s&amp;lastModEndDate=%s</CVE_API_START_END_DATE> -->
+                                    <!-- <CVE_API_START_END_DATE>https://services.nvd.nist.gov/rest/json/cves/2.0?startIndex=%d&amp;lastModStartDate=%s&amp;lastModEndDate=%s</CVE_API_START_END_DATE> -->
                                 </resourceLocations>
                             </nvdCveDownload>
 
@@ -368,6 +368,26 @@
                                 </resourceLocations>
                             </capecDownload>
 
+                            <atlasDownload>
+                                <resourceLocations>
+                                    <!-- URL for the latest MITRE ATLAS matrix in STIX 2.1 JSON format. -->
+                                    <!-- <ATLAS_STIX>https://raw.githubusercontent.com/mitre-atlas/atlas-navigator-data/refs/heads/main/dist/stix-atlas.json</ATLAS_STIX> -->
+                                </resourceLocations>
+                            </atlasDownload>
+
+                            <attackDownload>
+                                <resourceLocations>
+                                    <!-- URL for the latest Enterprise ATTACK matrix in STIX 2.1 JSON format. -->
+                                    <!-- <ENTERPRISE_ATTACK>https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/enterprise-attack/enterprise-attack.json</ENTERPRISE_ATTACK> -->
+
+                                    <!-- URL for the latest Mobile ATTACK matrix in STIX 2.1 JSON format. -->
+                                    <!-- <MOBILE_ATTACK>https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/mobile-attack/mobile-attack.json</MOBILE_ATTACK> -->
+
+                                    <!-- URL for the latest ICS ATTACK matrix in STIX 2.1 JSON format. -->
+                                    <!-- <ICS_ATTACK>https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/ics-attack/ics-attack.json</ICS_ATTACK> -->
+                                </resourceLocations>
+                            </attackDownload>
+
                         </configuration>
                     </execution>
                 </executions>
@@ -375,7 +395,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>${maven.enforcer.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>enforce-property</id>

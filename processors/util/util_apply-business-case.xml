@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+    Copyright 2026 the original author or authors.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+    -->
+
+    <parent>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
+        <version>KONTINUUM-SNAPSHOT</version>
+        <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
+    </parent>
+
+    <artifactId>util_apply-business-case</artifactId>
+
+    <properties>
+        <!-- specify param defaults -->
+        <param.language.mode>en_US</param.language.mode>
+        <param.source.mode>DISTRIBUTION_ANNEX</param.source.mode>
+        <param.notice.mode.overwrite>true</param.notice.mode.overwrite>
+
+        <!-- specify env defaults -->
+        <env.tmd.source>kosmos</env.tmd.source>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-artifact-analysis-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
+                <executions>
+                    <execution>
+                        <id>apply-business-case</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>apply-business-case</goal>
+                        </goals>
+                        <configuration>
+                            <inputInventoryFile>${input.inventory.file}</inputInventoryFile>
+                            <outputInventoryFile>${output.inventory.file}</outputInventoryFile>
+
+                            <languageMode>${param.language.mode}</languageMode>
+                            <sourceMode>${param.source.mode}</sourceMode>
+
+                            <forceOverwriteNotices>${param.notice.mode.overwrite}</forceOverwriteNotices>
+
+                            <!-- specified by profile -->
+                            <tmdGroupId>${ae.tmd.groupId}</tmdGroupId>
+                            <tmdArtifactId>${ae.tmd.artifactId}</tmdArtifactId>
+                            <tmdVersion>${ae.tmd.version}</tmdVersion>
+
+                            <userPassword>${env.tmd.password}</userPassword>
+                            <userKeysFile>${env.tmd.userkeys.file}</userKeysFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>input.inventory.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.inventory.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.tmd.userkeys.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.tmd.password</property>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+
+        <profile>
+            <id>kosmos</id>
+            <activation>
+                <property>
+                    <name>env.tmd.source</name>
+                    <value>ae-kosmos</value>
+                </property>
+            </activation>
+            <properties>
+                <ae.tmd.groupId>com.metaeffekt.kosmos</ae.tmd.groupId>
+                <ae.tmd.artifactId>ae-metaeffekt-kosmos</ae.tmd.artifactId>
+                <ae.tmd.version>${ae.kosmos.version}</ae.tmd.version>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>universe</id>
+            <activation>
+                <property>
+                    <name>env.tmd.source</name>
+                    <value>ae-universe</value>
+                </property>
+            </activation>
+            <properties>
+                <ae.tmd.groupId>com.metaeffekt.universe</ae.tmd.groupId>
+                <ae.tmd.artifactId>ae-metaeffekt-universe</ae.tmd.artifactId>
+                <ae.tmd.version>${ae.universe.version}</ae.tmd.version>
+            </properties>
+        </profile>
+
+    </profiles>
+</project>
