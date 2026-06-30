@@ -17,6 +17,7 @@
             <plugin>
                 <groupId>com.metaeffekt.portfolio.manager</groupId>
                 <artifactId>ae-portfolio-manager-maven-plugin</artifactId>
+                <version>${ae.portfolio.manager.version}</version>
                 <executions>
                     <execution>
                         <id>push-to-portfolio-manager</id>
