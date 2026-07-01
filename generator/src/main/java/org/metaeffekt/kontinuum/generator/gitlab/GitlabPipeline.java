@@ -155,6 +155,8 @@ public class GitlabPipeline {
 
     private String generateJobName(Processor processor, String assetName) {
         StringBuilder processorName =  new StringBuilder()
+                .append(assetName)
+                .append("-")
                 .append(processor.getId())
                 .append("-");
 
@@ -167,7 +169,7 @@ public class GitlabPipeline {
             processorParameter.ifPresent(parameter -> processorName.append(parameter.getValue()).append("-"));
         }
 
-        processorName.append(assetName).append(":");
+        processorName.append(":");
         return processorName.toString();
     }
  }
