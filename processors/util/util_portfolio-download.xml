@@ -32,7 +32,7 @@
                             <!-- 'upload' user token for project; always pass as credential/secret -->
                             <token>${param.portfolio.manager.token}</token>
                             <!-- the modifier initial is the default -->
-                            <modifier>initial</modifier>
+                            <modifier>${param.inventory.modifier}</modifier>
 
                             <!-- path to the keystore; replace or configure -->
                             <keyStoreFile>${param.keystore.config.file}</keyStoreFile>
@@ -101,6 +101,9 @@
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.truststore.config.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.inventory.modifier</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

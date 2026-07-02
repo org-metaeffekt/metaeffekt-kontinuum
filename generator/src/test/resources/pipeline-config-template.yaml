@@ -30,9 +30,17 @@ reports:
   - assetId: "asset1"
     types:
       - "VR"
+    organization: "metaeffekt"
+    classificationRating: "DEFAULT"
+    controlRating: "DEFAULT"
+    watermark: "Sample"
   - assetId: "asset2"
     types:
       - "CR"
+    organization: "metaeffekt"
+    classificationRating: "DEFAULT"
+    controlRating: "DEFAULT"
+    watermark: "Sample"
 
 # Dashboards define which assets should have vulnerability dashboards generated.
 dashboards:

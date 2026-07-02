@@ -29,8 +29,16 @@ projectProperties:
 reports:
   - assetId: "alacritty-0.17.0"
     types: ["VR", "LD"]
+    organization: "metaeffekt"
+    classificationRating: "DEFAULT"
+    controlRating: "DEFAULT"
+    watermark: "Sample"
   - assetId: "spdx"
     types: ["CR"]
+    organization: "metaeffekt"
+    classificationRating: "DEFAULT"
+    controlRating: "DEFAULT"
+    watermark: "Sample"
 
 # Dashboards define which assets should have vulnerability dashboards generated.
 dashboards:
@@ -51,7 +59,3 @@ options:
   enrichment:
     securityPolicyFile: "policies/security-policy/security-policy.json"
     securityPolicyActiveIds: ["base_configuration"]
-  document:
-    organization: "metaeffekt"
-    classificationRating: "DEFAULT"
-    controlRating: "DEFAULT"

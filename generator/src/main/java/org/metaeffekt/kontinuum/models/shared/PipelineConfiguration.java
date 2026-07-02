@@ -145,6 +145,10 @@ public class PipelineConfiguration {
         private String assetId;
         private List<String> types;
         private List<String> overviewAdvisors;
+        private String watermark;
+        private String organization;
+        private String classificationRating;
+        private String controlRating;
     }
 
     @Data
@@ -166,7 +170,6 @@ public class PipelineConfiguration {
 
         private GlobalOptions global = new GlobalOptions();
         private EnrichmentOptions enrichment = new EnrichmentOptions();
-        private DocumentOptions document = new DocumentOptions();
 
         @Data
         public static class GlobalOptions{
@@ -201,14 +204,6 @@ public class PipelineConfiguration {
                 File file = new File(securityPolicyFile);
                 return KontinuumUtils.normalizeDir(workbenchPath, file.getPath());
             }
-        }
-
-        @Data
-        public static class DocumentOptions{
-            private String watermark;
-            private String organization;
-            private String classificationRating;
-            private String controlRating;
         }
     }
 }

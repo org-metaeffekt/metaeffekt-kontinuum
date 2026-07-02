@@ -166,18 +166,14 @@ public class Pipeline {
                         pipelineConfiguration.getProjectProperties().getProject().getName());
                 processor.setProcessorParameter("param.product.version",
                         pipelineConfiguration.getProjectProperties().getProject().getVersion());
-                processor.setProcessorParameter("param.product.watermark",
-                        pipelineConfiguration.getOptions().getDocument().getWatermark());
+                processor.setProcessorParameter("param.product.watermark", report.getWatermark());
                 processor.setProcessorParameter("param.overview.advisors",
                         report.getOverviewAdvisors() == null || report.getOverviewAdvisors().isEmpty()
                                 ? null
                                 : String.join(", ", report.getOverviewAdvisors()));
-                processor.setProcessorParameter("param.property.selector.organization",
-                        pipelineConfiguration.getOptions().getDocument().getOrganization());
-                processor.setProcessorParameter("param.property.selector.classification",
-                        pipelineConfiguration.getOptions().getDocument().getClassificationRating());
-                processor.setProcessorParameter("param.property.selector.control",
-                        pipelineConfiguration.getOptions().getDocument().getControlRating());
+                processor.setProcessorParameter("param.property.selector.organization", report.getOrganization());
+                processor.setProcessorParameter("param.property.selector.classification", report.getClassificationRating());
+                processor.setProcessorParameter("param.property.selector.control", report.getControlRating());
                 processor.setProcessorParameter("param.security.policy.file",
                         pipelineConfiguration.getOptions().getEnrichment().getSecurityPolicyFile(environmentConfiguration.getWorkbenchDirNormalized()));
                 processor.setProcessorParameter("param.asset.descriptor.file", KontinuumUtils.normalizeDir(environmentConfiguration.getDescriptorsDirNormalized(), reportType.getAssetDescriptorFile()));
