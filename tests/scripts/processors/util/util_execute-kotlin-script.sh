@@ -42,7 +42,7 @@ initialize_logger() {
 #Run maven command
 run_maven_command() {
   echo "$INPUT_KOTLIN_SCRIPT_FILE"
-  echo "$PARAM_SCRIPT_ARGS"
+  echo "$INPUT_PROPERTIES_FILE"
 
   CMD=(mvn -f "$PROCESSORS_DIR/util/util_execute-kotlin-script.xml" process-resources)
   [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
@@ -50,7 +50,10 @@ run_maven_command() {
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   [ -n "${LOCAL_MAVEN_REPO:-}" ] && CMD+=("-Dmaven.repo.local=$LOCAL_MAVEN_REPO")
   CMD+=("-Dinput.kotlin.script.file=$INPUT_KOTLIN_SCRIPT_FILE")
-  CMD+=("-Dparam.script.args=$PARAM_SCRIPT_ARGS")
+  CMD+=("-Dinput.properties.file=$INPUT_PROPERTIES_FILE")
+  CMD+=("-Dinput.workspace.dir=$INPUT_WORKSPACE_DIR")
+  CMD+=("-Dparam.curl.arguments=$PARAM_CURL_ARGUMENTS")
+  CMD+=("-Doutput.env.file=${OUTPUT_ENV_FILE:-}")
 
   pass_command_info_to_logger "$(basename "$0")"
 }

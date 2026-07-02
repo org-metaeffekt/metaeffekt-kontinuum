@@ -846,15 +846,26 @@ processors:
 
   - name: Execute Kotlin Script
     description: |
-      This process executes a specified kotlin script file with a unspecified number of arguments.
+      This process executes a specified kotlin script file. The script is executed via the
+      ae-kotlin-scripting-maven-plugin and receives its arguments as a named parameter map
+      (accessed in the script via the implicit `params` receiver).
     pom: util/util_execute-kotlin-script.xml
     goal: process-resources
     parameters:
       - key: input.kotlin.script.file
         description: The kotlin script file to be executed.
         required: true
-      - key: param.script.args
-        description: Any additional arguments in the form of a space-separated list.
+      - key: input.properties.file
+        description: The properties file to be read by the script. Used by the fetch and read.properties scripts.
+        required: false
+      - key: input.workspace.dir
+        description: The workspace directory used by the fetch script to place downloaded assets.
+        required: false
+      - key: param.curl.arguments
+        description: Additional arguments passed to curl by the fetch script.
+        required: false
+      - key: output.env.file
+        description: The target env file written by the read.properties script.
         required: false
 
   - name: Generate Report SVG

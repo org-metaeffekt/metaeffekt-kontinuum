@@ -17,27 +17,50 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.1</version>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-kotlin-scripting-maven-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
                 <executions>
                     <execution>
                         <id>execute-kotlin-script</id>
                         <phase>process-resources</phase>
                         <goals>
-                            <goal>exec</goal>
+                            <goal>execute-script</goal>
                         </goals>
+                        <configuration>
+                            <kotlinScript>${input.kotlin.script.file}</kotlinScript>
+                            <parameterMap>
+                                <input.properties.file>${input.properties.file}</input.properties.file>
+                                <input.workspace.dir>${input.workspace.dir}</input.workspace.dir>
+                                <param.curl.arguments>${param.curl.arguments}</param.curl.arguments>
+                                <output.env.file>${output.env.file}</output.env.file>
+                            </parameterMap>
+                            <scriptExecutionClass>com.metaeffekt.artifact.analysis.scripting.kotlin.exec.InventoryScriptExecution</scriptExecutionClass>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <executable>kotlin</executable>
-                    <commandlineArgs>${input.kotlin.script.file} ${param.script.args}</commandlineArgs>
-                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.metaeffekt.artifact.analysis</groupId>
+                        <artifactId>ae-artifact-flow</artifactId>
+                        <version>${ae.artifact.analysis.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.fasterxml.jackson.module</groupId>
+                        <artifactId>jackson-module-kotlin</artifactId>
+                        <version>2.17.0</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.fasterxml.jackson.dataformat</groupId>
+                        <artifactId>jackson-dataformat-yaml</artifactId>
+                        <version>2.17.0</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>${maven.enforcer.plugin.version}</version>
                 <executions>
                     <execution>
                         <id>enforce-property</id>
