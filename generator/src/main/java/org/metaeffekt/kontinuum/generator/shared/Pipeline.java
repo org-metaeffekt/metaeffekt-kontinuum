@@ -285,22 +285,7 @@ public class Pipeline {
         Asset asset = assetPlan.getAsset();
         Processor processor = yamlProcessorCatalog.getProcessorById("portfolio-download");
 
-        if (pipelineConfiguration.getPortfolioManager().getResolve()) {
-            processor.setProcessorParameter("output.inventory.dir", workspace.getResolvedDirForAsset(asset).toString());
-            processor.setStage(Stage.RESOLVE);
-        }
-
-        if (pipelineConfiguration.getPortfolioManager().getScan()) {
-            processor.setProcessorParameter("output.inventory.dir", workspace.getScannedDirForAsset(asset).toString());
-            processor.setStage(Stage.SCAN);
-
-        }
-
-        if (pipelineConfiguration.getPortfolioManager().getEnrich()) {
-            processor.setProcessorParameter("output.inventory.dir", workspace.getAdvisedDirForAsset(asset).toString());
-            processor.setStage(Stage.ADVISE);
-        }
-
+        processor.setProcessorParameter("output.inventory.dir", workspace.getAggregatedDirForAsset(asset).toString());
         processor.setProcessorParameter("param.portfolio.manager.url", environmentConfiguration.PORTFOLIO_MANAGER_URL);
         processor.setProcessorParameter("param.portfolio.manager.token", environmentConfiguration.PORTFOLIO_MANAGER_TOKEN);
         processor.setProcessorParameter("param.project.name", pipelineConfiguration.getPortfolioManager().getProject());
@@ -312,6 +297,19 @@ public class Pipeline {
         processor.setProcessorParameter("param.keystore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
         processor.setProcessorParameter("param.truststore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
 
+
+        Processor mergeInventoriesProcessor = yamlProcessorCatalog.getProcessorById("merge-inventories");
+        mergeInventoriesProcessor.setProcessorParameter("input.inventory.dir", workspace.getAggregatedDirForAsset(asset).toString());
+        mergeInventoriesProcessor.setProcessorParameter("output.inventory.file", asset.getReference());
+
+        Processor enrichWithReferenceProcessor = yamlProcessorCatalog.getProcessorById("enrich-with-reference");
+        enrichWithReferenceProcessor.setProcessorParameter("input.inventory.file", workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
+        enrichWithReferenceProcessor.setProcessorParameter("output.inventory.dir", workspace.getAggregatedDirForAsset(asset).toString());
+        enrichWithReferenceProcessor.setProcessorParameter("output.inventory.path", null);
+        enrichWithReferenceProcessor.setProcessorParameter("param.reference.inventory.dir", asset.getReferenceDir(environmentConfiguration.getWorkbenchDirNormalized()));
+
+
+        processor.addSupportingUtilProcessor(mergeInventoriesProcessor);
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 

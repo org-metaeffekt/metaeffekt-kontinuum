@@ -87,16 +87,35 @@ public class GitlabPipeline {
                 job.append(generateJobName(processor , entry.getKey().toString())).append(System.lineSeparator());
                 job.append("  ").append("stage: ").append(processor.getStage()).append(System.lineSeparator());
                 job.append("  ").append("image: ").append(gitlabConfiguration.CONTAINER_IMAGE).append(System.lineSeparator());
-                
+                job.append(generateNeedsSection(processor, entry));
+
                 if (generateBeforeScriptBlock() != null) {
                     job.append(generateBeforeScriptBlock());
                 }
                 
                 job.append("  ").append("script: ").append(System.lineSeparator());
                 job.append("    - |").append(System.lineSeparator());
+                job.append(generateExecutionPrerequisitesBlock(processor));
                 job.append(generateMavenScriptBlock(processor));
                 gitlabPipelineDocument.append(job).append(System.lineSeparator());
             }
+        }
+    }
+
+    private String generateNeedsSection(Processor processor, Map.Entry<Asset, List<Processor>> entry) {
+        if (processor.getId().equals("portfolio-upload")
+                && entry.getValue().stream().map(Processor::getId).anyMatch(id -> id.equals("scan-directory"))) {
+            StringBuilder needsSection = new StringBuilder().append("  ").append("needs: ")
+                    .append(generateJobName(processor, entry.getKey().toString())).append(System.lineSeparator());
+
+            return needsSection.toString();
+        }
+        return "";
+    }
+
+    private String generateExecutionPrerequisitesBlock(Processor processor) {
+        if (processor.getId().equals("portfolio-download")) {
+
         }
     }
 

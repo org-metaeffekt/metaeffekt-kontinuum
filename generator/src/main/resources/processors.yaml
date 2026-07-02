@@ -179,7 +179,7 @@ processors:
       This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
     pomLocation: advise/advise_enrich-with-reference.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.inventory.file
         description: The file path of the inventory which will be enriched with the reference inventory.
@@ -200,7 +200,7 @@ processors:
       Used to convert a CycloneDX document into an inventory.
     pomLocation: convert/convert_cyclonedx-to-inventory.xml
     goal: process-resources
-    stage: PREPARE
+    stage: UTIL
     parameters:
       - key: input.bom.file
         description: The CycloneDX bom which to convert to an inventory.
@@ -227,7 +227,7 @@ processors:
       Used to convert an inventory into a CycloneDX BOM either xml or json format.
     pomLocation: convert/convert_inventory-to-cyclonedx.xml
     goal: process-resources
-    stage: PREPARE
+    stage: UTIL
     parameters:
       - key: input.inventory.file
         description: The input inventory file used to generate the CycloneDX BOM.
@@ -287,7 +287,7 @@ processors:
       This process converts an inventory, independent of which stage it was produced in, into an SPDX document. Parameters marked as "not required" already have default values associated.
     pomLocation: convert/convert_inventory-to-spdx.xml
     goal: process-resources
-    stage: PREPARE
+    stage: UTIL
     parameters:
       - key: input.inventory.file
         description: The input inventory file used to generate the SPDX BOM.
@@ -989,7 +989,7 @@ processors:
       This process merges multiple input inventories into one output inventory. The input inventories are specified using a directory. Additionally, a regex can be provided to further specify the inventories used for merging within the given directory. This process can be triggered at any point in the pipeline and is not bound to a phase.
     pomLocation: util/util_merge-inventories.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.inventory.dir
         description: The directory containing the inventories to be merged.
@@ -1007,7 +1007,7 @@ processors:
       This process enables the download of specific assets from a running portfolio manager service.
     pomLocation: util/util_portfolio-download.xml
     goal: process-resources
-    stage: SCAN
+    stage: AGGREGATE
     parameters:
       - key: output.inventory.dir
         description: The directory in which to download all fitting inventories.
@@ -1061,7 +1061,7 @@ processors:
       This process enables the upload of specific assets to a running portfolio manager service.
     pomLocation: util/util_portfolio-upload.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: PREPARE
     parameters:
       - key: input.file
         description: The SBOM or inventory file to upload.

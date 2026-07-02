@@ -17,7 +17,9 @@ public enum Stage {
     ADVISE("06_advised"),
     GROUP("07_grouped"),
     REPORT("08_reported"),
-    SUMMARIZE("09_summarized");
+    SUMMARIZE("09_summarized"),
+    UTIL("xx_additional"),
+    POST(".post");
 
     @Getter
     private final String stageDirectory;

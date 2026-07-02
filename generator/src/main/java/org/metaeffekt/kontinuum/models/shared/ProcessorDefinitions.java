@@ -1,10 +1,14 @@
 package org.metaeffekt.kontinuum.models.shared;
 
 
+import lombok.AccessLevel;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 @Data
@@ -20,7 +24,9 @@ public class ProcessorDefinitions {
         String goal;
         Stage stage;
         List<ProcessorParameter> parameters;
-        int executionOrder;
+
+        @Setter(AccessLevel.NONE)
+        List<Processor> supportingUtilProcessors = new ArrayList<>();
 
         public void setProcessorParameter(String key, String value) {
             if (parameters.stream().noneMatch(p -> p.key.equals(key))) {
@@ -52,6 +58,12 @@ public class ProcessorDefinitions {
             }
 
             return mavenCall.toString();
+        }
+
+        public void addSupportingUtilProcessor(Processor processor) {
+            if (processor != null) {
+                supportingUtilProcessors.add(processor);
+            }
         }
     }
 

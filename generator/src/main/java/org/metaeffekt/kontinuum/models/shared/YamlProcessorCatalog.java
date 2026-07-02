@@ -46,7 +46,6 @@ public class YamlProcessorCatalog implements ProcessorCatalog {
         copy.setPomLocation(original.getPomLocation());
         copy.setGoal(original.getGoal());
         copy.setStage(original.getStage());
-        copy.setExecutionOrder(original.getExecutionOrder());
         List<ProcessorDefinitions.ProcessorParameter> copiedParameters = new ArrayList<>();
         for (ProcessorDefinitions.ProcessorParameter parameter : original.getParameters()) {
             ProcessorDefinitions.ProcessorParameter parameterCopy = new ProcessorDefinitions.ProcessorParameter();
