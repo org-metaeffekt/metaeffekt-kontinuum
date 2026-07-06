@@ -1021,6 +1021,9 @@ processors:
       - key: param.asset.name
         description: The asset name to download.
         required: true
+      - key: param.inventory.modifier
+        description: The modifier determining in which state the inventory to download must exist.
+        required: true
       - key: param.asset.version
         description: The asset version to download.
         required: true

@@ -339,6 +339,7 @@ public class Pipeline {
         processor.setProcessorParameter(ProcessorParameterKey.PARAM_TRUSTSTORE_CONFIG_FILE, environmentConfiguration.getPortfolioManagerClientTruststoreFile());
         processor.setProcessorParameter(ProcessorParameterKey.PARAM_KEYSTORE_PASSWORD, environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
         processor.setProcessorParameter(ProcessorParameterKey.PARAM_TRUSTSTORE_PASSWORD, environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_INVENTORY_MODIFIER, "scanned");
 
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
