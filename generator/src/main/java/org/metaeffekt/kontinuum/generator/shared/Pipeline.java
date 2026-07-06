@@ -10,14 +10,15 @@ import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
 import org.metaeffekt.kontinuum.util.KontinuumUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Pipeline {
 
     private final List<AssetPlan> assetPlans = new ArrayList<>();
-    private final Map<Asset, List<Processor>> assetProcessorsMap = new HashMap<>();
+
+    private final Map<Asset, List<Processor>> assetProcessorsMap = new LinkedHashMap<>();
 
     private final PipelineConfiguration pipelineConfiguration;
 
@@ -42,37 +43,165 @@ public class Pipeline {
 
     public Map<Asset, List<Processor>> generatePipeline() {
         for (AssetPlan assetPlan : assetPlans) {
-            addMirrorDownloadProcessor(assetPlan);
-            addFetchProcessor(assetPlan);
-            addInspectImageProcessor(assetPlan);
-            addScanDirectoryProcessor(assetPlan);
-            addPortfolioUploadProcessor(assetPlan);
-            addPortfolioDownloadProcessor(assetPlan);
-            addEnrichWithReferenceProcessor(assetPlan);
-            addResolveProcessor(assetPlan);
-            addScanProcessor(assetPlan);
-            addVulnerabilityEnrichmentProcessor(assetPlan);
-            addReportProcessors(assetPlan);
-            addDashboardProcessors(assetPlan);
+            addPreStageProcessors(assetPlan);
+            addFetchStageProcessors(assetPlan);
+            addExtractStageProcessors(assetPlan);
+            addPrepareStageProcessors(assetPlan);
+            addAggregateStageProcessors(assetPlan);
+            addResolveStageProcessors(assetPlan);
+            addScanStageProcessors(assetPlan);
+            addAdviseStageProcessors(assetPlan);
+            addGroupStageProcessors(assetPlan);
+            addReportStageProcessors(assetPlan);
+            addSummarizeStageProcessors(assetPlan);
+            addPostStageProcessors(assetPlan);
         }
 
         return assetProcessorsMap;
     }
 
-    private void addMirrorDownloadProcessor(AssetPlan assetPlan) {
-        if (!assetPlan.isRequireVulnerabilityMirror()) {
-            return;
+
+    private void addPreStageProcessors(AssetPlan assetPlan) {
+        if (assetPlan.isRequireVulnerabilityMirror()) {
+            addDownloadIndexProcessor(assetPlan);
+        }
+    }
+
+    private void addFetchStageProcessors(AssetPlan assetPlan) {
+        if (assetPlan.isRequireFetch()) {
+            addDownloadAssetProcessor(assetPlan);
+        }
+    }
+
+    private void addExtractStageProcessors(AssetPlan assetPlan) {
+        if (assetPlan.isRequireContainerInspect()) {
+            addInspectImageProcessor(assetPlan);
+        }
+    }
+
+    private void addPrepareStageProcessors(AssetPlan assetPlan) {
+        if (assetPlan.isRequireExtract()) {
+            addScanDirectoryProcessor(assetPlan);
         }
 
+        if (assetPlan.isRequirePortfolioIntegration()) {
+            addPortfolioUploadProcessor(assetPlan);
+        }
+    }
+
+    private void addAggregateStageProcessors(AssetPlan assetPlan) {
+        if (assetPlan.isRequirePortfolioIntegration()) {
+            addPortfolioDownloadProcessor(assetPlan);
+        }
+        addEnrichWithReferenceProcessor(assetPlan, Stage.AGGREGATE);
+    }
+
+    private void addResolveStageProcessors(AssetPlan assetPlan) {
+        if (assetPlan.isRequireResolve()) {
+            addResolveProcessor(assetPlan);
+        }
+    }
+
+    private void addScanStageProcessors(AssetPlan assetPlan) {
+        if (assetPlan.isRequireLicenseScan()) {
+            addScanProcessor(assetPlan);
+        }
+    }
+
+    private void addAdviseStageProcessors(AssetPlan assetPlan) {
+        if (assetPlan.isRequireVulnerabilityEnrichment()) {
+            addVulnerabilityEnrichmentProcessor(assetPlan);
+        }
+    }
+
+    private void addGroupStageProcessors(AssetPlan assetPlan) {}
+
+    private void addReportStageProcessors(AssetPlan assetPlan) {
+        addDashboardProcessors(assetPlan);
+        addReportProcessors(assetPlan);
+    }
+
+    private void addSummarizeStageProcessors(AssetPlan assetPlan) {}
+
+    private void addPostStageProcessors(AssetPlan assetPlan) {}
+
+
+    private void addDownloadIndexProcessor(AssetPlan assetPlan) {
         Processor processor = yamlProcessorCatalog.getProcessorById("download-index");
-        processor.setProcessorParameter("param.mirror.archive.url", environmentConfiguration.VULNERABILITY_MIRROR_URL);
-        processor.setProcessorParameter("env.vulnerability.mirror.dir", environmentConfiguration.getMirrorDir());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_MIRROR_ARCHIVE_URL, environmentConfiguration.VULNERABILITY_MIRROR_URL);
+        processor.setProcessorParameter(ProcessorParameterKey.ENV_VULNERABILITY_MIRROR_DIR, environmentConfiguration.getMirrorDir());
+
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
+    }
+
+    private void addDownloadAssetProcessor(AssetPlan assetPlan) {
+        Asset asset = assetPlan.getAsset();
+        Processor processor = yamlProcessorCatalog.getProcessorById("download-asset");
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_URL, asset.getUrlResolver().getUrl());
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_ASSET_DIR, workspace.getStageDirForAsset(asset, Stage.FETCH).toString());
+
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
+    }
+
+    private void addInspectImageProcessor(AssetPlan assetPlan) {
+        Asset asset = assetPlan.getAsset();
+        Processor processor = yamlProcessorCatalog.getProcessorById("save-inspect-image");
+
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_DIR, workspace.getStageDirForAsset(asset, Stage.PREPARE).toString());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_IMAGE_ID,
+                asset.getContainerResolver().getImage());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_IMAGE_VERSION,
+                asset.getContainerResolver().getTag());
+
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
+    }
+
+    private void addScanDirectoryProcessor(AssetPlan assetPlan) {
+        Asset asset = assetPlan.getAsset();
+        Processor processor = yamlProcessorCatalog.getProcessorById("scan-directory");
+
+        if (assetPlan.isRequireFetch()) {
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_EXTRACT_DIR,
+                    workspace.getStageDirForAsset(asset, Stage.FETCH).toString());
+        } else if (assetPlan.isRequireContainerInspect()) {
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_EXTRACT_DIR,
+                    workspace.getStageDirForAsset(asset, Stage.EXTRACT).toString());
+        }
+
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_SCAN_DIR,
+                workspace.getStageDirForAsset(asset, Stage.PREPARE).toString() + "scan/");
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_INVENTORY_FILE,
+                workspace.getStageDirForAsset(asset, Stage.PREPARE).appendAssetInventory());
+
+        String referenceDir = asset.getReferenceDir(environmentConfiguration.getWorkbenchDirNormalized());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_REFERENCE_INVENTORY_DIR, referenceDir);
+
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
+    }
+
+
+    private void addPortfolioUploadProcessor(AssetPlan assetPlan) {
+        Asset asset = assetPlan.getAsset();
+        Processor processor = yamlProcessorCatalog.getProcessorById("portfolio-upload");
+
+        processor.setProcessorParameter(ProcessorParameterKey.INPUT_FILE, workspace.getStageDirForAsset(asset, Stage.PREPARE).appendAssetInventory());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_PORTFOLIO_MANAGER_URL, environmentConfiguration.PORTFOLIO_MANAGER_URL);
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_PORTFOLIO_MANAGER_TOKEN, environmentConfiguration.PORTFOLIO_MANAGER_TOKEN);
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_PROJECT_NAME, pipelineConfiguration.getPortfolioManager().getProject());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_GROUP_ID, pipelineConfiguration.getPortfolioManager().getAssetGroup());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_NAME, asset.getName());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_VERSION, asset.getVersion());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_KEYSTORE_CONFIG_FILE, environmentConfiguration.getPortfolioManagerClientKeystoreFile());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_TRUSTSTORE_CONFIG_FILE, environmentConfiguration.getPortfolioManagerClientTruststoreFile());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_KEYSTORE_PASSWORD, environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_TRUSTSTORE_PASSWORD, environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
 
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
     private void addDashboardProcessors(AssetPlan assetPlan) {
         List<Dashboard> dashboards = pipelineConfiguration.getDashboards();
+        Asset asset = assetPlan.getAsset();
         if (dashboards == null || dashboards.isEmpty()) {
             return;
         }
@@ -88,25 +217,25 @@ public class Pipeline {
                     .getProjectProperties()
                     .getProject();
 
-            processor.setProcessorParameter("input.inventory.file",
-                    workspace.getAdvisedDirForAsset(assetPlan.getAsset()).appendAssetInventory());
-            processor.setProcessorParameter("output.dashboard.file",
-                    workspace.getReportedDirForAsset(assetPlan.getAsset()).toString() + "dashboard.html");
-            processor.setProcessorParameter("param.security.policy.file",
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
+                    workspace.getStageDirForAsset(asset, Stage.ADVISE).appendAssetInventory());
+            processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_DASHBOARD_FILE,
+                    workspace.getStageDirForAsset(asset, Stage.REPORT).toString() + "dashboard.html");
+            processor.setProcessorParameter(ProcessorParameterKey.PARAM_SECURITY_POLICY_FILE,
                     enrichmentOptions.getSecurityPolicyFile(environmentConfiguration.getWorkbenchDirNormalized()));
-            processor.setProcessorParameter("param.security.policy.active.ids",
+            processor.setProcessorParameter(ProcessorParameterKey.PARAM_SECURITY_POLICY_ACTIVE_IDS,
                     enrichmentOptions.getSecurityPolicyActiveIds() != null
                             ? String.join(",",
                             pipelineConfiguration.getOptions()
                                     .getEnrichment()
                                     .getSecurityPolicyActiveIds()) : null);
-            processor.setProcessorParameter("param.tenant.id",
+            processor.setProcessorParameter(ProcessorParameterKey.PARAM_TENANT_ID,
                     project.getTenant());
-            processor.setProcessorParameter("param.asset.id",
+            processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_ID,
                     assetPlan.getAsset().getAssessmentId());
-            processor.setProcessorParameter("param.assessment.context",
+            processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSESSMENT_CONTEXT,
                     assetPlan.getAsset().getContext());
-            processor.setProcessorParameter("env.vulnerability.mirror.dir",
+            processor.setProcessorParameter(ProcessorParameterKey.ENV_VULNERABILITY_MIRROR_DIR,
                     environmentConfiguration.getMirrorDatabaseDir());
 
             assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
@@ -140,54 +269,54 @@ public class Pipeline {
                 Asset asset = assetPlan.getAsset();
 
                 if (ReportType.requiresScan(reportType)) {
-                    processor.setProcessorParameter("input.inventory.dir", workspace.getScannedDirForAsset(asset).toString());
+                    processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, Stage.SCAN).toString());
                 } else if (ReportType.requiresVulnerabilityEnrichment(reportType)) {
-                    processor.setProcessorParameter("input.inventory.dir", workspace.getAdvisedDirForAsset(asset).toString());
+                    processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, Stage.ADVISE).toString());
                 } else if (assetPlan.isRequireResolve()){
-                    processor.setProcessorParameter("input.inventory.dir", workspace.getResolvedDirForAsset(asset).toString());
+                    processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, Stage.RESOLVE).toString());
                 } else {
-                    processor.setProcessorParameter("input.inventory.dir", workspace.getAggregatedDirForAsset(asset).toString());
+                    processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, Stage.AGGREGATE).toString());
                 }
 
-                processor.setProcessorParameter("output.document.file",
-                        workspace.getReportedDirForAsset(asset).toString());
+                processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_DOCUMENT_FILE,
+                        workspace.getStageDirForAsset(asset, Stage.REPORT).toString());
 
-                processor.setProcessorParameter("param.computed.inventory.dir",
-                        workspace.getReportedDirForAsset(asset).toString());
-                processor.setProcessorParameter("param.document.type", type);
-                processor.setProcessorParameter("param.document.language",
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_COMPUTED_INVENTORY_DIR,
+                        workspace.getStageDirForAsset(asset, Stage.REPORT).toString());
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_DOCUMENT_TYPE, type);
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_DOCUMENT_LANGUAGE,
                         pipelineConfiguration.getOptions().getGlobal().getDocumentLanguage());
 
-                processor.setProcessorParameter("param.asset.id", assetPlan.getAsset().getId());
-                processor.setProcessorParameter("param.asset.name", assetPlan.getAsset().getName());
-                processor.setProcessorParameter("param.asset.version", assetPlan.getAsset().getVersion());
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_ID, assetPlan.getAsset().getId());
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_NAME, assetPlan.getAsset().getName());
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_VERSION, assetPlan.getAsset().getVersion());
 
-                processor.setProcessorParameter("param.product.name",
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_PRODUCT_NAME,
                         pipelineConfiguration.getProjectProperties().getProject().getName());
-                processor.setProcessorParameter("param.product.version",
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_PRODUCT_VERSION,
                         pipelineConfiguration.getProjectProperties().getProject().getVersion());
-                processor.setProcessorParameter("param.product.watermark", report.getWatermark());
-                processor.setProcessorParameter("param.overview.advisors",
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_PRODUCT_WATERMARK, report.getWatermark());
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_OVERVIEW_ADVISORS,
                         report.getOverviewAdvisors() == null || report.getOverviewAdvisors().isEmpty()
                                 ? null
                                 : String.join(", ", report.getOverviewAdvisors()));
-                processor.setProcessorParameter("param.property.selector.organization", report.getOrganization());
-                processor.setProcessorParameter("param.property.selector.classification", report.getClassificationRating());
-                processor.setProcessorParameter("param.property.selector.control", report.getControlRating());
-                processor.setProcessorParameter("param.security.policy.file",
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_PROPERTY_SELECTOR_ORGANIZATION, report.getOrganization());
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_PROPERTY_SELECTOR_CLASSIFICATION, report.getClassificationRating());
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_PROPERTY_SELECTOR_CONTROL, report.getControlRating());
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_SECURITY_POLICY_FILE,
                         pipelineConfiguration.getOptions().getEnrichment().getSecurityPolicyFile(environmentConfiguration.getWorkbenchDirNormalized()));
-                processor.setProcessorParameter("param.asset.descriptor.file", KontinuumUtils.normalizeDir(environmentConfiguration.getDescriptorsDirNormalized(), reportType.getAssetDescriptorFile()));
-                processor.setProcessorParameter("param.reference.inventory.dir",
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_DESCRIPTOR_FILE, KontinuumUtils.normalizeDir(environmentConfiguration.getDescriptorsDirNormalized(), reportType.getAssetDescriptorFile()));
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_REFERENCE_INVENTORY_DIR,
                         assetPlan.getAsset().getReferenceDir(environmentConfiguration.getWorkbenchDirNormalized()));
-                processor.setProcessorParameter("param.reference.license.dir", null);
-                processor.setProcessorParameter("param.reference.component.dir", null);
-                processor.setProcessorParameter("env.kontinuum.dir",
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_REFERENCE_LICENSE_DIR, null);
+                processor.setProcessorParameter(ProcessorParameterKey.PARAM_REFERENCE_COMPONENT_DIR, null);
+                processor.setProcessorParameter(ProcessorParameterKey.ENV_KONTINUUM_DIR,
                         environmentConfiguration.getKontinuumDirNormalized());
-                processor.setProcessorParameter("env.kontinuum.processors.dir",
+                processor.setProcessorParameter(ProcessorParameterKey.ENV_KONTINUUM_PROCESSORS_DIR,
                         environmentConfiguration.getKontinuumProcessorsDirNormalized());
-                processor.setProcessorParameter("env.workbench.dir",
+                processor.setProcessorParameter(ProcessorParameterKey.ENV_WORKBENCH_DIR,
                         environmentConfiguration.getWorkbenchDirNormalized());
-                processor.setProcessorParameter("env.vulnerability.mirror.dir",
+                processor.setProcessorParameter(ProcessorParameterKey.ENV_VULNERABILITY_MIRROR_DIR,
                         environmentConfiguration.getMirrorDatabaseDir());
 
                 assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
@@ -195,261 +324,144 @@ public class Pipeline {
         }
     }
 
-
-    private void addFetchProcessor(AssetPlan assetPlan) {
-        if (!assetPlan.isRequireFetch()) {
-            return;
-        }
-
-        Asset asset = assetPlan.getAsset();
-        Processor processor = yamlProcessorCatalog.getProcessorById("download-asset");
-        processor.setProcessorParameter("param.asset.url", asset.getUrlResolver().getUrl());
-        processor.setProcessorParameter("output.asset.dir", workspace.getFetchedDirForAsset(asset).toString());
-
-        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
-    }
-
-    private void addInspectImageProcessor(AssetPlan assetPlan) {
-        if (!assetPlan.isRequireContainerInspect()) {
-            return;
-        }
-
-        Asset asset = assetPlan.getAsset();
-        Processor processor = yamlProcessorCatalog.getProcessorById("save-inspect-image");
-
-        processor.setProcessorParameter("output.dir", workspace.getPreparedDirForAsset(asset).toString());
-        processor.setProcessorParameter("param.image.id",
-                asset.getContainerResolver().getImage());
-        processor.setProcessorParameter("param.image.version",
-                asset.getContainerResolver().getTag());
-
-        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
-    }
-
-    private void addScanDirectoryProcessor(AssetPlan assetPlan) {
-        Asset asset = assetPlan.getAsset();
-        if (!assetPlan.isRequireExtract()) {
-            return;
-        }
-
-        Processor processor = yamlProcessorCatalog.getProcessorById("scan-directory");
-
-        if (assetPlan.isRequireFetch()) {
-            processor.setProcessorParameter("input.extract.dir",
-                    workspace.getFetchedDirForAsset(asset).toString());
-        } else if (assetPlan.isRequireContainerInspect()) {
-            processor.setProcessorParameter("input.extract.dir",
-                    workspace.getExtractedDirForAsset(asset).toString());
-        }
-
-        processor.setProcessorParameter("output.scan.dir",
-                workspace.getPreparedDirForAsset(asset).toString() + "scan/");
-        processor.setProcessorParameter("output.inventory.file",
-                workspace.getPreparedDirForAsset(asset).appendAssetInventory());
-
-        String referenceDir = asset.getReferenceDir(environmentConfiguration.getWorkbenchDirNormalized());
-        processor.setProcessorParameter("param.reference.inventory.dir", referenceDir);
-
-        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
-    }
-
-
-    private void addPortfolioUploadProcessor(AssetPlan assetPlan) {
-        if (!assetPlan.isRequirePortfolioIntegration()) {
-            return;
-        }
-
-        Asset asset = assetPlan.getAsset();
-        Processor processor = yamlProcessorCatalog.getProcessorById("portfolio-upload");
-
-        processor.setProcessorParameter("input.file", workspace.getPreparedDirForAsset(asset).appendAssetInventory());
-        processor.setProcessorParameter("param.portfolio.manager.url", environmentConfiguration.PORTFOLIO_MANAGER_URL);
-        processor.setProcessorParameter("param.portfolio.manager.token", environmentConfiguration.PORTFOLIO_MANAGER_TOKEN);
-        processor.setProcessorParameter("param.project.name", pipelineConfiguration.getPortfolioManager().getProject());
-        processor.setProcessorParameter("param.asset.group.id", pipelineConfiguration.getPortfolioManager().getAssetGroup());
-        processor.setProcessorParameter("param.asset.name", asset.getName());
-        processor.setProcessorParameter("param.asset.version", asset.getVersion());
-        processor.setProcessorParameter("param.keystore.config.file", environmentConfiguration.getPortfolioManagerClientKeystoreFile());
-        processor.setProcessorParameter("param.truststore.config.file", environmentConfiguration.getPortfolioManagerClientTruststoreFile());
-        processor.setProcessorParameter("param.keystore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
-        processor.setProcessorParameter("param.truststore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
-
-        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
-    }
-
     private void addPortfolioDownloadProcessor(AssetPlan assetPlan) {
-        if (!assetPlan.isRequirePortfolioIntegration()) {
-            return;
-        }
-
         Asset asset = assetPlan.getAsset();
         Processor processor = yamlProcessorCatalog.getProcessorById("portfolio-download");
 
-        processor.setProcessorParameter("output.inventory.dir", workspace.getAggregatedDirForAsset(asset).toString());
-        processor.setProcessorParameter("param.portfolio.manager.url", environmentConfiguration.PORTFOLIO_MANAGER_URL);
-        processor.setProcessorParameter("param.portfolio.manager.token", environmentConfiguration.PORTFOLIO_MANAGER_TOKEN);
-        processor.setProcessorParameter("param.project.name", pipelineConfiguration.getPortfolioManager().getProject());
-        processor.setProcessorParameter("param.asset.group.id", pipelineConfiguration.getPortfolioManager().getAssetGroup());
-        processor.setProcessorParameter("param.asset.name", asset.getName());
-        processor.setProcessorParameter("param.asset.version", asset.getVersion());
-        processor.setProcessorParameter("param.keystore.config.file", environmentConfiguration.getPortfolioManagerClientKeystoreFile());
-        processor.setProcessorParameter("param.truststore.config.file", environmentConfiguration.getPortfolioManagerClientTruststoreFile());
-        processor.setProcessorParameter("param.keystore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
-        processor.setProcessorParameter("param.truststore.password", environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, Stage.AGGREGATE).toString());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_PORTFOLIO_MANAGER_URL, environmentConfiguration.PORTFOLIO_MANAGER_URL);
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_PORTFOLIO_MANAGER_TOKEN, environmentConfiguration.PORTFOLIO_MANAGER_TOKEN);
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_PROJECT_NAME, pipelineConfiguration.getPortfolioManager().getProject());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_GROUP_ID, pipelineConfiguration.getPortfolioManager().getAssetGroup());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_NAME, asset.getName());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_VERSION, asset.getVersion());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_KEYSTORE_CONFIG_FILE, environmentConfiguration.getPortfolioManagerClientKeystoreFile());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_TRUSTSTORE_CONFIG_FILE, environmentConfiguration.getPortfolioManagerClientTruststoreFile());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_KEYSTORE_PASSWORD, environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_TRUSTSTORE_PASSWORD, environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
 
-
-        Processor mergeInventoriesProcessor = yamlProcessorCatalog.getProcessorById("merge-inventories");
-        mergeInventoriesProcessor.setProcessorParameter("input.inventory.dir", workspace.getAggregatedDirForAsset(asset).toString());
-        mergeInventoriesProcessor.setProcessorParameter("output.inventory.file", asset.getReference());
-
-        Processor enrichWithReferenceProcessor = yamlProcessorCatalog.getProcessorById("enrich-with-reference");
-        enrichWithReferenceProcessor.setProcessorParameter("input.inventory.file", workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
-        enrichWithReferenceProcessor.setProcessorParameter("output.inventory.dir", workspace.getAggregatedDirForAsset(asset).toString());
-        enrichWithReferenceProcessor.setProcessorParameter("output.inventory.path", null);
-        enrichWithReferenceProcessor.setProcessorParameter("param.reference.inventory.dir", asset.getReferenceDir(environmentConfiguration.getWorkbenchDirNormalized()));
-
-
-        processor.addSupportingUtilProcessor(mergeInventoriesProcessor);
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
 
-    private void addEnrichWithReferenceProcessor(AssetPlan assetPlan) {
-        if (!assetPlan.isRequireReferenceEnrichment()) {
-            return;
-        }
-
+    private void addEnrichWithReferenceProcessor(AssetPlan assetPlan, Stage stage) {
         Asset asset = assetPlan.getAsset();
         Processor processor = yamlProcessorCatalog
-                .getProcessorById("enrich-with-reference");
+                .getProcessorById("enrich-inventory-with-reference");
 
-        processor.setProcessorParameter("input.inventory.file",
-                workspace.getPreparedDirForAsset(asset).appendAssetInventory());
+        processor.setStage(stage);
+        processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
+                workspace.getStageDirForAsset(asset, stage).appendAssetInventory());
 
         String referenceDir = asset.getReferenceDir(environmentConfiguration.getWorkbenchDirNormalized());
         if (referenceDir != null) {
-            processor.setProcessorParameter("param.reference.inventory.dir", referenceDir);
+            processor.setProcessorParameter(ProcessorParameterKey.PARAM_REFERENCE_INVENTORY_DIR, referenceDir);
         }
 
-        processor.setProcessorParameter("output.inventory.dir",
-                workspace.getAggregatedDirForAsset(asset).toString());
-        processor.setProcessorParameter("output.inventory.path", asset + ".xlsx");
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
     private void addResolveProcessor(AssetPlan assetPlan) {
-        if (!assetPlan.isRequireResolve()) {
-            return;
-        }
-
         Asset asset = assetPlan.getAsset();
         Processor processor = yamlProcessorCatalog.getProcessorById("resolve-inventory");
 
         if (assetPlan.isRequireAggregation()) {
-            processor.setProcessorParameter("input.inventory.file",
-                    workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
+                    workspace.getStageDirForAsset(asset, Stage.AGGREGATE).appendAssetInventory());
         } else {
-            processor.setProcessorParameter("input.inventory.file",
-                    workspace.getPreparedDirForAsset(asset).appendAssetInventory());
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
+                    workspace.getStageDirForAsset(asset, Stage.PREPARE).appendAssetInventory());
         }
 
-        processor.setProcessorParameter("output.inventory.file",
-                workspace.getResolvedDirForAsset(asset).appendAssetInventory());
-        processor.setProcessorParameter("param.artifact.resolver.config.file",
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_INVENTORY_FILE,
+                workspace.getStageDirForAsset(asset, Stage.RESOLVE).appendAssetInventory());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ARTIFACT_RESOLVER_CONFIG_FILE,
                 environmentConfiguration.ARTIFACT_RESOLVER_CONFIG_FILE);
-        processor.setProcessorParameter("param.artifact.resolver.proxy.file",
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ARTIFACT_RESOLVER_PROXY_FILE,
                 environmentConfiguration.ARTIFACT_RESOLVER_PROXY_FILE);
-        processor.setProcessorParameter("env.maven.index.dir", workspace.MAVEN_INDEX_DIR);
+        processor.setProcessorParameter(ProcessorParameterKey.ENV_MAVEN_INDEX_DIR, workspace.MAVEN_INDEX_DIR);
 
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
     private void addScanProcessor(AssetPlan assetPlan) {
-        if (!assetPlan.isRequireLicenseScan()) {
-            return;
-        }
-
         Asset asset = assetPlan.getAsset();
         Processor processor = yamlProcessorCatalog.getProcessorById("scan-inventory");
 
         if (assetPlan.isRequireResolve()) {
-            processor.setProcessorParameter("input.inventory.file",
-                    workspace.getResolvedDirForAsset(asset).appendAssetInventory());
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
+                    workspace.getStageDirForAsset(asset, Stage.RESOLVE).appendAssetInventory());
         } else if (assetPlan.isRequireAggregation()) {
-            processor.setProcessorParameter("input.inventory.file",
-                    workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
+                    workspace.getStageDirForAsset(asset, Stage.AGGREGATE).appendAssetInventory());
         } else {
-            processor.setProcessorParameter("input.inventory.file",
-                    workspace.getPreparedDirForAsset(asset).appendAssetInventory());
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
+                    workspace.getStageDirForAsset(asset, Stage.PREPARE).appendAssetInventory());
         }
 
-        processor.setProcessorParameter("output.inventory.file",
-                workspace.getScannedDirForAsset(asset).appendAssetInventory());
-        processor.setProcessorParameter("input.output.analysis.base.dir",
-                workspace.getScannedDirForAsset(asset) + "analysis/");
-        processor.setProcessorParameter("param.properties.file",
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_INVENTORY_FILE,
+                workspace.getStageDirForAsset(asset, Stage.SCAN).appendAssetInventory());
+        processor.setProcessorParameter(ProcessorParameterKey.INPUT_OUTPUT_ANALYSIS_BASE_DIR,
+                workspace.getStageDirForAsset(asset, Stage.SCAN) + "analysis/");
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_PROPERTIES_FILE,
                 environmentConfiguration.SCAN_PROPERTIES_FILE);
-        processor.setProcessorParameter("env.kosmos.password",
+        processor.setProcessorParameter(ProcessorParameterKey.ENV_KOSMOS_PASSWORD,
                 environmentConfiguration.KOSMOS_PASSWORD);
-        processor.setProcessorParameter("env.kosmos.userkeys.file",
+        processor.setProcessorParameter(ProcessorParameterKey.ENV_KOSMOS_USERKEYS_FILE,
                 environmentConfiguration.KOSMOS_USERKEYS_FILE);
 
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
     private void addVulnerabilityEnrichmentProcessor(AssetPlan assetPlan) {
-        if (!assetPlan.isRequireVulnerabilityEnrichment()) {
-            return;
-        }
-
         Asset asset = assetPlan.getAsset();
         Processor processor = yamlProcessorCatalog.getProcessorById("enrich-inventory");
 
         if (assetPlan.isRequireResolve()) {
-            processor.setProcessorParameter("input.inventory.file",
-                    workspace.getResolvedDirForAsset(asset).appendAssetInventory());
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
+                    workspace.getStageDirForAsset(asset, Stage.RESOLVE).appendAssetInventory());
         } else if (assetPlan.isRequireAggregation()) {
-            processor.setProcessorParameter("input.inventory.file",
-                    workspace.getAggregatedDirForAsset(asset).appendAssetInventory());
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
+                    workspace.getStageDirForAsset(asset, Stage.AGGREGATE).appendAssetInventory());
         } else {
-            processor.setProcessorParameter("input.inventory.file",
-                    workspace.getPreparedDirForAsset(asset).appendAssetInventory());
+            processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
+                    workspace.getStageDirForAsset(asset, Stage.PREPARE).appendAssetInventory());
         }
 
-        processor.setProcessorParameter("output.inventory.file",
-                workspace.getAdvisedDirForAsset(asset).appendAssetInventory());
-        processor.setProcessorParameter("output.tmp.dir", workspace.getAdvisedDirForAsset(asset) + "tmp/");
-        processor.setProcessorParameter("param.correlation.dir",
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_INVENTORY_FILE,
+                workspace.getStageDirForAsset(asset, Stage.ADVISE).appendAssetInventory());
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_TMP_DIR, workspace.getStageDirForAsset(asset, Stage.ADVISE) + "tmp/");
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_CORRELATION_DIR,
                 environmentConfiguration.getCorrelationDir());
 
         PipelineConfiguration.Options.EnrichmentOptions enrichment = pipelineConfiguration.getOptions()
                 .getEnrichment();
 
-        processor.setProcessorParameter("param.security.policy.file", enrichment.getSecurityPolicyFile(environmentConfiguration.getWorkbenchDirNormalized()));
-        processor.setProcessorParameter("param.security.policy.active.ids",
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_SECURITY_POLICY_FILE, enrichment.getSecurityPolicyFile(environmentConfiguration.getWorkbenchDirNormalized()));
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_SECURITY_POLICY_ACTIVE_IDS,
                 enrichment.getSecurityPolicyActiveIds() != null
                         ? String.join(",", enrichment.getSecurityPolicyActiveIds())
                         : null);
 
-        processor.setProcessorParameter("param.activate.msrc", String.valueOf(enrichment.getActivateMsrc()));
-        processor.setProcessorParameter("param.activate.nvd", String.valueOf(enrichment.getActivateNvd()));
-        processor.setProcessorParameter("param.activate.certfr",
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ACTIVATE_MSRC, String.valueOf(enrichment.getActivateMsrc()));
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ACTIVATE_NVD, String.valueOf(enrichment.getActivateNvd()));
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ACTIVATE_CERTFR,
                 String.valueOf(enrichment.getActivateCertFr()));
-        processor.setProcessorParameter("param.activate.certeu",
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ACTIVATE_CERTEU,
                 String.valueOf(enrichment.getActivateCertEu()));
-        processor.setProcessorParameter("param.activate.certsei",
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ACTIVATE_CERTSEI,
                 String.valueOf(enrichment.getActivateCertSei()));
-        processor.setProcessorParameter("param.activate.kev", String.valueOf(enrichment.getActivateKev()));
-        processor.setProcessorParameter("param.activate.epss", String.valueOf(enrichment.getActivateEpss()));
-        processor.setProcessorParameter("param.activate.eol", String.valueOf(enrichment.getActivateEol()));
-        processor.setProcessorParameter("param.activate.osv", String.valueOf(enrichment.getActivateOsv()));
-        processor.setProcessorParameter("param.activate.csaf", String.valueOf(enrichment.getActivateCsaf()));
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ACTIVATE_KEV, String.valueOf(enrichment.getActivateKev()));
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ACTIVATE_EPSS, String.valueOf(enrichment.getActivateEpss()));
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ACTIVATE_EOL, String.valueOf(enrichment.getActivateEol()));
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ACTIVATE_OSV, String.valueOf(enrichment.getActivateOsv()));
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ACTIVATE_CSAF, String.valueOf(enrichment.getActivateCsaf()));
         PipelineConfiguration.ProjectProperties.Project project = pipelineConfiguration.getProjectProperties()
                 .getProject();
-        processor.setProcessorParameter("param.assessment.dirs", asset.getAssessmentDir(project, environmentConfiguration.getWorkbenchDirNormalized()));
-        processor.setProcessorParameter("param.context.dirs", asset.getContextDir(project, environmentConfiguration.getWorkbenchDirNormalized()));
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSESSMENT_DIRS, asset.getAssessmentDir(project, environmentConfiguration.getWorkbenchDirNormalized()));
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_CONTEXT_DIRS, asset.getContextDir(project, environmentConfiguration.getWorkbenchDirNormalized()));
 
-        processor.setProcessorParameter("env.vulnerability.mirror.dir",
+        processor.setProcessorParameter(ProcessorParameterKey.ENV_VULNERABILITY_MIRROR_DIR,
                 environmentConfiguration.getMirrorDatabaseDir());
 
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);

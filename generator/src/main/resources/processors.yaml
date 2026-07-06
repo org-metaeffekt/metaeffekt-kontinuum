@@ -173,22 +173,16 @@ processors:
         description: The directory of the vulnerability mirror / index.
         required: true
 
-  - name: Enrich with Reference
-    id: enrich-with-reference
+  - name: Enrich Inventory with Reference
+    id: enrich-inventory-with-reference
     description: |
       This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
-    pomLocation: advise/advise_enrich-with-reference.xml
+    pomLocation: util/util_enrich-inventory-with-reference.xml
     goal: process-resources
     stage: UTIL
     parameters:
       - key: input.inventory.file
         description: The file path of the inventory which will be enriched with the reference inventory.
-        required: true
-      - key: output.inventory.dir
-        description: The target directory for the enriched output inventory.
-        required: true
-      - key: output.inventory.path
-        description: The path of the output inventory relative to 'output.inventory.dir'.
         required: true
       - key: param.reference.inventory.dir
         description: The directory of the reference inventory with which the input inventory is enriched.
@@ -458,7 +452,7 @@ processors:
       This processor creates or updates the indices of the mirror. It uses the previously downloaded data files of the external data sources. As a result the specified mirror directory is extended with the index files.
     pomLocation: mirror/mirror_update-index.xml
     goal: process-resources
-    stage: FETCH
+    stage: PRE
     parameters:
       - key: param.proxy.scheme
         description: The proxy scheme.
@@ -491,7 +485,7 @@ processors:
       This processor creates or updates the indices of the mirror. It uses the previously downloaded data files of the external data sources. As a result the specified mirror directory is extended with the index files.
     pomLocation: mirror/mirror_update-index_external.xml
     goal: process-resources
-    stage: FETCH
+    stage: PRE
     parameters:
       - key: param.proxy.scheme
         description: The proxy scheme.
@@ -794,7 +788,7 @@ processors:
       Currently under review.
     pomLocation: util/util_aggregate-sources.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.inventory.file
         description: The input inventory file.
@@ -824,7 +818,7 @@ processors:
       This process creates two output files containing the differences between two provided inventory versions. Which inventory version is declared as "base" and which as "compare" is negligible since the comparison is done in both ways and saved separately.
     pomLocation: util/util_convert-assessments.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.assessment.dir
         description: The directory containing assessment files which will be converted.
@@ -845,7 +839,7 @@ processors:
       Copies a list of inventories to a directory. This is a utility processor used to copy different inventories from individual locations to a common directory.
     pomLocation: util/util_copy-inventories.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.base.dir
         description: The directory in which the inventories are located.
@@ -863,7 +857,7 @@ processors:
       This process creates two output files containing the differences between two provided inventory versions. Which inventory version is declared as "base" and which as "compare" is negligible since the comparison is done in both ways and saved separately.
     pomLocation: util/util_create-diff.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.inventory.file
         description: The file of the base inventory for comparison.
@@ -893,7 +887,7 @@ processors:
       This process enriches an inventory based on the specified advisors. It is only used for cert-report document generation.
     pomLocation: util/util_enrich-advisors.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.inventory.file
         description: The file of the input inventory for enrichment.
@@ -923,7 +917,7 @@ processors:
       This process generates the SVG resources for different types of vulnerability reports for a specified inventory.
     pomLocation: util/util_generate-report-svg.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.inventory.file
         description: The file of the input inventory for SVG generation.
@@ -953,7 +947,7 @@ processors:
       This process merges inventories based on an individual security advisor and filters them using the security policy.
     pomLocation: util/util_merge-advisors.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.inventory.dir
         description: The directory containing the inventories to be merged.
@@ -974,7 +968,7 @@ processors:
       This process merges inventories and their assessments.
     pomLocation: util/util_merge-assessments.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.inventory.dir
         description: The directory containing the inventories to be merged.
@@ -986,7 +980,7 @@ processors:
   - name: Merge Inventories
     id: merge-inventories
     description: |
-      This process merges multiple input inventories into one output inventory. The input inventories are specified using a directory. Additionally, a regex can be provided to further specify the inventories used for merging within the given directory. This process can be triggered at any point in the pipeline and is not bound to a phase.
+      This process merges multiple input invenentories into one output inventory. The input inventories are specified using a directory. Additionally, a regex can be provided to further specify the inventories used for merging within the given directory. This process can be triggered at any point in the pipeline and is not bound to a phase.
     pomLocation: util/util_merge-inventories.xml
     goal: process-resources
     stage: UTIL
@@ -1005,7 +999,7 @@ processors:
     id: portfolio-download
     description: |
       This process enables the download of specific assets from a running portfolio manager service.
-    pomLocation: util/util_portfolio-download.xml
+    pomLocation: aggregate/aggregate_portfolio-download.xml
     goal: process-resources
     stage: AGGREGATE
     parameters:
@@ -1049,7 +1043,7 @@ processors:
       This process downloads the service and cli jars needed to run the portfolio manager. This is only necessary if the jars do not exist locally already.
     pomLocation: util/util_portfolio-download-jars.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.cli.dir
         description: Directory where the jars will be downloaded.
@@ -1103,7 +1097,7 @@ processors:
       This process performs a transformation on a specified inventory using a Kotlin Script. These transformations can range from inventory merging to field replacements.
     pomLocation: util/util_transform-inventories.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.inventory.dir
         description: The directory containing the input inventories to perform the transformation with.
@@ -1127,7 +1121,7 @@ processors:
       This process takes an input inventory directory and validates the contained inventories.
     pomLocation: util/util_validate-reference-inventory.xml
     goal: process-resources
-    stage: AGGREGATE
+    stage: UTIL
     parameters:
       - key: input.inventory.dir
         description: The directory containing the inventories to be validated.

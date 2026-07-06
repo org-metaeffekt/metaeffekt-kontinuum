@@ -23,7 +23,7 @@ public class YamlProcessorsCatalogTest {
         expectedProcessorIds.add("attach-metadata");
         expectedProcessorIds.add("create-dashboard");
         expectedProcessorIds.add("enrich-inventory");
-        expectedProcessorIds.add("enrich-with-reference");
+        expectedProcessorIds.add("enrich-inventory-with-reference");
         expectedProcessorIds.add("cyclonedx-to-inventory");
         expectedProcessorIds.add("inventory-to-cyclonedx");
         expectedProcessorIds.add("inventory-to-spdx");
@@ -65,6 +65,44 @@ public class YamlProcessorsCatalogTest {
             assertTrue(actualProcessorIds.contains(expectedId),
                     "Expected processor id [" + expectedId + "] is not present in processorCatalog.getProcessors()");
         }
+    }
+
+    /**
+     * Guards the YAML&rarr;enum contract for parameter keys in a single place. {@code ProcessorParameterKey}
+     * is generated from {@code processors.yaml}, so by construction every {@code key:} entry has a constant
+     * and vice-versa. This round-trip test catches a stale generated file, a generator bug, or a manual
+     * edit to the generated enum: it asserts the set of keys in the YAML equals the set of {@code key}
+     * fields on the enum constants, with a precise diff on failure.
+     */
+    @Test
+    public void testAllCatalogParameterKeysRoundTripWithEnum() {
+        YamlProcessorCatalog processorCatalog = new YamlProcessorCatalog();
+
+        java.util.Set<String> yamlKeys = new java.util.TreeSet<>();
+        for (ProcessorDefinitions.Processor processor : processorCatalog.getProcessors()) {
+            for (ProcessorDefinitions.ProcessorParameter parameter : processor.getParameters()) {
+                org.junit.jupiter.api.Assertions.assertNotNull(parameter.getKey(),
+                        "Parameter key on processor [" + processor.getId() + "] resolved to null");
+                yamlKeys.add(parameter.getKey().getKey());
+            }
+        }
+
+        java.util.Set<String> enumKeys = new java.util.TreeSet<>();
+        for (ProcessorParameterKey constant : ProcessorParameterKey.values()) {
+            enumKeys.add(constant.getKey());
+        }
+
+        java.util.Set<String> onlyInYaml = new java.util.TreeSet<>(yamlKeys);
+        onlyInYaml.removeAll(enumKeys);
+        java.util.Set<String> onlyInEnum = new java.util.TreeSet<>(enumKeys);
+        onlyInEnum.removeAll(yamlKeys);
+
+        assertTrue(onlyInYaml.isEmpty(),
+                "Keys present in processors.yaml but missing from generated ProcessorParameterKey: " + onlyInYaml
+                        + ". Rebuild to regenerate the enum.");
+        assertTrue(onlyInEnum.isEmpty(),
+                "Constants present in ProcessorParameterKey but absent from processors.yaml: " + onlyInEnum
+                        + ". The generated enum is stale; rebuild.");
     }
 
 }

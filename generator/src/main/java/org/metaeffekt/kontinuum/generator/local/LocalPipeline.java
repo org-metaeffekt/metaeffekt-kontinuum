@@ -9,10 +9,7 @@ import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.ProjectProperties.Asset;
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.ProcessorParameter;
-import org.metaeffekt.kontinuum.models.shared.Stage;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -59,25 +56,17 @@ public class LocalPipeline {
     }
 
     private void generateProcessorSteps() {
-        List<ProcessorStep> orderedSteps = new ArrayList<>();
         for (Map.Entry<Asset, List<Processor>> entry : assetProcessorsMap.entrySet()) {
             String assetName = entry.getKey().toString();
             for (Processor processor : entry.getValue()) {
-                orderedSteps.add(new ProcessorStep(processor, assetName));
+                ProcessorStep step = new ProcessorStep(processor, assetName);
+
+                scriptDocument.append("# --- ").append(step.processor.getStage()).append(": ")
+                        .append(step.processor.getId()).append(" (").append(step.assetName).append(") ----")
+                        .append(System.lineSeparator());
+                scriptDocument.append(generateMavenScriptBlock(step.processor));
+                scriptDocument.append(System.lineSeparator());
             }
-        }
-
-        orderedSteps.sort(Comparator
-                .comparingInt((ProcessorStep s) -> s.processor.getStage().ordinal())
-                .thenComparing(s -> s.assetName)
-                .thenComparing(s -> s.processor.getId()));
-
-        for (ProcessorStep step : orderedSteps) {
-            scriptDocument.append("# --- ").append(step.processor.getStage()).append(": ")
-                    .append(step.processor.getId()).append(" (").append(step.assetName).append(") ----")
-                    .append(System.lineSeparator());
-            scriptDocument.append(generateMavenScriptBlock(step.processor));
-            scriptDocument.append(System.lineSeparator());
         }
     }
 

@@ -23,8 +23,6 @@ public class AssetPlan {
 
     private boolean requireAggregation = false;
 
-    private boolean requireReferenceEnrichment = false;
-
     private boolean requirePortfolioIntegration = false;
 
     private boolean requireResolve = false;
@@ -48,7 +46,6 @@ public class AssetPlan {
         this.asset = asset;
         requireSpdx = pipelineConfiguration.getOptions().getGlobal().getEnableSpdxBom();
         requireCycloneDx = pipelineConfiguration.getOptions().getGlobal().getEnableCycloneDxBom();
-        requireReferenceEnrichment = StringUtils.isNotBlank(asset.getReference());
 
         if (pipelineConfiguration.getPortfolioManager() != null) {
             requirePortfolioIntegration = true;
@@ -109,9 +106,6 @@ public class AssetPlan {
 
         requireReportGeneration = true;
 
-        boolean enrichmentDoneByPortfolioManager = portfolioManagerFlag(pipelineConfiguration, PipelineConfiguration.PortfolioManager::getEnrich);
-        boolean scanDoneByPortfolioManager = portfolioManagerFlag(pipelineConfiguration, PipelineConfiguration.PortfolioManager::getScan);
-
         for (PipelineConfiguration.Report report : reportsForAsset) {
             List<String> types = report.getTypes();
             if (types == null) {
@@ -121,10 +115,10 @@ public class AssetPlan {
                 if (type == null) {
                     continue;
                 }
-                if (ReportType.requiresVulnerabilityEnrichment(ReportType.fromKey(type)) && !enrichmentDoneByPortfolioManager) {
+                if (ReportType.requiresVulnerabilityEnrichment(ReportType.fromKey(type))) {
                     requireVulnerabilityMirror = true;
                     requireVulnerabilityEnrichment = true;
-                } else if (ReportType.requiresScan(ReportType.fromKey(type)) && !scanDoneByPortfolioManager) {
+                } else if (ReportType.requiresScan(ReportType.fromKey(type)) && pipelineConfiguration.getPortfolioManager() == null) {
                     requireLicenseScan = true;
                 }
             }

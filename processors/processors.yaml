@@ -167,20 +167,14 @@ processors:
         description: The directory of the vulnerability mirror / index.
         required: true
 
-  - name: Enrich with Reference
+  - name: Enrich Inventory with Reference
     description: |
       This process enriches a specified input inventory with a reference directory to curate it with further information for later enrichment.
-    pom: advise/advise_enrich-with-reference.xml
+    pom: advise/util_enrich-inventory-with-reference.xml
     goal: process-resources
     parameters:
       - key: input.inventory.file
         description: The file path of the inventory which will be enriched with the reference inventory.
-        required: true
-      - key: output.inventory.dir
-        description: The target directory for the enriched output inventory.
-        required: true
-      - key: output.inventory.path
-        description: The path of the output inventory relative to 'output.inventory.dir'.
         required: true
       - key: param.reference.inventory.dir
         description: The directory of the reference inventory with which the input inventory is enriched.
@@ -936,7 +930,7 @@ processors:
   - name: Portfolio Download
     description: |
       This process enables the download of specific assets from a running portfolio manager service.
-    pom: util/util_portfolio-download.xml
+    pom: aggregate/aggregate_portfolio-download.xml
     goal: process-resources
     parameters:
       - key: output.inventory.dir

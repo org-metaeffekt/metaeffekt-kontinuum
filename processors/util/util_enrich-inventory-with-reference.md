@@ -1,4 +1,4 @@
-# Advise - Enrich with Reference
+# Util - Enrich inventory with Reference
 
 This process enriches a specified input inventory with a reference inventory to curate it with further information for later enrichment.
 
@@ -11,8 +11,6 @@ of this repository.
 | Parameter                     | Required | Description                                                                          |
 |-------------------------------|----------|--------------------------------------------------------------------------------------|
 | input.inventory.file          | yes      | The file path of the inventory which will be enriched with the reference inventory.  |
-| output.inventory.dir          | yes      | The target directory for the enriched output inventory.                              |     
-| output.inventory.path         | yes      | The path of the output inventory relative to 'output.inventory.dir' .                |     
 
 ### Parameters
 | Parameter                       | Required | Description                                                                            |

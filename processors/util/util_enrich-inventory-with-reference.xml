@@ -40,33 +40,16 @@
                 <version>${ae.core.version}</version>
                 <executions>
                     <execution>
-                        <id>enrich-with-reference-inventory</id>
-                        <phase>process-sources</phase>
+                        <id>enrich-inventory-with-reference</id>
+                        <phase>process-resources</phase>
                         <goals>
-                            <goal>create-inventory-report</goal>
+                            <goal>enrich-inventory-with-reference</goal>
                         </goals>
                         <configuration>
                             <inventory>${input.inventory.file}</inventory>
-
                             <sourceInventoryDir>${param.reference.inventory.dir}</sourceInventoryDir>
+
                             <sourceInventoryIncludes>*.xls,*.xlsx,*.ser</sourceInventoryIncludes>
-
-                            <failOnError>${advisor.validation}</failOnError>
-                            <failOnBanned>${advisor.validation}</failOnBanned>
-                            <failOnInternal>${advisor.validation}</failOnInternal>
-                            <failOnUnknownVersion>${advisor.validation}</failOnUnknownVersion>
-                            <failOnUnknown>${advisor.validation}</failOnUnknown>
-                            <failOnDevelopment>${advisor.validation}</failOnDevelopment>
-                            <failOnMissingLicense>${advisor.validation}</failOnMissingLicense>
-                            <failOnMissingLicenseFile>${advisor.validation}</failOnMissingLicenseFile>
-                            <failOnMissingNotice>${advisor.validation}</failOnMissingNotice>
-                            <failOnDowngrade>${advisor.validation}</failOnDowngrade>
-                            <failOnUpgrade>false</failOnUpgrade>
-
-                            <!-- FIXME: we should also enable to produce a file here -->
-                            <targetInventoryDir>${output.inventory.dir}</targetInventoryDir>
-                            <targetInventoryPath>${output.inventory.path}</targetInventoryPath>
-
                             <securityPolicy>
                                 <failOnMissingPolicyFile>false</failOnMissingPolicyFile>
                             </securityPolicy>
@@ -89,12 +72,6 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>output.inventory.dir</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>output.inventory.path</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.reference.inventory.dir</property>

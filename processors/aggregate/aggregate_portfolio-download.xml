@@ -10,7 +10,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>util_portfolio-download</artifactId>
+    <artifactId>aggregate_portfolio-download</artifactId>
 
     <build>
         <plugins>

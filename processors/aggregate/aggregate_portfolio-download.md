@@ -1,4 +1,4 @@
-# Util - Portfolio Download
+# Aggregate - Portfolio Download
 
 This process enables the download of specific assets from a running portfolio manager service.
 

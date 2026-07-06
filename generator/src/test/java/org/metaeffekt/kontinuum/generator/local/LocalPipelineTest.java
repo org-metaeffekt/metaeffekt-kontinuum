@@ -85,6 +85,10 @@ public class LocalPipelineTest {
 
         String generated = localPipeline.generatePipeline();
 
+        // Pipeline.generatePipeline() is the single authority for processor run order: within each
+        // asset the processors appear in the order the addXxxProcessor methods are invoked. The
+        // local script is emitted per-asset (not cross-asset-by-stage), so we assert that for any
+        // single asset the declared stage sequence FETCH < PREPARE < ADVISE < REPORT holds.
         int fetchIdx = generated.indexOf("# --- FETCH:");
         int prepareIdx = generated.indexOf("# --- PREPARE:");
         int adviseIdx = generated.indexOf("# --- ADVISE:");

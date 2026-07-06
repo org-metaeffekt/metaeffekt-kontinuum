@@ -12,6 +12,7 @@ import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.ProjectProperties.Asset;
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.ProcessorParameter;
+import org.metaeffekt.kontinuum.models.shared.ProcessorParameterKey;
 import org.metaeffekt.kontinuum.models.shared.Stage;
 
 /**
@@ -82,12 +83,20 @@ public class GitlabPipeline {
 
     public void generateJobsSection() {
         for (Map.Entry<Asset, List<Processor>> entry : assetProcessorsMap.entrySet()) {
+            Processor lastProcessor = null;
             for (Processor processor : entry.getValue()) {
+
                 StringBuilder job = new StringBuilder();
-                job.append(generateJobName(processor , entry.getKey().toString())).append(System.lineSeparator());
+                job.append(generateJobName(processor , entry.getKey().toString())).append(":").append(System.lineSeparator());
                 job.append("  ").append("stage: ").append(processor.getStage()).append(System.lineSeparator());
                 job.append("  ").append("image: ").append(gitlabConfiguration.CONTAINER_IMAGE).append(System.lineSeparator());
-                job.append(generateNeedsSection(processor, entry));
+
+                if (lastProcessor != null && Objects.equals(lastProcessor.getStage(), processor.getStage())) {
+                    job.append("  ").append("needs: [")
+                            .append(generateJobName(lastProcessor, entry.getKey().toString()))
+                            .append("]").append(System.lineSeparator());
+                }
+
 
                 if (generateBeforeScriptBlock() != null) {
                     job.append(generateBeforeScriptBlock());
@@ -95,29 +104,14 @@ public class GitlabPipeline {
                 
                 job.append("  ").append("script: ").append(System.lineSeparator());
                 job.append("    - |").append(System.lineSeparator());
-                job.append(generateExecutionPrerequisitesBlock(processor));
                 job.append(generateMavenScriptBlock(processor));
+
                 gitlabPipelineDocument.append(job).append(System.lineSeparator());
+                lastProcessor = processor;
             }
         }
     }
 
-    private String generateNeedsSection(Processor processor, Map.Entry<Asset, List<Processor>> entry) {
-        if (processor.getId().equals("portfolio-upload")
-                && entry.getValue().stream().map(Processor::getId).anyMatch(id -> id.equals("scan-directory"))) {
-            StringBuilder needsSection = new StringBuilder().append("  ").append("needs: ")
-                    .append(generateJobName(processor, entry.getKey().toString())).append(System.lineSeparator());
-
-            return needsSection.toString();
-        }
-        return "";
-    }
-
-    private String generateExecutionPrerequisitesBlock(Processor processor) {
-        if (processor.getId().equals("portfolio-download")) {
-
-        }
-    }
 
     private String generateMavenScriptBlock(Processor processor) {
         StringBuilder script = new StringBuilder();
@@ -176,19 +170,16 @@ public class GitlabPipeline {
         StringBuilder processorName =  new StringBuilder()
                 .append(assetName)
                 .append("-")
-                .append(processor.getId())
-                .append("-");
+                .append(processor.getId());
 
         if (processor.getId().equals("create-document")) {
             Optional<ProcessorParameter> processorParameter = processor.getParameters()
                     .stream()
-                    .filter(p -> p.getKey().equals("param.document.type"))
+                    .filter(p -> p.getKey() == ProcessorParameterKey.PARAM_DOCUMENT_TYPE)
                     .findFirst();
 
-            processorParameter.ifPresent(parameter -> processorName.append(parameter.getValue()).append("-"));
+            processorParameter.ifPresent(parameter -> processorName.append("-").append(parameter.getValue()));
         }
-
-        processorName.append(":");
         return processorName.toString();
     }
  }

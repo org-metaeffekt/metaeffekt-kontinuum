@@ -48,9 +48,6 @@ dashboards:
 portfolioManager:
   project: "metaeffekt-kontinuum"
   assetGroup: "metaffekt-kontinuum-0.1.0"
-  resolve: true
-  scan: true
-  enrich: false
 
 # Optional: global pipeline configuration
 options:
