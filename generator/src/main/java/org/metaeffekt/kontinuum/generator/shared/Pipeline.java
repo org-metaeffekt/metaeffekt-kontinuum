@@ -9,6 +9,9 @@ import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.ProjectPrope
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
 import org.metaeffekt.kontinuum.util.KontinuumUtils;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -82,6 +85,8 @@ public class Pipeline {
     private void addPrepareStageProcessors(AssetPlan assetPlan) {
         if (assetPlan.isRequireExtract()) {
             addScanDirectoryProcessor(assetPlan);
+        } else {
+            addCopyInventoryProcessor(assetPlan);
         }
 
         if (assetPlan.isRequirePortfolioIntegration()) {
@@ -92,8 +97,8 @@ public class Pipeline {
     private void addAggregateStageProcessors(AssetPlan assetPlan) {
         if (assetPlan.isRequirePortfolioIntegration()) {
             addPortfolioDownloadProcessor(assetPlan);
+            addMergeInventoriesProcessor(assetPlan, Stage.AGGREGATE);
         }
-        addMergeInventoriesProcessor(assetPlan, Stage.AGGREGATE);
     }
 
     private void addResolveStageProcessors(AssetPlan assetPlan) {
@@ -152,6 +157,26 @@ public class Pipeline {
                 asset.getContainerResolver().getImage());
         processor.setProcessorParameter(ProcessorParameterKey.PARAM_IMAGE_VERSION,
                 asset.getContainerResolver().getTag());
+
+        assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
+    }
+
+    private void addCopyInventoryProcessor(AssetPlan assetPlan) {
+        Asset asset = assetPlan.getAsset();
+        Processor processor = yamlProcessorCatalog.getProcessorById("copy-inventories");
+
+        File inputFile;
+        try {
+            URL fileUrl = new URL(asset.getUrlResolver().getUrl());
+            inputFile = new File(fileUrl.getPath());
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        processor.setProcessorParameter(ProcessorParameterKey.INPUT_BASE_DIR, inputFile.getParent());
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_INVENTORIES_DIR, workspace.getStageDirForAsset(asset, Stage.PREPARE).toString());
+        processor.setProcessorParameter(ProcessorParameterKey.PARAM_INVENTORIES_LIST, inputFile.getName());
 
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
@@ -220,7 +245,7 @@ public class Pipeline {
             processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
                     workspace.getStageDirForAsset(asset, Stage.ADVISE).appendAssetInventory());
             processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_DASHBOARD_FILE,
-                    workspace.getStageDirForAsset(asset, Stage.REPORT).toString() + "dashboard.html");
+                    workspace.getStageDirForAsset(asset, Stage.REPORT).appendDashboardFile());
             processor.setProcessorParameter(ProcessorParameterKey.PARAM_SECURITY_POLICY_FILE,
                     enrichmentOptions.getSecurityPolicyFile(environmentConfiguration.getWorkbenchDirNormalized()));
             processor.setProcessorParameter(ProcessorParameterKey.PARAM_SECURITY_POLICY_ACTIVE_IDS,
@@ -274,12 +299,22 @@ public class Pipeline {
                     processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, Stage.ADVISE).toString());
                 } else if (assetPlan.isRequireResolve()){
                     processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, Stage.RESOLVE).toString());
-                } else {
+                } else if (assetPlan.isRequireAggregation()){
                     processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, Stage.AGGREGATE).toString());
+                } else {
+                    processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, Stage.PREPARE).toString());
                 }
 
-                processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_DOCUMENT_FILE,
-                        workspace.getStageDirForAsset(asset, Stage.REPORT).toString());
+                if (ReportType.fromKey(type).equals(ReportType.CERT_REPORT)) {
+                    processor.setProcessorParameter(ProcessorParameterKey.PARAM_OVERVIEW_ADVISORS, "[\"CERT_FR\"]");
+                } else {
+                    processor.setProcessorParameter(ProcessorParameterKey.PARAM_OVERVIEW_ADVISORS,
+                            report.getOverviewAdvisors() == null || report.getOverviewAdvisors().isEmpty()
+                                    ? null
+                                    : String.join(", ", report.getOverviewAdvisors()));
+                }
+
+                processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_DOCUMENT_FILE, workspace.getStageDirForAsset(asset, Stage.REPORT).appendReportFile(ReportType.fromKey(type)));
 
                 processor.setProcessorParameter(ProcessorParameterKey.PARAM_COMPUTED_INVENTORY_DIR,
                         workspace.getStageDirForAsset(asset, Stage.REPORT).toString());
@@ -296,10 +331,6 @@ public class Pipeline {
                 processor.setProcessorParameter(ProcessorParameterKey.PARAM_PRODUCT_VERSION,
                         pipelineConfiguration.getProjectProperties().getProject().getVersion());
                 processor.setProcessorParameter(ProcessorParameterKey.PARAM_PRODUCT_WATERMARK, report.getWatermark());
-                processor.setProcessorParameter(ProcessorParameterKey.PARAM_OVERVIEW_ADVISORS,
-                        report.getOverviewAdvisors() == null || report.getOverviewAdvisors().isEmpty()
-                                ? null
-                                : String.join(", ", report.getOverviewAdvisors()));
                 processor.setProcessorParameter(ProcessorParameterKey.PARAM_PROPERTY_SELECTOR_ORGANIZATION, report.getOrganization());
                 processor.setProcessorParameter(ProcessorParameterKey.PARAM_PROPERTY_SELECTOR_CLASSIFICATION, report.getClassificationRating());
                 processor.setProcessorParameter(ProcessorParameterKey.PARAM_PROPERTY_SELECTOR_CONTROL, report.getControlRating());

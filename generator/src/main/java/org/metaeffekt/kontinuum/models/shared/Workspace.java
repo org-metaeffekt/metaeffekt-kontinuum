@@ -26,10 +26,11 @@ public class Workspace {
             return dir + assetName + ".xlsx";
         }
 
-        public String appenDashboardFile() {
+        public String appendDashboardFile() {
             return dir + assetName + ".html";
         }
 
+        public String appendReportFile(ReportType reportType) { return dir + assetName + "-" + reportType.getKey() + ".pdf"; }
 
         @Override
         public String toString() {
