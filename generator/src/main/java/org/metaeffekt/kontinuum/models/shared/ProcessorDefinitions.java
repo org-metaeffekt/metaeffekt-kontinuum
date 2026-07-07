@@ -24,6 +24,8 @@ public class ProcessorDefinitions {
         String goal;
         Stage stage;
         List<ProcessorParameter> parameters;
+        String preScript;
+        String postScript;
 
         public void setProcessorParameter(ProcessorParameterKey key, String value) {
             if (parameters.stream().noneMatch(p -> p.key == key)) {
@@ -40,6 +42,20 @@ public class ProcessorDefinitions {
                 }
             }
         }
+        public String getPreScript(int indent) {
+            return indentScript(preScript, indent);
+        }
+
+        public String getPostScript(int indent) {
+            return indentScript(postScript, indent);
+        }
+
+        private static String indentScript(String script, int indent) {
+            if (script == null) return null;
+            String padding = " ".repeat(indent);
+            return padding + script.replace("\n", "\n" + padding);
+        }
+
         // TODO: Implement this instead of having logic in the gitlab pipeline
         public String buildMavenCall() {
             StringBuilder mavenCall = new StringBuilder();
@@ -56,6 +72,7 @@ public class ProcessorDefinitions {
 
             return mavenCall.toString();
         }
+
     }
 
     @Data

@@ -49,6 +49,7 @@ public class AssetPlan {
 
         if (pipelineConfiguration.getPortfolioManager() != null) {
             requirePortfolioIntegration = true;
+            requireAggregation = true;
         }
 
         try {

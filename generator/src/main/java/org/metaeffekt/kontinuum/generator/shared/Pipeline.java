@@ -93,7 +93,7 @@ public class Pipeline {
         if (assetPlan.isRequirePortfolioIntegration()) {
             addPortfolioDownloadProcessor(assetPlan);
         }
-        addEnrichWithReferenceProcessor(assetPlan, Stage.AGGREGATE);
+        addMergeInventoriesProcessor(assetPlan, Stage.AGGREGATE);
     }
 
     private void addResolveStageProcessors(AssetPlan assetPlan) {
@@ -341,23 +341,26 @@ public class Pipeline {
         processor.setProcessorParameter(ProcessorParameterKey.PARAM_TRUSTSTORE_PASSWORD, environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
         processor.setProcessorParameter(ProcessorParameterKey.PARAM_INVENTORY_MODIFIER, "scanned");
 
+        StringBuilder postScript =  new StringBuilder();
+        postScript.append("find ").append(workspace.getStageDirForAsset(asset, Stage.AGGREGATE).toString()).append(" -type f -name \"*.zip\" -print0 | while IFS= read -r -d '' zip_file; do").append(System.lineSeparator());
+        postScript.append("    zip_dir=$(dirname \"$zip_file\")").append(System.lineSeparator());
+        postScript.append("    unzip -q -j \"$zip_file\" \"*.xls\" \"*.xlsx\" -d \"$zip_dir\" 2>/dev/null").append(System.lineSeparator());
+        postScript.append("done").append(System.lineSeparator());
+
+        processor.setPostScript(postScript.toString());
+
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }
 
 
-    private void addEnrichWithReferenceProcessor(AssetPlan assetPlan, Stage stage) {
+    private void addMergeInventoriesProcessor(AssetPlan assetPlan, Stage stage) {
         Asset asset = assetPlan.getAsset();
         Processor processor = yamlProcessorCatalog
-                .getProcessorById("enrich-inventory-with-reference");
+                .getProcessorById("merge-inventories");
 
         processor.setStage(stage);
-        processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE,
-                workspace.getStageDirForAsset(asset, stage).appendAssetInventory());
-
-        String referenceDir = asset.getReferenceDir(environmentConfiguration.getWorkbenchDirNormalized());
-        if (referenceDir != null) {
-            processor.setProcessorParameter(ProcessorParameterKey.PARAM_REFERENCE_INVENTORY_DIR, referenceDir);
-        }
+        processor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, stage).toString());
+        processor.setProcessorParameter(ProcessorParameterKey.OUTPUT_INVENTORY_FILE, workspace.getStageDirForAsset(asset, stage).appendAssetInventory());
 
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(processor);
     }

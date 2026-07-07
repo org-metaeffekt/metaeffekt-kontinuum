@@ -104,8 +104,16 @@ public class GitlabPipeline {
                 
                 job.append("  ").append("script: ").append(System.lineSeparator());
                 job.append("    - |").append(System.lineSeparator());
+
+                if (processor.getPreScript() != null) {
+                    job.append(processor.getPreScript(6)).append(System.lineSeparator());
+                }
+
                 job.append(generateMavenScriptBlock(processor));
 
+                if (processor.getPostScript() != null) {
+                    job.append(processor.getPostScript(6)).append(System.lineSeparator());
+                }
                 gitlabPipelineDocument.append(job).append(System.lineSeparator());
                 lastProcessor = processor;
             }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.metaeffekt.kontinuum.models.shared.EnvironmentConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
 import org.metaeffekt.kontinuum.models.shared.ReportType;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.Dashboard;
@@ -27,7 +26,6 @@ public class PipelineConfigurationLoader {
     private boolean isValid = true;
     private PipelineConfiguration pipelineConfiguration;
 
-    
     public PipelineConfiguration readConfig(File pipelineConfigFile) {
         isValid = true;
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
