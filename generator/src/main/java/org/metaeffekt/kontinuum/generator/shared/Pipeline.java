@@ -344,7 +344,7 @@ public class Pipeline {
         StringBuilder postScript =  new StringBuilder();
         postScript.append("find ").append(workspace.getStageDirForAsset(asset, Stage.AGGREGATE).toString()).append(" -type f -name \"*.zip\" -print0 | while IFS= read -r -d '' zip_file; do").append(System.lineSeparator());
         postScript.append("    zip_dir=$(dirname \"$zip_file\")").append(System.lineSeparator());
-        postScript.append("    unzip -q -j \"$zip_file\" \"*.xls\" \"*.xlsx\" -d \"$zip_dir\"").append(System.lineSeparator());
+        postScript.append("    unzip -q -j \"$zip_file\" \"*.xls\" \"*.xlsx\" -d \"$zip_dir\" || true").append(System.lineSeparator());
         postScript.append("done").append(System.lineSeparator());
 
         processor.setPostScript(postScript.toString());
