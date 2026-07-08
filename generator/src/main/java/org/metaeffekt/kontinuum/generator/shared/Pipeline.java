@@ -174,7 +174,7 @@ public class Pipeline {
 
         String scriptPath = environmentConfiguration.getKontinuumProcessorsDirNormalized()
                 + "scripts/download-maven-artifacts.sh";
-        String invocation = "\"" + scriptPath + "\" \"" + groupId + "\" \""
+        String invocation = "bash \"" + scriptPath + "\" \"" + groupId + "\" \""
                 + artifactId + "\" \"" + version + "\" \""
                 + fetchedDir + "\" \"" + repoUrl + "\"";
 
