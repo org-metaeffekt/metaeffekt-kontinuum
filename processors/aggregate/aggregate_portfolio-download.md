@@ -19,8 +19,7 @@ of this repository.
 | param.portfolio.manager.token | yes      | Upload user token for project; always pass as credential/secret                                              |
 | param.project.name            | yes      | The project name                                                                                             |
 | param.asset.group.id          | yes      | The asset group id                                                                                           |
-| param.asset.name              | yes      | The asset name                                                                                               |
-| param.asset.version           | yes      | The version                                                                                                  |
+| param.asset.id                | yes      | The asset id, in the format asset-name:asset-version                                                         |
 | param.keystore.password       | yes      | Keystore password, always pass as credential/secret                                                          |
 | param.truststore.password     | yes      | Truststore password, always pass as credential/secret                                                        |
 | param.keystore.config.file    | yes      | Path to the keystore                                                                                         |

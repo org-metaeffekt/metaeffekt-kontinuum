@@ -1,4 +1,4 @@
-# Util - Portfolio Upload
+# Prepare - Portfolio Upload
 
 This process enables the upload of specific assets to a running portfolio manager service.
 

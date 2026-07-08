@@ -109,7 +109,9 @@ public class Pipeline {
     private void addAggregateStageProcessors(AssetPlan assetPlan) {
         if (assetPlan.isRequirePortfolioIntegration()) {
             addPortfolioDownloadProcessor(assetPlan);
-            addMergeInventoriesProcessor(assetPlan, Stage.AGGREGATE);
+            addEnrichInventoryWithReferenceProcessor(assetPlan, Stage.AGGREGATE,
+                    workspace.getStageDirForAsset(assetPlan.getAsset(), Stage.AGGREGATE).appendAssetInventory(),
+                    workspace.getStageDirForAsset(assetPlan.getAsset(), Stage.AGGREGATE).toString());
         }
     }
 
@@ -425,13 +427,12 @@ public class Pipeline {
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_PORTFOLIO_MANAGER_TOKEN, environmentConfiguration.PORTFOLIO_MANAGER_TOKEN);
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_PROJECT_NAME, pipelineConfiguration.getPortfolioManager().getProject());
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_GROUP_ID, pipelineConfiguration.getPortfolioManager().getAssetGroup());
-        mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_NAME, asset.getName());
-        mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_VERSION, asset.getVersion());
+        mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_ID, pipelineConfiguration.getPortfolioManager().getProject());
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_KEYSTORE_CONFIG_FILE, environmentConfiguration.getPortfolioManagerClientKeystoreFile());
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_TRUSTSTORE_CONFIG_FILE, environmentConfiguration.getPortfolioManagerClientTruststoreFile());
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_KEYSTORE_PASSWORD, environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD);
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_TRUSTSTORE_PASSWORD, environmentConfiguration.PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD);
-        mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_INVENTORY_MODIFIER, "scanned");
+        mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_INVENTORY_MODIFIER, "report");
 
         StringBuilder postScript =  new StringBuilder();
         postScript.append("find ").append(workspace.getStageDirForAsset(asset, Stage.AGGREGATE).toString()).append(" -type f -name \"*.zip\" -print0 | while IFS= read -r -d '' zip_file; do").append(System.lineSeparator());
@@ -445,16 +446,15 @@ public class Pipeline {
     }
 
 
-    private void addMergeInventoriesProcessor(AssetPlan assetPlan, Stage stage) {
-        Asset asset = assetPlan.getAsset();
-        MavenProcessor mavenProcessor = yamlProcessorCatalog
-                .getProcessorById("merge-inventories");
-
+    private void addEnrichInventoryWithReferenceProcessor(AssetPlan assetPlan, Stage stage, String inputInventory, String referenceInventoryDir) {
+        MavenProcessor mavenProcessor = yamlProcessorCatalog.getProcessorById("enrich-inventory-with-reference");
         mavenProcessor.setStage(stage.name());
-        mavenProcessor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_DIR, workspace.getStageDirForAsset(asset, stage).toString());
-        mavenProcessor.setProcessorParameter(ProcessorParameterKey.OUTPUT_INVENTORY_FILE, workspace.getStageDirForAsset(asset, stage).appendAssetInventory());
+
+        mavenProcessor.setProcessorParameter(ProcessorParameterKey.INPUT_INVENTORY_FILE, inputInventory);
+        mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_REFERENCE_INVENTORY_DIR, referenceInventoryDir);
 
         assetProcessorsMap.computeIfAbsent(assetPlan.getAsset(), k -> new ArrayList<>()).add(mavenProcessor);
+
     }
 
     private void addResolveProcessor(AssetPlan assetPlan) {

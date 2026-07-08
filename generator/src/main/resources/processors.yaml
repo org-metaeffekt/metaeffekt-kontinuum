@@ -1018,14 +1018,11 @@ processors:
       - key: param.asset.group.id
         description: The asset group within the project to download to.
         required: true
-      - key: param.asset.name
-        description: The asset name to download.
+      - key: param.asset.id
+        description: The asset id, in the format asset-name:asset-version
         required: true
       - key: param.inventory.modifier
         description: The modifier determining in which state the inventory to download must exist.
-        required: true
-      - key: param.asset.version
-        description: The asset version to download.
         required: true
       - key: param.keystore.config.file
         description: Path to the keystore.
@@ -1056,7 +1053,7 @@ processors:
     id: portfolio-upload
     description: |
       This process enables the upload of specific assets to a running portfolio manager service.
-    pomLocation: util/util_portfolio-upload.xml
+    pomLocation: prepare/prepare_portfolio-upload.xml
     goal: process-resources
     stage: PREPARE
     parameters:

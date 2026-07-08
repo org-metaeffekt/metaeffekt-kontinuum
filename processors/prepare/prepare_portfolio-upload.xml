@@ -10,7 +10,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>util_portfolio-upload</artifactId>
+    <artifactId>prepare_portfolio-upload</artifactId>
 
     <build>
         <plugins>

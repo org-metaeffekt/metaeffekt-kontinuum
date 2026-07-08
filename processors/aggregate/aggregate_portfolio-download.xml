@@ -49,7 +49,7 @@
                             <!-- the asset group (in the project) to upload to -->
                             <assetGroupQuery>${param.asset.group.id}</assetGroupQuery>
                             <!-- the asset (in the project) the sbom represents -->
-                            <assetQuery>${param.asset.name}:${param.asset.version}</assetQuery>
+                            <assetQuery>${param.asset.id}</assetQuery>
                             <!-- the path to the sbom/inventory to download -->
                             <targetDir>${output.inventory.dir}</targetDir>
                         </configuration>
@@ -85,10 +85,7 @@
                                     <property>param.asset.group.id</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.asset.name</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.asset.version</property>
+                                    <property>param.asset.id</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.keystore.password</property>
