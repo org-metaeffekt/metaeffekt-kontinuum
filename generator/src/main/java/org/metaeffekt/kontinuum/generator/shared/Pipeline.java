@@ -426,7 +426,7 @@ public class Pipeline {
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_PORTFOLIO_MANAGER_URL, environmentConfiguration.PORTFOLIO_MANAGER_URL);
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_PORTFOLIO_MANAGER_TOKEN, environmentConfiguration.PORTFOLIO_MANAGER_TOKEN);
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_PROJECT_NAME, pipelineConfiguration.getPortfolioManager().getProject());
-        mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_GROUP_ID, pipelineConfiguration.getPortfolioManager().getAssetGroup());
+        mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_GROUP_ID, "Reports:SNAPSHOT");
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_ASSET_ID, pipelineConfiguration.getPortfolioManager().getProject());
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_KEYSTORE_CONFIG_FILE, environmentConfiguration.getPortfolioManagerClientKeystoreFile());
         mavenProcessor.setProcessorParameter(ProcessorParameterKey.PARAM_TRUSTSTORE_CONFIG_FILE, environmentConfiguration.getPortfolioManagerClientTruststoreFile());
