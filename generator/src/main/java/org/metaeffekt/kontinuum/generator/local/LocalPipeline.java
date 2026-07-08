@@ -7,8 +7,10 @@ import org.metaeffekt.kontinuum.generator.shared.Pipeline;
 import org.metaeffekt.kontinuum.models.local.LocalConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.ProjectProperties.Asset;
+import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.MavenProcessor;
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.ProcessorParameter;
+import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.StandaloneProcessor;
 
 import java.util.List;
 import java.util.Map;
@@ -64,20 +66,25 @@ public class LocalPipeline {
                 scriptDocument.append("# --- ").append(step.processor.getStage()).append(": ")
                         .append(step.processor.getId()).append(" (").append(step.assetName).append(") ----")
                         .append(System.lineSeparator());
-                scriptDocument.append(generateMavenScriptBlock(step.processor));
+
+                if (step.processor instanceof MavenProcessor mavenProcessor) {
+                    scriptDocument.append(generateMavenScriptBlock(mavenProcessor));
+                } else if (step.processor instanceof StandaloneProcessor standaloneProcessor) {
+                    scriptDocument.append(standaloneProcessor.getScript()).append(System.lineSeparator());
+                }
                 scriptDocument.append(System.lineSeparator());
             }
         }
     }
 
-    private String generateMavenScriptBlock(Processor processor) {
+    private String generateMavenScriptBlock(MavenProcessor mavenProcessor) {
         StringBuilder script = new StringBuilder();
         script.append("mvn -f ")
                 .append(localConfiguration.getKontinuumProcessorsDirNormalized())
-                .append(processor.getPomLocation()).append(" ")
-                .append(processor.getGoal()).append(" \\").append(System.lineSeparator());
+                .append(mavenProcessor.getPomLocation()).append(" ")
+                .append(mavenProcessor.getGoal()).append(" \\").append(System.lineSeparator());
 
-        List<ProcessorParameter> nonBlankParams = processor.getParameters().stream()
+        List<ProcessorParameter> nonBlankParams = mavenProcessor.getParameters().stream()
                 .filter(p -> StringUtils.isNotBlank(p.getValue()))
                 .toList();
 

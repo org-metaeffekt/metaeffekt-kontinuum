@@ -74,6 +74,7 @@ public class PipelineConfiguration {
                 private String groupId;
                 private String artifactId;
                 private String artifactVersion;
+                private String repoUrl = "https://repo1.maven.org/maven2";
             }
 
             @Data

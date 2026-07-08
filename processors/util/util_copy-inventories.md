@@ -1,6 +1,6 @@
 # Util - Copy Inventories
 
-Copies a list of inventories to a directory. This is a utility processor used to copy different inventories from individual 
+Copies a list of inventories to a directory. This is a utility mavenProcessor used to copy different inventories from individual 
 locations to a common directory.
 
 ## Properties

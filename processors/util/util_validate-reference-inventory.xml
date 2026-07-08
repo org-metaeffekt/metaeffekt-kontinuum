@@ -38,14 +38,14 @@
                 </executions>
                 <configuration>
                     <processors>
-                        <processor>
-                            <className>org.metaeffekt.core.inventory.processor.ValidateInventoryProcessor</className>
+                        <mavenProcessor>
+                            <className>org.metaeffekt.core.inventory.mavenProcessor.ValidateInventoryProcessor</className>
                             <properties>
                                 <licenses.path>${input.inventory.dir}/licenses</licenses.path>
                                 <components.path>${input.inventory.dir}/components</components.path>
                                 <failOnError>${artifact.inventory.enabled}</failOnError>
                             </properties>
-                        </processor>
+                        </mavenProcessor>
                     </processors>
                 </configuration>
             </plugin>

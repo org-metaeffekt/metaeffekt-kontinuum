@@ -32,6 +32,20 @@ public class Workspace {
 
         public String appendReportFile(ReportType reportType) { return dir + assetName + "-" + reportType.getKey() + ".pdf"; }
 
+        public String appendSpdxFile(String format) {
+            if (format.equals("XML")) {
+                return dir + assetName + "-spdx" + ".xml";
+            }
+            return dir + assetName + "-spdx" + ".json";
+        }
+
+        public String appendCycloneDxFile(String format) {
+            if (format.equals("XML")) {
+                return dir + assetName + "-cyclonedx" + ".xml";
+            }
+            return dir + assetName + "-cyclonedx" + ".json";
+        }
+
         @Override
         public String toString() {
             return dir;

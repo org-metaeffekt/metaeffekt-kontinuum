@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface ProcessorCatalog {
 
-    List<ProcessorDefinitions.Processor> getProcessors();
+    List<ProcessorDefinitions.MavenProcessor> getProcessors();
 
-    ProcessorDefinitions.Processor getProcessorById(String processorId);
+    ProcessorDefinitions.MavenProcessor getProcessorById(String processorId);
 
 }

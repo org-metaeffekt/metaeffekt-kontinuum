@@ -1,14 +1,10 @@
 package org.metaeffekt.kontinuum.models.shared;
 
 
-import lombok.AccessLevel;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 @Data
@@ -16,13 +12,17 @@ public class ProcessorDefinitions {
     List<Processor> processors;
 
     @Data
-    public static class Processor{
+    public abstract static class Processor {
         String id;
         String name;
+        String stage;
+    }
+
+    @Data
+    public static class MavenProcessor extends Processor{
         String description;
         String pomLocation;
         String goal;
-        Stage stage;
         List<ProcessorParameter> parameters;
         String preScript;
         String postScript;
@@ -73,6 +73,17 @@ public class ProcessorDefinitions {
             return mavenCall.toString();
         }
 
+    }
+
+    @Data
+    public static class StandaloneProcessor extends Processor{
+        String script;
+
+        public StandaloneProcessor(String id, String name, String stage) {
+            super.id = id;
+            this.name = name;
+            this.stage = stage;
+        }
     }
 
     @Data

@@ -6,7 +6,7 @@ many more, listed in the table below.
 
 ## Properties
 
-The different properties are sorted into three different groups which are explained in the top level [README](../README.md#processor-conventions)
+The different properties are sorted into three different groups which are explained in the top level [README](../README.md#mavenProcessor-conventions)
 of this repository.
 
 ### Input / Output

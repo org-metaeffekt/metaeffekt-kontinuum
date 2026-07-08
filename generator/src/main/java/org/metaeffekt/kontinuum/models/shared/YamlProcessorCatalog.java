@@ -1,5 +1,7 @@
 package org.metaeffekt.kontinuum.models.shared;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class YamlProcessorCatalog implements ProcessorCatalog {
 
-    public final List<ProcessorDefinitions.Processor> catalog;
+    public final List<ProcessorDefinitions.MavenProcessor> catalog;
 
     public YamlProcessorCatalog() {
         InputStream is = getClass().getClassLoader().getResourceAsStream("processors.yaml");
@@ -24,25 +26,24 @@ public class YamlProcessorCatalog implements ProcessorCatalog {
     }
 
     @Override
-    public List<ProcessorDefinitions.Processor> getProcessors() {
+    public List<ProcessorDefinitions.MavenProcessor> getProcessors() {
         return catalog;
     }
 
     @Override
-    public ProcessorDefinitions.Processor getProcessorById(String processorId) {
-        List<ProcessorDefinitions.Processor> foundProcessors = catalog.stream()
+    public ProcessorDefinitions.MavenProcessor getProcessorById(String processorId) {
+        List<ProcessorDefinitions.MavenProcessor> foundMavenProcessors = catalog.stream()
                 .filter(p -> p.id.equals(processorId))
                 .toList();
 
-        if (foundProcessors.size() > 1) {
-            log.error("More than one processor found with id {}, continuing with processor {}", processorId, foundProcessors.get(0).id);
+        if (foundMavenProcessors.size() > 1) {
+            log.error("More than one processor found with id {}, continuing with processor {}", processorId, foundMavenProcessors.get(0).id);
         }
 
-        ProcessorDefinitions.Processor original = foundProcessors.get(0);
-        ProcessorDefinitions.Processor copy = new ProcessorDefinitions.Processor();
+        ProcessorDefinitions.MavenProcessor original = foundMavenProcessors.get(0);
+        ProcessorDefinitions.MavenProcessor copy = new ProcessorDefinitions.MavenProcessor();
         copy.setId(original.getId());
         copy.setName(original.getName());
-        copy.setDescription(original.getDescription());
         copy.setPomLocation(original.getPomLocation());
         copy.setGoal(original.getGoal());
         copy.setStage(original.getStage());
@@ -59,11 +60,31 @@ public class YamlProcessorCatalog implements ProcessorCatalog {
         return copy;
     }
 
-    private List<ProcessorDefinitions.Processor> load(InputStream inputStream) {
+    /**
+     * Jackson mixin applied to {@link ProcessorDefinitions.Processor} so that the
+     * {@code Processor} / {@code MavenProcessor} / {@code StandaloneProcessor} hierarchy is
+     * deserialized by deduction: Jackson inspects the fields present on each YAML entry and
+     * picks the matching subtype (entries with {@code pomLocation}/{@code goal}/{@code parameters}
+     * become {@link ProcessorDefinitions.MavenProcessor}; entries with {@code script} become
+     * {@link ProcessorDefinitions.StandaloneProcessor}).
+     */
+    @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
+    @JsonSubTypes({
+            @JsonSubTypes.Type(ProcessorDefinitions.MavenProcessor.class),
+            @JsonSubTypes.Type(ProcessorDefinitions.StandaloneProcessor.class)
+    })
+    private interface ProcessorMixin {
+    }
+
+    private List<ProcessorDefinitions.MavenProcessor> load(InputStream inputStream) {
         ObjectMapper objectMapper = new ObjectMapper(new YAMLFactory());
+        objectMapper.addMixIn(ProcessorDefinitions.Processor.class, ProcessorMixin.class);
         try {
             ProcessorDefinitions processorDefinitions = objectMapper.readValue(inputStream, ProcessorDefinitions.class);
-            return processorDefinitions.processors.stream().sorted(Comparator.comparing(p -> p.name)).toList();
+            return processorDefinitions.processors.stream()
+                    .filter(ProcessorDefinitions.MavenProcessor.class::isInstance)
+                    .map(ProcessorDefinitions.MavenProcessor.class::cast)
+                    .sorted(Comparator.comparing(p -> p.name)).toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

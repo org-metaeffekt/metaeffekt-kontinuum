@@ -1,6 +1,6 @@
 # Mirror - Update Index
 
-This processor creates or updates the indices of the mirror. It uses the previously downloaded data files of the
+This mavenProcessor creates or updates the indices of the mirror. It uses the previously downloaded data files of the
 external data sources. As a result the specified mirror directory is extended with the index files.
 
 ## Properties
@@ -9,7 +9,7 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-None. This processor does not operate on workspace level.
+None. This mavenProcessor does not operate on workspace level.
 
 
 ### Parameters

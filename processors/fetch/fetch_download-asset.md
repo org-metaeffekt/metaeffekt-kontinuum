@@ -1,6 +1,6 @@
 # Fetch - Download Asset
 
-This processor downloads a remote asset from a specified URL into a target directory.
+This mavenProcessor downloads a remote asset from a specified URL into a target directory.
 
 ## Properties
 

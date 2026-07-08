@@ -89,14 +89,14 @@ public class PipelineConfigurationLoader {
     }
 
     private void validateAssets() {
-        List<PipelineConfiguration.ProjectProperties.Asset> assets = pipelineConfiguration.getProjectProperties().getAssets();
+        List<Asset> assets = pipelineConfiguration.getProjectProperties().getAssets();
         if (assets == null || assets.isEmpty()) {
             log.error("Assets are missing.");
             isValid = false;
             return;
         }
 
-        for (PipelineConfiguration.ProjectProperties.Asset asset : assets) {
+        for (Asset asset : assets) {
             if (asset == null) {
                 log.error("Asset entry is null.");
                 isValid = false;
@@ -122,18 +122,36 @@ public class PipelineConfigurationLoader {
                 isValid = false;
             }
             
-            if (asset.getMavenResolver() != null || asset.getContainerResolver() != null) {
-                log.warn("The maven resolver and container resolver are not yet implemented and can be removed for asset {}", asset);
+            if (asset.getMavenResolver() == null && asset.getUrlResolver() == null && asset.getContainerResolver() == null) {
+                log.error("Asset {} requires a resolver to bet set.", asset);
+                isValid = false;
             }
-            
+
+            validateMavenResolver(asset);
             validateUrlResolver(asset);
         }
     }
 
-    private void validateUrlResolver(PipelineConfiguration.ProjectProperties.Asset asset) {
-        if (asset.getUrlResolver() == null) {
-            log.error("Asset {} requires urlResolver to be set.", asset);
+    private void validateMavenResolver(Asset asset) {
+
+        Asset.MavenResolver mavenResolver = asset.getMavenResolver();
+        if (mavenResolver == null) {
+            return;
+        }
+
+        if (StringUtils.isBlank(mavenResolver.getGroupId())) {
+            log.error("Asset {} requires 'mavenResolver.groupId' to contain a group id.", asset);
             isValid = false;
+        }
+
+        if (StringUtils.isBlank(mavenResolver.getArtifactVersion())) {
+            log.error("Asset {} requires 'mavenResolver.artifactVersion' to contain a version.", asset);
+            isValid = false;
+        }
+    }
+    
+    private void validateUrlResolver(Asset asset) {
+        if (asset.getUrlResolver() == null) {
             return;
         }
 

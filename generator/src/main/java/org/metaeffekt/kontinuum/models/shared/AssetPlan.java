@@ -31,9 +31,9 @@ public class AssetPlan {
 
     private boolean requireVulnerabilityEnrichment = false;
 
-    private boolean requireSpdx = false;
+    private boolean requireSpdx;
 
-    private boolean requireCycloneDx = false;
+    private boolean requireCycloneDx;
 
     private boolean requireDashboardGeneration = false;
 
@@ -52,15 +52,27 @@ public class AssetPlan {
             requireAggregation = true;
         }
 
-        try {
-            URL assetUrl = new URL(asset.getUrlResolver().getUrl());
+        if (asset.getUrlResolver() != null) {
+            try {
+                URL assetUrl = new URL(asset.getUrlResolver().getUrl());
 
-            if (!"file".equals(assetUrl.getProtocol())) {
-                requireFetch = true;
-                requireExtract = true;
+                if (!"file".equals(assetUrl.getProtocol())) {
+                    requireFetch = true;
+                    requireExtract = true;
+                }
+            } catch (MalformedURLException e) {
+                throw new IllegalStateException( "The URLResolver for asset " + asset + " must contain a valid URL.",e);
             }
-        } catch (MalformedURLException e) {
-            throw new IllegalStateException( "The URLResolver for asset " + asset + " must contain a valid URL.",e);
+        }
+
+        if (asset.getContainerResolver() != null) {
+            requireContainerInspect = true;
+            requireExtract = true;
+        }
+
+        if (asset.getMavenResolver() != null) {
+            requireFetch = true;
+            requireExtract = true;
         }
 
         evaluateOptions(pipelineConfiguration);

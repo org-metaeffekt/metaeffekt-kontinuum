@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -58,7 +57,7 @@ public class YamlProcessorsCatalogTest {
         expectedProcessorIds.add("validate-reference-inventory");
 
         List<String> actualProcessorIds = processorCatalog.getProcessors().stream()
-                .map(ProcessorDefinitions.Processor::getId)
+                .map(ProcessorDefinitions.MavenProcessor::getId)
                 .toList();
 
         for (String expectedId : expectedProcessorIds) {
@@ -79,10 +78,10 @@ public class YamlProcessorsCatalogTest {
         YamlProcessorCatalog processorCatalog = new YamlProcessorCatalog();
 
         java.util.Set<String> yamlKeys = new java.util.TreeSet<>();
-        for (ProcessorDefinitions.Processor processor : processorCatalog.getProcessors()) {
-            for (ProcessorDefinitions.ProcessorParameter parameter : processor.getParameters()) {
+        for (ProcessorDefinitions.MavenProcessor mavenProcessor : processorCatalog.getProcessors()) {
+            for (ProcessorDefinitions.ProcessorParameter parameter : mavenProcessor.getParameters()) {
                 org.junit.jupiter.api.Assertions.assertNotNull(parameter.getKey(),
-                        "Parameter key on processor [" + processor.getId() + "] resolved to null");
+                        "Parameter key on processor [" + mavenProcessor.getId() + "] resolved to null");
                 yamlKeys.add(parameter.getKey().getKey());
             }
         }

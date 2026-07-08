@@ -7,14 +7,14 @@ use cases.
 
 This repository is organized into two main sections: **processors** and **tests**.
 
-The **processors** section contains XML files that execute predefined parameterized steps. Each processor 
-represents a specific isolated workflow or task. For detailed information about each processor's capabilities, usage 
-instructions, and expected results, refer to the processor-specific README files.
+The **processors** section contains XML files that execute predefined parameterized steps. Each mavenProcessor 
+represents a specific isolated workflow or task. For detailed information about each mavenProcessor's capabilities, usage 
+instructions, and expected results, refer to the mavenProcessor-specific README files.
 
 The **tests** section provides basic test infrastructure for:
 - Testing individual processors
-- Testing processor sequences through pipeline scripts
-- Demonstrating how to call each processor with available parameters
+- Testing mavenProcessor sequences through pipeline scripts
+- Demonstrating how to call each mavenProcessor with available parameters
 - Showing how to connect processors into custom pipelines
 
 ## Prerequisites
@@ -25,7 +25,7 @@ in the root of this repository. A template for this file with additional hints a
 
 Depending on which processors will be run, an instance of the [metaeffekt-workbech](https://github.com/org-metaeffekt/metaeffekt-workbench)
 might be required and checked out locally. The only additional requirement is a local instance of the vulnerability mirror
-which can be generated via the [mirror_update-index.xml](processors/mirror/mirror_update-index.xml) processor.
+which can be generated via the [mirror_update-index.xml](processors/mirror/mirror_update-index.xml) mavenProcessor.
 
 ## Running the Reference Pipeline
 
@@ -53,20 +53,20 @@ Since only a couple processors currently require the vulnerability mirror, you c
 
 ## Running a Single Processor
 
-To execute an individual processor, run the corresponding script in the [`processors`](tests/scripts/processors) directory. Note that some 
+To execute an individual mavenProcessor, run the corresponding script in the [`processors`](tests/scripts/processors) directory. Note that some 
 processors may require a vulnerability mirror instance.
 
-All processor results are stored in the [`target`](tests/target) directory.
+All mavenProcessor results are stored in the [`target`](tests/target) directory.
 
 ## Creating Custom Implementations
 
 While this repository is not designed as a custom workbench for executing processors with arbitrary resources and 
-parameters, it is technically possible. To create a custom script or processor execution:
+parameters, it is technically possible. To create a custom script or mavenProcessor execution:
 
 1. Create a new "case script" defining all necessary parameters
-2. Call the processor script with your case as a parameter:
+2. Call the mavenProcessor script with your case as a parameter:
    ```bash
-   sh your-processor.sh -c /path/to/your/case.sh
+   sh your-mavenProcessor.sh -c /path/to/your/case.sh
    ```
 
 This repository is mainly meant to be used in conjunction with the [metaeffekt-workbech](https://github.com/org-metaeffekt/metaeffekt-workbench)

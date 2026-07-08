@@ -10,8 +10,11 @@ import org.metaeffekt.kontinuum.generator.shared.Pipeline;
 import org.metaeffekt.kontinuum.models.gitlab.GitlabConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration;
 import org.metaeffekt.kontinuum.models.shared.PipelineConfiguration.ProjectProperties.Asset;
+import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions;
+import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.MavenProcessor;
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.Processor;
 import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.ProcessorParameter;
+import org.metaeffekt.kontinuum.models.shared.ProcessorDefinitions.StandaloneProcessor;
 import org.metaeffekt.kontinuum.models.shared.ProcessorParameterKey;
 import org.metaeffekt.kontinuum.models.shared.Stage;
 
@@ -45,13 +48,15 @@ public class GitlabPipeline {
     public void generateStagesSection() {
         StringBuilder stagesSection = new StringBuilder();
         stagesSection.append("stages:").append(System.lineSeparator());
-        Set<Stage> requiredStages = new HashSet<>();
-        
+        Set<String> requiredStages = new HashSet<>();
+
         assetProcessorsMap.values().stream()
             .flatMap(List::stream)
             .forEach(p -> requiredStages.add(p.getStage()));
-        
-        for (Stage stage : requiredStages.stream().sorted().toList()) {
+
+        for (String stage : requiredStages.stream()
+                .sorted(Comparator.comparingInt(s -> Stage.valueOf(s).ordinal()))
+                .toList()) {
             stagesSection.append("  - ").append(stage).append(System.lineSeparator());
         }
 
@@ -87,7 +92,7 @@ public class GitlabPipeline {
             for (Processor processor : entry.getValue()) {
 
                 StringBuilder job = new StringBuilder();
-                job.append(generateJobName(processor , entry.getKey().toString())).append(":").append(System.lineSeparator());
+                job.append(generateJobName(processor, entry.getKey().toString())).append(":").append(System.lineSeparator());
                 job.append("  ").append("stage: ").append(processor.getStage()).append(System.lineSeparator());
                 job.append("  ").append("image: ").append(gitlabConfiguration.CONTAINER_IMAGE).append(System.lineSeparator());
 
@@ -101,19 +106,25 @@ public class GitlabPipeline {
                 if (generateBeforeScriptBlock() != null) {
                     job.append(generateBeforeScriptBlock());
                 }
-                
+
                 job.append("  ").append("script: ").append(System.lineSeparator());
                 job.append("    - |").append(System.lineSeparator());
 
-                if (processor.getPreScript() != null) {
-                    job.append(processor.getPreScript(6)).append(System.lineSeparator());
+                if (processor instanceof MavenProcessor mavenProcessor) {
+                    if (mavenProcessor.getPreScript() != null) {
+                        job.append(mavenProcessor.getPreScript(6)).append(System.lineSeparator());
+                    }
+
+                    job.append(generateMavenScriptBlock(mavenProcessor));
+
+                    if (mavenProcessor.getPostScript() != null) {
+                        job.append(mavenProcessor.getPostScript(6)).append(System.lineSeparator());
+                    }
+                } else if (processor instanceof StandaloneProcessor standaloneProcessor) {
+                    String indent = "      ";
+                    job.append(indent).append(standaloneProcessor.getScript().replace("\n", "\n" + indent)).append(System.lineSeparator());
                 }
 
-                job.append(generateMavenScriptBlock(processor));
-
-                if (processor.getPostScript() != null) {
-                    job.append(processor.getPostScript(6)).append(System.lineSeparator());
-                }
                 gitlabPipelineDocument.append(job).append(System.lineSeparator());
                 lastProcessor = processor;
             }
@@ -121,14 +132,14 @@ public class GitlabPipeline {
     }
 
 
-    private String generateMavenScriptBlock(Processor processor) {
+    private String generateMavenScriptBlock(ProcessorDefinitions.MavenProcessor mavenProcessor) {
         StringBuilder script = new StringBuilder();
         script.append("      mvn -f ")
                 .append(gitlabConfiguration.getKontinuumProcessorsDirNormalized())
-                .append(processor.getPomLocation()).append(" ")
-                .append(processor.getGoal()).append(" \\").append(System.lineSeparator());
+                .append(mavenProcessor.getPomLocation()).append(" ")
+                .append(mavenProcessor.getGoal()).append(" \\").append(System.lineSeparator());
         
-        List<ProcessorParameter> nonBlankParams = processor.getParameters().stream()
+        List<ProcessorParameter> nonBlankParams = mavenProcessor.getParameters().stream()
             .filter(p -> StringUtils.isNotBlank(p.getValue()))
             .toList();
         
@@ -180,8 +191,9 @@ public class GitlabPipeline {
                 .append("-")
                 .append(processor.getId());
 
-        if (processor.getId().equals("create-document")) {
-            Optional<ProcessorParameter> processorParameter = processor.getParameters()
+        if (processor instanceof MavenProcessor mavenProcessor
+                && mavenProcessor.getId().equals("create-document")) {
+            Optional<ProcessorParameter> processorParameter = mavenProcessor.getParameters()
                     .stream()
                     .filter(p -> p.getKey() == ProcessorParameterKey.PARAM_DOCUMENT_TYPE)
                     .findFirst();

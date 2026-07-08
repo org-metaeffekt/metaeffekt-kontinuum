@@ -1,6 +1,6 @@
 # Portfolio - Create Overview
 
-This process creates an overview with the resources copied with the portfolio_copy-resources.xml processor.
+This process creates an overview with the resources copied with the portfolio_copy-resources.xml mavenProcessor.
 
 ## Properties
 

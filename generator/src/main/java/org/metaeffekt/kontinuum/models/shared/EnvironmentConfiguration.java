@@ -28,8 +28,8 @@ public abstract class EnvironmentConfiguration {
     private final String KONTINUUM_DIR;
 
     private final String PORTFOLIO_MANAGER_CLIENT_KEYSTORE_FILE;
-    public final String PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD;
     private final String PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_FILE;
+    public final String PORTFOLIO_MANAGER_CLIENT_KEYSTORE_PASSWORD;
     public final String PORTFOLIO_MANAGER_CLIENT_TRUSTSTORE_PASSWORD;
     public final String PORTFOLIO_MANAGER_TOKEN;
     public final String PORTFOLIO_MANAGER_URL;

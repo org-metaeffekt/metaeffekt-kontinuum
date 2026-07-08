@@ -22,7 +22,7 @@ See also the use cases detailed in [{metæffekt} bom essentials)](https://github
 ## Processors
 
 To enable broad compatibility the kontinuum provides all processors as .xml files, which can be executed via the
-maven build tool. Every processor defines the steps necessary to execute a specific goal, as well as the configuration
+maven build tool. Every mavenProcessor defines the steps necessary to execute a specific goal, as well as the configuration
 parameters required to successfully run it.
 
 Multiple processors can be combined to define pipelines and workflows for integration into larger projects. The {metæffekt}
