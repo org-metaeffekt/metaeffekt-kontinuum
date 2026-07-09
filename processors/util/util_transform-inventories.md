@@ -22,8 +22,3 @@ of this repository.
 
 ### Environment
 None
-
-
-FIXME:
-- generalize parameters (dictated by script); get rid of asset name
-- duplicate to not interfere with pipelines 

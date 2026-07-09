@@ -15,6 +15,13 @@ of this repository.
 | input.output.analysis.base.dir     | yes      | The directory in which the scanner caches information on artifacts. Increases speed drastically between multiple scanner runs. |
 
 ### Parameters
-| Parameter                         | Required | Description                                                                          | default                                                           |
-|-----------------------------------|----------|--------------------------------------------------------------------------------------|-------------------------------------------------------------------|
-| param.properties.file             | yes      | Yaml file containing properties to configure the scanner's behaviour.                 |
+| Parameter                         | Required | Description                                                                           | default                                                           |
+|-----------------------------------|----------|---------------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| param.properties.file             | yes      | Yaml file containing properties to configure the scanner's behaviour.                 | 
+
+### Environment
+| Property                 | Required | Explanation                                                           |
+|--------------------------|----------|-----------------------------------------------------------------------|
+| env.kosmos.password      | yes      | The password to decrypt the metaeffekt license database (Kosmos).     |   
+| env.kosmos.userkeys.file | yes      | The userkeys file to access the metaeffekt license database (Kosmos). |   
+

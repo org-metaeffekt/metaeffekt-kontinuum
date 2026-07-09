@@ -56,6 +56,15 @@
                         </configuration>
                     </execution>
                 </executions>
+
+                <!-- FIXME: Currently required because of a dependency issue in portfolio manager 0.8.0. Remove once updated. -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-core</artifactId>
+                        <version>5.3.37</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
