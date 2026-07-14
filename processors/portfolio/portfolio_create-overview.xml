@@ -70,8 +70,6 @@
                     </notificationRuleFiles>
 
                     <notificationOutputFile>${output.notification.file}</notificationOutputFile>
-
-
                 </configuration>
                 <dependencies>
                     <!-- FIXME: provide plugin with complete dependencies -->
