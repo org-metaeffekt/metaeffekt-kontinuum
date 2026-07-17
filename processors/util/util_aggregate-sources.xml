@@ -43,90 +43,52 @@
             </goals>
             <phase>validate</phase>
             <configuration>
-              <includeAllSources>${param.include.all.sources}</includeAllSources>
-              <failOnMissingSources>${param.fail.on.missing.sources}</failOnMissingSources>
               <inventoryPath>${input.inventory.file}</inventoryPath>
+              <sourceAggregationConfig>${param.config.file}</sourceAggregationConfig>
+              <aggregationProtocolFile>${param.protocol.file}</aggregationProtocolFile>
+              <targetDirectory>${output.target.dir}</targetDirectory>
 
-              <!-- Source Repositories -->
               <sourceRepositories>
-
                 <sourceRepository>
-                  <id>Public FileServer Mirrors</id>
-                  <targetFolder>${output.artifacts.dir}</targetFolder>
-                  <patterns>
-                    <pattern>^.*\.jar</pattern>
-                  </patterns>
-                  <fileServerMirror>
-                    <propertyFilePath>${param.property.file}</propertyFilePath>
-                    <sourceUrls>
-                      <url>https://$[host02]/maven2/$[artifact.groupId]/$[artifact.groupId]/$[artifact.version]/$[artifact.name]</url>
-                    </sourceUrls>
-                  </fileServerMirror>
+                  <id>FileServer</id>
+                  <fileServerMirror/>
                 </sourceRepository>
 
                 <sourceRepository>
-                  <id>Internal / External Eclipse Mirrors</id>
-                  <targetFolder>${output.artifacts.dir}</targetFolder>
-                  <patterns>
-                    <!-- patterns: "artifact:component:version:effectiveLicense"; Regular expressions start with '^' -->
-                    <pattern>^org\.eclipse\..*_.*\.jar:^.*:^.*:^.*</pattern>
-                  </patterns>
-                  <eclipseMirror>
-                    <mirrorUrls>
-                      <url>https://builds.gradle.org:8001/eclipse/update-site/mirror/releases-rolling/features/</url>
-                    </mirrorUrls>
-                  </eclipseMirror>
+                  <id>Maven Repository</id>
+                  <mavenMirror/>
                 </sourceRepository>
-
-                <sourceRepository>
-                  <id>Internal / External Eclipse Mirrors</id>
-                  <targetFolder>${output.artifacts.dir}</targetFolder>
-                  <patterns>
-                    <!-- patterns: "artifact:component:version:effectiveLicense"; Regular expressions start with '^' -->
-                    <pattern>^.*?_.*\.jar</pattern>
-                  </patterns>
-                  <eclipseMirror>
-                    <mirrorUrls>
-                      <url>https://builds.gradle.org:8001/eclipse/update-site/mirror/releases-rolling/plugins/</url>
-                    </mirrorUrls>
-                  </eclipseMirror>
-                </sourceRepository>
-
-                <sourceRepository>
-                  <id>Maven Repo (Mapped)</id>
-
-                  <!-- this variant shows how incomplete artifacts can be mapped to a maven repository -->
-
-                  <targetFolder>${output.artifacts.dir}</targetFolder>
-                  <patterns>
-                    <pattern>^.*\.jar</pattern>
-                  </patterns>
-                  <componentMirror>
-                    <mappings>
-                      <map>^Bouncy Castle-.*:org/bouncycastle/$artifactId/$version/$artifactId-$version-sources.$type</map>
-                      <map>^bcpkix-jdk18on-([0-9]*\.[0-9]*).jar:org/bouncycastle/bcpkix-jdk18on/$1/bcpkix-jdk18on-$1-sources.jar</map>
-                    </mappings>
-                    <mirrorUrls>
-                      <url>https://repo1.maven.org/maven2/</url>
-                    </mirrorUrls>
-                  </componentMirror>
-                </sourceRepository>
-
-                <sourceRepository>
-
-                  <!-- this variant shows how arbitrary (yet complete gav) artifacts can be mapped -->
-
-                  <id>Maven Repo (Fallback)</id>
-                  <targetFolder>${output.artifacts.dir}</targetFolder>
-                  <patterns>
-                    <pattern>^.*\.jar</pattern>
-                  </patterns>
-                  <mavenMirror />
-                </sourceRepository>
-
               </sourceRepositories>
-            </configuration>
 
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven.enforcer.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>enforce-property</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireProperty>
+                  <property>input.inventory.file</property>
+                </requireProperty>
+                <requireProperty>
+                  <property>param.config.file</property>
+                </requireProperty>
+                <requireProperty>
+                  <property>output.target.dir</property>
+                </requireProperty>
+              </rules>
+              <fail>true</fail>
+            </configuration>
           </execution>
         </executions>
       </plugin>

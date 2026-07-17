@@ -12,12 +12,11 @@ of this repository.
 | Parameter            | Required | Description                                                                                |
 |----------------------|----------|--------------------------------------------------------------------------------------------|
 | input.inventory.file | yes      | The file path of the inventory containing the artifacts for which to download the sources. |
-| output.artifact.dir  | yes      | The directory in which to download the source artifacts.                                   |     
+| output.target.dir    | yes      | The directory in which to download the source artifacts.                                   |     
 
 ### Parameters
-| Parameter                     | Required | Description                                                                                                                               |
-|-------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| param.include.all.sources     | yes      | If true, includes all sources in the target artifact directory.                                                                           |
-| param.fail.on.missing.sources | yes      | If true, fails if any required source is not found in a remote repository.                                                                |
-| param.property.file           | yes      | The file path of the property files required for the source aggregation process. This file contains placeholders for the current project. |
+| Parameter           | Required | Description                                                                                              |
+|---------------------|----------|----------------------------------------------------------------------------------------------------------|
+| param.config.file   | yes      | The file path of the configuration YAML required for the source aggregation process.                     |
+| param.protocol.file | no       | The file path of the protocol file containing detailed execution information for the source aggregation. |
 
