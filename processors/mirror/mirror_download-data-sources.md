@@ -8,7 +8,7 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-None. This mavenProcessor does not operate on workspace level.
+None. This processor does not operate on workspace level.
 
 
 ### Parameters

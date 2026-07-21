@@ -78,10 +78,10 @@ public class YamlProcessorsCatalogTest {
         YamlProcessorCatalog processorCatalog = new YamlProcessorCatalog();
 
         java.util.Set<String> yamlKeys = new java.util.TreeSet<>();
-        for (ProcessorDefinitions.MavenProcessor mavenProcessor : processorCatalog.getProcessors()) {
-            for (ProcessorDefinitions.ProcessorParameter parameter : mavenProcessor.getParameters()) {
+        for (ProcessorDefinitions.MavenProcessor processor : processorCatalog.getProcessors()) {
+            for (ProcessorDefinitions.ProcessorParameter parameter : processor.getParameters()) {
                 org.junit.jupiter.api.Assertions.assertNotNull(parameter.getKey(),
-                        "Parameter key on processor [" + mavenProcessor.getId() + "] resolved to null");
+                        "Parameter key on processor [" + processor.getId() + "] resolved to null");
                 yamlKeys.add(parameter.getKey().getKey());
             }
         }

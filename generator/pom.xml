@@ -60,7 +60,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>generate-mavenProcessor-parameter-key</id>
+                        <id>generate-processor-parameter-key</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>java</goal>

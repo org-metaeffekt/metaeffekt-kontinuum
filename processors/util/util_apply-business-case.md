@@ -1,6 +1,6 @@
 # Util - Apply Business Case
 
-An inventory can be evaluated in a defined business case and documentation context. This mavenProcessor enables to
+An inventory can be evaluated in a defined business case and documentation context. This processor enables to
 apply business case specific modulation of an inventory. E.g. before producing a distribution annex.
 
 ## Properties

@@ -77,14 +77,14 @@ public class LocalPipeline {
         }
     }
 
-    private String generateMavenScriptBlock(MavenProcessor mavenProcessor) {
+    private String generateMavenScriptBlock(MavenProcessor processor) {
         StringBuilder script = new StringBuilder();
         script.append("mvn -f ")
                 .append(localConfiguration.getKontinuumProcessorsDirNormalized())
-                .append(mavenProcessor.getPomLocation()).append(" ")
-                .append(mavenProcessor.getGoal()).append(" \\").append(System.lineSeparator());
+                .append(processor.getPomLocation()).append(" ")
+                .append(processor.getGoal()).append(" \\").append(System.lineSeparator());
 
-        List<ProcessorParameter> nonBlankParams = mavenProcessor.getParameters().stream()
+        List<ProcessorParameter> nonBlankParams = processor.getParameters().stream()
                 .filter(p -> StringUtils.isNotBlank(p.getValue()))
                 .toList();
 

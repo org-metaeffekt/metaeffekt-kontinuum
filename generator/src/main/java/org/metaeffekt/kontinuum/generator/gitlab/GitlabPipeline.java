@@ -132,14 +132,14 @@ public class GitlabPipeline {
     }
 
 
-    private String generateMavenScriptBlock(ProcessorDefinitions.MavenProcessor mavenProcessor) {
+    private String generateMavenScriptBlock(ProcessorDefinitions.MavenProcessor processor) {
         StringBuilder script = new StringBuilder();
         script.append("      mvn -f ")
                 .append(gitlabConfiguration.getKontinuumProcessorsDirNormalized())
-                .append(mavenProcessor.getPomLocation()).append(" ")
-                .append(mavenProcessor.getGoal()).append(" \\").append(System.lineSeparator());
+                .append(processor.getPomLocation()).append(" ")
+                .append(processor.getGoal()).append(" \\").append(System.lineSeparator());
         
-        List<ProcessorParameter> nonBlankParams = mavenProcessor.getParameters().stream()
+        List<ProcessorParameter> nonBlankParams = processor.getParameters().stream()
             .filter(p -> StringUtils.isNotBlank(p.getValue()))
             .toList();
         
@@ -192,7 +192,7 @@ public class GitlabPipeline {
                 .append(processor.getId());
 
         if (processor instanceof MavenProcessor mavenProcessor
-                && mavenProcessor.getId().equals("create-document")) {
+                && processor.getId().equals("create-document")) {
             Optional<ProcessorParameter> processorParameter = mavenProcessor.getParameters()
                     .stream()
                     .filter(p -> p.getKey() == ProcessorParameterKey.PARAM_DOCUMENT_TYPE)
