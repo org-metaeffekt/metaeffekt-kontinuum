@@ -48,10 +48,9 @@ run_maven_command() {
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   [ -n "${LOCAL_MAVEN_REPO:-}" ] && CMD+=("-Dmaven.repo.local=$LOCAL_MAVEN_REPO")
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
-  CMD+=("-Doutput.artifacts.dir=$OUTPUT_ARTIFACTS_DIR")
-  CMD+=("-Dparam.property.file=$PARAM_PROPERTY_FILE")
-  CMD+=("-Dparam.include.all.sources=${PARAM_INCLUDE_ALL_SOURCES:-false}")
-  CMD+=("-Dparam.fail.on.missing.sources=${PARAM_FAIL_ON_MISSING_SOURCES:-false}")
+  CMD+=("-Doutput.target.dir=$OUTPUT_TARGET_DIR")
+  CMD+=("-Dparam.config.file=$PARAM_CONFIG_FILE")
+  CMD+=("-Dparam.protocol.file=$PARAM_PROTOCOL_FILE")
 
   pass_command_info_to_logger "$(basename "$0")"
 }
