@@ -53,32 +53,49 @@
                                 <delete dir="${staging.dir}"/>
                                 <mkdir dir="${staging.dir}"/>
 
-                                <!-- FIXME: provide a baseDir where the different PDFs are aggregated (e.g. multi-lang) -->
-                                <copy file="${input.document.pdf.file}"
-                                      todir="${staging.dir}"/>
+                                <!-- Include document PDF DE-->
+                                <condition property="pdf_de.present">
+                                    <isset property="input.document.en.pdf.file"/>
+                                </condition>
+                                <copy file="${input.document.en.pdf.file}" todir="${staging.dir}" failonerror="false" if:set="pdf_de.present"/>
+                                <echo unless:set="pdf_de.present" message="[SKIP] Document PDF (DE) not provided."/>
 
+                                <!-- Include document PDF EN -->
+                                <condition property="pdf_en.present">
+                                    <isset property="input.document.de.pdf.file"/>
+                                </condition>
+                                <copy file="${input.document.de.pdf.file}" todir="${staging.dir}" failonerror="false" if:set="pdf_en.present"/>
+                                <echo unless:set="pdf_en.present" message="[SKIP] Document PDF (EN) not provided."/>
+
+                                <!-- Include components -->
                                 <condition property="components.present">
                                     <isset property="input.inventory.components.dir"/>
                                 </condition>
-
-                                <copy todir="${staging.dir}/components" failonerror="false">
+                                <copy todir="${staging.dir}/components" failonerror="false" if:set="components.present">
                                     <fileset dir="${input.inventory.components.dir}" erroronmissingdir="false"/>
                                 </copy>
-                                <echo unless:set="components.exists"
-                                      message="[SKIP] Components folder not provided."/>
+                                <echo unless:set="components.present" message="[SKIP] Components folder not provided."/>
 
+                                <!-- Include licenses -->
                                 <condition property="licenses.present">
                                     <isset property="input.inventory.licenses.dir"/>
                                 </condition>
-
-                                <copy todir="${staging.dir}/licenses" failonerror="false">
+                                <copy todir="${staging.dir}/licenses" failonerror="false" if:set="licenses.present">
                                     <fileset dir="${input.inventory.licenses.dir}" erroronmissingdir="false"/>
                                 </copy>
-                                <echo unless:set="licenses.exists"
-                                      message="[SKIP] Licenses folder not provided."/>
+                                <echo unless:set="licenses.present" message="[SKIP] Licenses folder not provided."/>
 
-                                <zip destfile="${output.annex.archive.file}"
-                                     basedir="${staging.dir}"/>
+                                <!-- Include sources -->
+                                <condition property="sources.present">
+                                    <isset property="input.inventory.sources.dir"/>
+                                </condition>
+                                <copy todir="${staging.dir}/sources" failonerror="false" if:set="sources.present">
+                                    <fileset dir="${input.inventory.sources.dir}" erroronmissingdir="false"/>
+                                </copy>
+                                <echo unless:set="sources.present" message="[SKIP] Sources folder not provided."/>
+
+                                <!-- zip Annex content -->
+                                <zip destfile="${output.annex.archive.file}" basedir="${staging.dir}"/>
                                 <echo message="[SUCCESS] Archive created at: ${output.annex.archive.file}"/>
                             </target>
                         </configuration>
@@ -98,9 +115,6 @@
                         </goals>
                         <configuration>
                             <rules>
-                                <requireProperty>
-                                    <property>input.document.pdf.file</property>
-                                </requireProperty>
                                 <requireProperty>
                                     <property>output.annex.archive.file</property>
                                 </requireProperty>
