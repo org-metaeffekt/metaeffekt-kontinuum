@@ -1,4 +1,4 @@
-# Report - Aggregate Annex Folders With TMD
+# Report - Aggregate Licenses
 
 This process enables the aggregation of license and component information using a reference inventory and Terms Metadata 
 (TMD) for a specified inventory. The content will be generated to the specified target directories. This process is a 
