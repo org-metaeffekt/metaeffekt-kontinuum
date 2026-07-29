@@ -6,7 +6,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PRELOAD_SCRIPT_PATH="$SCRIPT_DIR/../preload.sh"
 SHARED_SCRIPT_PATH="$SCRIPT_DIR/../shared.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
-CASE="report/report_create-annex-archive-01.sh"
+CASE="report/report_aggregate-annex-folders-01.sh"
 
 
 source_shared() {
@@ -40,16 +40,19 @@ initialize_logger() {
 
 #Run maven command
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/report/report_create-annex-archive.xml" verify)
+  CMD=(mvn -f "$PROCESSORS_DIR/report/util_aggregate-reference-licenses.xml" verify)
   [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   [ -n "${LOCAL_MAVEN_REPO:-}" ] && CMD+=("-Dmaven.repo.local=$LOCAL_MAVEN_REPO")
-  CMD+=("-Dinput.document.en.pdf.file=$INPUT_DOCUMENT_PDF_FILE")
-  CMD+=("-Dinput.inventory.components.dir=$INPUT_INVENTORY_COMPONENTS_DIR")
-  CMD+=("-Dinput.inventory.licenses.dir=$INPUT_INVENTORY_LICENSES_DIR")
-  CMD+=("-Doutput.annex.archive.file=$OUTPUT_ANNEX_ARCHIVE_FILE")
-
+  CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
+  CMD+=("-Dparam.reference.inventory.dir=$PARAM_REFERENCE_INVENTORY_DIR")
+  CMD+=("-Dparam.reference.inventory.includes=$PARAM_REFERENCE_INVENTORY_INCLUDES")
+  CMD+=("-Dparam.reference.component.path=$PARAM_REFERENCE_COMPONENT_PATH")
+  CMD+=("-Dparam.reference.license.path=$PARAM_REFERENCE_LICENSE_PATH")
+  CMD+=("-Dparam.target.component.dir=$PARAM_TARGET_COMPONENT_DIR")
+  CMD+=("-Dparam.target.license.dir=$PARAM_TARGET_LICENSE_DIR")
+  CMD+=("-Dparam.fail.on.missing.license.file=$PARAM_FAIL_ON_MISSING_LICENSE_FILE")
 
 
   pass_command_info_to_logger "$(basename "$0")"
