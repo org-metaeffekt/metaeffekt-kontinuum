@@ -41,6 +41,8 @@
         <param.reference.license.dir>${param.reference.inventory.dir}/../licenses</param.reference.license.dir>
         <param.reference.component.dir>${param.reference.inventory.dir}/../components</param.reference.component.dir>
 
+        <param.asset.build>n.a.</param.asset.build>
+
         <param.template.dir>${env.workbench.dir}/templates/report-template</param.template.dir>
         <param.computed.inventory.dir>${param.template.dir}/target/tmp</param.computed.inventory.dir>
         <env.workbench.processors.dir>${env.workbench.dir}/processors</env.workbench.processors.dir>
@@ -73,6 +75,7 @@
                                 <argument>-Dasset.id=${param.asset.id}</argument>
                                 <argument>-Dasset.name=${param.asset.name}</argument>
                                 <argument>-Dasset.version=${param.asset.version}</argument>
+                                <argument>-Dasset.build=${param.asset.build}</argument>
 
                                 <argument>-Dproduct.version=${param.product.version}</argument>
                                 <argument>-Dproduct.name=${param.product.name}</argument>
