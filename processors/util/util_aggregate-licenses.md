@@ -17,8 +17,6 @@ of this repository.
 ### Parameters
 | Parameter                             | Required | Description                                                                                                                                            |
 |---------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| env.kosmos.password                   | yes      | The password to decrypt the metaeffekt license database (Kosmos).                                                                                      |
-| env.kosmos.password                   | yes      | The userkeys file to access the metaeffekt license database (Kosmos).                                                                                  |
 | param.reference.inventory.dir         | no       | The input reference inventory with which the input inventory will be enriched. This is the parent directory of the license and components directories. |
 | param.reference.license.path          | no       | The license path of the reference inventory, default is  "licenses".                                                                                   |
 | param.reference.component.path        | no       | The component path of the reference inventory, default is  "components".                                                                               |
@@ -27,6 +25,13 @@ of this repository.
 | param.target.component.dir            | no       | The target directory for the components, default is "${project.build.dir}/annex/components".                                                           |
 | param.fail.on.missing.license.file    | no       | A boolean for controlling whether the process fails if a license file is missing, default is "false".                                                  |
 | param.fail.on.missing.component.files | no       | A boolean for controlling whether the process fails if component files are missing, default is "false".                                                |
+
+### Environment
+| Parameter             | Required | Description                                                                               |
+|-----------------------|----------|-------------------------------------------------------------------------------------------|
+| env.tmd.source        | no       | The license database source. Either `ae-universe` or `ae-kosmos`. Default is `ae-kosmos`. |
+| env.tmd.userkeys.file | yes      | The password to decrypt the metaeffekt license database (TMD).                            |
+| env.tmd.password      | yes      | The userkeys file to access the metaeffekt license database (TMD).                        |
 
 
 ### Environment

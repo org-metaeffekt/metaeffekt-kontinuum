@@ -68,8 +68,8 @@
                             <tmdArtifactId>ae-metaeffekt-kosmos</tmdArtifactId>
                             <tmdVersion>0.1.0</tmdVersion>
 
-                            <userPassword>${env.kosmos.password}</userPassword>
-                            <userKeysFile>${env.kosmos.userkeys.file}</userKeysFile>
+                            <userPassword>${env.tmd.password}</userPassword>
+                            <userKeysFile>${env.tmd.userkeys.file}</userKeysFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -90,10 +90,10 @@
                                     <property>input.inventory.file</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>env.kosmos.password</property>
+                                    <property>env.tmd.password</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>env.kosmos.userkeys.file</property>
+                                    <property>env.tmd.userkeys.file</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
@@ -103,4 +103,38 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+
+        <profile>
+            <id>kosmos</id>
+            <activation>
+                <property>
+                    <name>env.tmd.source</name>
+                    <value>ae-kosmos</value>
+                </property>
+            </activation>
+            <properties>
+                <ae.tmd.groupId>com.metaeffekt.kosmos</ae.tmd.groupId>
+                <ae.tmd.artifactId>ae-metaeffekt-kosmos</ae.tmd.artifactId>
+                <ae.tmd.version>${ae.kosmos.version}</ae.tmd.version>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>universe</id>
+            <activation>
+                <property>
+                    <name>env.tmd.source</name>
+                    <value>ae-universe</value>
+                </property>
+            </activation>
+            <properties>
+                <ae.tmd.groupId>com.metaeffekt.universe</ae.tmd.groupId>
+                <ae.tmd.artifactId>ae-metaeffekt-universe</ae.tmd.artifactId>
+                <ae.tmd.version>${ae.universe.version}</ae.tmd.version>
+            </properties>
+        </profile>
+
+    </profiles>
 </project>
