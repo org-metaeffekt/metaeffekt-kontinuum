@@ -64,9 +64,9 @@
                             <targetLicenseDir>${param.target.license.dir}</targetLicenseDir>
 
                             <!-- We utilize the metaeffekt kosmos as our database for license information -->
-                            <tmdGroupId>com.metaeffekt.kosmos</tmdGroupId>
-                            <tmdArtifactId>ae-metaeffekt-kosmos</tmdArtifactId>
-                            <tmdVersion>0.1.0</tmdVersion>
+                            <tmdGroupId>${ae.tmd.groupId}</tmdGroupId>
+                            <tmdArtifactId>${ae.tmd.artifactId}</tmdArtifactId>
+                            <tmdVersion>${ae.tmd.version}</tmdVersion>
 
                             <userPassword>${env.tmd.password}</userPassword>
                             <userKeysFile>${env.tmd.userkeys.file}</userKeysFile>
