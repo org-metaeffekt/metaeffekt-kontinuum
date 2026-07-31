@@ -27,7 +27,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>report_aggregate-annex-folders</artifactId>
+    <artifactId>util_aggregate-reference-licenses</artifactId>
     <packaging>pom</packaging>
 
     <properties>
@@ -47,9 +47,9 @@
                 <version>${ae.core.version}</version>
                 <executions>
                     <execution>
-                        <id>aggregate-annex-folders</id>
+                        <id>aggregate-licenses-from-reference-inventory</id>
                         <goals>
-                            <goal>aggregate-annex-folders</goal>
+                            <goal>aggregate-reference-licenses</goal>
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>

@@ -40,7 +40,7 @@ initialize_logger() {
 
 #Run maven command
 run_maven_command() {
-  CMD=(mvn -f "$PROCESSORS_DIR/report/report_aggregate-annex-folders.xml" verify)
+  CMD=(mvn -f "$PROCESSORS_DIR/report/util_aggregate-licenses.xml" verify)
   [ "${DEBUG:-}" = "true" ] && CMD+=("-X")
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
@@ -53,6 +53,9 @@ run_maven_command() {
   CMD+=("-Dparam.target.component.dir=$PARAM_TARGET_COMPONENT_DIR")
   CMD+=("-Dparam.target.license.dir=$PARAM_TARGET_LICENSE_DIR")
   CMD+=("-Dparam.fail.on.missing.license.file=$PARAM_FAIL_ON_MISSING_LICENSE_FILE")
+  CMD+=("-Dparam.fail.on.missing.component.files=$PARAM_FAIL_ON_MISSING_COMPONENT_FILES")
+  CMD+=("-Denv.tmd.password=$ENV_TMD_PASSWORD")
+  CMD+=("-Denv.tmd.userkeys.file=$ENV_TMD_USERKEYS_FILE")
 
 
   pass_command_info_to_logger "$(basename "$0")"

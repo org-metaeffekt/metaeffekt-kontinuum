@@ -9,16 +9,18 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Parameter                   | Required | Description                                   |
-|----------------------------|----------|-----------------------------------------------|
-| input.document.pdf.file    | yes      | The input PDF document for the Annex archive. |
-| output.annex.archive.file  | yes      | The output Annex archive file.                |
+| Parameter                  | Required | Description                                           |
+|----------------------------|----------|-------------------------------------------------------|
+| input.document.en.pdf.file | no       | The English input PDF document for the Annex archive. |
+| input.document.de.pdf.file | no       | The German input PDF document for the Annex archive.  |
+| output.annex.archive.file  | yes      | The output Annex archive file.                        |
 
 ### Parameters
-| Parameter                       | Required | Description                                                                              |
+| Parameter                      | Required | Description                                                                              |
 |--------------------------------|----------|------------------------------------------------------------------------------------------|
-| input.inventory.components.dir | yes      | The directory containing the components of the inventory for which the Annex is created. |
-| input.inventory.licenses.dir   | yes      | The directory containing the licenses of the inventory for which the Annex is created.   |
+| input.inventory.components.dir | no       | The directory containing the components of the inventory for which the Annex is created. |
+| input.inventory.licenses.dir   | no       | The directory containing the licenses of the inventory for which the Annex is created.   |
+| input.inventory.sources.dir    | no       | The directory containing the sources of the inventory for which the Annex is created.    |
 
 ### Environment
 None

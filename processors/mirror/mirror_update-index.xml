@@ -124,6 +124,10 @@
                                     <replacementCpe>cpe:2.3:a:oracle:mysql:8.0:*:*:*:community_server:*:*:*</replacementCpe>
                                 </cpeCorrection>
 
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:a:ibm:engineering_lifecycle_management:7.1.0:interim_fix_009:*:*:*:*:*:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:engineering_lifecycle_management:7.1.0:interim_fix_009:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
                             </cpeCorrections>
 
                             <!-- Using "cpePatternCorrections" on the other hand, the "malformedCpe" accepts a regular expression (must be enclosed with '/' character) -->
@@ -191,10 +195,11 @@
                                     <malformedCpe>/cpe:2.3:a:ibm:([^:]+):([^:]+):cd:\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
                                     <replacementCpe>cpe:2.3:a:ibm:$1:$2:*:*:*:continuous_delivery:*:*:*</replacementCpe>
                                 </cpeCorrection>
-                                <!-- IBM: ifix update identifier with extra trailing wildcard -->
+                                <!-- IBM: ifix/interim_fix update identifier with extra trailing wildcard -->
                                 <!-- cpe:2.3:a:ibm:engineering_lifecycle_management:7.2.0:ifix001:*:*:*:*:*:*:* to cpe:2.3:a:ibm:engineering_lifecycle_management:7.2.0:ifix001:*:*:*:*:*:* -->
+                                <!-- cpe:2.3:a:ibm:engineering_lifecycle_management:7.1.0:interim_fix_009:*:*:*:*:*:*:* to cpe:2.3:a:ibm:engineering_lifecycle_management:7.1.0:interim_fix_009:*:*:*:*:*:* -->
                                 <cpeCorrection>
-                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):([^:]+):(ifix[^:]*):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):([^:]+):((?:ifix|interim_fix)[^:]*):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
                                     <replacementCpe>cpe:2.3:a:ibm:$1:$2:$3:*:*:*:*:*:*</replacementCpe>
                                 </cpeCorrection>
 

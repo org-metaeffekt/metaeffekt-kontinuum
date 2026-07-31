@@ -27,7 +27,7 @@
         <ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>
 
         <!-- these are usually the latest released versions -->
-        <ae.universe.version>2.0.0</ae.universe.version>
+        <ae.universe.version>3.0.0</ae.universe.version>
         <ae.kosmos.version>0.1.0</ae.kosmos.version>
         <ae.portfolio.manager.version>0.8.0</ae.portfolio.manager.version>
 
