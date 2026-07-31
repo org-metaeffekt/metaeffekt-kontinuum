@@ -8,4 +8,4 @@ export PARAM_TARGET_LICENSE_DIR="$TESTS_DIR/target/workspace-001/sample-product-
 export PARAM_FAIL_ON_MISSING_LICENSE_FILE="false"
 export PARAM_FAIL_ON_MISSING_COMPONENT_FILES="false"
 export ENV_TMD_PASSWORD="EuBsVvcjIElWdXVVtHmPJdsE"
-export ENV_TMD_USERKEYS_FILE="$EXTERNAL_WORKBENCH_DIR/config/kosmos/kosmos.consumer.keys""
+export ENV_TMD_USERKEYS_FILE="$EXTERNAL_WORKBENCH_DIR/config/kosmos/kosmos.consumer.keys"
