@@ -11,7 +11,6 @@ LOG_FILE="$SELF_DIR/../../../.logs/$(basename $0).log"
 bash "$PROCESSOR_SCRIPTS_DIR/mirror/mirror_download-index.sh" -c "$CASES_DIR/mirror/mirror_download-index-01.sh" -f "$LOG_FILE"
 
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_execute-kotlin-script.sh" -c "$CASES_DIR/util/util_execute-kotlin-script-01.sh" -f "$LOG_FILE"
-bash "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-sources.sh" -c "$CASES_DIR/util/util_aggregate-sources-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_copy-inventories.sh" -c "$CASES_DIR/util/util_copy-inventories-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_create-diff.sh" -c "$CASES_DIR/util/util_create-diff-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_merge-inventories.sh" -c "$CASES_DIR/util/util_merge-inventories-01.sh" -f "$LOG_FILE"
@@ -43,6 +42,8 @@ bash "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_copy-resources.sh" -c "$CASES_D
 # Currently disabled because of unknown NullPointerException
 # bash "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_create-overview.sh" -c "$CASES_DIR/portfolio/portfolio_create-overview-01.sh" -f "$LOG_FILE"
 
-bash "$PROCESSOR_SCRIPTS_DIR/report/report_aggregate-annex-folders.sh" -c "$CASES_DIR/report/report_aggregate-annex-folders-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-reference-licenses.sh" -c "$CASES_DIR/util/util_aggregate-reference-licenses-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-licenses.sh" -c "$CASES_DIR/util/util_aggregate-licenses-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-sources.sh" -c "$CASES_DIR/util/util_aggregate-sources-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/report/report_create-annex-archive.sh" -c "$CASES_DIR/report/report_create-annex-archive-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/report/report_create-document.sh" -c "$CASES_DIR/report/report_create-document-01.sh" -f "$LOG_FILE"
