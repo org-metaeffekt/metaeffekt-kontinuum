@@ -43,6 +43,8 @@ bash "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_copy-resources.sh" -c "$CASES_D
 # Currently disabled because of unknown NullPointerException
 # bash "$PROCESSOR_SCRIPTS_DIR/portfolio/portfolio_create-overview.sh" -c "$CASES_DIR/portfolio/portfolio_create-overview-01.sh" -f "$LOG_FILE"
 
-bash "$PROCESSOR_SCRIPTS_DIR/report/report_aggregate-annex-folders.sh" -c "$CASES_DIR/report/report_aggregate-annex-folders-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-reference-licenses.sh" -c "$CASES_DIR/util/util_aggregate-reference-licenses-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-licenses.sh" -c "$CASES_DIR/util/util_aggregate-licenses-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/util/util_aggregate-sources.sh" -c "$CASES_DIR/util/util_aggregate-sources-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/report/report_create-annex-archive.sh" -c "$CASES_DIR/report/report_create-annex-archive-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/report/report_create-document.sh" -c "$CASES_DIR/report/report_create-document-01.sh" -f "$LOG_FILE"
