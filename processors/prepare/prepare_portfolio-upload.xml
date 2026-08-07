@@ -10,7 +10,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>util_portfolio-download</artifactId>
+    <artifactId>prepare_portfolio-upload</artifactId>
 
     <build>
         <plugins>
@@ -20,9 +20,9 @@
                 <version>${ae.portfolio.manager.version}</version>
                 <executions>
                     <execution>
-                        <id>pull-to-portfolio-manager</id>
+                        <id>push-to-portfolio-manager</id>
                         <goals>
-                            <goal>pull</goal>
+                            <goal>push</goal>
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
@@ -45,14 +45,13 @@
                             <trustStorePassword>${param.truststore.password}</trustStorePassword>
 
                             <!-- the project name to upload to -->
-                            <projectName>${param.product.name}</projectName>
+                            <projectName>${param.project.name}</projectName>
                             <!-- the asset group (in the project) to upload to -->
-                            <assetGroupQuery>${param.product.name}:${param.product.version}</assetGroupQuery>
+                            <assetGroup>${param.asset.group.id}</assetGroup>
                             <!-- the asset (in the project) the sbom represents -->
-                            <assetQuery>${param.product.artifact.id}:${param.product.version}</assetQuery>
-                            <!-- the path to the sbom/inventory to download -->
-                            <targetDir>${output.inventory.dir}</targetDir>
-
+                            <asset>${param.asset.name}:${param.asset.version}</asset>
+                            <!-- the path to the sbom/inventory to upload -->
+                            <fileToPush>${input.file}</fileToPush>
                         </configuration>
                     </execution>
                 </executions>
@@ -80,7 +79,7 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>output.inventory.dir</property>
+                                    <property>input.file</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.portfolio.manager.url</property>
@@ -89,25 +88,28 @@
                                     <property>param.portfolio.manager.token</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.name</property>
+                                    <property>param.project.name</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.version</property>
+                                    <property>param.asset.group.id</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.artifact.id</property>
+                                    <property>param.asset.name</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.keystore.password</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.truststore.password</property>
+                                    <property>param.asset.version</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.keystore.config.file</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.truststore.config.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.keystore.password</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.truststore.password</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>

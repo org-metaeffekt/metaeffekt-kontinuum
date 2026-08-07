@@ -10,7 +10,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>util_portfolio-upload</artifactId>
+    <artifactId>aggregate_portfolio-download</artifactId>
 
     <build>
         <plugins>
@@ -20,9 +20,9 @@
                 <version>${ae.portfolio.manager.version}</version>
                 <executions>
                     <execution>
-                        <id>push-to-portfolio-manager</id>
+                        <id>pull-to-portfolio-manager</id>
                         <goals>
-                            <goal>push</goal>
+                            <goal>pull</goal>
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
@@ -32,7 +32,7 @@
                             <!-- 'upload' user token for project; always pass as credential/secret -->
                             <token>${param.portfolio.manager.token}</token>
                             <!-- the modifier initial is the default -->
-                            <modifier>initial</modifier>
+                            <modifier>${param.inventory.modifier}</modifier>
 
                             <!-- path to the keystore; replace or configure -->
                             <keyStoreFile>${param.keystore.config.file}</keyStoreFile>
@@ -45,17 +45,17 @@
                             <trustStorePassword>${param.truststore.password}</trustStorePassword>
 
                             <!-- the project name to upload to -->
-                            <projectName>${param.product.name}</projectName>
+                            <projectName>${param.project.name}</projectName>
                             <!-- the asset group (in the project) to upload to -->
-                            <assetGroup>${param.product.name}:${param.product.version}</assetGroup>
+                            <assetGroupQuery>${param.asset.group.id}</assetGroupQuery>
                             <!-- the asset (in the project) the sbom represents -->
-                            <asset>${param.product.artifact.id}:${param.product.version}</asset>
-                            <!-- the path to the sbom/inventory to upload -->
-                            <fileToPush>${input.file}</fileToPush>
-
+                            <assetQuery>${param.asset.id}</assetQuery>
+                            <!-- the path to the sbom/inventory to download -->
+                            <targetDir>${output.inventory.dir}</targetDir>
                         </configuration>
                     </execution>
                 </executions>
+
                 <!-- FIXME: Currently required because of a dependency issue in portfolio manager 0.8.0. Remove once updated. -->
                 <dependencies>
                     <dependency>
@@ -79,7 +79,7 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.file</property>
+                                    <property>output.inventory.dir</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.portfolio.manager.url</property>
@@ -88,13 +88,19 @@
                                     <property>param.portfolio.manager.token</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.name</property>
+                                    <property>param.project.name</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.version</property>
+                                    <property>param.asset.group.id</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.product.artifact.id</property>
+                                    <property>param.asset.id</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.keystore.password</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.truststore.password</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.keystore.config.file</property>
@@ -103,10 +109,7 @@
                                     <property>param.truststore.config.file</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.keystore.password</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.truststore.password</property>
+                                    <property>param.inventory.modifier</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
