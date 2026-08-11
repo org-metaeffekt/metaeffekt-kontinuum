@@ -45,12 +45,14 @@
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
-                            <sourceInventoryDir>${param.reference.inventory.dir}</sourceInventoryDir>
                             <inputDirectory>${input.extract.dir}</inputDirectory>
                             <scanDirectory>${output.scan.dir}</scanDirectory>
+
+                            <sourceInventoryDir>${param.reference.inventory.dir}</sourceInventoryDir>
+                            <sourceInventoryIncludes>*.xls,*.xlsx</sourceInventoryIncludes>
+
                             <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
 
-                            <sourceInventoryIncludes>*.xlsx,*.xls</sourceInventoryIncludes>
                             <scanIncludes>**/*</scanIncludes>
                             <!-- general exclude for containers; review constantly; minimize -->
                             <scanExcludes>
@@ -70,11 +72,11 @@
                                 <exclude>**/usr/share/terminfo/**/*</exclude>
                                 <exclude>**/var/lib/dnf/history.sqlite-shm/**/*</exclude>
                             </scanExcludes>
+                            <unwrapIncludes>**/*</unwrapIncludes>
 
                             <enableImplicitUnpack>true</enableImplicitUnpack>
                             <includeEmbedded>true</includeEmbedded>
                             <enableDetectComponentPatterns>true</enableDetectComponentPatterns>
-                            <unwrapIncludes>**/*</unwrapIncludes>
                         </configuration>
                     </execution>
                 </executions>

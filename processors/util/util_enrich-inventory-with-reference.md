@@ -8,9 +8,10 @@ The different properties are sorted into three different groups which are explai
 of this repository.
 
 ### Input / Output
-| Parameter                     | Required | Description                                                                          |
-|-------------------------------|----------|--------------------------------------------------------------------------------------|
-| input.inventory.file          | yes      | The file path of the inventory which will be enriched with the reference inventory.  |
+| Parameter             | Required | Description                                                                         |
+|-----------------------|----------|-------------------------------------------------------------------------------------|
+| input.inventory.file  | yes      | The file path of the inventory which will be enriched with the reference inventory. |
+| output.inventory.file | yes      | The file path of the output inventory containing the enriched content.              |
 
 ### Parameters
 | Parameter                       | Required | Description                                                                            |

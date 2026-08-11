@@ -46,10 +46,12 @@
                             <goal>enrich-inventory-with-reference</goal>
                         </goals>
                         <configuration>
-                            <inventory>${input.inventory.file}</inventory>
-                            <sourceInventoryDir>${param.reference.inventory.dir}</sourceInventoryDir>
+                            <inputInventoryFile>${input.inventory.file}</inputInventoryFile>
+                            <outputInventoryFile>${output.inventory.file}</outputInventoryFile>
 
-                            <sourceInventoryIncludes>*.xls,*.xlsx,*.ser</sourceInventoryIncludes>
+                            <referenceInventoryDir>${param.reference.inventory.dir}</referenceInventoryDir>
+                            <referenceInventoryIncludes>*.xls,*.xlsx,*.ser</referenceInventoryIncludes>
+
                             <securityPolicy>
                                 <failOnMissingPolicyFile>false</failOnMissingPolicyFile>
                             </securityPolicy>
@@ -72,6 +74,9 @@
                             <rules>
                                 <requireProperty>
                                     <property>input.inventory.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.inventory.file</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.reference.inventory.dir</property>

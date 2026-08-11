@@ -17,22 +17,36 @@ of this repository.
 | output.tmp.dir                   | yes      | The directory containing temporary files like intermediate inventories.   |
 
 ### Parameters
-| Parameter                        | Required | Description                                                                                    |
-|----------------------------------|----------|------------------------------------------------------------------------------------------------|
-| param.correlation.dir            | yes      | The directory containing vulnerability correlation information.                                |
-| param.assessment.dirs            | yes      | A comma separated list of all directories or files containing assessments.                     |
-| param.context.dirs               | yes      | A comma separated list of all directories or files containing contexts.                        |
-| param.security.policy.file       | yes      | The security policy file to use.                                                               |
-| param.security.policy.active.ids | no       | The activeIds of the security policy configurations to use for enrichment.                     |
-| param.activate.*                 | no       | Switches determining which vulnerability databases are utilized during the enrichment process. |
-| param.exclude.nvd.equivalent.*   | no       | Switches determining if vulnerabilities equivalent to those found via nvd should be excluded.  |
-| param.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment.                      |
-| param.threat.catalog.file        | no       | A file pointing to the threat catalog to use when ${param.activate.threat}=true               |
-| param.dashboard.title            | ignore   | Title for a dashboard which could be generated during this process.                            |
-| param.dashboard.subtitle         | ignore   | Subtitle for a dashboard which could be generated during this process.                         |
-| param.dashboard.footer           | ignore   | Footer for a dashboard which could be generated during this process.                           |
+| Parameter                        | Required | Description                                                                                            |
+|----------------------------------|----------|--------------------------------------------------------------------------------------------------------|
+| param.correlation.dir            | yes      | The directory containing vulnerability correlation information.                                        |
+| param.assessment.dirs            | yes      | A comma separated list of all directories or files containing assessments.                             |
+| param.assessment.labels          | no       | The labels for activating assessments. Default is empty, meaning assessments with labels are inactive. |                                                                  |
+| param.context.dirs               | yes      | A comma separated list of all directories or files containing contexts.                                |
+| param.security.policy.file       | yes      | The security policy file to use.                                                                       |
+| param.security.policy.active.ids | no       | The activeIds of the security policy configurations to use for enrichment.                             |
+| param.activate.*                 | no       | Switches determining which vulnerability databases are utilized during the enrichment process.         |
+| param.activate.osv.providers     | no       | List of providers used to identify vulnerabilities and advisories. Default to all available.           |
+| param.exclude.nvd.equivalent.*   | no       | Switches determining if vulnerabilities equivalent to those found via nvd should be excluded.          |
+| param.vulnerabilities.custom.dir | no       | The directory for custom vulnerabilities that can be added to enrichment.                              |
+| param.threat.catalog.file        | no       | A file pointing to the threat catalog to use when ${param.activate.threat}=true                        |
+| param.dashboard.title            | ignore   | Title for a dashboard which could be generated during this process.                                    |
+| param.dashboard.subtitle         | ignore   | Subtitle for a dashboard which could be generated during this process.                                 |
+| param.dashboard.footer           | ignore   | Footer for a dashboard which could be generated during this process.                                   |
 
 ### Environment
 | Parameter                    | Required | Description                                        |
 |------------------------------|----------|----------------------------------------------------|
 | env.vulnerability.mirror.dir | yes      | The directory of the vulnerability mirror / index. |
+
+
+## Examples
+
+The following construct activates only GHSA as an OSV provider:
+
+    -Dparam.activate.osv.providers='[{"src":"GHSA","impl":"OSV"} ]'
+
+The default enables any provider source:
+
+    -Dparam.activate.osv.providers='[{"src":"*","impl":"OSV"}]'
+

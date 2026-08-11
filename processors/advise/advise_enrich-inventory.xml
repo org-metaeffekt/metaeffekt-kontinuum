@@ -42,6 +42,9 @@
         <param.activate.csaf>true</param.activate.csaf>
         <param.activate.vulnerabilities.custom>false</param.activate.vulnerabilities.custom>
 
+        <!-- For OSV the active providers can be configured -->
+        <param.activate.osv.providers>[{"src":"*","impl":"OSV"}]</param.activate.osv.providers>
+
         <param.activate.msrc>true</param.activate.msrc>
         <param.activate.certfr>true</param.activate.certfr>
         <param.activate.certsei>true</param.activate.certsei>
@@ -169,6 +172,9 @@
                                 <!-- false: keep unreviewed entries (default) -->
                                 <githubReviewed>${param.remove.ghsa.unreviewed}</githubReviewed>
 
+                                <!-- limit osv providers -->
+                                <includeAdvisoryProviders>${param.activate.osv.providers}</includeAdvisoryProviders>
+
                                 <excludeNvdEquivalent>${param.exclude.nvd.equivalent.osv}</excludeNvdEquivalent>
                             </osvVulnerabilitiesEnrichment>
 
@@ -221,7 +227,7 @@
                             <vulnerabilityStatusEnrichment>
                                 <active>${param.activate.status}</active>
                                 <statusFiles>${param.assessment.dirs}</statusFiles>
-                                <activeLabels>${assessment.labels}</activeLabels>
+                                <activeLabels>${param.assessment.labels}</activeLabels>
                             </vulnerabilityStatusEnrichment>
 
                             <vulnerabilityKeywordsEnrichment>
@@ -233,7 +239,7 @@
                             <!-- Security Advisory Matching -->
                             <osvAdvisorFillDetailsEnrichment>
                                 <active>${param.activate.osv}</active>
-                                <includeAdvisoryProviders>[{"src":"*","impl":"OSV","st":"sa"}]</includeAdvisoryProviders>
+                                <includeAdvisoryProviders>${param.activate.osv.providers}</includeAdvisoryProviders>
                                 <excludeNvdEquivalent>${param.exclude.nvd.equivalent.osv}</excludeNvdEquivalent>  <!-- Ensure this is supported by other configurations as well (osv & msrc) -->
                             </osvAdvisorFillDetailsEnrichment>
 
@@ -281,7 +287,7 @@
                                 <multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
                                     <versionLevel>minor</versionLevel>
                                 </multipleArtifactsAndVersionsOnVulnerabilityInventoryValidator>
-                                <artifactAndCpeVersionsDifferGreatlyInventoryValidator></artifactAndCpeVersionsDifferGreatlyInventoryValidator>
+                                <artifactAndCpeVersionsDifferGreatlyInventoryValidator/>
                                 <vulnerabilityInvalidNameValidator/>
                             </inventoryValidationEnrichment>
 
