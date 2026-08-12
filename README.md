@@ -1,4 +1,4 @@
-# Metaeffekt Kontinuum
+# {metæffekt} Kontinuum
 
 The {metæffekt} kontinuum repository provides a series of base-configurations to support using the {metæffekt} plugins, 
 tools and content. All configurations can be found in the [processors](processors) directory with their respective
@@ -81,7 +81,7 @@ test scripts or when using CI/CD components provided by [metaeffekt-components](
 └── asset-part/
 └── summary report
 ```
-
+    
 ## Integration
 
 Integration of the {metæffekt} processors is manifold. The following diagram illustrates the anticipated integration
@@ -102,5 +102,3 @@ GitHub workflows. An example of how to use these components can be seen at [meta
 Generally speaking any templates or examples created by {metæffekt} meant as a reference for custom projects will be 
 available in a public repository while other data is stored increasingly more private and secure, depending on 
 the nature of the data.
-
-## Workspace
