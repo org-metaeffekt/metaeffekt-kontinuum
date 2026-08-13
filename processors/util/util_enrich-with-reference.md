@@ -1,4 +1,4 @@
-# Util - Enrich inventory with Reference
+# Util - Enrich with Reference
 
 This process enriches a specified input inventory with a reference inventory to curate it with further information for later enrichment.
 

@@ -14,6 +14,7 @@ bash "$PROCESSOR_SCRIPTS_DIR/util/util_execute-kotlin-script.sh" -c "$CASES_DIR/
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_copy-inventories.sh" -c "$CASES_DIR/util/util_copy-inventories-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_create-diff.sh" -c "$CASES_DIR/util/util_create-diff-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_merge-inventories.sh" -c "$CASES_DIR/util/util_merge-inventories-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/util/util_enrich-with-reference.sh" -c "$CASES_DIR/util/util_enrich-with-reference-01.sh" -f "$LOG_FILE"
 
 #Disabled due to fail on first run
 #bash "$PROCESSOR_SCRIPTS_DIR/util/util_portfolio-transfer.sh" -c "$CASES_DIR/util/util_portfolio-transfer-01.sh" -f "$LOG_FILE"
@@ -32,7 +33,6 @@ bash "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-cyclonedx.sh" -c "$CAS
 bash "$PROCESSOR_SCRIPTS_DIR/convert/convert_inventory-to-spdx.sh" -c "$CASES_DIR/convert/convert_inventory-to-spdx-01.sh" -f "$LOG_FILE"
 
 bash "$PROCESSOR_SCRIPTS_DIR/advise/advise_attach-metadata.sh" -c "$CASES_DIR/advise/advise_attach-metadata-01.sh" -f "$LOG_FILE"
-bash "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-with-reference.sh" -c "$CASES_DIR/advise/advise_enrich-with-reference-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-inventory.sh" -c "$CASES_DIR/advise/advise_enrich-inventory-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/advise/advise_create-dashboard.sh" -c "$CASES_DIR/advise/advise_create-dashboard-01.sh" -f "$LOG_FILE"
 
