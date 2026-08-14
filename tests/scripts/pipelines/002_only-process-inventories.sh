@@ -16,9 +16,9 @@ bash "$PROCESSOR_SCRIPTS_DIR/util/util_create-diff.sh" -c "$CASES_DIR/util/util_
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_merge-inventories.sh" -c "$CASES_DIR/util/util_merge-inventories-02.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_transform-inventories.sh" -c "$CASES_DIR/util/util_transform-inventories-02.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_validate-reference-inventory.sh" -c "$CASES_DIR/util/util_validate-reference-inventory-02.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/util/util_enrich-with-reference.sh" -c "$CASES_DIR/util/util_enrich-with-reference-02.sh" -f "$LOG_FILE"
 
 bash "$PROCESSOR_SCRIPTS_DIR/advise/advise_attach-metadata.sh" -c "$CASES_DIR/advise/advise_attach-metadata-02.sh" -f "$LOG_FILE"
-bash "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-with-reference.sh" -c "$CASES_DIR/advise/advise_enrich-with-reference-02.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/advise/advise_enrich-inventory.sh" -c "$CASES_DIR/advise/advise_enrich-inventory-02.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/advise/advise_create-dashboard.sh" -c "$CASES_DIR/advise/advise_create-dashboard-02.sh" -f "$LOG_FILE"
 
