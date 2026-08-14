@@ -7,6 +7,7 @@ PRELOAD_SCRIPT_PATH="$SCRIPT_DIR/../preload.sh"
 SHARED_SCRIPT_PATH="$SCRIPT_DIR/../shared.sh"
 LOGGER_PATH="$SCRIPT_DIR/../log.sh"
 CASE="util/util_enrich-with-reference-01.sh"
+CASE="util/util_enrich-with-reference-02.sh"
 
 
 source_shared() {
