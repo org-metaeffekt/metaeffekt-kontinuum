@@ -19,10 +19,10 @@ of this repository.
 |------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
 | param.reference.inventory.dir      | yes      | The input reference inventory with which the input inventory will be enriched. This is the parent directory of the license and components directories. |
 | param.reference.inventory.includes | no       | A comma separated list of included file types for the reference inventory, default is "\*\*/\*.ser,\*\*/\*.xls,\*\*/\*.xlsx.                           |
-| param.reference.component.path     | no       | The component path of the reference inventory, default is  "components".                                                                               |
-| param.reference.license.path       | no       | The license path of the reference inventory, default is  "licenses".                                                                                   |
-| param.target.component.dir         | no       | The target directory for the components, default is "${project.build.dir}/annex/components".                                                           |
-| param.target.license.dir           | no       | The target directory for the licenses, default is "{project.build.dir}/annex/licenses".                                                                |
+| param.reference.components.dir     | no       | The component path of the reference inventory, default is  "components".                                                                               |
+| param.reference.licenses.dir       | no       | The license path of the reference inventory, default is  "licenses".                                                                                   |
+| param.target.components.dir         | no       | The target directory for the components, default is "${project.build.dir}/annex/components".                                                           |
+| param.target.licenses.dir           | no       | The target directory for the licenses, default is "{project.build.dir}/annex/licenses".                                                                |
 | param.fail.on.missing.license.file | no       | A boolean for controlling whether the process fails if a license file is missing, default is "true".                                                   |
 
 
