@@ -84,8 +84,8 @@
                                 <argument>-Dinput.inventory.dir=${input.inventory.dir}</argument>
                                 <argument>-Dreference.inventory.path=${param.reference.inventory.dir}</argument>
 
-                                <argument>-Dreference.licenses.dir=${param.reference.license.dir}</argument>
-                                <argument>-Dreference.components.dir=${param.reference.component.dir}</argument>
+                                <argument>-Dreference.licenses.dir=${param.reference.licenses.dir}</argument>
+                                <argument>-Dreference.components.dir=${param.reference.components.dir}</argument>
                                 <argument>-Dparam.computed.inventory.dir=${param.computed.inventory.dir}</argument>
                                 <argument>-Dasset.descriptor.file=${param.asset.descriptor.file}</argument>
 
