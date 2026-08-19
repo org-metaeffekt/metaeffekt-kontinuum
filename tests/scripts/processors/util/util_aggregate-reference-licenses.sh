@@ -48,10 +48,10 @@ run_maven_command() {
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
   CMD+=("-Dparam.reference.inventory.dir=$PARAM_REFERENCE_INVENTORY_DIR")
   CMD+=("-Dparam.reference.inventory.includes=$PARAM_REFERENCE_INVENTORY_INCLUDES")
-  CMD+=("-Dparam.reference.component.path=$PARAM_REFERENCE_COMPONENT_PATH")
-  CMD+=("-Dparam.reference.license.path=$PARAM_REFERENCE_LICENSE_PATH")
-  CMD+=("-Dparam.target.component.dir=$PARAM_TARGET_COMPONENT_DIR")
-  CMD+=("-Dparam.target.license.dir=$PARAM_TARGET_LICENSE_DIR")
+  CMD+=("-Dparam.reference.components.dir=$PARAM_REFERENCE_COMPONENT_PATH")
+  CMD+=("-Dparam.reference.licenses.dir=$PARAM_REFERENCE_LICENSE_PATH")
+  CMD+=("-Dparam.target.components.dir=$PARAM_TARGET_COMPONENT_DIR")
+  CMD+=("-Dparam.target.licenses.dir=$PARAM_TARGET_LICENSE_DIR")
   CMD+=("-Dparam.fail.on.missing.license.file=$PARAM_FAIL_ON_MISSING_LICENSE_FILE")
 
 

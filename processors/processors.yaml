@@ -567,16 +567,16 @@ processors:
       - key: param.reference.inventory.includes
         description: A comma separated list of included file types for the reference inventory, default is "**/*.ser,**/*.xls,**/*.xlsx".
         required: false
-      - key: param.reference.component.path
+      - key: param.reference.components.dir
         description: The component path of the reference inventory, default is "components".
         required: false
-      - key: param.reference.license.path
+      - key: param.reference.licenses.dir
         description: The license path of the reference inventory, default is "licenses".
         required: false
-      - key: param.target.component.dir
+      - key: param.target.components.dir
         description: The target directory for the components, default is "${project.build.dir}/annex/components".
         required: false
-      - key: param.target.license.dir
+      - key: param.target.licenses.dir
         description: The target directory for the licenses, default is "${project.build.dir}/annex/licenses".
         required: false
       - key: param.fail.on.missing.license.file
