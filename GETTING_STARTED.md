@@ -19,9 +19,9 @@ The **tests** section provides basic test infrastructure for:
 
 ## Prerequisites
 
-To ensure all reference processes and pipelines in this repository can run, we need to create an external.rc file
-in the root of this repository. A template for this file with additional hints and details has been provided here: 
-[external-template.rc](external-template.rc).
+To ensure all reference processes and pipelines in this repository can run, a .project.properties file
+must be available in the root of this repository or in the encompassing integration harness. A template for this file with additional hints and details has been provided here: 
+[.project.properties.template](.project.properties.template).
 
 Depending on which processors will be run, an instance of the [metaeffekt-workbech](https://github.com/org-metaeffekt/metaeffekt-workbench)
 might be required and checked out locally. The only additional requirement is a local instance of the vulnerability mirror

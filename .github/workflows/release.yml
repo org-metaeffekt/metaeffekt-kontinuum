@@ -71,16 +71,16 @@ jobs:
           sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|' templates/report-template/pom.xml
           sed -i 's|<ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|' templates/report-template/pom.xml
 
-      - name: Create external.rc file
+      - name: Create .project.properties file
         run: |
-          touch ${{ github.workspace }}/external.rc
-          echo "EXTERNAL_WORKBENCH_DIR=${{ github.workspace }}/.metaeffekt-workbench" >> ${{ github.workspace }}/external.rc
-          echo "EXTERNAL_VULNERABILITY_MIRROR_DIR=${{ github.workspace }}/.mirror" >> ${{ github.workspace }}/external.rc
-          echo "EXTERNAL_VULNERABILITY_MIRROR_URL=${{ env.MIRROR_URL }}" >> ${{ github.workspace }}/external.rc
-          echo "NVD_API_KEY=${{ secrets.NVD_API_KEY }}" >> ${{ github.workspace }}/external.rc
-          echo "AE_CORE_VERSION=${{ inputs.ae-core-version }}" >> ${{ github.workspace }}/external.rc
-          echo "AE_ARTIFACT_ANALYSIS_VERSION=${{ inputs.ae-artifact-analysis-version }}" >> ${{ github.workspace }}/external.rc
-          echo "DUMP_LOGS=true" >> ${{ github.workspace }}/external.rc
+          touch ${{ github.workspace }}/.project.properties
+          echo "ae.workbench.dir=${{ github.workspace }}/.metaeffekt-workbench" >> ${{ github.workspace }}/.project.properties
+          echo "vulnerability.mirror.dir=${{ github.workspace }}/.mirror" >> ${{ github.workspace }}/.project.properties
+          echo "vulnerability.mirror.url=${{ env.MIRROR_URL }}" >> ${{ github.workspace }}/.project.properties
+          echo "nvd.api.key=${{ secrets.NVD_API_KEY }}" >> ${{ github.workspace }}/.project.properties
+          echo "ae.core.version=${{ inputs.ae-core-version }}" >> ${{ github.workspace }}/.project.properties
+          echo "ae.artifact.analysis.version=${{ inputs.ae-artifact-analysis-version }}" >> ${{ github.workspace }}/.project.properties
+          echo "dump.logs=true" >> ${{ github.workspace }}/.project.properties
 
       - name: Restore vulnerability mirror and maven index cache
         uses: actions/cache/restore@v4

@@ -30,9 +30,5 @@ of this repository.
 | Parameter             | Required | Description                                                                               |
 |-----------------------|----------|-------------------------------------------------------------------------------------------|
 | env.tmd.source        | no       | The license database source. Either `ae-universe` or `ae-kosmos`. Default is `ae-kosmos`. |
-| env.tmd.userkeys.file | yes      | The password to decrypt the metaeffekt license database (TMD).                            |
-| env.tmd.password      | yes      | The userkeys file to access the metaeffekt license database (TMD).                        |
-
-
-### Environment
-None
+| env.tmd.userkeys.file | yes      | The userkeys file to access the metaeffekt license database (TMD).                        |
+| env.tmd.password      | yes      | The password to decrypt the metaeffekt license database (TMD).                            |

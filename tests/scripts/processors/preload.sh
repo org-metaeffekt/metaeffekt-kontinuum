@@ -5,8 +5,14 @@ set -eo pipefail
 ########################################
 # Configuration and Directory Setup
 ########################################
-readonly SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-KONTINUUM_DIR="$(realpath "$SELF_DIR/../../../")"
+readonly PRELOAD_SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+KONTINUUM_ROOT="$(cd "$PRELOAD_SELF_DIR/../../.." && pwd)"
+HARNESS_ROOT="$(cd "$PRELOAD_SELF_DIR/../../../.." && pwd)"
+KONTINUUM_DIR="$KONTINUUM_ROOT"
+
+if [ -f "$PRELOAD_SELF_DIR/log.sh" ]; then
+  source "$PRELOAD_SELF_DIR/log.sh"
+fi
 
 # Export environment variables
 
@@ -125,33 +131,125 @@ source_case_file() {
     fi
 }
 
-load_externalrc() {
+load_properties() {
+  local prop_file="$1"
+  [ ! -f "$prop_file" ] && return 1
 
-  if [ -f "$KONTINUUM_DIR/external.rc" ]; then
-    source "$KONTINUUM_DIR/external.rc"
+  while IFS= read -r line || [ -n "$line" ]; do
+    # Remove carriage return characters
+    line="${line//$'\r'/}"
+    # Strip leading whitespace
+    line="${line#"${line%%[![:space:]]*}"}"
+    # Strip trailing whitespace
+    line="${line%"${line##*[![:space:]]}"}"
+
+    # Skip comments and empty lines
+    [[ -z "$line" || "$line" =~ ^[#!] ]] && continue
+
+    # Parse key=val or key:val
+    if [[ "$line" =~ ^([^=:]+)[=:](.*)$ ]]; then
+      local key="${BASH_REMATCH[1]}"
+      local val="${BASH_REMATCH[2]}"
+
+      # Trim whitespace around key and value
+      key="${key#"${key%%[![:space:]]*}"}"
+      key="${key%"${key##*[![:space:]]}"}"
+      val="${val#"${val%%[![:space:]]*}"}"
+      val="${val%"${val##*[![:space:]]}"}"
+
+      # Remove surrounding quotes if present
+      if [[ "$val" =~ ^\"(.*)\"$ ]] || [[ "$val" =~ ^\'(.*)\'$ ]]; then
+        val="${BASH_REMATCH[1]}"
+      fi
+
+      # Convert property key to uppercase variable name (dots and hyphens become underscores)
+      local var_name
+      var_name=$(echo "$key" | tr '[:lower:]' '[:upper:]' | tr '.-' '__')
+
+      export "$var_name"="$val"
+    fi
+  done < "$prop_file"
+}
+
+load_project_properties() {
+  local properties_file=""
+  if [ -f "$KONTINUUM_ROOT/.project.properties" ]; then
+    properties_file="$KONTINUUM_ROOT/.project.properties"
+  elif [ -f "$HARNESS_ROOT/.project.properties" ]; then
+    properties_file="$HARNESS_ROOT/.project.properties"
+  fi
+
+  if [ -n "$properties_file" ]; then
+    load_properties "$properties_file"
+    log_info "Successfully loaded .project.properties from $properties_file"
   else
-    log_error "Missing external.rc file in root of repository."
+    log_error "Terminating: .project.properties file not found in metaeffekt-kontinuum or encompassing integration harness."
     exit 1
   fi
 
-  if [ -z "${EXTERNAL_WORKBENCH_DIR:-}" ]; then
-    log_info "No EXTERNAL_WORKBENCH_DIR specified in the external.rc file, this might result in scripts failing."
+  # Set aliases for Workbench directory
+  if [ -n "${AE_WORKBENCH_DIR:-}" ] && [ -z "${EXTERNAL_WORKBENCH_DIR:-}" ]; then
+    EXTERNAL_WORKBENCH_DIR="$AE_WORKBENCH_DIR"
+  elif [ -n "${EXTERNAL_WORKBENCH_DIR:-}" ] && [ -z "${AE_WORKBENCH_DIR:-}" ]; then
+    AE_WORKBENCH_DIR="$EXTERNAL_WORKBENCH_DIR"
+  fi
+  export EXTERNAL_WORKBENCH_DIR AE_WORKBENCH_DIR
+
+  # Set aliases for Kontinuum directory
+  if [ -n "${AE_KONTINUUM_DIR:-}" ] && [ -z "${EXTERNAL_KONTINUUM_DIR:-}" ]; then
+    EXTERNAL_KONTINUUM_DIR="$AE_KONTINUUM_DIR"
+  elif [ -n "${EXTERNAL_KONTINUUM_DIR:-}" ] && [ -z "${AE_KONTINUUM_DIR:-}" ]; then
+    AE_KONTINUUM_DIR="$EXTERNAL_KONTINUUM_DIR"
+  fi
+  export EXTERNAL_KONTINUUM_DIR AE_KONTINUUM_DIR
+
+  # Set aliases for Vulnerability Mirror directory
+  if [ -n "${VULNERABILITY_MIRROR_DIR:-}" ] && [ -z "${EXTERNAL_VULNERABILITY_MIRROR_DIR:-}" ]; then
+    EXTERNAL_VULNERABILITY_MIRROR_DIR="$VULNERABILITY_MIRROR_DIR"
+  elif [ -n "${EXTERNAL_VULNERABILITY_MIRROR_DIR:-}" ] && [ -z "${VULNERABILITY_MIRROR_DIR:-}" ]; then
+    VULNERABILITY_MIRROR_DIR="$EXTERNAL_VULNERABILITY_MIRROR_DIR"
+  fi
+  export EXTERNAL_VULNERABILITY_MIRROR_DIR VULNERABILITY_MIRROR_DIR
+
+  # Set aliases for Vulnerability Mirror URL
+  if [ -n "${VULNERABILITY_MIRROR_URL:-}" ] && [ -z "${EXTERNAL_VULNERABILITY_MIRROR_URL:-}" ]; then
+    EXTERNAL_VULNERABILITY_MIRROR_URL="$VULNERABILITY_MIRROR_URL"
+  elif [ -n "${EXTERNAL_VULNERABILITY_MIRROR_URL:-}" ] && [ -z "${VULNERABILITY_MIRROR_URL:-}" ]; then
+    VULNERABILITY_MIRROR_URL="$EXTERNAL_VULNERABILITY_MIRROR_URL"
+  fi
+  export EXTERNAL_VULNERABILITY_MIRROR_URL VULNERABILITY_MIRROR_URL
+
+  # Validate and log status
+  if [ -n "${EXTERNAL_WORKBENCH_DIR:-}" ]; then
+    log_info "Found external workbench at $EXTERNAL_WORKBENCH_DIR"
+  else
+    log_info "No ae.workbench.dir specified in .project.properties, this might result in scripts failing."
   fi
 
-  if [ -z "${EXTERNAL_VULNERABILITY_MIRROR_DIR:-}" ]; then
-    log_info "No EXTERNAL_VULNERABILITY_MIRROR_DIR specified in external.rc, this might result in scripts failing."
+  if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_DIR:-}" ]; then
+    log_info "Found external mirror at $EXTERNAL_VULNERABILITY_MIRROR_DIR"
+  else
+    log_info "No vulnerability.mirror.dir specified in .project.properties, this might result in scripts failing."
   fi
 
-  if [ -z "${EXTERNAL_VULNERABILITY_MIRROR_URL:-}" ]; then
-    log_info "No EXTERNAL_VULNERABILITY_MIRROR_URL specified in external.rc, this might result in scripts failing."
+  if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_URL:-}" ]; then
+    log_info "External mirror URL specified: $EXTERNAL_VULNERABILITY_MIRROR_URL"
+  else
+    log_info "No vulnerability.mirror.url specified in .project.properties, this might result in scripts failing."
   fi
 
-  if [ -z "${AE_CORE_VERSION:-}" ]; then
-    log_info "No AE_CORE_VERSION specified in external.rc file, using 0.153-SNAPSHOT."
+  if [ -n "${AE_CORE_VERSION:-}" ]; then
+    log_info "Core version specified: $AE_CORE_VERSION"
+  else
+    log_info "No ae.core.version specified in .project.properties file, using HEAD-SNAPSHOT."
+    export AE_CORE_VERSION=HEAD-SNAPSHOT
   fi
 
-  if [ -z "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ]; then
-    log_info "No AE_ARTIFACT_ANALYSIS_VERSION specified in external.rc file, using 0.156-SNAPSHOT"
+  if [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ]; then
+    log_info "Artifact analysis version specified: $AE_ARTIFACT_ANALYSIS_VERSION"
+  else
+    log_info "No ae.artifact.analysis.version specified in .project.properties file, using HEAD-SNAPSHOT"
+    export AE_ARTIFACT_ANALYSIS_VERSION=HEAD-SNAPSHOT
   fi
 }
 
@@ -176,7 +274,7 @@ pass_command_info_to_logger() {
 ########################################
 
 main() {
-    load_externalrc
+    load_project_properties
     initialize_target_directories
 }
 

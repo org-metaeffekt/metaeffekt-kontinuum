@@ -28,10 +28,12 @@ of this repository.
 | param.timeline.conf.enabled        | no       | Enables the timeline configuration overall. Enabled by default.                     | 
 | param.timeline.max.threads         | no       | The maximum number of threads working on timelines. Defaults to 4.                  |
 | param.timeline.time.spent.max      | no       | The maximum number of seconds spent per timeline. Defaults to 10000ms.              |
-| param.timeline.vuln.providers.list | no       | A list of vulnerability providers used to generate the timelines. Empty by default. |
-| param.tenant.id                    | yes      | The tenant id, necessary for the assessment server.                                 |
-| param.asset.id                     | yes      | The asset id, necessary for the assessment server.                                  |
-| param.assessment.context           | yes      | The assessment context, necessary for the assessment server.                        |
+| param.timeline.vuln.providers.list          | no       | A list of vulnerability providers used to generate the timelines. Empty by default.                                     |
+| param.events.since.timestamp.for.dashboard | no       | Expression for query events since timestamp for the dashboard.                                                           |
+| param.put.event.for.dashboard              | no       | Expression for putting events for the dashboard.                                                                         |
+| param.tenant.id                            | yes      | The tenant id, necessary for the assessment server.                                                                     |
+| param.asset.id                             | yes      | The asset id, necessary for the assessment server.                                                                      |
+| param.assessment.context                   | yes      | The assessment context, necessary for the assessment server.                                                            |
 
 For more information on the parameters param.tenant.id, param.asset.id and param.assessment.context check out the README in the
 metaeffekt-workbench project in the assessments' folder.

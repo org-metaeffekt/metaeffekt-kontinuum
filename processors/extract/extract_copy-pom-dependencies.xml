@@ -68,7 +68,7 @@
                                     <property>param.group.id</property>
                                 </requireProperty>
                                 <requireProperty>
-                                    <property>param.artifact.id </property>
+                                    <property>param.artifact.id</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>param.version</property>

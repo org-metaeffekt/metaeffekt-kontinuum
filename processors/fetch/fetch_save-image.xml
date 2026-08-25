@@ -27,7 +27,7 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>prepare_save-inspect-image</artifactId>
+    <artifactId>fetch_inspect-image</artifactId>
     <packaging>pom</packaging>
 
     <build>

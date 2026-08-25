@@ -20,6 +20,8 @@ None. This processor does not operate on workspace level.
 | param.proxy.port   | no       | The proxy port.                        |
 | param.proxy.user   | no       | The proxy user.                        |
 | param.proxy.pass   | no       | The proxy pass.                        |
+| param.fail.on.error| no       | Fail if an error occurs during indexing. Defaults to true. |
+| param.fail.on.issue| no       | Fail on integrity issue during indexing. Defaults to true. |
 
 
 ### Environment

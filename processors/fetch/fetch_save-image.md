@@ -1,4 +1,4 @@
-# Extract - Save Inspect Image
+# Fetch - Inspect Image
 
 This process saves and inspects a docker container image via its id and version. The extracted container information is
 then saved into a specified directory for further processing.
