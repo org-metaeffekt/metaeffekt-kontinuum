@@ -33,10 +33,10 @@
     <properties>
         <param.reference.inventory.includes>**/*.ser,**/*.xls,**/*.xlsx</param.reference.inventory.includes>
         <param.fail.on.missing.license.file>false</param.fail.on.missing.license.file>
-        <param.reference.component.path>../components</param.reference.component.path>
-        <param.reference.license.path>../licenses</param.reference.license.path>
-        <param.target.component.dir>${project.build.directory}/annex/components</param.target.component.dir>
-        <param.target.license.dir>${project.build.directory}/annex/licenses</param.target.license.dir>
+        <param.reference.components.dir>../components</param.reference.components.dir>
+        <param.reference.licenses.dir>../licenses</param.reference.licenses.dir>
+        <param.target.components.dir>${project.build.directory}/annex/components</param.target.components.dir>
+        <param.target.licenses.dir>${project.build.directory}/annex/licenses</param.target.licenses.dir>
     </properties>
 
     <build>
@@ -56,10 +56,10 @@
                             <inventoryFile>${input.inventory.file}</inventoryFile>
                             <referenceInventoryDir>${param.reference.inventory.dir}</referenceInventoryDir>
                             <referenceInventoryIncludes>${param.reference.inventory.includes}</referenceInventoryIncludes>
-                            <referenceComponentPath>${param.reference.component.path}</referenceComponentPath>
-                            <referenceLicensePath>${param.reference.license.path}</referenceLicensePath>
-                            <targetComponentDir>${param.target.component.dir}</targetComponentDir>
-                            <targetLicenseDir>${param.target.license.dir}</targetLicenseDir>
+                            <referenceComponentsDir>${param.reference.components.dir}</referenceComponentsDir>
+                            <referenceLicensesDir>${param.reference.licenses.dir}</referenceLicensesDir>
+                            <targetComponentsDir>${param.target.components.dir}</targetComponentsDir>
+                            <targetLicensesDir>${param.target.licenses.dir}</targetLicensesDir>
                             <failOnMissingLicenseFile>${param.fail.on.missing.license.file}</failOnMissingLicenseFile>
                         </configuration>
                     </execution>
