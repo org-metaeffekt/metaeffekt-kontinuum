@@ -30,10 +30,9 @@
                         <configuration>
                             <kotlinScript>${input.kotlin.script.file}</kotlinScript>
                             <parameterMap>
-                                <input.properties.file>${input.properties.file}</input.properties.file>
-                                <input.workspace.dir>${input.workspace.dir}</input.workspace.dir>
-                                <param.curl.arguments>${param.curl.arguments}</param.curl.arguments>
-                                <output.env.file>${output.env.file}</output.env.file>
+                                <input.inventory.file>${input.inventory.file}</input.inventory.file>
+                                <output.inventory.file>${output.inventory.file}</output.inventory.file>
+                                <param.asset.id>${param.asset.id}</param.asset.id>
                             </parameterMap>
                             <scriptExecutionClass>com.metaeffekt.artifact.analysis.scripting.kotlin.exec.InventoryScriptExecution</scriptExecutionClass>
                         </configuration>
