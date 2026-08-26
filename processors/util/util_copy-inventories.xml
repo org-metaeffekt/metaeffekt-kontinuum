@@ -70,6 +70,9 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
+                                    <property>input.base.dir</property>
+                                </requireProperty>
+                                <requireProperty>
                                     <property>param.inventories.list</property>
                                 </requireProperty>
                                 <requireProperty>

@@ -19,9 +19,9 @@ The **tests** section provides basic test infrastructure for:
 
 ## Prerequisites
 
-To ensure all reference processes and pipelines in this repository can run, a .project.properties file
+To ensure all reference processes and pipelines in this repository can run, a .local.properties file
 must be available in the root of this repository or in the encompassing integration harness. A template for this file with additional hints and details has been provided here: 
-[.project.properties.template](.project.properties.template).
+[.local.properties.template](.local.properties.template).
 
 Depending on which processors will be run, an instance of the [metaeffekt-workbech](https://github.com/org-metaeffekt/metaeffekt-workbench)
 might be required and checked out locally. The only additional requirement is a local instance of the vulnerability mirror

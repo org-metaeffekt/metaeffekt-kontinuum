@@ -173,17 +173,17 @@ load_properties() {
 
 load_project_properties() {
   local properties_file=""
-  if [ -f "$KONTINUUM_ROOT/.project.properties" ]; then
-    properties_file="$KONTINUUM_ROOT/.project.properties"
-  elif [ -f "$HARNESS_ROOT/.project.properties" ]; then
-    properties_file="$HARNESS_ROOT/.project.properties"
+  if [ -f "$KONTINUUM_ROOT/.local.properties" ]; then
+    properties_file="$KONTINUUM_ROOT/.local.properties"
+  elif [ -f "$HARNESS_ROOT/.local.properties" ]; then
+    properties_file="$HARNESS_ROOT/.local.properties"
   fi
 
   if [ -n "$properties_file" ]; then
     load_properties "$properties_file"
-    log_info "Successfully loaded .project.properties from $properties_file"
+    log_info "Successfully loaded .local.properties from $properties_file"
   else
-    log_error "Terminating: .project.properties file not found in metaeffekt-kontinuum or encompassing integration harness."
+    log_error "Terminating: .local.properties file not found in metaeffekt-kontinuum or encompassing integration harness."
     exit 1
   fi
 
@@ -223,32 +223,32 @@ load_project_properties() {
   if [ -n "${EXTERNAL_WORKBENCH_DIR:-}" ]; then
     log_info "Found external workbench at $EXTERNAL_WORKBENCH_DIR"
   else
-    log_info "No ae.workbench.dir specified in .project.properties, this might result in scripts failing."
+    log_info "No ae.workbench.dir specified in .local.properties, this might result in scripts failing."
   fi
 
   if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_DIR:-}" ]; then
     log_info "Found external mirror at $EXTERNAL_VULNERABILITY_MIRROR_DIR"
   else
-    log_info "No vulnerability.mirror.dir specified in .project.properties, this might result in scripts failing."
+    log_info "No vulnerability.mirror.dir specified in .local.properties, this might result in scripts failing."
   fi
 
   if [ -n "${EXTERNAL_VULNERABILITY_MIRROR_URL:-}" ]; then
     log_info "External mirror URL specified: $EXTERNAL_VULNERABILITY_MIRROR_URL"
   else
-    log_info "No vulnerability.mirror.url specified in .project.properties, this might result in scripts failing."
+    log_info "No vulnerability.mirror.url specified in .local.properties, this might result in scripts failing."
   fi
 
   if [ -n "${AE_CORE_VERSION:-}" ]; then
     log_info "Core version specified: $AE_CORE_VERSION"
   else
-    log_info "No ae.core.version specified in .project.properties file, using HEAD-SNAPSHOT."
+    log_info "No ae.core.version specified in .local.properties file, using HEAD-SNAPSHOT."
     export AE_CORE_VERSION=HEAD-SNAPSHOT
   fi
 
   if [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ]; then
     log_info "Artifact analysis version specified: $AE_ARTIFACT_ANALYSIS_VERSION"
   else
-    log_info "No ae.artifact.analysis.version specified in .project.properties file, using HEAD-SNAPSHOT"
+    log_info "No ae.artifact.analysis.version specified in .local.properties file, using HEAD-SNAPSHOT"
     export AE_ARTIFACT_ANALYSIS_VERSION=HEAD-SNAPSHOT
   fi
 }

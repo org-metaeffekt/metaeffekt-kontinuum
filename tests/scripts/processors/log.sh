@@ -24,7 +24,7 @@ logger_init() {
 _log_output() {
     local level="$1"
     local message="$2"
-    local log_to_console="$3"
+    local log_to_console="true"
     [ "${DUMP_LOGS:-}" = true ] && log_to_console=true
 
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')

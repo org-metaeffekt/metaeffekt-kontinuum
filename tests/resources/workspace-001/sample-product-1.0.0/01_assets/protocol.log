@@ -1,0 +1,80 @@
+================================================================================
+SOURCE AGGREGATION PROTOCOL
+================================================================================
+
+Artifact:  log4j-api-2.14.0.jar:Apache Log4j:2.14.0:
+Inclusion: INCLUDED (Reason: Default implicit inclusion)
+Download:  SUCCESS
+Attempted:
+  - https://[host02]]/maven2/org.apache.logging.log4j/org.apache.logging.log4j/2.14.0/log4j-api-2.14.0.jar
+  * https://maven.repository.redhat.com/maven2/org.apache.logging.log4j/org.apache.logging.log4j/2.14.0/log4j-api-2.14.0.jar [SUCCESS]
+
+--------------------------------------------------------------------------------
+
+Artifact:  log4j-core-2.14.0.jar:Apache Log4j:2.14.0:
+Inclusion: INCLUDED (Reason: Default implicit inclusion)
+Download:  SUCCESS
+Attempted:
+  - https://[host02]]/maven2/org.apache.logging.log4j/org.apache.logging.log4j/2.14.0/log4j-core-2.14.0.jar
+  * https://maven.repository.redhat.com/maven2/org.apache.logging.log4j/org.apache.logging.log4j/2.14.0/log4j-core-2.14.0.jar [SUCCESS]
+
+--------------------------------------------------------------------------------
+
+Artifact:  spring-aop-5.3.14.jar:Spring Framework:5.3.14:
+Inclusion: INCLUDED (Reason: Default implicit inclusion)
+Download:  SUCCESS
+Attempted:
+  - https://[host02]]/maven2/org.springframework/org.springframework/5.3.14/spring-aop-5.3.14.jar
+  * https://maven.repository.redhat.com/maven2/org.springframework/org.springframework/5.3.14/spring-aop-5.3.14.jar [SUCCESS]
+
+--------------------------------------------------------------------------------
+
+Artifact:  spring-beans-5.3.14.jar:Spring Framework:5.3.14:
+Inclusion: INCLUDED (Reason: Default implicit inclusion)
+Download:  SUCCESS
+Attempted:
+  - https://[host02]]/maven2/org.springframework/org.springframework/5.3.14/spring-beans-5.3.14.jar
+  * https://maven.repository.redhat.com/maven2/org.springframework/org.springframework/5.3.14/spring-beans-5.3.14.jar [SUCCESS]
+
+--------------------------------------------------------------------------------
+
+Artifact:  spring-context-5.3.14.jar:Spring Framework:5.3.14:
+Inclusion: INCLUDED (Reason: Default implicit inclusion)
+Download:  SUCCESS
+Attempted:
+  - https://[host02]]/maven2/org.springframework/org.springframework/5.3.14/spring-context-5.3.14.jar
+  * https://maven.repository.redhat.com/maven2/org.springframework/org.springframework/5.3.14/spring-context-5.3.14.jar [SUCCESS]
+
+--------------------------------------------------------------------------------
+
+Artifact:  spring-core-5.3.14.jar:Spring Framework:5.3.14:
+Inclusion: INCLUDED (Reason: Default implicit inclusion)
+Download:  SUCCESS
+Attempted:
+  - https://[host02]]/maven2/org.springframework/org.springframework/5.3.14/spring-core-5.3.14.jar
+  * https://maven.repository.redhat.com/maven2/org.springframework/org.springframework/5.3.14/spring-core-5.3.14.jar [SUCCESS]
+
+--------------------------------------------------------------------------------
+
+Artifact:  spring-expression-5.3.14.jar:Spring Framework:5.3.14:
+Inclusion: INCLUDED (Reason: Default implicit inclusion)
+Download:  SUCCESS
+Attempted:
+  - https://[host02]]/maven2/org.springframework/org.springframework/5.3.14/spring-expression-5.3.14.jar
+  * https://maven.repository.redhat.com/maven2/org.springframework/org.springframework/5.3.14/spring-expression-5.3.14.jar [SUCCESS]
+
+--------------------------------------------------------------------------------
+
+Artifact:  spring-jcl-5.3.14.jar:Spring Framework:5.3.14:
+Inclusion: INCLUDED (Reason: Default implicit inclusion)
+Download:  SUCCESS
+Attempted:
+  - https://[host02]]/maven2/org.springframework/org.springframework/5.3.14/spring-jcl-5.3.14.jar
+  * https://maven.repository.redhat.com/maven2/org.springframework/org.springframework/5.3.14/spring-jcl-5.3.14.jar [SUCCESS]
+
+--------------------------------------------------------------------------------
+
+================================================================================
+SUMMARY
+Total Artifacts: 8 | Included: 8 | Excluded: 0 | Downloaded: 8 | Failed: 0
+================================================================================
