@@ -82,11 +82,9 @@ pipeline {
             steps {
                 sh 'echo "ae.workbench.dir=$(pwd)/.metaeffekt-workbench" > .local.properties'
 
-                // this is effectively workspace/.vulnerability-mirror; so next to the jobs workspace; reconsider as shared
-                sh 'echo "vulnerability.mirror.dir=$(dirname $(pwd))/.vulnerability-mirror/gen6" >> .local.properties'
-
                 // configure mirror
                 sh 'echo "vulnerability.mirror.url=http://ae-scanner/mirror/index/ae-mirror-index_gen6.tar.gz" >> .local.properties'
+                sh 'echo "vulnerability.mirror.dir=$(dirname $(pwd))/.vulnerability-mirror/gen6" >> .local.properties'
 
                 sh 'echo "ae.core.version=HEAD-SNAPSHOT" >> .local.properties'
                 sh 'echo "ae.artifact.analysis.version=HEAD-SNAPSHOT" >> .local.properties'
