@@ -127,11 +127,11 @@
                                 <if>
                                     <isset property="param.mirror.archive.username" />
                                     <then>
-                                        <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}/" verbose="true"
+                                        <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}/" verbose="false"
                                              username="${param.mirror.archive.username}" password="${param.mirror.archive.password}" />
                                     </then>
                                     <else>
-                                        <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}/" verbose="true" />
+                                        <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}/" verbose="false" />
                                     </else>
                                 </if>
                             </target>
