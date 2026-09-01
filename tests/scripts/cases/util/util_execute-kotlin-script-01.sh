@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export INPUT_KOTLIN_SCRIPT_FILE="$EXTERNAL_WORKBENCH_DIR/scripts/fetch.filter.kts"
-export INPUT_PROPERTIES_FILE="$EXTERNAL_WORKBENCH_DIR/properties/example-properties.yaml"
-export INPUT_WORKSPACE_DIR="$TARGET_DIR/workspace-001"
-export PARAM_CURL_ARGUMENTS="--retry 3"
+export INPUT_KOTLIN_SCRIPT_FILE="$EXTERNAL_WORKBENCH_DIR/scripts/inventory.asset.filter.kts"
+export INPUT_INVENTORY_FILE="$AGGREGATED_DIR_001/sample-asset-1.0/sample-asset-1.0-inventory.xls"
+export PARAM_ASSET_ID="sample-asset"
+export OUTPUT_INVENTORY_FILE="$AGGREGATED_DIR_001/sample-asset-1.0/sample-asset-1.0-inventory.xls"
