@@ -34,7 +34,7 @@ of this repository.
 | param.tenant.id                            | yes      | The tenant id, necessary for the assessment server.                                 |
 | param.asset.id                             | yes      | The asset id, necessary for the assessment server.                                  |
 | param.assessment.context                   | yes      | The assessment context, necessary for the assessment server.                        |
-| param.feature.exploitability               | no       | Enable 'Exploitability Label'-feature in dashboard                                  |
+| param.feature.exploitability               | no       | Enable/Disable 'Exploitability Label'-feature in dashboard Disabled by default      |
 
 For more information on the parameters param.tenant.id, param.asset.id and param.assessment.context check out the README in the
 metaeffekt-workbench project in the assessments' folder.
