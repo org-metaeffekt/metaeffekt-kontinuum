@@ -61,56 +61,56 @@
                                 <mkdir dir="${output.asset.dir}" />
                                 <taskdef resource="net/sf/antcontrib/antlib.xml" />
                                 <if>
-                                    <isset property="param.asset.username" />
+                                    <isset property="param.username" />
                                     <then>
                                         <if>
-                                            <isset property="param.asset.password" />
+                                            <isset property="param.password" />
                                             <then>
                                                 <get src="${param.asset.url}" dest="${output.asset.dir}" verbose="true"
-                                                     username="${param.asset.username}" password="${param.asset.password}" />
+                                                     username="${param.username}" password="${param.password}" />
                                             </then>
                                             <elseif>
-                                                <isset property="param.asset.token" />
+                                                <isset property="param.token" />
                                                 <then>
                                                     <get src="${param.asset.url}" dest="${output.asset.dir}" verbose="true"
-                                                         username="${param.asset.username}" password="${param.asset.token}" />
+                                                         username="${param.username}" password="${param.token}" />
                                                 </then>
                                             </elseif>
                                             <else>
                                                 <get src="${param.asset.url}" dest="${output.asset.dir}" verbose="true"
-                                                     username="${param.asset.username}" password="" />
+                                                     username="${param.username}" password="" />
                                             </else>
                                         </if>
                                     </then>
                                     <elseif>
-                                        <isset property="param.asset.token" />
+                                        <isset property="param.token" />
                                         <then>
                                             <if>
-                                                <isset property="param.asset.header.name" />
+                                                <isset property="param.header.name" />
                                                 <then>
                                                     <get src="${param.asset.url}" dest="${output.asset.dir}" verbose="true">
-                                                        <header name="${param.asset.header.name}" value="${param.asset.token}" />
+                                                        <header name="${param.header.name}" value="${param.token}" />
                                                     </get>
                                                 </then>
                                                 <else>
                                                     <get src="${param.asset.url}" dest="${output.asset.dir}" verbose="true">
-                                                        <header name="Authorization" value="Bearer ${param.asset.token}" />
+                                                        <header name="Authorization" value="Bearer ${param.token}" />
                                                     </get>
                                                 </else>
                                             </if>
                                         </then>
                                     </elseif>
                                     <elseif>
-                                        <isset property="param.asset.password" />
+                                        <isset property="param.password" />
                                         <then>
-                                            <get src="${param.asset.url}" dest="${output.asset.dir}" verbose="true" password="${param.asset.password}" />
+                                            <get src="${param.asset.url}" dest="${output.asset.dir}" verbose="true" password="${param.password}" />
                                         </then>
                                     </elseif>
                                     <elseif>
-                                        <isset property="param.asset.header.name" />
+                                        <isset property="param.header.name" />
                                         <then>
                                             <get src="${param.asset.url}" dest="${output.asset.dir}" verbose="true">
-                                                <header name="${param.asset.header.name}" value="${param.asset.header.value}" />
+                                                <header name="${param.header.name}" value="${param.header.value}" />
                                             </get>
                                         </then>
                                     </elseif>
