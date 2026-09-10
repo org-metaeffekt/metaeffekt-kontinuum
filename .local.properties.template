@@ -7,7 +7,7 @@ ae.kontinuum.runtime.version=HEAD-SNAPSHOT
 ae.portfolio.manager.version=HEAD-SNAPSHOT
 
 # TermsMetaData; how to handle universe
-kosmos.password=
+tmd.password=
 
 # Docker Build Process
 docker.image.tag=
