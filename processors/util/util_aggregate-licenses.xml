@@ -95,6 +95,12 @@
                                 <requireProperty>
                                     <property>env.tmd.userkeys.file</property>
                                 </requireProperty>
+                                <requireProperty>
+                                    <property>param.reference.licenses.dir</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.reference.components.dir</property>
+                                </requireProperty>
                             </rules>
                             <fail>true</fail>
                         </configuration>
