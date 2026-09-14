@@ -51,13 +51,13 @@
 
               <sourceRepositories>
                 <sourceRepository>
-                  <id>FileServer</id>
-                  <fileServerMirror/>
+                  <id>Maven Repository</id>
+                  <mavenMirror/>
                 </sourceRepository>
 
                 <sourceRepository>
-                  <id>Maven Repository</id>
-                  <mavenMirror/>
+                  <id>FileServer</id>
+                  <fileServerMirror/>
                 </sourceRepository>
               </sourceRepositories>
 
