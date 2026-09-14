@@ -18,8 +18,8 @@ of this repository.
 | Parameter                             | Required | Description                                                                                                                                            |
 |---------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
 | param.reference.inventory.dir         | no       | The input reference inventory with which the input inventory will be enriched. This is the parent directory of the license and components directories. |
-| param.reference.licenses.dir          | no       | The license path of the reference inventory, default is  "licenses".                                                                                   |
-| param.reference.components.dir        | no       | The component path of the reference inventory, default is  "components".                                                                               |
+| param.reference.licenses.dir          | yes      | The license path of the reference inventory, default is  "licenses".                                                                                   |
+| param.reference.components.dir        | yes      | The component path of the reference inventory, default is  "components".                                                                               |
 | param.reference.inventory.includes    | no       | A comma separated list of included file types for the reference inventory, default is "\*\*/\*.ser,\*\*/\*.xls,\*\*/\*.xlsx.                           |
 | param.target.licenses.dir              | no       | The target directory for the licenses, default is "{project.build.dir}/annex/licenses".                                                                |
 | param.target.components.dir            | no       | The target directory for the components, default is "${project.build.dir}/annex/components".                                                           |
