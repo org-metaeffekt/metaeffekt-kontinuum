@@ -15,8 +15,9 @@ of this repository.
 | output.target.dir    | yes      | The directory in which to download the source artifacts.                                   |     
 
 ### Parameters
-| Parameter           | Required | Description                                                                                              |
-|---------------------|----------|----------------------------------------------------------------------------------------------------------|
-| param.config.file   | yes      | The file path of the configuration YAML required for the source aggregation process.                     |
-| param.protocol.file | no       | The file path of the protocol file containing detailed execution information for the source aggregation. |
+| Parameter                      | Required | Description                                                                                              |
+|--------------------------------|----------|----------------------------------------------------------------------------------------------------------|
+| param.config.file              | yes      | The file path of the configuration YAML required for the source aggregation process.                     |
+| param.protocol.file            | no       | The file path of the protocol file containing detailed execution information for the source aggregation. |
+| param.fail.on.missing.sources  | no       | If true, the processor fails if one or more sources can not be found.                                    |
 
