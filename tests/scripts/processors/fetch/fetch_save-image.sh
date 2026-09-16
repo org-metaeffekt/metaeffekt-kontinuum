@@ -47,6 +47,7 @@ run_maven_command() {
   [ -n "${AE_CORE_VERSION:-}" ] && CMD+=("-Dae.core.version=$AE_CORE_VERSION")
   [ -n "${AE_ARTIFACT_ANALYSIS_VERSION:-}" ] && CMD+=("-Dae.artifact.analysis.version=$AE_ARTIFACT_ANALYSIS_VERSION")
   [ -n "${LOCAL_MAVEN_REPO:-}" ] && CMD+=("-Dmaven.repo.local=$LOCAL_MAVEN_REPO")
+  [ -n "${PARAM_REPO_URL:-}" ] && CMD+=("-Dparam.repo.url=$PARAM_REPO_URL")
   CMD+=("-Dparam.image.id=$PARAM_IMAGE_ID")
   CMD+=("-Dparam.image.version=$PARAM_IMAGE_VERSION")
   CMD+=("-Doutput.dir=$OUTPUT_DIR")
