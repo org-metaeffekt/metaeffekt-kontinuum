@@ -45,7 +45,7 @@ jobs:
           git config --local user.email "github-actions[bot]@metaeffekt.com"
           git config --local user.name "github-actions[bot]"
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: zulu
           java-version: '17'
@@ -82,7 +82,7 @@ jobs:
           echo "dump.logs=true" >> ${{ github.workspace }}/.local.properties
 
       - name: Restore vulnerability mirror and maven index cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           key: key-${{ inputs.ae-core-version }}-${{ inputs.ae-artifact-analysis-version }}
           path: |
@@ -98,7 +98,7 @@ jobs:
           ./tests/scripts/pipelines/001_remote.sh
 
       - name: Save vulnerability mirror and maven index cache
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         if: ${{ always() }}
         with:
           key: key-${{ inputs.ae-core-version }}-${{ inputs.ae-artifact-analysis-version }}
@@ -124,7 +124,7 @@ jobs:
 
       # This might be broken / might not publish some files in processors/report
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ inputs.version }}
           name: ${{ inputs.version }}
