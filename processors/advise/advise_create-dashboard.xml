@@ -92,6 +92,10 @@
                                     </apiA>
                                 </apiConfiguration>
 
+                                <featureToggle>
+                                    <exploitabilityLabel>${param.feature.exploitability}</exploitabilityLabel>
+                                </featureToggle>
+
                             </reportConfiguration>
 
                             <timelines>
