@@ -45,6 +45,7 @@
         <!-- For OSV the active providers can be configured -->
         <param.activate.osv.providers>[{"src":"*","impl":"OSV"}]</param.activate.osv.providers>
 
+        <param.activate.euvd>true</param.activate.euvd>
         <param.activate.msrc>true</param.activate.msrc>
         <param.activate.certfr>true</param.activate.certfr>
         <param.activate.certsei>true</param.activate.certsei>
@@ -205,6 +206,10 @@
                                     <file>${param.vulnerabilities.custom.dir}</file>
                                 </vulnerabilityFiles>
                             </customVulnerabilitiesFillDetailsEnrichment>
+
+                            <euvdVulnerabilitiesEnrichment>
+                                <active>${param.activate.euvd}</active>
+                            </euvdVulnerabilitiesEnrichment>
 
                             <!-- Threat Details Filling -->
                             <cweFillDetailsEnrichment>

@@ -70,6 +70,7 @@
                             <nvdVulnerabilityIndex/>
                             <nvdCpeIndex/>
                             <nvdCpeVendorProductIndex/>
+                            <euvdIndex/>
                             <msrcProductIndex/>
                             <msrcAdvisorIndex/>
                             <msrcKbChainIndex/>
