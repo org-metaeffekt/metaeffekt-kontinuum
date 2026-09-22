@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+        Copyright 2024-2026 the original author or authors.
+
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+    -->
+
+    <parent>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
+        <version>KONTINUUM-SNAPSHOT</version>
+        <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
+    </parent>
+
+    <artifactId>extract_linux-arch-inventory</artifactId>
+    <packaging>pom</packaging>
+
+    <!--<build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>-->
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.metaeffekt.core</groupId>
+                <artifactId>ae-inventory-maven-plugin</artifactId>
+                <version>${ae.core.version}</version>
+                <executions>
+                    <execution>
+                        <id>extract-container-inventory</id>
+                        <goals>
+                            <goal>extract-container-inventory</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <analysisDir>${input.extract.dir}</analysisDir>
+                            <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <excludes>
+                        <excludes>/boot/**/*</excludes>
+                        <excludes>/dev/shm/**/*</excludes>
+                        <excludes>/etc/**/*</excludes>
+                        <excludes>/proc/**/*</excludes>
+                        <excludes>/usr/source/kernels/**/*</excludes>
+                        <excludes>/usr/share/mime/**/*</excludes>
+                        <excludes>/run/**/*</excludes>
+                        <excludes>/sys/**/*</excludes>
+                        <excludes>/var/opt/metaeffekt/**/*</excludes>
+                        <excludes>/var/db/**/*</excludes>
+                        <excludes>/var/lib/alternatives/**/*</excludes>
+                        <excludes>/var/spool/**/*</excludes>
+                        <excludes>/var/log/**/*</excludes>
+                        <excludes>/tmp/sort*</excludes>
+
+                        <excludes>/var/lib/dnf/**/*</excludes>
+                        <excludes>/var/lib/rpm/**/*</excludes>
+                        <excludes>/var/lib/rpm-state/**/*</excludes>
+                        <excludes>/var/lib/samba/**/*</excludes>
+                        <excludes>/var/lib/rsyslog/**/*</excludes>
+                        <excludes>/var/lib/selinux/**/*</excludes>
+                        <excludes>/var/lib/sss/**/*</excludes>
+                        <excludes>/var/lib/systemd/**/*</excludes>
+                        <excludes>/var/lib/loginsight-agent/**/*</excludes>
+                        <excludes>/var/lib/NetworkManager/**/*</excludes>
+                        <excludes>/var/lib/rhsm/**/*</excludes>
+                        <excludes>/var/lib/mysql/**/*</excludes>
+
+                        <excludes>/**/cache/**/*</excludes>
+                        <excludes>/**/ccache/**/*</excludes>
+
+                        <excludes>/**/build.xml</excludes>
+                        <excludes>/**/*.log.*</excludes>
+                        <excludes>/**/log/**/*</excludes>
+                        <excludes>/**/*.log</excludes>
+                        <excludes>/**/*.lock</excludes>
+
+                        <excludes>/**/*.cache</excludes>
+                        <excludes>/**/*.service</excludes>
+                        <excludes>/**/*.allow</excludes>
+                        <excludes>/**/*.uuid</excludes>
+                        <excludes>/**/*.updated</excludes>
+
+                        <excludes>/**/*.der</excludes>
+                        <excludes>/**/*.pem</excludes>
+                        <excludes>/**/*.p12</excludes>
+                        <excludes>/**/*.jks</excludes>
+                        <excludes>/**/*.key</excludes>
+                        <excludes>/**/*.pub</excludes>
+                        <excludes>/**/*.crt</excludes>
+
+                        <excludes>/**/.swagger-codegen-ignore</excludes>
+                        <excludes>/**/.autorelabel</excludes>
+
+                        <!-- FIXME: why does the root folder contain such a file? -->
+                        <excludes>/haErrorLog.txt</excludes>
+                        <excludes>/root/standalone.xml</excludes>
+
+                        <excludes>/home/PREPROD/**/*</excludes>
+                        <excludes>/home/thales/ERS-items/URLs.txt</excludes>
+
+                        <excludes>/opt/ejbca-custom/conf/**/*</excludes>
+                        <excludes>/opt/standalone.xml</excludes>
+                        <excludes>/opt/vmware/epops-agent/conf/agent.scu</excludes>
+                        <excludes>/opt/vmware/epops-agent/data/**/*</excludes>
+
+                        <excludes>/home/wildfly/.*/**/*</excludes>
+                        <excludes>/usr/bin/wildfly_pass</excludes>
+                        <excludes>/home/**/.*</excludes>
+                        <excludes>/home/**/.*/**/*</excludes>
+                        <excludes>/home/**/.conf</excludes>
+                        <excludes>/root/**/.*</excludes>
+                        <excludes>/root/**/.*/**/*</excludes>
+                        <excludes>/root/**/.conf</excludes>
+                        <excludes>/root/anaconda-ks.cfg</excludes>
+                        <excludes>/root/hosts2</excludes>
+                        <excludes>/root/keystore/**/*</excludes>
+
+                        <excludes>/var/opt/managesoft/**/*</excludes>
+                        <excludes>/var/opt/metaeffekt/**/*</excludes>
+                        <excludes>/root/rhel-extractor-mod.sh</excludes>
+                        <excludes>/var/lib/authselect/backups/**/*</excludes>
+
+                        <excludes>/home/thales/Assessor/**/*</excludes>
+                        <excludes>/**/*.read</excludes>
+                        <excludes>/**/*.write</excludes>
+                        <excludes>/**/*.qid</excludes>
+                        <excludes>/**/*.qtp</excludes>
+                        <excludes>/var/opt/BESClient/**/*</excludes>
+                        <excludes>/root/bigfix/**/*</excludes>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--<dependencies>
+        <dependency>
+            <groupId>org.metaeffekt.core</groupId>
+            <artifactId>ae-inventory-processor</artifactId>
+            <version>${ae.core.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.thales.kmc.documentation</groupId>
+            <artifactId>okms-vm-extractor-support</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+        </dependency>
+    </dependencies>-->
+
+</project>
+
