@@ -7,6 +7,7 @@ export SECURITY_POLICY="$EXTERNAL_WORKBENCH_DIR/policies/security-policy/securit
 export PROCESSOR_TMP_DIR="$ADVISED_DIR_001/tmp"
 export CORRELATION_DIR="$EXTERNAL_WORKBENCH_DIR/correlations"
 export ACTIVATE_MSRC="false"
+export ACTIVATE_EUVD="false"
 
 # Assessments and Context
 TENANT_ID="metaeffekt"

@@ -56,6 +56,7 @@ run_maven_command() {
   CMD+=("-Dparam.security.policy.file=$SECURITY_POLICY")
   CMD+=("-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR")
   CMD+=("-Dparam.activate.msrc=$ACTIVATE_MSRC")
+  CMD+=("-Dparam.activate.euvd=$ACTIVATE_EUVD")
 
   pass_command_info_to_logger "$(basename "$0")"
 }
