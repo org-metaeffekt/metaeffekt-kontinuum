@@ -101,6 +101,9 @@
                                 <requireProperty>
                                     <property>param.reference.components.dir</property>
                                 </requireProperty>
+                                <requireProperty>
+                                    <property>env.tmd.source</property>
+                                </requireProperty>
                             </rules>
                             <fail>true</fail>
                         </configuration>
