@@ -1,6 +1,6 @@
-# Extract - Copy POM Dependencies
+# Extract - Generate Linux Arch Inventory
 
-This process copies dependencies found in a pom.xml file into a directory for further processing.
+This process analysis extracted data from a Linux appliance and generates an inventory with artifacts.
 
 ## Properties
 
@@ -12,13 +12,13 @@ of this repository.
 | Parameter             | Required | Description                                     |
 |-----------------------|----------|-------------------------------------------------|
 | input.extract.dir     | yes      | The directory containing extracted information. |
-| output.inventory.file | no       | The directory containing extracted information. |
+| output.inventory.file | no       | The output inventory file.                      |
 
 ### Parameters
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-|           |          |             |
+| Parameter                   | Required | Description                                                                      |
+|-----------------------------|----------|----------------------------------------------------------------------------------|
+| input.exclude.patterns.file | no       | The yaml config containing patterns for files to be excluded from the inventory. |
 
 ### Environment
 
