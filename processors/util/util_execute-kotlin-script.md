@@ -11,17 +11,16 @@ receives its arguments as a named parameter map, accessed in the script via the 
 The different properties are sorted into three different groups.
 
 ### Input / Output
-| Parameter                | Required | Description                                                                                  |
-|--------------------------|----------|----------------------------------------------------------------------------------------------|
-| input.kotlin.script.file | yes      | The kotlin script file to be executed.                                                       |
-| input.properties.file    | no       | The properties file to be read by the script. Used by the fetch and read.properties scripts. |
-| input.workspace.dir      | no       | The workspace directory used by the fetch script to place downloaded assets.                 |
-| output.env.file          | no       | The target env file written by the read.properties script.                                   |
+| Parameter                | Required | Description                                                   |
+|--------------------------|----------|---------------------------------------------------------------|
+| input.kotlin.script.file | yes      | The kotlin script file to be executed.                        |
+| input.inventory.file     | yes      | The input inventory file to be processed by the script.       |
+| output.inventory.file    | yes      | The target inventory file written by the script.              |
 
 ### Parameters
-| Parameter              | Required | Description                                                    |
-|------------------------|----------|----------------------------------------------------------------|
-| param.curl.arguments   | no       | Additional arguments passed to curl by the fetch script.       |
+| Parameter      | Required | Description                                  |
+|----------------|----------|----------------------------------------------|
+| param.asset.id | no       | The identifier of the asset being processed. |
 
 ### Environment
 

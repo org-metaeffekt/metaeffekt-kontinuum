@@ -55,6 +55,9 @@
                             <inputInventoryFile>${input.inventory.file}</inputInventoryFile>
                             <outputInventoryFile>${output.inventory.file}</outputInventoryFile>
 
+                            <referenceInventoryDir>${param.reference.inventory.dir}</referenceInventoryDir>
+                            <referenceInventoryIncludes>${param.reference.inventory.includes}</referenceInventoryIncludes>
+
                             <languageMode>${param.language.mode}</languageMode>
                             <sourceMode>${param.source.mode}</sourceMode>
 

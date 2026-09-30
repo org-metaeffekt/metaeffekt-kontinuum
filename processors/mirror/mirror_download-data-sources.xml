@@ -132,6 +132,16 @@
                                 </resourceLocations>
                             </nvdCpeDownload>
 
+                            <euvdDownload>
+                                <resourceLocations>
+                                    <!-- Paginated listing of all entries, sorted by {@code dateUpdated} descending.
+                                         - {@code page} 0-based page index
+                                         - {@code size} entries per page, defaults to 10, capped at 100 by the API
+                                         - {@code filter} additional query parameters, such as {@code &fromUpdatedDate=2026-09-13} -->
+                                    <!-- <EUVD_SEARCH>https://euvdservices.enisa.europa.eu/api/search?page=%d&amp;size=%d%s</EUVD_SEARCH> -->
+                                </resourceLocations>
+                            </euvdDownload>
+
                             <cveListDownload>
                                 <!-- If set to true, the git command is used to clone the repository. Otherwise, the zip download is used.
                                      zip URLs have the following format: https://github.com/owner/repo/archive/refs/heads/main.zip -->
@@ -247,6 +257,14 @@
                                     <!-- <CISA_KEV>https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json</CISA_KEV> -->
                                 </resourceLocations>
                             </cisaKevDownload>
+
+                            <enisaEuKevDownload>
+                                <resourceLocations>
+                                    <!-- URL for the EUVD API.
+                                         Full dataset (JSON). Consolidated Known Exploited Vulnerabilities from CISA KEV and ENISA EU KEV sources. Updated daily at 07:00 UTC. -->
+                                    <!-- <ENISA_EU_KEV>https://euvdservices.enisa.europa.eu/api/kev/dump</ENISA_EU_KEV> -->
+                                </resourceLocations>
+                            </enisaEuKevDownload>
 
                             <epssDownload>
                                 <resourceLocations>

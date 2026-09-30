@@ -18,17 +18,17 @@ of this repository.
 | Parameter                             | Required | Description                                                                                                                                            |
 |---------------------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
 | param.reference.inventory.dir         | no       | The input reference inventory with which the input inventory will be enriched. This is the parent directory of the license and components directories. |
-| param.reference.licenses.dir          | no       | The license path of the reference inventory, default is  "licenses".                                                                                   |
-| param.reference.components.dir        | no       | The component path of the reference inventory, default is  "components".                                                                               |
+| param.reference.licenses.dir          | yes      | The license path of the reference inventory, default is  "licenses".                                                                                   |
+| param.reference.components.dir        | yes      | The component path of the reference inventory, default is  "components".                                                                               |
 | param.reference.inventory.includes    | no       | A comma separated list of included file types for the reference inventory, default is "\*\*/\*.ser,\*\*/\*.xls,\*\*/\*.xlsx.                           |
-| param.target.licenses.dir              | no       | The target directory for the licenses, default is "{project.build.dir}/annex/licenses".                                                                |
-| param.target.components.dir            | no       | The target directory for the components, default is "${project.build.dir}/annex/components".                                                           |
+| param.target.licenses.dir             | no       | The target directory for the licenses, default is "{project.build.dir}/annex/licenses".                                                                |
+| param.target.components.dir           | no       | The target directory for the components, default is "${project.build.dir}/annex/components".                                                           |
 | param.fail.on.missing.license.file    | no       | A boolean for controlling whether the process fails if a license file is missing, default is "false".                                                  |
 | param.fail.on.missing.component.files | no       | A boolean for controlling whether the process fails if component files are missing, default is "false".                                                |
 
 ### Environment
-| Parameter             | Required | Description                                                                               |
-|-----------------------|----------|-------------------------------------------------------------------------------------------|
-| env.tmd.source        | no       | The license database source. Either `ae-universe` or `ae-kosmos`. Default is `ae-kosmos`. |
-| env.tmd.userkeys.file | yes      | The userkeys file to access the metaeffekt license database (TMD).                        |
-| env.tmd.password      | yes      | The password to decrypt the metaeffekt license database (TMD).                            |
+| Parameter             | Required | Description                                                        |
+|-----------------------|----------|--------------------------------------------------------------------|
+| env.tmd.source        | yes      | The license database source. Either `ae-universe` or `ae-kosmos`.  |
+| env.tmd.userkeys.file | yes      | The userkeys file to access the metaeffekt license database (TMD). |
+| env.tmd.password      | yes      | The password to decrypt the metaeffekt license database (TMD).     |

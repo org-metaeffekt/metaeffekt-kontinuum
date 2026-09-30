@@ -27,8 +27,12 @@
         <relativePath>../_common_/ae-kontinuum-processors.xml</relativePath>
     </parent>
 
-    <artifactId>fetch_inspect-image</artifactId>
+    <artifactId>fetch_save-image</artifactId>
     <packaging>pom</packaging>
+
+    <properties>
+        <param.repo.url>docker.io</param.repo.url>
+    </properties>
 
     <build>
         <plugins>
@@ -47,7 +51,7 @@
                             <executable>docker</executable>
                             <arguments>
                                 <argument>pull</argument>
-                                <argument>${param.image.id}:${param.image.version}</argument>
+                                <argument>${param.repo.url}/${param.image.id}:${param.image.version}</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -61,7 +65,7 @@
                             <executable>docker</executable>
                             <arguments>
                                 <argument>inspect</argument>
-                                <argument>${param.image.id}:${param.image.version}</argument>
+                                <argument>${param.repo.url}/${param.image.id}:${param.image.version}</argument>
                             </arguments>
                             <outputFile>${output.dir}/${param.image.id}-${param.image.version}.json</outputFile>
                         </configuration>
@@ -76,7 +80,7 @@
                             <executable>docker</executable>
                             <arguments>
                                 <argument>save</argument>
-                                <argument>${param.image.id}:${param.image.version}</argument>
+                                <argument>${param.repo.url}/${param.image.id}:${param.image.version}</argument>
                                 <argument>-o</argument>
                                 <argument>${output.dir}/${param.image.id}-${param.image.version}.tar</argument>
                             </arguments>

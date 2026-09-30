@@ -18,6 +18,8 @@ of this repository.
 | param.group.id    | yes      | The Maven group ID of the artifact to download.                |
 | param.artifact.id | yes      | The Maven artifact ID of the artifact to download.             |
 | param.version     | yes      | The version of the Maven artifact to download.                 |
+| param.type        | no       | The type/packaging of the artifact, default is `jar`.           |
+| param.classifier  | no       | The optional classifier of the artifact.                       |
 | param.repo.url    | no       | The URL of the repository hosting the artifact (optional).     |
 
 ### Environment

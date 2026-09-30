@@ -38,8 +38,8 @@
         <param.document.language>en</param.document.language>
 
         <!-- FIXME: Check whether this is required -->
-        <param.reference.license.dir>${param.reference.inventory.dir}/../licenses</param.reference.license.dir>
-        <param.reference.component.dir>${param.reference.inventory.dir}/../components</param.reference.component.dir>
+        <param.reference.licenses.dir>${param.reference.inventory.dir}/../licenses</param.reference.licenses.dir>
+        <param.reference.components.dir>${param.reference.inventory.dir}/../components</param.reference.components.dir>
 
         <param.asset.build>n.a.</param.asset.build>
 

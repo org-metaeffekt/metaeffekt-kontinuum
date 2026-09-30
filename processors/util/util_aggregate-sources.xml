@@ -46,17 +46,18 @@
               <inventoryPath>${input.inventory.file}</inventoryPath>
               <sourceAggregationConfig>${param.config.file}</sourceAggregationConfig>
               <aggregationProtocolFile>${param.protocol.file}</aggregationProtocolFile>
+              <failOnMissingSources>${param.fail.on.missing.sources}</failOnMissingSources>
               <targetDirectory>${output.target.dir}</targetDirectory>
 
               <sourceRepositories>
                 <sourceRepository>
-                  <id>FileServer</id>
-                  <fileServerMirror/>
+                  <id>Maven Repository</id>
+                  <mavenMirror/>
                 </sourceRepository>
 
                 <sourceRepository>
-                  <id>Maven Repository</id>
-                  <mavenMirror/>
+                  <id>FileServer</id>
+                  <fileServerMirror/>
                 </sourceRepository>
               </sourceRepositories>
 

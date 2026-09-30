@@ -57,6 +57,7 @@
                             <goal>set-inventory-info</goal>
                         </goals>
                         <configuration>
+<!--                            FIXME: Why is this required?-->
                             <entryId>vad-customization</entryId>
                             <values>
                                 <Tenant>${param.tenant.id}</Tenant>

@@ -20,13 +20,9 @@ on:
         description: 'Valid metaeffekt-artifact-analysis version tag.'
         required: true
         type: string
-      trigger-workbench-release:
-        description: 'If true, triggers a workbench release based on this kontinuum release.'
-        default: true
-        type: boolean
 
 env:
-  MIRROR_URL: "https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen7-external.tar.gz"
+  MIRROR_URL: "https://metaeffekt.com/mirror/ae-vulnerability-mirror/ae-mirror-index_gen6-external.tar.gz"
 
 permissions:
   contents: write
@@ -38,25 +34,27 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
 
-      - name: Create release branch
+      - name: Configure git
         shell: bash
         run: |
           git config --local user.email "github-actions[bot]@metaeffekt.com"
           git config --local user.name "github-actions[bot]"
-          git checkout -B release/${{ inputs.version }}
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: zulu
           java-version: '17'
 
       - name: Adjust core and artifact-analysis versions
         run: |
-          sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|g' \
+          sed -i -E 's|<ae.core.version>[^<]*</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|g' \
             processors/_common_/ae-kontinuum-processors.xml
-          sed -i 's|<ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|g' \
+          sed -i -E 's|<ae.artifact.analysis.version>[^<]*</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|g' \
             processors/_common_/ae-kontinuum-processors.xml
 
       - name: Checkout metaeffekt-workbench
@@ -68,11 +66,12 @@ jobs:
       - name: Adjust core and artifact-analysis versions in workbench
         run: |
           cd ${{ github.workspace }}/.metaeffekt-workbench
-          sed -i 's|<ae.core.version>HEAD-SNAPSHOT</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|' templates/report-template/pom.xml
-          sed -i 's|<ae.artifact.analysis.version>HEAD-SNAPSHOT</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|' templates/report-template/pom.xml
+          sed -i -E 's|<ae.core.version>[^<]*</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|' templates/report-template/pom.xml
+          sed -i -E 's|<ae.artifact.analysis.version>[^<]*</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|' templates/report-template/pom.xml
 
       - name: Create .local.properties file
         run: |
+          umask 077
           touch ${{ github.workspace }}/.local.properties
           echo "ae.workbench.dir=${{ github.workspace }}/.metaeffekt-workbench" >> ${{ github.workspace }}/.local.properties
           echo "vulnerability.mirror.dir=${{ github.workspace }}/.mirror" >> ${{ github.workspace }}/.local.properties
@@ -83,7 +82,7 @@ jobs:
           echo "dump.logs=true" >> ${{ github.workspace }}/.local.properties
 
       - name: Restore vulnerability mirror and maven index cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           key: key-${{ inputs.ae-core-version }}-${{ inputs.ae-artifact-analysis-version }}
           path: |
@@ -99,7 +98,7 @@ jobs:
           ./tests/scripts/pipelines/001_remote.sh
 
       - name: Save vulnerability mirror and maven index cache
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         if: ${{ always() }}
         with:
           key: key-${{ inputs.ae-core-version }}-${{ inputs.ae-artifact-analysis-version }}
@@ -107,37 +106,36 @@ jobs:
             .mirror
             .maven-index
 
-      - name: Commit changes
-        if: ${{ !env.ACT }}
+      # Commit the overrides on a throwaway commit and publish only the tag, so main is never modified.
+      - name: Create release commit and tag
         run: |
           git add processors/_common_/ae-kontinuum-processors.xml
           git commit -m "Release ${{ inputs.version }}" || echo "No changes to commit"
+          git tag -f "${{ inputs.version }}"
+          # --force allows re-running a failed release; it does not affect main.
+          git push --force origin "refs/tags/${{ inputs.version }}"
 
-      # We need to use --force here as previous failed pipeline might have pushed to the branch already.
-      - name: Push changes
-        if: ${{ !env.ACT }}
-        run: git push --set-upstream origin "release/${{ inputs.version }}" --force
+      - name: Create full source archive
+        run: |
+          git archive --format=tar.gz \
+            --prefix="metaeffekt-kontinuum-${{ inputs.version }}/" \
+            --output="metaeffekt-kontinuum-${{ inputs.version }}.tar.gz" \
+            "${{ inputs.version }}"
 
       # This might be broken / might not publish some files in processors/report
       - name: Create Release
-        if: ${{ !env.ACT }}
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ inputs.version }}
-          target_commitish: "release/${{ inputs.version }}"
           name: ${{ inputs.version }}
           draft: false
           prerelease: false
+          files: metaeffekt-kontinuum-${{ inputs.version }}.tar.gz
 
-      - name: Trigger metaeffekt-workbench release
-        if: ${{ !env.ACT && inputs.trigger-workbench-release }}
-        env:
-          GH_TOKEN: ${{ secrets.AE_WORKBENCH_DISPATCH_TOKEN }}
+      # Remove the credential-bearing properties file and pipeline logs so they never leave the runner.
+      - name: Clean up local properties and logs
+        if: ${{ always() }}
+        shell: bash
         run: |
-          gh workflow run release.yml \
-            --repo org-metaeffekt/metaeffekt-workbench \
-            --ref main \
-            -f version="${{ inputs.version }}" \
-            -f ae-core-version="${{ inputs.ae-core-version }}" \
-            -f ae-artifact-analysis-version="${{ inputs.ae-artifact-analysis-version }}" \
-            -f ae-kontinuum-version="release/${{ inputs.version }}"
+          find "${{ github.workspace }}" -maxdepth 3 -name '.local.properties' -type f -delete
+          find "${{ github.workspace }}" -maxdepth 3 -type d -name '.logs' -exec rm -rf {} +
