@@ -37,6 +37,8 @@
         <param.timeline.time.spent.max>10000</param.timeline.time.spent.max>
         <param.events.since.timestamp.for.dashboard>assessment_event/$[since_time]/${param.tenant.id}/${param.asset.id}/${param.assessment.context}</param.events.since.timestamp.for.dashboard>
         <param.put.event.for.dashboard>assessment_event/$[creation_time]/${param.tenant.id}/${param.asset.id}/${param.assessment.context}</param.put.event.for.dashboard>
+        <param.feature.toggle.threat>true</param.feature.toggle.threat>
+        <param.feature.toggle.threat.priority>false</param.feature.toggle.threat.priority>
         <!-- determines what data sources to consider in the vulnerability timelines.
              supported: NVD, OSV, all -->
         <param.timeline.vuln.providers.list>NVD, OSV</param.timeline.vuln.providers.list>
@@ -92,6 +94,11 @@
                                         <logoutMode>REDIRECT</logoutMode>
                                     </apiA>
                                 </apiConfiguration>
+
+                                <featureToggle>
+                                    <threat>${param.feature.toggle.threat}</threat>
+                                    <threatPrioritization>${param.feature.toggle.threat.priority}</threatPrioritization>
+                                </featureToggle>
 
                             </reportConfiguration>
 
