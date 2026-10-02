@@ -6,8 +6,10 @@ ae.workbench.version=HEAD-SNAPSHOT
 ae.kontinuum.runtime.version=HEAD-SNAPSHOT
 ae.portfolio.manager.version=HEAD-SNAPSHOT
 
-# TermsMetaData; how to handle universe
-tmd.password=
+# TermsMetaData (defaults to kosmos)
+tmd.source=ae-kosmos
+tmd.password=EuBsVvcjIElWdXVVtHmPJdsE
+tmd.userkeys.file=<path-to-workbench>/config/kosmos/kosmos.consumer.keys
 
 # Docker Build Process
 docker.image.tag=
