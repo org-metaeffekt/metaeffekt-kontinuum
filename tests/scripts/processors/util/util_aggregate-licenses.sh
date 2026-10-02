@@ -54,6 +54,7 @@ run_maven_command() {
   CMD+=("-Dparam.target.licenses.dir=$PARAM_TARGET_LICENSE_DIR")
   CMD+=("-Dparam.fail.on.missing.license.file=$PARAM_FAIL_ON_MISSING_LICENSE_FILE")
   CMD+=("-Dparam.fail.on.missing.component.files=$PARAM_FAIL_ON_MISSING_COMPONENT_FILES")
+  CMD+=("-Denv.tmd.source=$ENV_TMD_SOURCE")
   CMD+=("-Denv.tmd.password=$ENV_TMD_PASSWORD")
   CMD+=("-Denv.tmd.userkeys.file=$ENV_TMD_USERKEYS_FILE")
 
