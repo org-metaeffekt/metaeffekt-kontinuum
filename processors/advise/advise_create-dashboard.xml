@@ -37,6 +37,11 @@
         <param.timeline.time.spent.max>10000</param.timeline.time.spent.max>
         <param.events.since.timestamp.for.dashboard>assessment_event/$[since_time]/${param.tenant.id}/${param.asset.id}/${param.assessment.context}</param.events.since.timestamp.for.dashboard>
         <param.put.event.for.dashboard>assessment_event/$[creation_time]/${param.tenant.id}/${param.asset.id}/${param.assessment.context}</param.put.event.for.dashboard>
+
+        <!-- feature toggle -->
+        <param.feature.threats>false</param.feature.threats>
+        <param.feature.exploitability>false</param.feature.exploitability>
+
         <!-- determines what data sources to consider in the vulnerability timelines.
              supported: NVD, OSV, all -->
         <param.timeline.vuln.providers.list>NVD, OSV</param.timeline.vuln.providers.list>
@@ -92,6 +97,14 @@
                                         <logoutMode>REDIRECT</logoutMode>
                                     </apiA>
                                 </apiConfiguration>
+
+                                <featureToggle>
+                                    <!-- currently threat display and threatPrioritization are activated/deactivated as one -->
+                                    <threat>${param.feature.threats}</threat>
+                                    <threatPrioritization>${param.feature.threats}</threatPrioritization>
+
+                                    <exploitabilityLabel>${param.feature.exploitability}</exploitabilityLabel>
+                                </featureToggle>
 
                             </reportConfiguration>
 
