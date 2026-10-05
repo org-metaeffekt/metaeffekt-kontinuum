@@ -101,7 +101,6 @@
                                 <featureToggle>
                                     <!-- currently threat display and threatPrioritization are activated/deactivated as one -->
                                     <threat>${param.feature.threats}</threat>
-                                    <threatPrioritization>${param.feature.threats}</threatPrioritization>
 
                                     <exploitabilityLabel>${param.feature.exploitability}</exploitabilityLabel>
                                 </featureToggle>
