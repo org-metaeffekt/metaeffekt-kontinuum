@@ -55,6 +55,7 @@ run_maven_command() {
   CMD+=("-Dparam.asset.id=$PARAM_ASSET_ID")
   CMD+=("-Dparam.asset.name=$PARAM_ASSET_NAME")
   CMD+=("-Dparam.asset.version=$PARAM_ASSET_VERSION")
+  CMD+=("-Dparam.asset.build=$PARAM_ASSET_BUILD")
   CMD+=("-Dparam.product.name=$PARAM_PRODUCT_NAME")
   CMD+=("-Dparam.product.version=$PARAM_PRODUCT_VERSION")
   CMD+=("-Dparam.product.watermark=$PARAM_PRODUCT_WATERMARK")
