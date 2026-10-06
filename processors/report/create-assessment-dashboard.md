@@ -1,0 +1,47 @@
+# Enrich with Vulnerabilities
+
+This process takes an input inventory containing vulnerability information and creates 
+a Vulnerability Assessment Dashboard from it. Additional parameters can influence the information contained in the 
+resulting dashboard which are listed in the table below.
+
+## Future Developments
+
+The current implementation of the Vulnerability Assessment Dashboard is under revision to allow more dynamic interactions with 
+the dashboard.
+
+## Properties
+
+The different properties are sorted into three different groups which are explained in the top level [README](../../README.md)
+of this repository.
+
+### Input / Output
+| Parameter             | Required | Description                                                     |
+|-----------------------|----------|-----------------------------------------------------------------|
+| input.inventory.file  | yes      | The input inventory from which the dashboard will be generated. |
+| output.dashboard.file | yes      | The file of the resulting vulnerability assessment dashboard.   |
+
+### Parameters
+| Parameter                                  | Required | Description                                                                                  |
+|--------------------------------------------|----------|----------------------------------------------------------------------------------------------|
+| param.security.policy.file                 | yes      | The security policy file to use.                                                             |
+| param.security.policy.active.ids           | no       | The activeIds of the security policy configurations to use for enrichment.                   | 
+| param.timeline.conf.enabled                | no       | Enables the timeline configuration overall. Enabled by default.                              | 
+| param.timeline.max.threads                 | no       | The maximum number of threads working on timelines. Defaults to 4.                           |
+| param.timeline.time.spent.max              | no       | The maximum number of seconds spent per timeline. Defaults to 10000ms.                       |
+| param.timeline.vuln.providers.list         | no       | A list of vulnerability providers used to generate the timelines. Empty by default.          |
+| param.events.since.timestamp.for.dashboard | no       | Expression for query events since timestamp for the dashboard.                               |
+| param.put.event.for.dashboard              | no       | Expression for putting events for the dashboard.                                             |
+| param.tenant.id                            | yes      | The tenant id, necessary for the assessment server.                                          |
+| param.asset.id                             | yes      | The asset id, necessary for the assessment server.                                           |
+| param.assessment.context                   | yes      | The assessment context, necessary for the assessment server.                                 |
+| param.feature.threats                      | no       | Toggle support and prioritization of threats. Disabled by default; value is false.           |
+| param.feature.exploitability               | no       | Toggle the 'Exploitability Label'-feature in dashboard. Disabled by default; value is false. |
+
+For more information on the parameters param.tenant.id, param.asset.id and param.assessment.context check out the README in the
+metaeffekt-workbench project in the assessments' folder.
+
+### Environment
+| Parameter                        | Required | Description                                                        |
+|----------------------------------|----------|--------------------------------------------------------------------|
+| env.vulnerability.mirror.dir     | yes      | The directory containing the vulnerability database/index.         |
+| env.vulnerability.assessment.api | no       | Backend for dynamic vulnerability assessment. Disabled by default. |
