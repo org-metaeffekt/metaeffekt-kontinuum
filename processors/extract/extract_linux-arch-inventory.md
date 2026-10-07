@@ -12,13 +12,14 @@ of this repository.
 | Parameter             | Required | Description                                     |
 |-----------------------|----------|-------------------------------------------------|
 | input.extract.dir     | yes      | The directory containing extracted information. |
-| output.inventory.file | no       | The output inventory file.                      |
+| output.inventory.file | yes      | The output inventory file.                      |
 
 ### Parameters
 
-| Parameter                   | Required | Description                                                                      |
-|-----------------------------|----------|----------------------------------------------------------------------------------|
-| input.exclude.patterns.file | no       | The yaml config containing patterns for files to be excluded from the inventory. |
+| Parameter                             | Required | Description                                                                             |
+|---------------------------------------|----------|-----------------------------------------------------------------------------------------|
+| param.file.exclude.patterns           | yes      | The yaml config containing patterns for files to be excluded from the inventory.        |
+| param.file.level.processing.activated | no       | Whether files should be processed and added to the inventory or not. By default active. |
 
 ### Environment
 

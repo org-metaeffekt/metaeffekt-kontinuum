@@ -45,7 +45,35 @@
                         <configuration>
                             <inputDir>${input.extract.dir}</inputDir>
                             <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
-                            <excludePatternsFile>${input.exclude.patterns.file}</excludePatternsFile>
+                            <activateFileLevelProcessing>${param.file.level.processing.activated}</activateFileLevelProcessing>
+                            <excludePatternsFile>${param.file.exclude.patterns}</excludePatternsFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>input.extract.dir</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.inventory.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.file.exclude.patterns</property>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
                         </configuration>
                     </execution>
                 </executions>
