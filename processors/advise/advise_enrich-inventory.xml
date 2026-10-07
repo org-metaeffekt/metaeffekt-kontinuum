@@ -183,12 +183,12 @@
                                 <active>${param.activate.csaf}</active>
                             </csafVulnerabilitiesEnrichment>
 
-                            <customVulnerabilitiesFromCpeEnrichment>
+<!--                            <customVulnerabilitiesFromCpeEnrichment>
                                 <active>${param.activate.vulnerabilities.custom}</active>
                                 <vulnerabilityFiles>
                                     <file>${param.vulnerabilities.custom.dir}</file>
                                 </vulnerabilityFiles>
-                            </customVulnerabilitiesFromCpeEnrichment>
+                            </customVulnerabilitiesFromCpeEnrichment>-->
 
                             <!-- Vulnerability Details Filling -->
                             <nvdCveFillDetailsEnrichment>
@@ -200,12 +200,12 @@
                                 <excludeNvdEquivalent>${param.exclude.nvd.equivalent.msrc}</excludeNvdEquivalent>
                             </msrcAdvisorFillDetailsEnrichment>
 
-                            <customVulnerabilitiesFillDetailsEnrichment>
+<!--                            <customVulnerabilitiesFillDetailsEnrichment>
                                 <active>${param.activate.vulnerabilities.custom}</active>
                                 <vulnerabilityFiles>
                                     <file>${param.vulnerabilities.custom.dir}</file>
                                 </vulnerabilityFiles>
-                            </customVulnerabilitiesFillDetailsEnrichment>
+                            </customVulnerabilitiesFillDetailsEnrichment>-->
 
                             <euvdVulnerabilitiesEnrichment>
                                 <active>${param.activate.euvd}</active>
