@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+        Copyright 2024-2026 the original author or authors.
+
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+    -->
+
+    <parent>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
+        <version>KONTINUUM-SNAPSHOT</version>
+        <relativePath>../../processors/ae-kontinuum-processors.xml</relativePath>
+    </parent>
+
+    <artifactId>mirror_update-index</artifactId>
+
+    <properties>
+        <param.proxy.scheme>none</param.proxy.scheme>
+        <param.proxy.host>none</param.proxy.host>
+        <param.proxy.port>-1</param.proxy.port>
+        <param.proxy.user>none</param.proxy.user>
+        <param.proxy.pass>none</param.proxy.pass>
+
+        <param.fail.on.error>true</param.fail.on.error>
+        <param.fail.on.issue>true</param.fail.on.issue>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-mirror-plugin</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>data-index</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>data-mirror</goal>
+                        </goals>
+
+                        <configuration>
+                            <mirrorDirectory>${env.mirror.dir}</mirrorDirectory>
+
+                            <!-- fail if an error occurs, but not on incomplete warnings -->
+                            <failOnIndexError>${param.fail.on.error}</failOnIndexError>
+                            <failOnIntegrityError>${param.fail.on.issue}</failOnIntegrityError>
+
+                            <!-- Indexers -->
+
+                            <!-- NOTE:
+                                    - the configuration can be regularly synchronized with the reference configuration on
+                                      https://github.com/org-metaeffekt/metaeffekt-documentation/blob/main/metaeffekt-vulnerability-management/data-mirror/index.md#pom-configuration
+                            -->
+
+                            <nvdVulnerabilityIndex/>
+                            <nvdCpeIndex/>
+                            <nvdCpeVendorProductIndex/>
+                            <euvdIndex/>
+                            <msrcProductIndex/>
+                            <msrcAdvisorIndex/>
+                            <msrcKbChainIndex/>
+
+                            <osvAdvisorIndex>
+                                <!-- <useDefaultExcludeAdvisoryProviders>true</useDefaultExcludeAdvisoryProviders> -->
+                                <!-- <excludeAdvisoryProviders>[]</excludeAdvisoryProviders> -->
+                            </osvAdvisorIndex>
+
+                            <csafVulnerabilityIndex/>
+                            <csafAdvisoryIndex/>
+                            <certSeiAdvisorIndex/>
+                            <certFrAdvisorIndex/>
+                            <certEuAdvisorIndex/>
+                            <kevIndex/>
+                            <epssIndex/>
+                            <eolIndex/>
+                            <cweIndex/>
+                            <capecIndex/>
+                            <attackIndex/>
+                            <atlasIndex/>
+
+                            <!-- The NVD and other vendors often publish data which contain invalid CPEs; this configuration attempts to 'correct' the malformed CPEs -->
+                            <!-- A simple "cpeCorrection" has a target string ("malformedCpe") and a replacement string ("replacementCpe") which function as 1:1 text replacements -->
+                            <cpeCorrections>
+                                <!-- SPECIFIC SIMPLE CORRECTIONS -->
+
+                                <!-- part and vendor melted together -->
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:aainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                </cpeCorrection>
+                                <!-- missing part -->
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:sainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                </cpeCorrection>
+                                <!-- too many parts -->
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:*:wordpress:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:sainwp:onestore_sites:*:*:*:*:*:wordpress:*:*</replacementCpe>
+                                </cpeCorrection>
+
+                                <!-- repair product name with unescaped ':'; for testing gen4 -->
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:a:ibm:sterling_connect:express_for_windows:3.1.0.0:*:*:*:*:*:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:sterling_connect\:express_for_windows:3.1.0.0:*:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
+
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:a:oracle:mysql:8.0:*:*:*:community_server:*:*:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:oracle:mysql:8.0:*:*:*:community_server:*:*:*</replacementCpe>
+                                </cpeCorrection>
+
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:a:ibm:engineering_lifecycle_management:7.1.0:interim_fix_009:*:*:*:*:*:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:engineering_lifecycle_management:7.1.0:interim_fix_009:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
+                            </cpeCorrections>
+
+                            <!-- Using "cpePatternCorrections" on the other hand, the "malformedCpe" accepts a regular expression (must be enclosed with '/' character) -->
+                            <!-- the "replacementCpe" may then either hold the full pattern replacement or some substitution values -->
+                            <!-- The order of the regex "cpePatternCorrections" is important, as they also specify the order the replacements are performed -->
+
+                            <cpePatternCorrections>
+                                <!-- GENERAL REGEX CORRECTIONS -->
+
+                                <!-- trim whitespaces from beginning -->
+                                <cpeCorrection>
+                                    <malformedCpe>/^\s+(.*?)$/</malformedCpe>
+                                    <replacementCpe>$1</replacementCpe>
+                                    <genericRule>true</genericRule>
+                                </cpeCorrection>
+                                <!-- trim whitespaces from end -->
+                                <cpeCorrection>
+                                    <malformedCpe>/^(.*?)\s+$/</malformedCpe>
+                                    <replacementCpe>$1</replacementCpe>
+                                    <genericRule>true</genericRule>
+                                </cpeCorrection>
+                                <!-- whitespaces surrounding the delimiter character ':' are collapsed -->
+                                <cpeCorrection>
+                                    <malformedCpe>/:\s+|\s+:/</malformedCpe>
+                                    <replacementCpe>:</replacementCpe>
+                                    <genericRule>true</genericRule>
+                                </cpeCorrection>
+                                <!-- any other remaining whitespaces are replaced with the '_' character, as defined by the cpe spec -->
+                                <cpeCorrection>
+                                    <malformedCpe>/\s+/</malformedCpe>
+                                    <replacementCpe>_</replacementCpe>
+                                    <genericRule>true</genericRule>
+                                </cpeCorrection>
+                                <!-- cpes may not contain multiple asterisk characters in sequence and are therefore collapsed as well -->
+                                <cpeCorrection>
+                                    <malformedCpe>/\*\*/</malformedCpe>
+                                    <replacementCpe>*</replacementCpe>
+                                    <genericRule>true</genericRule>
+                                </cpeCorrection>
+                                <!-- another common mistake is doubling the cpe header; if present, it is collapsed and the first configured part is used -->
+                                <cpeCorrection>
+                                    <malformedCpe>/^cpe:2\.3:([aoh]):cpe:2\.3:[aoh]/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:$1</replacementCpe>
+                                    <genericRule>true</genericRule>
+                                </cpeCorrection>
+
+                                <!-- SPECIFIC REGEX CORRECTIONS -->
+
+                                <!-- IBM: unescaped ':' in product name -->
+                                <!-- cpe:2.3:a:ibm:sterling_connect:express_for_windows:3.1.0.0:... to cpe:2.3:a:ibm:sterling_connect\:express_for_windows:3.1.0.0:... -->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:a:ibm:sterling_connect:(.*?):(.*?):\*:\*:\*:\*:(.*?):\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:sterling_connect\\:$1:$2:*:*:*:*:$3:*:*</replacementCpe>
+                                </cpeCorrection>
+                                <!-- IBM: 'cd' continuous_delivery marker placed in version field instead of sw_edition -->
+                                <!-- cpe:2.3:a:ibm:app_connect_operator:cd:11.3.0:*:*:*:*:*:*:* to cpe:2.3:a:ibm:app_connect_operator:11.3.0:*:*:*:continuous_delivery:*:*:* -->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):cd:([^:]+):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:$1:$2:*:*:*:continuous_delivery:*:*:*</replacementCpe>
+                                </cpeCorrection>
+                                <!-- IBM: 'cd' continuous_delivery marker placed in update field instead of sw_edition -->
+                                <!-- https://nvd.nist.gov/products/cpe/detail/3F59F71B-2449-4067-85D0-5F3E11233F05?namingFormat=2.2&orderBy=CPEURI&keyword=cpe%3A2.3%3Aa%3Aibm&status=FINAL -->
+                                <!-- cpe:2.3:a:ibm:mq_operator:3.2.23:cd:*:*:*:*:*:*:* to cpe:2.3:a:ibm:mq_operator:3.2.23:*:*:*:continuous_delivery:*:*:* -->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):([^:]+):cd:\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:$1:$2:*:*:*:continuous_delivery:*:*:*</replacementCpe>
+                                </cpeCorrection>
+                                <!-- IBM: ifix/interim_fix update identifier with extra trailing wildcard -->
+                                <!-- cpe:2.3:a:ibm:engineering_lifecycle_management:7.2.0:ifix001:*:*:*:*:*:*:* to cpe:2.3:a:ibm:engineering_lifecycle_management:7.2.0:ifix001:*:*:*:*:*:* -->
+                                <!-- cpe:2.3:a:ibm:engineering_lifecycle_management:7.1.0:interim_fix_009:*:*:*:*:*:*:* to cpe:2.3:a:ibm:engineering_lifecycle_management:7.1.0:interim_fix_009:*:*:*:*:*:* -->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:a:ibm:([^:]+):([^:]+):((?:ifix|interim_fix)[^:]*):\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:$1:$2:$3:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
+
+                                <!-- Palo Alto Networks: extra trailing wildcard -->
+                                <!-- cpe:2.3:o:palo_alto_networks:pan-os:11.1.6:-:*:*:*:*:*:*:* to cpe:2.3:o:palo_alto_networks:pan-os:11.1.6:-:*:*:*:*:*:* -->
+                                <cpeCorrection>
+                                    <malformedCpe>/cpe:2.3:o:palo_alto_networks:pan-os:(.*?):-:\*:\*:\*:\*:\*:\*:\*/</malformedCpe>
+                                    <replacementCpe>cpe:2.3:o:palo_alto_networks:pan-os:$1:-:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
+                            </cpePatternCorrections>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>env.mirror.dir</property>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

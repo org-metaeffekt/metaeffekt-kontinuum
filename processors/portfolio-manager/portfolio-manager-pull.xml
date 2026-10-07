@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
+        <version>KONTINUUM-SNAPSHOT</version>
+        <relativePath>../ae-kontinuum-processors.xml</relativePath>
+    </parent>
+
+    <artifactId>aggregate_portfolio-download</artifactId>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.metaeffekt.portfolio.manager</groupId>
+                <artifactId>ae-portfolio-manager-maven-plugin</artifactId>
+                <version>${ae.portfolio.manager.version}</version>
+                <executions>
+                    <execution>
+                        <id>pull-to-portfolio-manager</id>
+                        <goals>
+                            <goal>pull</goal>
+                        </goals>
+                        <phase>process-resources</phase>
+                        <configuration>
+
+                            <!-- url to the SwAM Portfolio Manager Endpoint -->
+                            <serviceUrl>${param.portfolio.manager.url}</serviceUrl>
+                            <!-- 'upload' user token for project; always pass as credential/secret -->
+                            <token>${param.portfolio.manager.token}</token>
+                            <!-- the modifier initial is the default -->
+                            <modifier>${param.inventory.modifier}</modifier>
+
+                            <!-- path to the keystore; replace or configure -->
+                            <keyStoreFile>${param.keystore.config.file}</keyStoreFile>
+                            <!-- keystore password; always pass as credential/secret -->
+                            <keyStorePassword>${param.keystore.password}</keyStorePassword>
+
+                            <!-- path to the truststore; replace or configure -->
+                            <trustStoreFile>${param.truststore.config.file}</trustStoreFile>
+                            <!-- truststore password; always pass as credential/secret -->
+                            <trustStorePassword>${param.truststore.password}</trustStorePassword>
+
+                            <!-- the project name to upload to -->
+                            <projectName>${param.project.name}</projectName>
+                            <!-- the asset group (in the project) to upload to -->
+                            <assetGroupQuery>${param.asset.group.id}</assetGroupQuery>
+                            <!-- the asset (in the project) the sbom represents -->
+                            <assetQuery>${param.asset.id}</assetQuery>
+                            <!-- the path to the sbom/inventory to download -->
+                            <targetDir>${output.inventory.dir}</targetDir>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <!-- FIXME: Currently required because of a dependency issue in portfolio manager 0.8.0. Remove once updated. -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-core</artifactId>
+                        <version>5.3.37</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>output.inventory.dir</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.portfolio.manager.url</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.portfolio.manager.token</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.project.name</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.asset.group.id</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.asset.id</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.keystore.password</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.truststore.password</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.keystore.config.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.truststore.config.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.inventory.modifier</property>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

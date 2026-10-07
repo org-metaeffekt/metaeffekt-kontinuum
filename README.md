@@ -29,61 +29,7 @@ Multiple processors can be combined to define pipelines and workflows for integr
 CI/CD components for GitLab are available in the
 [metaeffekt-components](https://gitlab.opencode.de/metaeffekt/metaeffekt-components) repository.
 
-For further details see [processors](processors/README.md).
-
-## Stages
-
-Processors are grouped into numbered stages to indicate their usual order. Later stages may depend on results from
-earlier stages, while the order of processors within a stage usually does not matter.
-
-### Workspace
-
-A workspace is a directory structure that groups software assets into stages and, where needed, divides them into
-asset-parts. It stores the inputs and outputs for each stage and asset. A workspace is not a separate repository or
-project. The included test scripts and the CI/CD components in
-[metaeffekt-components](https://gitlab.opencode.de/metaeffekt/metaeffekt-components) create or populate their workspaces.
-
-``` text
-.
-└── workspace/
-    └── asset/
-        ├── xx_additional/
-        │   └── asset-part/
-        │       └── auxiliary inputs / outputs
-        ├── 00_fetched/
-        │   └── asset-part/
-        │       └── fetched software
-        ├── 01_extracted/
-        │   └── asset-part/
-        │       └── extracted software
-        ├── 02_prepared/
-        │   └── asset-part/
-        │       └── prepared inventories
-        ├── 03_aggregated/
-        │   └── asset-part/
-        │       └── aggregated inventories
-        ├── 04_resolved/
-        │   └── asset-part/
-        │       └── inventories with resolved artifacts
-        ├── 05_scanned/
-        │   └── asset-part/
-        │       └── inventories with licensing and copyright data
-        ├── 06_advised/
-        │   └── asset-part/
-        │       └── inventories with vulnerability data
-        ├── 07_grouped/
-        │   └── asset-part/
-        │       └── inventories grouped for reporting
-        ├── 08_reported/
-        │   └── asset-part/
-        │       └── reports and dashboards
-        └── 09_summarized/
-            └── asset-part/
-                └── summary reports
-```
-
-This is a representative layout; a pipeline may use only some stages or add input directories such as `01_assets` and
-`00_portfolio`.
+For further details see the processor-specific `.md` files under [processors](processors).
     
 ## Integration
 
