@@ -13,17 +13,17 @@ None. This processor does not operate on workspace level.
 
 
 ### Parameters
-| Parameter                             | Required | Description                                                                                                                                    |
-|---------------------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| param.proxy.scheme                    | no       | The proxy scheme.                                                                                                                              |
-| param.proxy.host                      | no       | The proxy host.                                                                                                                                |
-| param.proxy.port                      | no       | The proxy port.                                                                                                                                |
-| param.proxy.user                      | no       | The proxy user.                                                                                                                                |
-| param.proxy.pass                      | no       | The proxy pass.                                                                                                                                |
-| param.fail.on.error                   | no       | Fails the process in case an error is detected during indexing. Defaults to `true`.                                                            |
-| param.fail.on.issue                   | no       | Fails the process in case of an integrity issue or incomplete state with the index. Defaults to `true`.                                        |
-| param.activate.vulnerabilities.custom | no       | Indexes the custom vulnerabilities stated in local files. Defaults to `false`.                                                                 |
-| param.vulnerabilities.custom.config   | no       | The file or directory that provides the JSON configuration of the custom vulnerability index. A directory is scanned recursively for `*.json`. |
+| Parameter                             | Required | Description                                                                                                                                                                                         |
+|---------------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| param.proxy.scheme                    | no       | The proxy scheme.                                                                                                                                                                                   |
+| param.proxy.host                      | no       | The proxy host.                                                                                                                                                                                     |
+| param.proxy.port                      | no       | The proxy port.                                                                                                                                                                                     |
+| param.proxy.user                      | no       | The proxy user.                                                                                                                                                                                     |
+| param.proxy.pass                      | no       | The proxy pass.                                                                                                                                                                                     |
+| param.fail.on.error                   | no       | Fails the process in case an error is detected during indexing. Defaults to `true`.                                                                                                                 |
+| param.fail.on.issue                   | no       | Fails the process in case of an integrity issue or incomplete state with the index. Defaults to `true`.                                                                                             |
+| param.activate.vulnerabilities.custom | no       | Indexes the custom vulnerabilities of the configured files and repositories. Defaults to `false`.                                                                                                   |
+| param.vulnerabilities.custom.config   | no       | The file or directory with the JSON configuration of the custom vulnerability index, scanned recursively for `*.json`. Not required when the downloaded repositories carry their own configuration. |
 
 
 ### Environment

@@ -39,7 +39,7 @@
         <param.fail.on.issue>true</param.fail.on.issue>
 
         <param.activate.vulnerabilities.custom>false</param.activate.vulnerabilities.custom>
-        <param.vulnerabilities.custom.config>${project.basedir}/custom-vulnerabilities/config</param.vulnerabilities.custom.config>
+        <param.vulnerabilities.custom.config/>
     </properties>
 
     <build>
