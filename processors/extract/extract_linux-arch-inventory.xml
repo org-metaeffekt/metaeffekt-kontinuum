@@ -43,10 +43,11 @@
                         </goals>
                         <phase>prepare-package</phase>
                         <configuration>
-                            <inputDir>${input.extract.dir}</inputDir>
+                            <inputArchiveFile>${input.archive.file}</inputArchiveFile>
                             <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
-                            <activateFileLevelProcessing>${param.file.level.processing.activated}</activateFileLevelProcessing>
-                            <excludePatternsFile>${param.file.exclude.patterns}</excludePatternsFile>
+                            <analysisDir>${param.analysis.dir}</analysisDir>
+                            <activateFileLevelProcessing>${param.activate.file.processing}</activateFileLevelProcessing>
+                            <excludePatternsFile>${param.exclude.pattern.file}</excludePatternsFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -64,13 +65,13 @@
                         <configuration>
                             <rules>
                                 <requireProperty>
-                                    <property>input.extract.dir</property>
+                                    <property>input.archive.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.analysis.dir</property>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>output.inventory.file</property>
-                                </requireProperty>
-                                <requireProperty>
-                                    <property>param.file.exclude.patterns</property>
                                 </requireProperty>
                             </rules>
                             <fail>true</fail>
