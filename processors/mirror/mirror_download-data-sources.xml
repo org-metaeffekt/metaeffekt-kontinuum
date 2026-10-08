@@ -40,6 +40,10 @@
 
         <param.fail.on.error>true</param.fail.on.error>
         <param.fail.on.issue>true</param.fail.on.issue>
+
+        <param.activate.vulnerabilities.custom.download>false</param.activate.vulnerabilities.custom.download>
+        <param.vulnerabilities.custom.download.git.url/>
+        <param.vulnerabilities.custom.download.git.branch/>
     </properties>
 
     <build>
@@ -405,6 +409,28 @@
                                     <!-- <ICS_ATTACK>https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/ics-attack/ics-attack.json</ICS_ATTACK> -->
                                 </resourceLocations>
                             </attackDownload>
+
+                            <customVulnerabilitiesDownload>
+                                <active>${param.activate.vulnerabilities.custom.download}</active>
+
+                                <repositories>
+                                    <repository>
+                                        <remoteUrl>${param.vulnerabilities.custom.download.git.url}</remoteUrl>
+                                        <branch>${param.vulnerabilities.custom.download.git.branch}</branch>
+                                    </repository>
+
+                                    <!-- Further repositories can be provided in the same way.
+                                    <repository>
+                                        <directoryName>internal</directoryName>
+                                        <remoteUrl>https://oauth2:TOKEN@git.example.com/security/disclosures.git</remoteUrl>
+                                        <branch>release</branch>
+                                        <sparsePaths>
+                                            <sparsePath>vulnerabilities</sparsePath>
+                                        </sparsePaths>
+                                    </repository>
+                                    -->
+                                </repositories>
+                            </customVulnerabilitiesDownload>
 
                         </configuration>
                     </execution>
