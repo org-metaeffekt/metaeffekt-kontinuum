@@ -46,6 +46,8 @@ run_maven_command() {
   [ -n "${LOCAL_MAVEN_REPO:-}" ] && CMD+=("-Dmaven.repo.local=$LOCAL_MAVEN_REPO")
   CMD+=("-Denv.mirror.dir=$ENV_MIRROR_DIR")
 
+  CMD+=("-Dparam.activate.vulnerabilities.custom=$PARAM_CUSTOM_VULNERABILITY_ACTIVATE")
+
   pass_command_info_to_logger "$(basename "$0")"
 }
 

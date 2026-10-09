@@ -46,6 +46,10 @@ run_maven_command() {
   CMD+=("-Denv.mirror.dir=$ENV_MIRROR_DIR")
   CMD+=("-Denv.nvd.apikey=$ENV_NVD_APIKEY")
 
+  CMD+=("-Dparam.activate.vulnerabilities.custom.download=$PARAM_DOWNLOAD_CUSTOM_VULNERABILITY_ACTIVATE")
+  CMD+=("-Dparam.vulnerabilities.custom.download.git.url=$PARAM_DOWNLOAD_CUSTOM_VULNERABILITY_REPOSITORY_URL")
+  CMD+=("-Dparam.vulnerabilities.custom.download.git.branch=$PARAM_DOWNLOAD_CUSTOM_VULNERABILITY_REPOSITORY_BRANCH")
+
   pass_command_info_to_logger "$(basename "$0")"
 }
 
