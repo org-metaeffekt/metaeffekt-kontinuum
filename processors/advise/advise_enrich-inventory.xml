@@ -75,7 +75,8 @@
         <param.remove.ghsa.unreviewed>false</param.remove.ghsa.unreviewed>
         <param.exclude.nvd.equivalent.msrc>true</param.exclude.nvd.equivalent.msrc>
         <param.exclude.nvd.equivalent.osv>true</param.exclude.nvd.equivalent.osv>
-        <param.vulnerabilities.custom.dir>${project.basedir}/custom-vulnerabilities</param.vulnerabilities.custom.dir>
+
+        <param.vulnerabilities.custom.mark.inapplicable>true</param.vulnerabilities.custom.mark.inapplicable>
 
         <!-- other configuration -->
         <param.dashboard.title>Vulnerability Assessment Dashboard</param.dashboard.title>
@@ -183,12 +184,12 @@
                                 <active>${param.activate.csaf}</active>
                             </csafVulnerabilitiesEnrichment>
 
-<!--                            <customVulnerabilitiesFromCpeEnrichment>
+                            <customVulnerabilitiesEnrichment>
                                 <active>${param.activate.vulnerabilities.custom}</active>
-                                <vulnerabilityFiles>
-                                    <file>${param.vulnerabilities.custom.dir}</file>
-                                </vulnerabilityFiles>
-                            </customVulnerabilitiesFromCpeEnrichment>-->
+
+                                <!-- whether a vulnerability excluded by an inapplicable purl or CPE is recorded on the artifact as an inapplicable id -->
+                                <markInapplicableVulnerabilities>${param.vulnerabilities.custom.mark.inapplicable}</markInapplicableVulnerabilities>
+                            </customVulnerabilitiesEnrichment>
 
                             <!-- Vulnerability Details Filling -->
                             <nvdCveFillDetailsEnrichment>
@@ -200,12 +201,9 @@
                                 <excludeNvdEquivalent>${param.exclude.nvd.equivalent.msrc}</excludeNvdEquivalent>
                             </msrcAdvisorFillDetailsEnrichment>
 
-<!--                            <customVulnerabilitiesFillDetailsEnrichment>
+                            <customVulnerabilitiesFillDetailsEnrichment>
                                 <active>${param.activate.vulnerabilities.custom}</active>
-                                <vulnerabilityFiles>
-                                    <file>${param.vulnerabilities.custom.dir}</file>
-                                </vulnerabilityFiles>
-                            </customVulnerabilitiesFillDetailsEnrichment>-->
+                            </customVulnerabilitiesFillDetailsEnrichment>
 
                             <euvdVulnerabilitiesEnrichment>
                                 <active>${param.activate.euvd}</active>
