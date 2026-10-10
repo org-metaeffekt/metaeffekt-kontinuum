@@ -4,3 +4,6 @@
 
 export ENV_MIRROR_DIR="$EXTERNAL_VULNERABILITY_MIRROR_DIR"
 export PROCESSOR_POM="mirror/mirror_update-index_external.xml"
+
+# deactivate internal vulnerabilities for external facing index
+export PARAM_CUSTOM_VULNERABILITY_ACTIVATE="false"
