@@ -13,7 +13,7 @@ of this repository.
 
 | Parameter                        | Required | Description                                                                                                                      |
 |----------------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------|
-| input.archive.file               | no       | The archive with extraction results.                                                                                             |
+| input.archive.file               | yes      | The archive with extraction results.                                                                                             |
 | output.inventory.file            | yes      | The output inventory file.                                                                                                       |
 | output.transformed.inventory.dir | no       | The directory to which the inventory transformed by the kotlin script is written. Required when param.kotlin.script.file is set. |
 
