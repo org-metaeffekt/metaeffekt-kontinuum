@@ -41,7 +41,7 @@
                         <goals>
                             <goal>extract-windows-inventory</goal>
                         </goals>
-                        <phase>prepare-package</phase>
+                        <phase>process-resources</phase>
                         <configuration>
                             <inputArchiveFile>${input.archive.file}</inputArchiveFile>
                             <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
