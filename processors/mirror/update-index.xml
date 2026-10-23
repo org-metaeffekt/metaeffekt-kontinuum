@@ -37,6 +37,9 @@
 
         <param.fail.on.error>true</param.fail.on.error>
         <param.fail.on.issue>true</param.fail.on.issue>
+
+        <param.activate.vulnerabilities.custom>false</param.activate.vulnerabilities.custom>
+        <param.vulnerabilities.custom.config/>
     </properties>
 
     <build>
@@ -94,6 +97,15 @@
                             <attackIndex/>
                             <atlasIndex/>
 
+                            <customVulnerabilitiesIndex>
+                                <active>${param.activate.vulnerabilities.custom}</active>
+                                <configuration>
+                                    <configFiles>
+                                        <file>${param.vulnerabilities.custom.config}</file>
+                                    </configFiles>
+                                </configuration>
+                            </customVulnerabilitiesIndex>
+
                             <!-- The NVD and other vendors often publish data which contain invalid CPEs; this configuration attempts to 'correct' the malformed CPEs -->
                             <!-- A simple "cpeCorrection" has a target string ("malformedCpe") and a replacement string ("replacementCpe") which function as 1:1 text replacements -->
                             <cpeCorrections>
@@ -129,6 +141,11 @@
                                 <cpeCorrection>
                                     <malformedCpe>cpe:2.3:a:ibm:engineering_lifecycle_management:7.1.0:interim_fix_009:*:*:*:*:*:*:*</malformedCpe>
                                     <replacementCpe>cpe:2.3:a:ibm:engineering_lifecycle_management:7.1.0:interim_fix_009:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
+
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:a:peazip:peazip:*:*:*:*:*:*:windows:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:peazip:peazip:*:*:*:*:*:windows:*:*</replacementCpe>
                                 </cpeCorrection>
                             </cpeCorrections>
 
