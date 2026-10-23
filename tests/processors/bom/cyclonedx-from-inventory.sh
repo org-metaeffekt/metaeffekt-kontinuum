@@ -6,7 +6,7 @@ source "$SCRIPT_DIR/../shared.sh"
 
 setup_processor_test "bom" "cyclonedx-from-inventory"
 
-input_file="$TEST_RESOURCES_DIR/inventories/sample-asset-001.xlsx"
+input_file="$TEST_RESOURCES_DIR/inventories/samples/sample-inventory-small.xlsx"
 output_file="$TEST_OUTPUT_DIR/cyclonedx.json"
 
 run_processor "$PROCESSOR_POM" \

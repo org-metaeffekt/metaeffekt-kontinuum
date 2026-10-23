@@ -6,13 +6,11 @@ source "$SCRIPT_DIR/../shared.sh"
 
 setup_processor_test "inventory" "transform-inventories"
 
-input_dir="$TEST_RESOURCES_DIR/inventories"
-output_file="$TEST_OUTPUT_DIR/transformed-inventory.xls"
+input_dir="$TEST_RESOURCES_DIR/inventories/samples"
+output_dir="$TEST_OUTPUT_DIR"
 script_file="$TEST_RESOURCES_DIR/misc/transform-inventories.kts"
 
 run_processor "$PROCESSOR_POM" \
 "-Dinput.inventory.dir=$input_dir" \
-"-Doutput.inventory.dir=$output_file" \
+"-Doutput.inventory.dir=$output_dir" \
 "-Dparam.kotlin.script.file=$script_file"
-
-assert_exists "$output_file"

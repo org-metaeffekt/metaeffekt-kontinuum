@@ -7,9 +7,8 @@ source "$SCRIPT_DIR/../shared.sh"
 setup_processor_test "report" "create-assessment-dashboard"
 
 require_config VULNERABILITY_MIRROR_DIR
-require_directory "$VULNERABILITY_MIRROR_DIR"
 
-input_file="$TEST_RESOURCES_DIR/inventories/sample-asset-001.xlsx"
+input_file="$TEST_RESOURCES_DIR/inventories/samples/sample-inventory-small.xlsx"
 output_file="$TEST_OUTPUT_DIR/dashboard.html"
 policy_file="$TEST_RESOURCES_DIR/dashboard/sample-security-policy.json"
 

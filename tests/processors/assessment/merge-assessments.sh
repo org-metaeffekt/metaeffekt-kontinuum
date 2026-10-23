@@ -6,7 +6,7 @@ source "$SCRIPT_DIR/../shared.sh"
 
 setup_processor_test "assessment" "merge-assessments"
 
-input_dir="$TEST_RESOURCES_DIR/inventories"
+input_dir="$TEST_RESOURCES_DIR/inventories/samples"
 output_file="$TEST_OUTPUT_DIR/merged-inventory.xls"
 
 run_processor "$PROCESSOR_POM" \

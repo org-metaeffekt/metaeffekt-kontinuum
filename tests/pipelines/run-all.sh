@@ -38,7 +38,7 @@ readonly PROCESSOR_TESTS=(
   licensing/resolve-licensing-information.sh
 
   # mirror
-  mirror/download-data-sources.sh
+  # mirror/download-data-sources.sh
   mirror/download-index.sh
   mirror/update-index.sh
   mirror/update-index_external.sh

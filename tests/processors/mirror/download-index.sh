@@ -7,11 +7,10 @@ source "$SCRIPT_DIR/../shared.sh"
 setup_processor_test "mirror" "download-index"
 
 require_config VULNERABILITY_MIRROR_URL
-
-mirror_dir="$TEST_OUTPUT_DIR/mirror"
+require_config VULNERABILITY_MIRROR_DIR
 
 run_processor "$PROCESSOR_POM" \
-"-Denv.vulnerability.mirror.dir=$mirror_dir" \
+"-Denv.vulnerability.mirror.dir=$VULNERABILITY_MIRROR_DIR" \
 "-Dparam.mirror.archive.url=$VULNERABILITY_MIRROR_URL"
 
-assert_nonempty_directory "$mirror_dir/.database"
+assert_nonempty_directory "$VULNERABILITY_MIRROR_DIR/.database"

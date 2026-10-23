@@ -7,11 +7,8 @@ source "$SCRIPT_DIR/../shared.sh"
 setup_processor_test "mirror" "update-index"
 
 require_config VULNERABILITY_MIRROR_DIR
-require_directory "$VULNERABILITY_MIRROR_DIR"
 
-mirror_dir="$TEST_OUTPUT_DIR/mirror"
-mkdir -p "$mirror_dir"
-cp -a "$VULNERABILITY_MIRROR_DIR/." "$mirror_dir/"
+mirror_dir="$KONTINUUM_DIR/.mirror"
 
 run_processor "$PROCESSOR_POM" \
 "-Denv.mirror.dir=$mirror_dir"

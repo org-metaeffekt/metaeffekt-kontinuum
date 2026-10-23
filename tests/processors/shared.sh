@@ -100,14 +100,6 @@ require_config() {
   [[ -n "${!variable:-}" ]] || fail "Required .local.properties value is missing: $variable"
 }
 
-require_file() {
-  [[ -f "$1" ]] || fail "Required test input file not found: $1"
-}
-
-require_directory() {
-  [[ -d "$1" ]] || fail "Required test input directory not found: $1"
-}
-
 new_test_output_dir() {
   local domain="$1"
   local processor="$2"

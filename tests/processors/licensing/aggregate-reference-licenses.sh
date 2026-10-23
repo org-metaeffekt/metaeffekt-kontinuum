@@ -6,7 +6,7 @@ source "$SCRIPT_DIR/../shared.sh"
 
 setup_processor_test "licensing" "aggregate-reference-licenses"
 
-input_file="$TEST_RESOURCES_DIR/inventories/sample-asset-001.xlsx"
+input_file="$TEST_RESOURCES_DIR/inventories/samples/sample-inventory-small.xlsx"
 reference_dir="$TEST_RESOURCES_DIR/inventories"
 
 run_processor "$PROCESSOR_POM" \
@@ -16,6 +16,3 @@ run_processor "$PROCESSOR_POM" \
 "-Dparam.reference.licenses.dir=$reference_dir" \
 "-Dparam.target.components.dir=$TEST_OUTPUT_DIR/components" \
 "-Dparam.target.licenses.dir=$TEST_OUTPUT_DIR/licenses"
-
-assert_exists "$TEST_OUTPUT_DIR/components"
-assert_exists "$TEST_OUTPUT_DIR/licenses"

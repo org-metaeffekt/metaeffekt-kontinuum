@@ -6,7 +6,7 @@ source "$SCRIPT_DIR/../shared.sh"
 
 setup_processor_test "bom" "spdx-from-inventory"
 
-input_file="$TEST_RESOURCES_DIR/inventories/sample-asset-001.xlsx"
+input_file="$TEST_RESOURCES_DIR/inventories/samples/sample-inventory-small.xlsx"
 output_file="$TEST_OUTPUT_DIR/spdx.json"
 
 run_processor "$PROCESSOR_POM" \

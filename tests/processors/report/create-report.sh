@@ -7,9 +7,9 @@ source "$SCRIPT_DIR/../shared.sh"
 setup_processor_test "report" "create-report"
 
 require_config AE_WORKBENCH_DIR
-require_directory "$AE_WORKBENCH_DIR"
+ "$AE_WORKBENCH_DIR"
 require_config VULNERABILITY_MIRROR_DIR
-require_directory "$VULNERABILITY_MIRROR_DIR"
+ "$VULNERABILITY_MIRROR_DIR"
 
 input_dir="$TEST_RESOURCES_DIR/inventories"
 reference_dir="$TEST_RESOURCES_DIR/inventories"
