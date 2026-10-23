@@ -1,0 +1,28 @@
+schema-version: '2.2'
+assessments:
+  - affects:
+      vulnerabilities:
+        - CVE-2021-44228
+    events:
+      - reset to baseline: true
+        status: applicable
+        rationale: <p>Vulnerability applicable. Upgrade to latest version on Log4j (2.17.2) pending.</p> <p>The modified CVSS vectors anticipate that - in the given context - currently no possibility was identified to inject a log message with malicious content and the complexity for an attacker is high (TD:M; MAC:H). The modification is however not sufficient to reduce the severity. Therefore, the upgrade to a newer version or removal of Log4j is imperative to address the vulnerability.</p>
+        risk: Direct or indirect injection of messages may result in execution of arbitrary code.
+        measures: <p> <lq> <b>Fix:</b> Upgrade to latest version of Log4j mandatory. </lq> </p> <p> <lq> <b>Mitigation:</b> Eliminate all external options to inject foreign log messages. </lq> </p>
+        date: '2023-03-02'
+        cvss:
+          - rationale: Overwriting all parts
+            modifications:
+              - version: '2.0'
+                type: overwrite
+                metrics: TD:M
+          - rationale: Overwriting all parts
+            modifications:
+              - version: '3.1'
+                type: overwrite
+                metrics: CVSS:3.1/MAC:H
+          - rationale: Overwriting all parts
+            modifications:
+              - version: '4.0'
+                type: overwrite
+                metrics: CVSS:4.0/MAC:H

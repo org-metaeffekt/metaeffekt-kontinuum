@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+        Copyright 2024-2026 the original author or authors.
+
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+    -->
+
+    <parent>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
+        <version>KONTINUUM-SNAPSHOT</version>
+        <relativePath>../ae-kontinuum-processors.xml</relativePath>
+    </parent>
+
+    <artifactId>portfolio_create-overview</artifactId>
+    <packaging>pom</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.metaeffekt.artifact.analysis</groupId>
+                <artifactId>ae-inventory-overview-html-report</artifactId>
+                <version>${ae.artifact.analysis.version}</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+<goals>
+                            <goal>create-report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <baseDirectory>${input.inventory.dir}</baseDirectory>
+                    <inputInventoryPath>${input.inventory.path}</inputInventoryPath>
+                    <advisorInventoryPath>${input.advisor.inventories.dir}</advisorInventoryPath>
+
+                    <outputFile>${output.overview.file}</outputFile>
+
+                    <dashboardsPath>${input.dashboards.dir}</dashboardsPath>
+                    <reportsPath>${input.reports.dir}</reportsPath>
+
+                    <securityPolicy>
+                        <files>
+                            <file>${param.security.policy.file}</file>
+                        </files>
+                        <activeIds>${param.security.policy.active.ids}</activeIds>
+                    </securityPolicy>
+
+                    <!-- notification -->
+                    <notificationConfigFiles>
+                        <file>${param.notification.config.file}</file>
+                    </notificationConfigFiles>
+
+                    <notificationRuleFiles>
+                        <file>${param.notification.rule.file}</file>
+                    </notificationRuleFiles>
+
+                    <notificationOutputFile>${output.notification.file}</notificationOutputFile>
+                </configuration>
+                <dependencies>
+                    <!-- FIXME: provide plugin with complete dependencies -->
+                    <dependency>
+                        <groupId>org.apache.logging.log4j</groupId>
+                        <artifactId>log4j-api</artifactId>
+                        <version>2.23.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>input.inventory.dir</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.inventory.path</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.advisor.inventories.dir</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.dashboards.dir</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>input.reports.dir</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>output.overview.file</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>param.security.policy.file</property>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

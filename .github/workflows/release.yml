@@ -53,9 +53,9 @@ jobs:
       - name: Adjust core and artifact-analysis versions
         run: |
           sed -i -E 's|<ae.core.version>[^<]*</ae.core.version>|<ae.core.version>${{ inputs.ae-core-version }}</ae.core.version>|g' \
-            processors/_common_/ae-kontinuum-processors.xml
+            processors/ae-kontinuum-processors.xml
           sed -i -E 's|<ae.artifact.analysis.version>[^<]*</ae.artifact.analysis.version>|<ae.artifact.analysis.version>${{ inputs.ae-artifact-analysis-version }}</ae.artifact.analysis.version>|g' \
-            processors/_common_/ae-kontinuum-processors.xml
+            processors/ae-kontinuum-processors.xml
 
       - name: Checkout metaeffekt-workbench
         run: |
@@ -109,7 +109,7 @@ jobs:
       # Commit the overrides on a throwaway commit and publish only the tag, so main is never modified.
       - name: Create release commit and tag
         run: |
-          git add processors/_common_/ae-kontinuum-processors.xml
+          git add processors/ae-kontinuum-processors.xml
           git commit -m "Release ${{ inputs.version }}" || echo "No changes to commit"
           git tag -f "${{ inputs.version }}"
           # --force allows re-running a failed release; it does not affect main.

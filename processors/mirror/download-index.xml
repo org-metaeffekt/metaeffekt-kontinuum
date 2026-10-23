@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+        Copyright 2024-2026 the original author or authors.
+
+        Licensed under the Apache License, Version 2.0 (the "License");
+        you may not use this file except in compliance with the License.
+        You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+    -->
+
+    <parent>
+        <groupId>com.metaeffekt.kontinuum</groupId>
+        <artifactId>ae-kontinuum-processors</artifactId>
+        <version>KONTINUUM-SNAPSHOT</version>
+        <relativePath>../../processors/ae-kontinuum-processors.xml</relativePath>
+    </parent>
+
+    <artifactId>mirror_download-index</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <mirror.target.tmp>${env.vulnerability.mirror.dir}/download</mirror.target.tmp>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven.antrun.plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>1.0b3</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>ant</groupId>
+                                <artifactId>ant</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <target>
+                        <delete dir="${project.build.directory}" quiet="true"/>
+                    </target>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>initialize-update-check</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${env.vulnerability.mirror.dir}/.database" />
+                                <available file="${env.vulnerability.mirror.dir}/next-update" property="next-update-file-exists" />
+                            </target>
+                            <exportAntProperties>true</exportAntProperties>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>initialize-update-check-first-execution</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target unless="next-update-file-exists">
+                                <echo message="Initialize first run." />
+                                <tstamp>
+                                    <format property="next.update" offset="-4" unit="hour" pattern="MM/dd/yyyy hh:mm:ss aa"/>
+                                </tstamp>
+                                <touch file="${env.vulnerability.mirror.dir}/next-update" datetime="${next.update}" pattern="MM/dd/yyyy hh:mm:ss aa" />
+                            </target>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>update-check</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <touch file="${env.vulnerability.mirror.dir}/last-update" />
+
+                                <uptodate property="update.required" value="true"
+                                          srcfile="${env.vulnerability.mirror.dir}/next-update"
+                                          targetfile="${env.vulnerability.mirror.dir}/last-update" />
+
+                                <echo message="Update Required: ${update.required}" />
+                            </target>
+                            <exportAntProperties>true</exportAntProperties>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>download-mirror-archive</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target if="update.required">
+                                <echo message="Downloading to ${mirror.target.tmp}" />
+                                <mkdir dir="${mirror.target.tmp}" />
+
+                                <!-- Define ant-contrib tasks -->
+                                <taskdef resource="net/sf/antcontrib/antlib.xml" />
+
+                                <if>
+                                    <isset property="param.mirror.archive.username" />
+                                    <then>
+                                        <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}/" verbose="false"
+                                             username="${param.mirror.archive.username}" password="${param.mirror.archive.password}" />
+                                    </then>
+                                    <else>
+                                        <get src="${param.mirror.archive.url}" dest="${mirror.target.tmp}/" verbose="false" />
+                                    </else>
+                                </if>
+                            </target>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>unpack-mirror-archive</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target if="update.required">
+                                <!-- Define ant-contrib tasks -->
+                                <taskdef resource="net/sf/antcontrib/antlib.xml" />
+
+                                <!-- extract file name -->
+                                <propertyregex property="mirror.file"
+                                               input="${param.mirror.archive.url}"
+                                               regexp=".*\/([^\/])"
+                                               replace="\1"
+                                               casesensitive="false" />
+
+                                <!-- Determine archive type based on file extension in url -->
+                                <condition property="is.zip">
+                                    <matches pattern=".*\.zip$" string="${param.mirror.archive.url}" />
+                                </condition>
+                                <condition property="is.tar.gz">
+                                    <matches pattern=".*\.tar\.gz$" string="${param.mirror.archive.url}" />
+                                </condition>
+
+                                <if>
+                                    <isset property="is.zip" />
+                                    <then>
+                                        <unzip src="${mirror.target.tmp}/${mirror.file}" dest="${env.vulnerability.mirror.dir}/.database_update" />
+                                    </then>
+                                    <elseif>
+                                        <isset property="is.tar.gz" />
+                                        <then>
+                                            <untar src="${mirror.target.tmp}/${mirror.file}" dest="${env.vulnerability.mirror.dir}/.database_update" compression="gzip" />
+                                        </then>
+                                    </elseif>
+                                </if>
+                            </target>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>patch-mirror-archive</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target if="update.required">
+                                <echo message="Patching ${env.vulnerability.mirror.dir}/.database_update" />
+                                <copy todir="${env.vulnerability.mirror.dir}/.database_update" overwrite="true" failonerror="false">
+                                    <fileset dir="${env.vulnerability.mirror.dir}/.database_patch" includes="**/*" />
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>replace-mirror-data</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target if="update.required">
+                                <echo message="Backing up mirror data to ${env.vulnerability.mirror.dir}/.database_backup" />
+                                <mkdir dir="${env.vulnerability.mirror.dir}/.database" />
+                                <move file="${env.vulnerability.mirror.dir}/.database" tofile="${env.vulnerability.mirror.dir}/.database_backup" />
+                                <echo message="Updating new mirror to ${env.vulnerability.mirror.dir}/.database" />
+                                <move file="${env.vulnerability.mirror.dir}/.database_update" tofile="${env.vulnerability.mirror.dir}/.database" />
+                                <echo message="Deleting backup mirror data ${env.vulnerability.mirror.dir}/.database_backup" />
+                                <delete dir="${env.vulnerability.mirror.dir}/.database_backup" />
+
+                                <touch file="${env.vulnerability.mirror.dir}/last-update" />
+                            </target>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>update-mirror-finalize</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target if="update.required">
+                                <tstamp>
+                                    <format property="next.update" offset="+24" unit="hour" pattern="MM/dd/yyyy hh:mm:ss aa"/>
+                                </tstamp>
+                                <touch file="${env.vulnerability.mirror.dir}/next-update" datetime="${next.update}" pattern="MM/dd/yyyy hh:mm:ss aa" />
+                                <echo message="Next update scheduled for: ${next.update}" />
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-property</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireProperty>
+                                    <property>param.mirror.archive.url</property>
+                                </requireProperty>
+                                <requireProperty>
+                                    <property>env.vulnerability.mirror.dir</property>
+                                </requireProperty>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
