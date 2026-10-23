@@ -98,7 +98,7 @@
                         <version>${ae.artifact.analysis.version}</version>
                         <executions>
                             <execution>
-                                <id>transform-extracted-inventory</id>
+                                <id>script-extracted-inventory</id>
                                 <phase>process-resources</phase>
                                 <goals>
                                     <goal>execute-script</goal>
