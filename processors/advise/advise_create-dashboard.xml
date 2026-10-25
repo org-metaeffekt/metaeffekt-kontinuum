@@ -87,7 +87,7 @@
                                 <apiConfiguration>
                                     <apiType>${env.vulnerability.assessment.api}</apiType>
                                     <apiA>
-                                        <baseUrl>api/v2</baseUrl>
+                                        <baseUrl>/api/v2</baseUrl>
                                         <ping>ping</ping>
                                         <currentUser>current_user</currentUser>
                                         <reserveAssessmentEventId>entity_id/assessment_event</reserveAssessmentEventId>
