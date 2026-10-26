@@ -107,7 +107,7 @@
                                     <kotlinScript>${param.kotlin.script.file}</kotlinScript>
                                     <parameterMap>
                                         <input.inventory.file>${output.inventory.file}</input.inventory.file>
-                                        <output.inventory.dir>${output.transformed.inventory.dir}</output.inventory.dir>
+                                        <output.inventory.dir>${output.scripted.inventory.dir}</output.inventory.dir>
                                     </parameterMap>
                                     <scriptExecutionClass>com.metaeffekt.artifact.analysis.scripting.kotlin.exec.InventoryScriptExecution</scriptExecutionClass>
                                 </configuration>
@@ -160,7 +160,7 @@
                                 <configuration>
                                     <rules>
                                         <requireProperty>
-                                            <property>output.transformed.inventory.dir</property>
+                                            <property>output.scripted.inventory.dir</property>
                                         </requireProperty>
                                     </rules>
                                     <fail>true</fail>
