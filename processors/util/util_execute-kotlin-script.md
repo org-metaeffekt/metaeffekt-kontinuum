@@ -21,7 +21,33 @@ The different properties are sorted into three different groups.
 | Parameter      | Required | Description                                  |
 |----------------|----------|----------------------------------------------|
 | param.asset.id | no       | The identifier of the asset being processed. |
+| param.script.params | no      | Additional script parameters as a JSON object. Defaults to an empty object. |
 
 ### Environment
 
 None
+
+## Reading Script Parameters
+
+All parameters listed above are available in the script via the implicit `params` receiver. Additional script
+parameters passed with `param.script.params` arrive as a single JSON string and are parsed by the script itself:
+
+```kotlin
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+
+val scriptParams: Map<String, String> =
+    jacksonObjectMapper().readValue(params["param.script.params"] ?: "{}")
+
+val filter = scriptParams["filter"]
+```
+
+Example invocation:
+
+```bash
+mvn -f processors/util/util_execute-kotlin-script.xml process-resources \
+  -Dinput.kotlin.script.file=scripts/my-script.kts \
+  -Dinput.inventory.file=inventory.xlsx \
+  -Doutput.inventory.file=output.xlsx \
+  -Dparam.script.params='{"filter":"os"}'
+```

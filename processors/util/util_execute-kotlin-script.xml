@@ -13,7 +13,10 @@
 
     <artifactId>util_execute-kotlin-script</artifactId>
     <packaging>jar</packaging>
-
+    <properties>
+        <!-- Default for scripts without parameters; overridden by -Dparam.script.params. -->
+        <param.script.params>{}</param.script.params>
+    </properties>
     <build>
         <plugins>
             <plugin>
@@ -33,6 +36,7 @@
                                 <input.inventory.file>${input.inventory.file}</input.inventory.file>
                                 <output.inventory.file>${output.inventory.file}</output.inventory.file>
                                 <param.asset.id>${param.asset.id}</param.asset.id>
+                                <param.script.params>${param.script.params}</param.script.params>
                             </parameterMap>
                             <scriptExecutionClass>com.metaeffekt.artifact.analysis.scripting.kotlin.exec.InventoryScriptExecution</scriptExecutionClass>
                         </configuration>
