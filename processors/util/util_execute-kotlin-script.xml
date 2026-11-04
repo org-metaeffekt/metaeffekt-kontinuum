@@ -13,10 +13,12 @@
 
     <artifactId>util_execute-kotlin-script</artifactId>
     <packaging>jar</packaging>
+
     <properties>
         <!-- Default for scripts without parameters; overridden by -Dparam.script.params. -->
         <param.script.params>{}</param.script.params>
     </properties>
+
     <build>
         <plugins>
             <plugin>

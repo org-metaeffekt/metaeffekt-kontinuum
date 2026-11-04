@@ -18,10 +18,10 @@ The different properties are sorted into three different groups.
 | output.inventory.file    | yes      | The target inventory file written by the script.              |
 
 ### Parameters
-| Parameter      | Required | Description                                  |
-|----------------|----------|----------------------------------------------|
-| param.asset.id | no       | The identifier of the asset being processed. |
-| param.script.params | no      | Additional script parameters as a JSON object. Defaults to an empty object. |
+| Parameter           | Required | Description                                                                 |
+|---------------------|----------|-----------------------------------------------------------------------------|
+| param.asset.id      | no       | The identifier of the asset being processed.                                |
+| param.script.params | no       | Additional script parameters as a JSON object. Defaults to an empty object. |
 
 ### Environment
 
