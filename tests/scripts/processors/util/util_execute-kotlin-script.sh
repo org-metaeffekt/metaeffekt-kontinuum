@@ -50,6 +50,7 @@ run_maven_command() {
   CMD+=("-Dinput.inventory.file=$INPUT_INVENTORY_FILE")
   CMD+=("-Dparam.asset.id=$PARAM_ASSET_ID")
   CMD+=("-Doutput.inventory.file=$OUTPUT_INVENTORY_FILE")
+  [ -n "${PARAM_SCRIPT_PARAMS:-}" ] && CMD+=("-Dparam.script.params=$PARAM_SCRIPT_PARAMS")
 
   pass_command_info_to_logger "$(basename "$0")"
 }
