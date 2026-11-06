@@ -60,7 +60,7 @@
                 <executions>
                     <execution>
                         <id>initialize-update-check</id>
-                        <phase>compile</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -75,7 +75,7 @@
 
                     <execution>
                         <id>initialize-update-check-first-execution</id>
-                        <phase>compile</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -92,7 +92,7 @@
 
                     <execution>
                         <id>update-check</id>
-                        <phase>compile</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -112,7 +112,7 @@
 
                     <execution>
                         <id>download-mirror-archive</id>
-                        <phase>compile</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -140,7 +140,7 @@
 
                     <execution>
                         <id>unpack-mirror-archive</id>
-                        <phase>compile</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -182,7 +182,7 @@
 
                     <execution>
                         <id>patch-mirror-archive</id>
-                        <phase>compile</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -198,7 +198,7 @@
 
                     <execution>
                         <id>replace-mirror-data</id>
-                        <phase>compile</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -219,7 +219,7 @@
 
                     <execution>
                         <id>update-mirror-finalize</id>
-                        <phase>compile</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
