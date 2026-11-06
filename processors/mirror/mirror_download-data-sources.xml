@@ -375,10 +375,10 @@
                             <cweDownload>
                                 <resourceLocations>
                                     <!-- URL for the CWE Download is used to fetch complete and latest CWE Information. -->
-                                    <!-- <MOST_RECENT_CWE>https://cwe.mitre.org/data/xml/cwec_latest.xml.zip</MOST_RECENT_CWE> -->
+                                     <MOST_RECENT_CWE>https://cwe.mitre.org/data/xml/cwec_v4.20.xml.zip</MOST_RECENT_CWE>
 
                                     <!-- This URL is optional but can be used to download the complete CWE information for a specific version. -->
-                                    <!-- <SPECIFIC_VERSION_CWE>https://cwe.mitre.org/data/xml/cwec_v%s.xml.zip</SPECIFIC_VERSION_CWE> -->
+                                     <SPECIFIC_VERSION_CWE>https://cwe.mitre.org/data/xml/cwec_v4.20.xml.zip</SPECIFIC_VERSION_CWE>
                                 </resourceLocations>
                             </cweDownload>
 

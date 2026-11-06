@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>extract_linux-arch-inventory</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <build>
         <plugins>
@@ -41,7 +41,7 @@
                         <goals>
                             <goal>extract-container-inventory</goal>
                         </goals>
-                        <phase>prepare-package</phase>
+                        <phase>process-resources</phase>
                         <configuration>
                             <inputArchiveFile>${input.archive.file}</inputArchiveFile>
                             <targetInventoryFile>${output.inventory.file}</targetInventoryFile>
@@ -82,5 +82,62 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>kotlin-script</id>
+            <activation>
+                <property>
+                    <name>param.kotlin.script.file</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.metaeffekt.artifact.analysis</groupId>
+                        <artifactId>ae-kotlin-scripting-maven-plugin</artifactId>
+                        <version>${ae.artifact.analysis.version}</version>
+                        <executions>
+                            <execution>
+                                <id>script-extracted-inventory</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>execute-script</goal>
+                                </goals>
+                                <configuration>
+                                    <kotlinScript>${param.kotlin.script.file}</kotlinScript>
+                                    <parameterMap>
+                                        <input.inventory.file>${output.inventory.file}</input.inventory.file>
+                                        <output.inventory.dir>${output.scripted.inventory.dir}</output.inventory.dir>
+                                    </parameterMap>
+                                    <scriptExecutionClass>com.metaeffekt.artifact.analysis.scripting.kotlin.exec.InventoryScriptExecution</scriptExecutionClass>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>${maven.enforcer.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>enforce-kotlin-script-properties</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireProperty>
+                                            <property>output.scripted.inventory.dir</property>
+                                        </requireProperty>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
 

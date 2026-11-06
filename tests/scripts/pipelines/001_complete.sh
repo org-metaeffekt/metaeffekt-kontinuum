@@ -11,6 +11,7 @@ LOG_FILE="$SELF_DIR/../../../.logs/$(basename $0).log"
 bash "$PROCESSOR_SCRIPTS_DIR/mirror/mirror_download-index.sh" -c "$CASES_DIR/mirror/mirror_download-index-01.sh" -f "$LOG_FILE"
 
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_execute-kotlin-script.sh" -c "$CASES_DIR/util/util_execute-kotlin-script-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/util/util_execute-kotlin-script.sh" -c "$CASES_DIR/util/util_execute-kotlin-script-02.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_copy-inventories.sh" -c "$CASES_DIR/util/util_copy-inventories-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_create-diff.sh" -c "$CASES_DIR/util/util_create-diff-01.sh" -f "$LOG_FILE"
 bash "$PROCESSOR_SCRIPTS_DIR/util/util_merge-inventories.sh" -c "$CASES_DIR/util/util_merge-inventories-01.sh" -f "$LOG_FILE"
@@ -24,6 +25,10 @@ bash "$PROCESSOR_SCRIPTS_DIR/util/util_validate-reference-inventory.sh" -c "$CAS
 bash "$PROCESSOR_SCRIPTS_DIR/fetch/fetch_save-image.sh" -c "$CASES_DIR/fetch/fetch_save-image-01.sh" -f "$LOG_FILE"
 
 bash "$PROCESSOR_SCRIPTS_DIR/extract/extract_copy-pom-dependencies.sh" -c "$CASES_DIR/extract/extract_copy-pom-dependencies-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/extract/extract_windows-inventory.sh" -c "$CASES_DIR/extract/extract_windows-inventory-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/extract/extract_windows-inventory.sh" -c "$CASES_DIR/extract/extract_windows-inventory-02.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/extract/extract_linux-arch-inventory.sh" -c "$CASES_DIR/extract/extract_linux-arch-inventory-01.sh" -f "$LOG_FILE"
+bash "$PROCESSOR_SCRIPTS_DIR/extract/extract_linux-arch-inventory.sh" -c "$CASES_DIR/extract/extract_linux-arch-inventory-02.sh" -f "$LOG_FILE"
 
 bash "$PROCESSOR_SCRIPTS_DIR/prepare/prepare_scan-directory.sh" -c "$CASES_DIR/prepare/prepare_scan-directory-01.sh" -f "$LOG_FILE"
 
