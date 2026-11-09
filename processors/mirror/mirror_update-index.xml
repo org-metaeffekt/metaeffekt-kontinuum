@@ -151,6 +151,11 @@
                                     <malformedCpe>cpe:2.3:a:ibm:tivoli_netcoolomnibus:8.1.0:*:*:*:*:*:*:*:*</malformedCpe>
                                     <replacementCpe>cpe:2.3:a:ibm:tivoli_netcoolomnibus:8.1.0:*:*:*:*:*:*:*</replacementCpe>
                                 </cpeCorrection>
+
+                                <cpeCorrection>
+                                    <malformedCpe>cpe:2.3:a:ibm:tivoli_netcoolomnibus:8.1.0.41:*:*:*:*:*:*:*:*</malformedCpe>
+                                    <replacementCpe>cpe:2.3:a:ibm:tivoli_netcoolomnibus:8.1.0.41:*:*:*:*:*:*:*</replacementCpe>
+                                </cpeCorrection>
                             </cpeCorrections>
 
                             <!-- Using "cpePatternCorrections" on the other hand, the "malformedCpe" accepts a regular expression (must be enclosed with '/' character) -->
