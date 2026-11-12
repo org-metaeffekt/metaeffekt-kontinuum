@@ -87,13 +87,16 @@
                                 <apiConfiguration>
                                     <apiType>${env.vulnerability.assessment.api}</apiType>
                                     <apiA>
+                                        <!-- endpoint mappings -->
                                         <baseUrl>/api/v2</baseUrl>
                                         <ping>/ping</ping>
-                                        <currentUser>current_user</currentUser>
-                                        <reserveAssessmentEventId>entity_id/assessment_event</reserveAssessmentEventId>
+                                        <currentUser>/current_user</currentUser>
+                                        <logout>/logout</logout>
+                                        <reserveAssessmentEventId>/entity_id/assessment_event</reserveAssessmentEventId>
+
+                                        <!-- settings -->
                                         <eventsSinceTimestampForDashboard>${param.events.since.timestamp.for.dashboard}</eventsSinceTimestampForDashboard>
                                         <putEventForDashboard>${param.put.event.for.dashboard}</putEventForDashboard>
-                                        <logout>/logout</logout>
                                         <logoutMode>REDIRECT</logoutMode>
                                     </apiA>
                                 </apiConfiguration>
