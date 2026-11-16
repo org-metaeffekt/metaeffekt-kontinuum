@@ -61,6 +61,8 @@ run_maven_command() {
   CMD+=("-Dparam.product.watermark=$PARAM_PRODUCT_WATERMARK")
   CMD+=("-Dparam.overview.advisors=$PARAM_OVERVIEW_ADVISORS")
   CMD+=("-Dparam.property.selector.organization=$PARAM_PROPERTY_SELECTOR_ORGANIZATION")
+  [ -n "${PARAM_REPORT_PERIOD_SINCE:-}" ] && CMD+=("-Dparam.report.period.since=$PARAM_REPORT_PERIOD_SINCE")
+  [ -n "${PARAM_REPORT_PERIOD_UNTIL:-}" ] && CMD+=("-Dparam.report.period.until=$PARAM_REPORT_PERIOD_UNTIL")
   CMD+=("-Denv.kontinuum.dir=$KONTINUUM_DIR")
   CMD+=("-Denv.workbench.dir=$ENV_WORKBENCH_DIR")
   CMD+=("-Denv.vulnerability.mirror.dir=$ENV_VULNERABILITY_MIRROR_DIR")

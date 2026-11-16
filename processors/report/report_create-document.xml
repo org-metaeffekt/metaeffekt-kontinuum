@@ -43,6 +43,10 @@
 
         <param.asset.build>n.a.</param.asset.build>
 
+        <!-- query period of cert reports; the defaults correspond to those of the cert report template -->
+        <param.report.period.since>1 week</param.report.period.since>
+        <param.report.period.until>now</param.report.period.until>
+
         <param.template.dir>${env.workbench.dir}/templates/report-template</param.template.dir>
         <param.computed.inventory.dir>${param.template.dir}/target/tmp</param.computed.inventory.dir>
         <env.workbench.processors.dir>${env.workbench.dir}/processors</env.workbench.processors.dir>
@@ -93,6 +97,9 @@
                                 <argument>-Denv.vulnerability.mirror.dir=${env.vulnerability.mirror.dir}</argument>
 
                                 <argument>-Doverview.advisors=${param.overview.advisors}</argument>
+
+                                <argument>-Dreport.period.since=${param.report.period.since}</argument>
+                                <argument>-Dreport.period.until=${param.report.period.until}</argument>
 
                                 <argument>-Doutput.document.file=${output.document.file}</argument>
 
