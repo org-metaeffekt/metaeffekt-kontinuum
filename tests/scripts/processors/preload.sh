@@ -173,16 +173,18 @@ load_properties() {
 
 load_project_properties() {
   local properties_file=""
-  if [ -f "$KONTINUUM_ROOT/.local.properties" ]; then
-    properties_file="$KONTINUUM_ROOT/.local.properties"
-  elif [ -f "$HARNESS_ROOT/.local.properties" ]; then
-    properties_file="$HARNESS_ROOT/.local.properties"
-  fi
+  local properties_count=0
 
-  if [ -n "$properties_file" ]; then
-    load_properties "$properties_file"
-    log_info "Successfully loaded .local.properties from $properties_file"
-  else
+  # Load shared harness defaults first, then repository-local overrides.
+  for properties_file in "$HARNESS_ROOT/.local.properties" "$KONTINUUM_ROOT/.local.properties"; do
+    if [ -f "$properties_file" ]; then
+      load_properties "$properties_file"
+      log_info "Successfully loaded .local.properties from $properties_file"
+      properties_count=$((properties_count + 1))
+    fi
+  done
+
+  if [ "$properties_count" -eq 0 ]; then
     log_error "Terminating: .local.properties file not found in metaeffekt-kontinuum or encompassing integration harness."
     exit 1
   fi
